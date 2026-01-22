@@ -4,16 +4,74 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
-// Animation variants
+// Smoother animation variants with transitions included
 const fadeInUp = {
-  initial: { opacity: 0, y: 40 },
-  animate: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
+  },
+};
+
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
+  },
+};
+
+const fadeInRight = {
+  hidden: { opacity: 0, x: 30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
+  },
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
+  },
 };
 
 const staggerContainer = {
-  animate: {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1] as const,
     },
   },
 };
@@ -52,14 +110,13 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Text Content */}
             <motion.div
-              initial="initial"
-              animate="animate"
+              initial="hidden"
+              animate="visible"
               variants={staggerContainer}
               className="text-center lg:text-left"
             >
               <motion.div
                 variants={fadeInUp}
-                transition={{ duration: 0.6 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
               >
                 <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
@@ -70,7 +127,6 @@ export default function Home() {
 
               <motion.h1
                 variants={fadeInUp}
-                transition={{ duration: 0.6, delay: 0.1 }}
                 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
               >
                 Stay Connected.
@@ -80,7 +136,6 @@ export default function Home() {
 
               <motion.p
                 variants={fadeInUp}
-                transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-lg md:text-xl text-muted-light max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed"
               >
                 The world&apos;s first MagSafe-compatible LoRa mesh device.
@@ -90,7 +145,6 @@ export default function Home() {
 
               <motion.div
                 variants={fadeInUp}
-                transition={{ duration: 0.6, delay: 0.3 }}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
                 <a
@@ -112,7 +166,6 @@ export default function Home() {
               {/* Social proof */}
               <motion.div
                 variants={fadeInUp}
-                transition={{ duration: 0.6, delay: 0.4 }}
                 className="mt-12 flex items-center gap-6 justify-center lg:justify-start"
               >
                 <div className="flex -space-x-2">
@@ -150,9 +203,9 @@ export default function Home() {
               className="relative"
             >
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                 className="relative"
               >
                 {/* Glow effect behind image */}
@@ -195,10 +248,10 @@ export default function Home() {
       <section id="features" className="relative py-32">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
             className="text-center mb-20"
           >
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
@@ -212,15 +265,18 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {features.map((feature) => (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group p-8 rounded-3xl glass hover:bg-white/[0.04] transition-all duration-500"
+                variants={cardVariant}
+                className="group p-8 rounded-3xl glass hover:bg-white/[0.04] transition-all duration-300"
               >
                 <div className="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-accent/20 transition-all duration-300">
                   <span className="text-2xl">{feature.icon}</span>
@@ -233,7 +289,7 @@ export default function Home() {
                 </p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -241,10 +297,10 @@ export default function Home() {
       <section id="gallery" className="relative py-32 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
             className="text-center mb-20"
           >
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
@@ -259,14 +315,14 @@ export default function Home() {
           </motion.div>
 
           {/* Gallery grid */}
-          <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6 }}
-              className="relative group"
-            >
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 gap-8"
+          >
+            <motion.div variants={fadeInLeft} className="relative group">
               <div className="overflow-hidden rounded-3xl">
                 <Image
                   src="https://i.etsystatic.com/61623051/r/il/dac7cb/7509660894/il_fullxfull.7509660894_1nka.jpg"
@@ -284,13 +340,7 @@ export default function Home() {
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="relative group"
-            >
+            <motion.div variants={fadeInRight} className="relative group">
               <div className="overflow-hidden rounded-3xl">
                 <Image
                   src="https://i.etsystatic.com/61623051/r/il/d606f2/7553086919/il_fullxfull.7553086919_pb5k.jpg"
@@ -308,7 +358,7 @@ export default function Home() {
                 </p>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -317,10 +367,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={fadeInLeft}
             >
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
                 Engineered for
@@ -332,14 +382,17 @@ export default function Home() {
                 performance. Compatible with Meshtastic and MeshCore firmware.
               </p>
 
-              <div className="space-y-6">
-                {specs.map((spec, index) => (
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={staggerContainer}
+                className="space-y-4"
+              >
+                {specs.map((spec) => (
                   <motion.div
                     key={spec.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    variants={cardVariant}
                     className="flex items-center gap-4 p-4 rounded-2xl glass"
                   >
                     <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
@@ -353,14 +406,14 @@ export default function Home() {
                     </div>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={scaleIn}
               className="relative"
             >
               <div className="absolute inset-0 bg-accent/10 blur-[80px] rounded-full" />
@@ -380,10 +433,10 @@ export default function Home() {
       <section className="relative py-32">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={scaleIn}
             className="p-12 md:p-16 rounded-[2.5rem] glass-strong relative overflow-hidden"
           >
             {/* Background glow */}
@@ -394,8 +447,8 @@ export default function Home() {
                 Ready to Go Off-Grid?
               </h2>
               <p className="text-lg text-muted-light mb-10 max-w-xl mx-auto">
-                Join the growing community of adventurers, preppers, and
-                tech enthusiasts who never lose connection.
+                Join the growing community of adventurers, preppers, and tech
+                enthusiasts who never lose connection.
               </p>
               <a
                 href="https://www.etsy.com/shop/offgriddevices"

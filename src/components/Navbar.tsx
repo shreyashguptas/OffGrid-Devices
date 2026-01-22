@@ -80,7 +80,7 @@ export function Navbar() {
             href="https://www.etsy.com/shop/offgriddevices"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-5 py-2.5 bg-accent text-background font-medium rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-lg hover:shadow-accent/20"
+            className="px-6 py-2.5 bg-accent text-background font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 border border-accent-light/50"
           >
             Shop Now
           </a>

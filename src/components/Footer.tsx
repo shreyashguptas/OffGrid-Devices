@@ -157,7 +157,7 @@ export function Footer() {
 
       {/* Bottom Section - Large Brand Mark */}
       <div className="border-t border-white/5 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 text-center">
           {/* Copyright and Social Icons Row */}
           <div className="py-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-4">
@@ -232,13 +232,13 @@ export function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative py-8 -mb-4 select-none"
+            className="relative py-12 select-none flex justify-center"
           >
-            <div className="font-display text-[15vw] md:text-[12vw] font-bold tracking-tighter leading-none text-white/[0.08] whitespace-nowrap">
+            <div className="font-display text-[18vw] md:text-[14vw] lg:text-[12vw] font-bold tracking-tighter leading-none text-white/[0.15] text-center">
               OFFGRID
             </div>
             {/* Gradient overlay for fade effect */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
           </motion.div>
         </div>
       </div>
