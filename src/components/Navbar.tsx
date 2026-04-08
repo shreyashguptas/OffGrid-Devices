@@ -5,13 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 
 const products = [
   {
     name: "Link 1",
     subtitle: "MagSafe LoRa Mesh Device",
     href: "/products/link-1",
-    image: "https://i.etsystatic.com/61623051/r/il/9f66b4/7517364106/il_fullxfull.7517364106_5bbx.jpg",
+    image: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
     badge: null,
   },
   {
@@ -223,14 +224,11 @@ function NavbarContent() {
           >
             Blog
           </Link>
-          <a
-            href="https://www.etsy.com/shop/offgriddevices"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link1CheckoutButton
+            defaultLabel="Shop Now"
+            loadingLabel="Opening Checkout..."
             className="px-6 py-2.5 bg-accent text-background font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 border border-accent-light/50"
-          >
-            Shop Now
-          </a>
+          />
         </div>
 
         {/* Mobile Menu Button */}
@@ -351,14 +349,11 @@ function NavbarContent() {
               >
                 Blog
               </Link>
-              <a
-                href="https://www.etsy.com/shop/offgriddevices"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link1CheckoutButton
+                defaultLabel="Shop Now"
+                loadingLabel="Opening Checkout..."
                 className="mt-2 px-5 py-3 bg-accent text-background font-medium rounded-full text-center hover:bg-accent-light transition-all duration-300"
-              >
-                Shop Now
-              </a>
+              />
             </div>
           </motion.div>
         )}

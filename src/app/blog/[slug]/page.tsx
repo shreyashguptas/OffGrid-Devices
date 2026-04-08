@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 
 // Blog post data - in a real app, this would come from a CMS or MDX files
 interface BlogPost {
@@ -27,7 +28,7 @@ const blogPostsData: Record<string, BlogPost> = {
     date: "January 15, 2026",
     readTime: "8 min read",
     category: "Tutorials",
-    image: "https://i.etsystatic.com/61623051/r/il/9f66b4/7517364106/il_fullxfull.7517364106_5bbx.jpg",
+    image: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
     sections: [
       { type: "paragraph", content: "Welcome to the world of off-grid communication! If you've just received your OffGrid device, this guide will help you get started with Meshtastic firmware and begin communicating without cellular service." },
       { type: "heading", content: "What is Meshtastic?" },
@@ -49,7 +50,7 @@ const blogPostsData: Record<string, BlogPost> = {
     date: "January 10, 2026",
     readTime: "6 min read",
     category: "Education",
-    image: "https://i.etsystatic.com/61623051/r/il/dac7cb/7509660894/il_fullxfull.7509660894_1nka.jpg",
+    image: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
     sections: [
       { type: "paragraph", content: "In an increasingly connected world, we often take cellular coverage for granted. But what happens when the towers go down, or when you venture into remote wilderness? That's where LoRa technology shines." },
       { type: "heading", content: "The Limitations of Cellular" },
@@ -67,7 +68,7 @@ const blogPostsData: Record<string, BlogPost> = {
     date: "January 5, 2026",
     readTime: "10 min read",
     category: "Technology",
-    image: "https://i.etsystatic.com/61623051/r/il/d606f2/7553086919/il_fullxfull.7553086919_pb5k.jpg",
+    image: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
     sections: [
       { type: "paragraph", content: "Mesh networking might sound complex, but the concept is beautifully simple: instead of relying on a central hub, every device in the network helps relay messages to their destination." },
       { type: "heading", content: "The Power of Decentralization" },
@@ -231,26 +232,12 @@ export default function BlogPostPage() {
           <p className="text-muted-light mb-6 max-w-md mx-auto">
             Get your own MagSafe-compatible mesh device and join the community.
           </p>
-          <a
-            href="https://www.etsy.com/shop/offgriddevices"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link1CheckoutButton
+            defaultLabel="Buy Now"
+            loadingLabel="Opening Checkout..."
+            showArrow
             className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-background font-semibold rounded-full hover:bg-accent-light transition-all duration-300"
-          >
-            Shop on Etsy
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </a>
+          />
         </motion.div>
       </div>
     </article>

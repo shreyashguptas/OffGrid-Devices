@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 
 export function Footer() {
   return (
@@ -58,14 +59,11 @@ export function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <a
-                      href="https://www.etsy.com/shop/offgriddevices"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-foreground/80 hover:text-accent transition-colors duration-300"
-                    >
-                      Shop on Etsy
-                    </a>
+                    <Link1CheckoutButton
+                      defaultLabel="Buy Link 1"
+                      loadingLabel="Opening Checkout..."
+                      className="text-foreground/80 hover:text-accent transition-colors duration-300 text-left"
+                    />
                   </li>
                 </ul>
               </div>
@@ -134,14 +132,12 @@ export function Footer() {
                     </a>
                   </li>
                   <li>
-                    <a
-                      href="https://www.etsy.com/shop/offgriddevices"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      href="/products/link-1"
                       className="text-foreground/80 hover:text-accent transition-colors duration-300"
                     >
-                      Etsy
-                    </a>
+                      Shopify Checkout
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -202,22 +198,25 @@ export function Footer() {
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                 </svg>
               </a>
-              <a
-                href="https://www.etsy.com/shop/offgriddevices"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/products/link-1"
                 className="text-muted hover:text-accent transition-colors duration-300"
-                aria-label="Etsy Shop"
+                aria-label="Link 1 Product"
               >
                 <svg
                   width="18"
                   height="18"
                   viewBox="0 0 24 24"
-                  fill="currentColor"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  <path d="M8.559 1.067c-.268 0-.457.19-.457.456v4.258c0 .268.189.457.457.457h6.884c.267 0 .456-.19.456-.457V1.523c0-.267-.189-.456-.456-.456H8.559zM1.067 8.559c-.267 0-.456.189-.456.456v6.885c0 .267.189.456.456.456h4.258c.267 0 .456-.189.456-.456V9.015c0-.267-.189-.456-.456-.456H1.067zm17.152 0c-.267 0-.456.189-.456.456v6.885c0 .267.189.456.456.456h4.258c.267 0 .456-.189.456-.456V9.015c0-.267-.189-.456-.456-.456h-4.258zM8.559 17.762c-.268 0-.457.189-.457.456v4.259c0 .267.189.456.457.456h6.884c.267 0 .456-.189.456-.456v-4.259c0-.267-.189-.456-.456-.456H8.559z" />
+                  <path d="M6 7h12l-1 13H7L6 7Z" />
+                  <path d="M9 7a3 3 0 0 1 6 0" />
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
 

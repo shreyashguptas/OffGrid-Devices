@@ -15,7 +15,7 @@ const blogPosts = [
     readTime: "8 min read",
     category: "Tutorials",
     image:
-      "https://i.etsystatic.com/61623051/r/il/9f66b4/7517364106/il_fullxfull.7517364106_5bbx.jpg",
+      "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
   },
   {
     slug: "lora-vs-cellular-comparison",
@@ -26,7 +26,7 @@ const blogPosts = [
     readTime: "6 min read",
     category: "Education",
     image:
-      "https://i.etsystatic.com/61623051/r/il/dac7cb/7509660894/il_fullxfull.7509660894_1nka.jpg",
+      "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
   },
   {
     slug: "mesh-network-explained",
@@ -37,7 +37,7 @@ const blogPosts = [
     readTime: "10 min read",
     category: "Technology",
     image:
-      "https://i.etsystatic.com/61623051/r/il/d606f2/7553086919/il_fullxfull.7553086919_pb5k.jpg",
+      "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
   },
 ];
 

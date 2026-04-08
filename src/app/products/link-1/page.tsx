@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
-import { commerceLinks } from "@/lib/commerce";
+import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -60,10 +60,6 @@ const cardVariant = {
 
 export default function Link1Product() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const link1Checkout = commerceLinks.products.link1.checkoutUrl;
-  const link1CheckoutLabel = commerceLinks.products.link1.isUsingShopify
-    ? "Buy Now"
-    : "Order Now";
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -127,14 +123,11 @@ export default function Link1Product() {
                 variants={fadeInUp}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
-                <a
-                  href={link1Checkout}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link1CheckoutButton
+                  defaultLabel="Buy Now"
+                  loadingLabel="Opening Checkout..."
                   className="px-8 py-4 bg-accent text-background font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
-                >
-                  {link1CheckoutLabel}
-                </a>
+                />
                 <a
                   href="#features"
                   className="px-8 py-4 bg-white/10 border border-white/20 rounded-full font-semibold text-foreground hover:bg-white/15 hover:border-white/30 transition-all duration-300"
@@ -157,7 +150,7 @@ export default function Link1Product() {
                 <div className="absolute inset-0 bg-accent/20 blur-[100px] rounded-full" />
                 <div className="relative animate-float">
                   <Image
-                    src="https://i.etsystatic.com/61623051/r/il/9f66b4/7517364106/il_fullxfull.7517364106_5bbx.jpg"
+                    src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
                     alt="OffGrid Link 1 Device"
                     width={600}
                     height={800}
@@ -251,7 +244,7 @@ export default function Link1Product() {
             <motion.div variants={fadeInLeft} className="relative group">
               <div className="overflow-hidden rounded-3xl">
                 <Image
-                  src="https://i.etsystatic.com/61623051/r/il/dac7cb/7509660894/il_fullxfull.7509660894_1nka.jpg"
+                  src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009"
                   alt="OffGrid device outdoor use"
                   width={800}
                   height={1000}
@@ -269,7 +262,7 @@ export default function Link1Product() {
             <motion.div variants={fadeInRight} className="relative group">
               <div className="overflow-hidden rounded-3xl">
                 <Image
-                  src="https://i.etsystatic.com/61623051/r/il/d606f2/7553086919/il_fullxfull.7553086919_pb5k.jpg"
+                  src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042"
                   alt="OffGrid device detail view"
                   width={800}
                   height={1000}
@@ -344,7 +337,7 @@ export default function Link1Product() {
             >
               <div className="absolute inset-0 bg-accent/10 blur-[80px] rounded-full" />
               <Image
-                src="https://i.etsystatic.com/61623051/r/il/9f66b4/7517364106/il_fullxfull.7517364106_5bbx.jpg"
+                src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
                 alt="OffGrid Link 1 specifications"
                 width={600}
                 height={800}
@@ -480,28 +473,12 @@ export default function Link1Product() {
                 Join the growing community of adventurers, preppers, and tech
                 enthusiasts who never lose connection.
               </p>
-              <a
-                href={link1Checkout}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link1CheckoutButton
+                defaultLabel="Buy Now"
+                loadingLabel="Opening Checkout..."
+                showArrow
                 className="inline-flex items-center gap-3 px-10 py-5 bg-[#F1641E] text-white font-semibold text-lg rounded-full hover:bg-[#D9571A] transition-all duration-300 hover:shadow-xl hover:shadow-[#F1641E]/30 hover:-translate-y-1"
-              >
-                {commerceLinks.products.link1.isUsingShopify
-                  ? "Buy Now"
-                  : "Shop on Etsy"}
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </a>
+              />
             </div>
           </motion.div>
         </div>
