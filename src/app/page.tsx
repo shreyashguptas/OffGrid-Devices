@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { startTransition, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 // Smoother animation variants with transitions included
@@ -78,6 +78,7 @@ const cardVariant = {
 
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [activeFeature, setActiveFeature] = useState(0);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -85,6 +86,17 @@ export default function Home() {
 
   const heroImageY = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const currentFeature = featureHighlights[activeFeature];
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      startTransition(() => {
+        setActiveFeature((current) => (current + 1) % featureHighlights.length);
+      });
+    }, 4500);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -256,50 +268,192 @@ export default function Home() {
 
       {/* Features Section */}
       <section id="features" className="relative py-32">
+        <div className="absolute inset-x-0 top-24 h-64 bg-accent/10 blur-3xl pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="text-center mb-20"
+            className="text-center mb-16"
           >
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Never Forget It.
+              Snaps On.
               <br />
-              <span className="text-muted">Always Connected.</span>
+              <span className="text-muted">Stays With You.</span>
             </h2>
             <p className="text-lg text-muted-light max-w-2xl mx-auto">
-              Designed to solve a real problem: keeping your mesh device with
-              you, always. No more leaving it at home.
+              Your mesh device belongs on the phone you already never leave
+              behind.
             </p>
           </motion.div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {features.map((feature) => (
-              <motion.div
-                key={feature.title}
-                variants={cardVariant}
-                className="group p-8 rounded-3xl glass hover:bg-white/[0.04] transition-all duration-300"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-accent/20 transition-all duration-300">
-                  <span className="text-2xl">{feature.icon}</span>
+          <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-stretch">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={fadeInLeft}
+              className="relative min-h-[560px] overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03]"
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentFeature.title}
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={currentFeature.image}
+                    alt={currentFeature.alt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/35" />
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="absolute left-6 top-6 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-2 backdrop-blur-xl">
+                <span className="text-sm">{currentFeature.icon}</span>
+                <span className="text-xs uppercase tracking-[0.24em] text-muted-light">
+                  Feature Tour
+                </span>
+              </div>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`${currentFeature.title}-overlay`}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 12 }}
+                  transition={{ duration: 0.45 }}
+                  className="absolute inset-x-6 bottom-6 z-10"
+                >
+                  <div className="max-w-xl rounded-[1.75rem] border border-white/10 bg-black/40 p-6 backdrop-blur-xl">
+                    <p className="mb-3 text-xs uppercase tracking-[0.28em] text-accent/90">
+                      {currentFeature.kicker}
+                    </p>
+                    <h3 className="font-display text-3xl md:text-4xl font-semibold leading-tight">
+                      {currentFeature.title}
+                    </h3>
+                    <p className="mt-3 max-w-md text-base text-muted-light leading-relaxed">
+                      {currentFeature.description}
+                    </p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {currentFeature.chips.map((chip) => (
+                        <span
+                          key={chip}
+                          className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-foreground/90"
+                        >
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={fadeInRight}
+              className="flex flex-col gap-4"
+            >
+              <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 md:p-8">
+                <div className="mb-6 flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.22em] text-muted">
+                      Quick view
+                    </p>
+                    <p className="mt-2 text-base text-muted-light">
+                      The essentials, without the spec sheet. Tap a card, or let
+                      it rotate on its own.
+                    </p>
+                  </div>
+                  <div className="rounded-full border border-white/10 px-4 py-2 text-sm font-mono text-muted-light">
+                    {String(activeFeature + 1).padStart(2, "0")} /{" "}
+                    {String(featureHighlights.length).padStart(2, "0")}
+                  </div>
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-muted leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
+
+                <div className="space-y-3">
+                  {featureHighlights.map((feature, index) => {
+                    const isActive = index === activeFeature;
+
+                    return (
+                      <button
+                        key={feature.title}
+                        type="button"
+                        onClick={() =>
+                          startTransition(() => {
+                            setActiveFeature(index);
+                          })
+                        }
+                        className={`w-full rounded-[1.5rem] border px-4 py-4 text-left transition-all duration-300 ${
+                          isActive
+                            ? "border-accent/40 bg-accent/10 shadow-lg shadow-accent/10"
+                            : "border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05]"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-3">
+                            <div
+                              className={`flex h-11 w-11 items-center justify-center rounded-2xl border text-lg transition-colors ${
+                                isActive
+                                  ? "border-accent/30 bg-accent/[0.15]"
+                                  : "border-white/10 bg-white/[0.04]"
+                              }`}
+                            >
+                              {feature.icon}
+                            </div>
+                            <div>
+                              <p className="font-display text-lg font-semibold">
+                                {feature.tab}
+                              </p>
+                              <p className="text-sm text-muted-light">
+                                {feature.caption}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-mono text-muted">
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <span
+                              className={`h-2.5 w-2.5 rounded-full transition-colors ${
+                                isActive ? "bg-accent" : "bg-white/10"
+                              }`}
+                            />
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                {quickSignals.map((signal) => (
+                  <div
+                    key={signal.label}
+                    className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-4"
+                  >
+                    <p className="text-xs uppercase tracking-[0.24em] text-muted">
+                      {signal.label}
+                    </p>
+                    <p className="mt-2 font-display text-xl font-semibold">
+                      {signal.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -602,44 +756,91 @@ const reviewerAvatars = [
   { name: "John", image: null, initials: "J" },
   { name: "Bob", image: null, initials: "B" },
 ];
-
-const features = [
+const featureHighlights = [
   {
     icon: "🧲",
-    title: "MagSafe Compatible",
+    kicker: "Daily carry",
+    title: "Snap it on and go",
+    tab: "MagSafe carry",
+    caption: "The device follows the phone.",
     description:
-      "Attaches securely to any MagSafe-compatible phone or case. Your mesh device goes where your phone goes—no more forgetting it at home.",
+      "MagSafe turns the radio into something you carry automatically instead of something you remember later.",
+    chips: ["MagSafe", "No loose gear"],
+    image:
+      "https://i.etsystatic.com/61623051/r/il/9f66b4/7517364106/il_fullxfull.7517364106_5bbx.jpg",
+    alt: "OffGrid MagSafe device mounted to a phone",
   },
   {
     icon: "📡",
-    title: "Long-Range LoRa",
+    kicker: "Off-grid reach",
+    title: "Keep talking past the dead zone",
+    tab: "LoRa range",
+    caption: "Built for places without bars.",
     description:
-      "Communicate miles away without cell service. LoRa technology provides reliable, long-range communication in any environment.",
+      "When cell service drops away, LoRa keeps messages moving through the mesh.",
+    chips: ["Off-grid", "Peer to peer"],
+    image:
+      "https://i.etsystatic.com/61623051/r/il/dac7cb/7509660894/il_fullxfull.7509660894_1nka.jpg",
+    alt: "OffGrid device used outdoors",
   },
   {
     icon: "🔋",
-    title: "All-Day Battery",
+    kicker: "Trip-ready power",
+    title: "Charge once, stay out longer",
+    tab: "Battery",
+    caption: "Less babysitting, more moving.",
     description:
-      "Built-in rechargeable battery keeps you connected throughout your adventures. Charge via USB-C when you're back at base.",
+      "Rechargeable power and USB-C make the device easy to top off and easy to trust.",
+    chips: ["USB-C", "Adventure ready"],
+    image:
+      "https://i.etsystatic.com/61623051/r/il/d606f2/7553086919/il_fullxfull.7553086919_pb5k.jpg",
+    alt: "OffGrid device showing internal hardware and battery",
   },
   {
     icon: "👁️",
-    title: "Transparent Design",
+    kicker: "Built to be seen",
+    title: "Let the hardware do the talking",
+    tab: "Transparent shell",
+    caption: "The product looks as technical as it is.",
     description:
-      "See the tech inside through our frosted transparent back. The RAK board, battery, and antenna—all visible, all beautiful.",
+      "The transparent back gives the device personality without asking for more copy.",
+    chips: ["Visible internals", "Distinctive look"],
+    image:
+      "https://i.etsystatic.com/61623051/r/il/d606f2/7553086919/il_fullxfull.7553086919_pb5k.jpg",
+    alt: "Transparent OffGrid device close-up",
   },
   {
     icon: "⚙️",
-    title: "Dual Firmware Support",
+    kicker: "Flexible setup",
+    title: "Run the firmware you already prefer",
+    tab: "Dual firmware",
+    caption: "Meshtastic or MeshCore.",
     description:
-      "Run Meshtastic or MeshCore firmware. Choose the platform that fits your needs—or switch between them.",
+      "It fits into the ecosystem you already use instead of forcing a new workflow.",
+    chips: ["Meshtastic", "MeshCore"],
+    image:
+      "https://i.etsystatic.com/61623051/r/il/9f66b4/7517364106/il_fullxfull.7517364106_5bbx.jpg",
+    alt: "OffGrid mesh device product view",
   },
   {
     icon: "🌐",
-    title: "Mesh Networking",
+    kicker: "Network effect",
+    title: "Every extra node makes the system stronger",
+    tab: "Mesh network",
+    caption: "Coverage grows with the group.",
     description:
-      "Connect with others on the network. Messages hop between devices, extending range and creating resilient communication.",
+      "Messages can hop across nearby devices, so the network gets tougher as more people join.",
+    chips: ["Shared coverage", "Resilient"],
+    image:
+      "https://i.etsystatic.com/61623051/r/il/dac7cb/7509660894/il_fullxfull.7509660894_1nka.jpg",
+    alt: "OffGrid device used during an outdoor trip",
   },
+];
+
+const quickSignals = [
+  { label: "Mount", value: "MagSafe" },
+  { label: "Link", value: "LoRa mesh" },
+  { label: "Charge", value: "USB-C" },
 ];
 
 const specs = [
