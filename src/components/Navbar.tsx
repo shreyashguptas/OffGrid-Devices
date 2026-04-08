@@ -1,13 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+
+const products = [
+  {
+    name: "Link 1",
+    subtitle: "MagSafe LoRa Mesh Device",
+    href: "/products/link-1",
+    image: "https://i.etsystatic.com/61623051/r/il/9f66b4/7517364106/il_fullxfull.7517364106_5bbx.jpg",
+    badge: null,
+  },
+  {
+    name: "Link 2",
+    subtitle: "Next-Gen Mesh Device",
+    href: "/products/link-2",
+    image: null,
+    badge: "New",
+  },
+];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProductsOpen, setIsProductsOpen] = useState(false);
+  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+
+  const openTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +40,41 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close menus on route change
+  useEffect(() => {
+    setIsProductsOpen(false);
+    setIsMobileMenuOpen(false);
+    setIsMobileProductsOpen(false);
+  }, [pathname]);
+
+  // Cleanup timeouts
+  useEffect(() => {
+    return () => {
+      if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current);
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    openTimeoutRef.current = setTimeout(() => {
+      setIsProductsOpen(true);
+    }, 150);
+  };
+
+  const handleMouseLeave = () => {
+    if (openTimeoutRef.current) {
+      clearTimeout(openTimeoutRef.current);
+      openTimeoutRef.current = null;
+    }
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsProductsOpen(false);
+    }, 300);
+  };
 
   return (
     <motion.header
@@ -52,24 +111,112 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <Link
-            href="/#features"
-            className="text-muted-light hover:text-foreground transition-colors duration-300 link-underline"
+          {/* Products Dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
-            Features
-          </Link>
-          <Link
-            href="/#gallery"
-            className="text-muted-light hover:text-foreground transition-colors duration-300 link-underline"
-          >
-            Gallery
-          </Link>
-          <Link
-            href="/#specs"
-            className="text-muted-light hover:text-foreground transition-colors duration-300 link-underline"
-          >
-            Specs
-          </Link>
+            <button
+              className="flex items-center gap-1.5 text-muted-light hover:text-foreground transition-colors duration-300 link-underline"
+              onClick={() => setIsProductsOpen(!isProductsOpen)}
+            >
+              Products
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={`transition-transform duration-200 ${
+                  isProductsOpen ? "rotate-180" : ""
+                }`}
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+
+            <AnimatePresence>
+              {isProductsOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                  transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+                  className="absolute left-1/2 -translate-x-1/2 top-full mt-4 w-80"
+                >
+                  <div className="rounded-2xl p-2 shadow-2xl shadow-black/50 border border-white/[0.08]" style={{ background: "rgba(18, 18, 18, 0.95)", backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)" }}>
+                    {products.map((product) => (
+                      <Link
+                        key={product.name}
+                        href={product.href}
+                        className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/[0.05] transition-all duration-200 group"
+                      >
+                        {/* Product thumbnail */}
+                        <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-surface-elevated border border-white/[0.06]">
+                          {product.image ? (
+                            <Image
+                              src={product.image}
+                              alt={product.name}
+                              width={48}
+                              height={48}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <Image
+                                src="/logo-512.png"
+                                alt={product.name}
+                                width={28}
+                                height={28}
+                                className="opacity-40"
+                              />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Product info */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="font-display font-semibold text-sm text-foreground">
+                              {product.name}
+                            </span>
+                            {product.badge && (
+                              <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                                {product.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-muted mt-0.5 truncate">
+                            {product.subtitle}
+                          </p>
+                        </div>
+
+                        {/* Arrow */}
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="text-muted group-hover:text-foreground group-hover:translate-x-0.5 transition-all duration-200 shrink-0"
+                        >
+                          <path d="M9 18l6-6-6-6" />
+                        </svg>
+                      </Link>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <Link
             href="/blog"
             className="text-muted-light hover:text-foreground transition-colors duration-300 link-underline"
@@ -123,27 +270,80 @@ export function Navbar() {
             className="md:hidden glass-strong mt-2 mx-4 rounded-2xl overflow-hidden"
           >
             <div className="p-6 flex flex-col gap-4">
-              <Link
-                href="/#features"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg text-muted-light hover:text-foreground transition-colors"
+              {/* Products Expandable */}
+              <button
+                onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
+                className="flex items-center justify-between text-lg text-muted-light hover:text-foreground transition-colors w-full text-left"
               >
-                Features
-              </Link>
-              <Link
-                href="/#gallery"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg text-muted-light hover:text-foreground transition-colors"
-              >
-                Gallery
-              </Link>
-              <Link
-                href="/#specs"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg text-muted-light hover:text-foreground transition-colors"
-              >
-                Specs
-              </Link>
+                Products
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={`transition-transform duration-200 ${
+                    isMobileProductsOpen ? "rotate-180" : ""
+                  }`}
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+
+              <AnimatePresence>
+                {isMobileProductsOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pl-4 flex flex-col gap-3 pb-2">
+                      {products.map((product) => (
+                        <Link
+                          key={product.name}
+                          href={product.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="flex items-center gap-3 text-muted-light hover:text-foreground transition-colors"
+                        >
+                          <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-surface-elevated border border-white/[0.06]">
+                            {product.image ? (
+                              <Image
+                                src={product.image}
+                                alt={product.name}
+                                width={32}
+                                height={32}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <Image
+                                  src="/logo-512.png"
+                                  alt={product.name}
+                                  width={20}
+                                  height={20}
+                                  className="opacity-40"
+                                />
+                              </div>
+                            )}
+                          </div>
+                          <span className="text-base">{product.name}</span>
+                          {product.badge && (
+                            <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                              {product.badge}
+                            </span>
+                          )}
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <Link
                 href="/blog"
                 onClick={() => setIsMobileMenuOpen(false)}

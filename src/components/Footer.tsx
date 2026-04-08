@@ -32,34 +32,29 @@ export function Footer() {
 
             {/* Right - Links Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 lg:gap-12">
-              {/* Product */}
+              {/* Products */}
               <div>
                 <h4 className="text-xs font-semibold uppercase tracking-widest text-muted mb-6">
-                  Product
+                  Products
                 </h4>
                 <ul className="space-y-4">
                   <li>
                     <Link
-                      href="/#features"
+                      href="/products/link-1"
                       className="text-foreground/80 hover:text-accent transition-colors duration-300"
                     >
-                      Features
+                      Link 1
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/#specs"
-                      className="text-foreground/80 hover:text-accent transition-colors duration-300"
+                      href="/products/link-2"
+                      className="text-foreground/80 hover:text-accent transition-colors duration-300 inline-flex items-center gap-2"
                     >
-                      Specifications
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/#gallery"
-                      className="text-foreground/80 hover:text-accent transition-colors duration-300"
-                    >
-                      Gallery
+                      Link 2
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                        New
+                      </span>
                     </Link>
                   </li>
                   <li>
@@ -101,7 +96,7 @@ export function Footer() {
                   </li>
                   <li>
                     <a
-                      href="https://meshcore.co"
+                      href="https://meshcore.co.uk"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-foreground/80 hover:text-accent transition-colors duration-300"

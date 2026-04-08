@@ -4,16 +4,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
-// Smoother animation variants with transitions included
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.1, 0.25, 1] as const,
-    },
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
   },
 };
 
@@ -22,10 +18,7 @@ const fadeInLeft = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.1, 0.25, 1] as const,
-    },
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
   },
 };
 
@@ -34,10 +27,7 @@ const fadeInRight = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.1, 0.25, 1] as const,
-    },
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
   },
 };
 
@@ -46,10 +36,7 @@ const scaleIn = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.1, 0.25, 1] as const,
-    },
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
   },
 };
 
@@ -57,10 +44,7 @@ const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
   },
 };
 
@@ -69,14 +53,11 @@ const cardVariant = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.25, 0.1, 0.25, 1] as const,
-    },
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const },
   },
 };
 
-export default function Home() {
+export default function Link1Product() {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -88,15 +69,12 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero Section */}
+      {/* Product Hero */}
       <section
         ref={heroRef}
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
       >
-        {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-radial from-accent/5 via-transparent to-transparent" />
-
-        {/* Grid pattern */}
         <div
           className="absolute inset-0 opacity-[0.02]"
           style={{
@@ -108,7 +86,6 @@ export default function Home() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            {/* Text Content */}
             <motion.div
               initial="hidden"
               animate="visible"
@@ -120,9 +97,7 @@ export default function Home() {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
               >
                 <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-sm text-muted-light">
-                  Trusted by adventurers worldwide
-                </span>
+                <span className="text-sm text-muted-light">Link 1</span>
               </motion.div>
 
               <motion.h1
@@ -156,58 +131,14 @@ export default function Home() {
                   Order Now
                 </a>
                 <a
-                  href="/products/link-1"
+                  href="#features"
                   className="px-8 py-4 bg-white/10 border border-white/20 rounded-full font-semibold text-foreground hover:bg-white/15 hover:border-white/30 transition-all duration-300"
                 >
-                  Learn More
+                  View Features
                 </a>
-              </motion.div>
-
-              {/* Social proof */}
-              <motion.div
-                variants={fadeInUp}
-                className="mt-12 flex items-center gap-6 justify-center lg:justify-start"
-              >
-                <div className="flex -space-x-2">
-                  {reviewerAvatars.map((avatar) => (
-                    <div
-                      key={avatar.name}
-                      className="w-10 h-10 rounded-full border-2 border-background overflow-hidden bg-surface-elevated flex items-center justify-center text-xs font-medium"
-                    >
-                      {avatar.image ? (
-                        <Image
-                          src={avatar.image}
-                          alt={avatar.name}
-                          width={40}
-                          height={40}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        avatar.initials
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <div className="text-left">
-                  <div className="flex items-center gap-1 text-accent">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <svg
-                        key={i}
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted">Loved by 28+ customers</p>
-                </div>
               </motion.div>
             </motion.div>
 
-            {/* Hero Image */}
             <motion.div
               style={{ y: heroImageY, opacity: heroOpacity }}
               className="relative"
@@ -218,14 +149,11 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                 className="relative"
               >
-                {/* Glow effect behind image */}
                 <div className="absolute inset-0 bg-accent/20 blur-[100px] rounded-full" />
-
-                {/* Main product image */}
                 <div className="relative animate-float">
                   <Image
                     src="https://i.etsystatic.com/61623051/r/il/9f66b4/7517364106/il_fullxfull.7517364106_5bbx.jpg"
-                    alt="OffGrid MagSafe LoRa Device"
+                    alt="OffGrid Link 1 Device"
                     width={600}
                     height={800}
                     className="relative z-10 rounded-3xl shadow-2xl shadow-black/50"
@@ -236,22 +164,6 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.6 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <div className="w-6 h-10 rounded-full border border-white/20 flex items-start justify-center p-2">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-              className="w-1.5 h-1.5 rounded-full bg-accent"
-            />
-          </div>
-        </motion.div>
       </section>
 
       {/* Features Section */}
@@ -324,7 +236,6 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* Gallery grid */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -429,7 +340,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-accent/10 blur-[80px] rounded-full" />
               <Image
                 src="https://i.etsystatic.com/61623051/r/il/9f66b4/7517364106/il_fullxfull.7517364106_5bbx.jpg"
-                alt="OffGrid device specifications"
+                alt="OffGrid Link 1 specifications"
                 width={600}
                 height={800}
                 className="relative rounded-3xl shadow-2xl shadow-black/50"
@@ -555,9 +466,7 @@ export default function Home() {
             variants={scaleIn}
             className="p-12 md:p-16 rounded-[2.5rem] glass-strong relative overflow-hidden"
           >
-            {/* Background glow */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-accent/10 blur-[120px] rounded-full" />
-
             <div className="relative z-10">
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
                 Ready to Go Off-Grid?
@@ -593,15 +502,6 @@ export default function Home() {
     </>
   );
 }
-
-// Data
-const reviewerAvatars = [
-  { name: "Jesus", image: "/reviewers/jesus.jpg", initials: null },
-  { name: "Brazen", image: "/reviewers/brazen.webp", initials: null },
-  { name: "Ryan", image: null, initials: "R" },
-  { name: "John", image: null, initials: "J" },
-  { name: "Bob", image: null, initials: "B" },
-];
 
 const features = [
   {
