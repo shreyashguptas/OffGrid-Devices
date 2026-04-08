@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
+import { commerceLinks } from "@/lib/commerce";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -59,6 +60,10 @@ const cardVariant = {
 
 export default function Link1Product() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const link1Checkout = commerceLinks.products.link1.checkoutUrl;
+  const link1CheckoutLabel = commerceLinks.products.link1.isUsingShopify
+    ? "Buy Now"
+    : "Order Now";
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -123,12 +128,12 @@ export default function Link1Product() {
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
                 <a
-                  href="https://www.etsy.com/shop/offgriddevices"
+                  href={link1Checkout}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-8 py-4 bg-accent text-background font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
                 >
-                  Order Now
+                  {link1CheckoutLabel}
                 </a>
                 <a
                   href="#features"
@@ -476,12 +481,14 @@ export default function Link1Product() {
                 enthusiasts who never lose connection.
               </p>
               <a
-                href="https://www.etsy.com/shop/offgriddevices"
+                href={link1Checkout}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-10 py-5 bg-[#F1641E] text-white font-semibold text-lg rounded-full hover:bg-[#D9571A] transition-all duration-300 hover:shadow-xl hover:shadow-[#F1641E]/30 hover:-translate-y-1"
               >
-                Shop on Etsy
+                {commerceLinks.products.link1.isUsingShopify
+                  ? "Buy Now"
+                  : "Shop on Etsy"}
                 <svg
                   width="20"
                   height="20"

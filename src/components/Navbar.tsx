@@ -24,6 +24,12 @@ const products = [
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
+
+  return <NavbarContent key={pathname} />;
+}
+
+function NavbarContent() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
@@ -31,22 +37,16 @@ export function Navbar() {
 
   const openTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Close menus on route change
-  useEffect(() => {
-    setIsProductsOpen(false);
-    setIsMobileMenuOpen(false);
-    setIsMobileProductsOpen(false);
-  }, [pathname]);
 
   // Cleanup timeouts
   useEffect(() => {

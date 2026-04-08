@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { startTransition, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { commerceLinks } from "@/lib/commerce";
 
 // Smoother animation variants with transitions included
 const fadeInUp = {
@@ -79,6 +80,7 @@ const cardVariant = {
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [activeFeature, setActiveFeature] = useState(0);
+  const link1Checkout = commerceLinks.products.link1.checkoutUrl;
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -160,12 +162,12 @@ export default function Home() {
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
                 <a
-                  href="https://www.etsy.com/shop/offgriddevices"
+                  href={link1Checkout}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-8 py-4 bg-accent text-background font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
                 >
-                  Order Now
+                  Buy Now
                 </a>
                 <a
                   href="/products/link-1"
