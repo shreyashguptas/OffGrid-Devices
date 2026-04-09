@@ -8,8 +8,8 @@ If the Vercel dashboard has a **custom Build Command**, it overrides [vercel.jso
 
 - **Phase 1 — CI hygiene**: concurrency (cancel stale runs), Node **22** aligned with `engines` in `package.json`.
 - **Phase 3 — Tests**: Vitest for API routes (mocked Shopify); Playwright for smoke + optional live Shopify API via HTTP.
-- **Phase 5 — Supply chain**: `pnpm audit --audit-level=high` in CI; [Dependabot](../.github/dependabot.yml) for weekly npm updates (grouped dev deps).
-- **Phase 7 — Deploy gates**: Vercel uses [vercel.json](../vercel.json) `buildCommand`: `**pnpm run verify:shopify && pnpm run build`**. If the live Shopify check fails, **the deployment build fails** and nothing new goes live.
+- **Phase 5 — Supply chain**: `pnpm audit --audit-level=high` in CI; [Dependabot](../.github/dependabot.yml) for weekly npm updates.
+- **Phase 7 — Deploy gates**: Vercel uses [vercel.json](../vercel.json) `buildCommand`: **`pnpm run verify:shopify && pnpm run build`**. If the live Shopify check fails, **the deployment build fails** and nothing new goes live.
 
 ## Shopify secrets (GitHub + Vercel)
 
@@ -27,13 +27,43 @@ To copy a local `.env.local` into Vercel after `vercel login` and `vercel link`:
 
 Optional: `SHOPIFY_STOREFRONT_API_VERSION` (defaults in app code if unset).
 
-## Branch protection (recommended)
+## Production gating (recommended, secure)
 
-In GitHub: **Settings → Branches → Branch protection** for `main`:
+Goal: **nothing reaches your production domain until GitHub CI has passed**, and **`main` only moves via pull requests** with a green pipeline.
 
-- Require the workflow job **quality** (shown as **CI / quality** on pull requests) to pass before merge.
+### 1. GitHub — repository ruleset (automated)
 
-That way broken code does not land on `main`; combined with Vercel’s build command, **broken Shopify Link 1 cannot deploy** when env is set.
+This repo includes a ruleset definition that:
+
+- Requires **pull requests** to update `main` (no direct pushes).
+- Requires status check **`quality`** (GitHub Actions job from the **CI** workflow, integration **GitHub Actions**).
+- Enables **strict** status checks (PR branch must be up to date with `main` before merge).
+- Blocks **force-push** and **branch deletion** on `main`.
+
+Apply or refresh it (needs `gh` logged in and **admin** on the repo):
+
+```bash
+pnpm repo:ruleset
+# or: bash scripts/apply-github-repo-ruleset.sh
+```
+
+Payload: [scripts/config/github-ruleset-main.json](../scripts/config/github-ruleset-main.json).
+
+To require **one approving review** before merge, edit that JSON (`required_approving_review_count`) and run the script again.
+
+### 2. Vercel — Deployment Checks (dashboard, required for live traffic)
+
+Vercel can **build** a production deployment when you merge, but **hold promotion** to your production domain until GitHub reports success.
+
+1. Open the project on [vercel.com](https://vercel.com) → **Settings**.
+2. Open **Deployment Checks** (or **Git** → deployment checks, depending on UI).
+3. **Add check** and select the GitHub Actions check for job **`quality`** (workflow **CI**).
+
+Until this is enabled, a green Vercel build could still assign traffic before GitHub finishes; with Deployment Checks, **production URLs wait for CI**.
+
+Docs: [Deployment Checks](https://vercel.com/docs/deployment-checks), [changelog: block promotion until GitHub Actions pass](https://vercel.com/changelog/block-vercel-deployment-promotions-with-github-actions).
+
+**Important:** In Vercel **Build & Development Settings**, do not override the build command in a way that skips `verify:shopify` (see [vercel.json](../vercel.json)).
 
 ## Fork pull requests
 

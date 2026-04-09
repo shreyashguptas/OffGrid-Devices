@@ -32,8 +32,9 @@ You can start editing the page by modifying `src/app/page.tsx`. The page auto-up
 | `pnpm test`     | Vitest (unit / API)   |
 | `pnpm test:e2e` | Playwright            |
 | `pnpm verify:shopify` | Live Link 1 + checkout check (needs `.env.local`) |
+| `pnpm repo:ruleset` | Apply GitHub ruleset (PR + required CI on `main`; needs `gh` + admin) |
 
-CI, secrets, and deploy gates: [docs/ci.md](docs/ci.md).
+CI, secrets, deploy gates, and Vercel Deployment Checks: [docs/ci.md](docs/ci.md).
 
 
 This project uses `[next/font](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)` to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
