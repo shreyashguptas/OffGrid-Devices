@@ -154,50 +154,38 @@ export default function Home() {
                 </a>
               </motion.div>
 
-              {/* Social proof: avatars + rating + caption */}
+              {/* Social proof: stacked reviewer faces + caption (compact trust pill) */}
               <motion.div
                 variants={fadeInUp}
-                className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-6"
+                className="mt-8 flex justify-center"
               >
-                <div className="flex -space-x-2 sm:shrink-0">
-                  {reviewerAvatars.map((avatar) => (
-                    <div
-                      key={avatar.name}
-                      className="w-10 h-10 rounded-full border-2 border-background overflow-hidden bg-surface-elevated flex items-center justify-center text-xs font-medium"
-                    >
-                      {avatar.image ? (
+                <div className="flex items-center rounded-full border border-border bg-background px-1.5 py-1.5 sm:px-2 sm:py-2 shadow shadow-black/5">
+                  <div className="flex -space-x-2">
+                    {reviewerAvatars.map((avatar) =>
+                      avatar.image ? (
                         <Image
+                          key={avatar.name}
                           src={avatar.image}
                           alt={avatar.name}
-                          width={40}
-                          height={40}
-                          className="w-full h-full object-cover"
+                          width={28}
+                          height={28}
+                          className="size-7 rounded-full ring-2 ring-background object-cover"
                         />
                       ) : (
-                        avatar.initials
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <div className="flex flex-col items-center gap-0.5 sm:items-start sm:text-left">
-                  <div
-                    className="flex items-center gap-1 text-accent"
-                    aria-hidden="true"
-                  >
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <svg
-                        key={i}
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                    ))}
+                        <div
+                          key={avatar.name}
+                          className="flex size-7 shrink-0 items-center justify-center rounded-full bg-surface-elevated text-[11px] font-semibold text-muted-light ring-2 ring-background"
+                          aria-hidden
+                        >
+                          {avatar.initials}
+                        </div>
+                      ),
+                    )}
                   </div>
-                  <p className="text-sm text-foreground/90 leading-tight font-medium">
-                    Loved by 28+ customers
+                  <p className="px-2.5 text-sm text-muted-foreground sm:px-3">
+                    Loved by{" "}
+                    <strong className="font-medium text-foreground">28+</strong>{" "}
+                    customers.
                   </p>
                 </div>
               </motion.div>
