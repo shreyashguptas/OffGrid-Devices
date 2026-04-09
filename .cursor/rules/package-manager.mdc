@@ -1,0 +1,13 @@
+---
+description: Use pnpm exclusively for Node dependencies in this repo
+globs: package.json,pnpm-lock.yaml,.npmrc,**/*
+alwaysApply: false
+---
+
+# Package manager
+
+- Use **pnpm** for installs, scripts, and one-off package binaries (`pnpm dlx`, `pnpm exec`).
+- Do not use `npm install`, `npm ci`, `yarn`, or `bun` for this project’s dependencies.
+- The lockfile is **`pnpm-lock.yaml`**; never add or commit `package-lock.json` or `yarn.lock`.
+- When suggesting commands in docs or automation, prefer `pnpm run <script>` or `pnpm <script>` (e.g. `pnpm build`, `pnpm lint`).
+- Exception: `package.json` `preinstall` uses `npx only-allow pnpm` on purpose; do not replace that with `npm install`-style workflows elsewhere.
