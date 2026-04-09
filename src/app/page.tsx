@@ -1,9 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
-import { startTransition, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { startTransition, useEffect, useState } from "react";
 import Image from "next/image";
 import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 
 // Smoother animation variants with transitions included
 const fadeInUp = {
@@ -78,15 +79,7 @@ const cardVariant = {
 };
 
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement>(null);
   const [activeFeature, setActiveFeature] = useState(0);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  const heroImageY = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const currentFeature = featureHighlights[activeFeature];
 
   useEffect(() => {
@@ -102,16 +95,13 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section
-        ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
-      >
+      <section className="flex flex-col overflow-hidden relative">
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-radial from-accent/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-radial from-accent/5 via-transparent to-transparent pointer-events-none" />
 
         {/* Grid pattern */}
         <div
-          className="absolute inset-0 opacity-[0.02]"
+          className="absolute inset-0 opacity-[0.02] pointer-events-none"
           style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
@@ -119,14 +109,12 @@ export default function Home() {
           }}
         />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            {/* Text Content */}
+        <ContainerScroll
+          titleComponent={
             <motion.div
               initial="hidden"
               animate="visible"
               variants={staggerContainer}
-              className="text-center lg:text-left"
             >
               <motion.div
                 variants={fadeInUp}
@@ -149,7 +137,7 @@ export default function Home() {
 
               <motion.p
                 variants={fadeInUp}
-                className="text-lg md:text-xl text-muted-light max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed"
+                className="text-lg md:text-xl text-muted-light max-w-lg mx-auto mb-8 leading-relaxed"
               >
                 The world&apos;s first MagSafe-compatible LoRa mesh device.
                 Off-grid communication that attaches to your phone and goes
@@ -158,7 +146,7 @@ export default function Home() {
 
               <motion.div
                 variants={fadeInUp}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                className="flex flex-col sm:flex-row gap-4 justify-center"
               >
                 <Link1CheckoutButton
                   defaultLabel="Buy Now"
@@ -175,7 +163,7 @@ export default function Home() {
               {/* Social proof */}
               <motion.div
                 variants={fadeInUp}
-                className="mt-12 flex items-center gap-6 justify-center lg:justify-start"
+                className="mt-12 flex items-center gap-6 justify-center"
               >
                 <div className="flex -space-x-2">
                   {reviewerAvatars.map((avatar) => (
@@ -215,52 +203,18 @@ export default function Home() {
                 </div>
               </motion.div>
             </motion.div>
-
-            {/* Hero Image */}
-            <motion.div
-              style={{ y: heroImageY, opacity: heroOpacity }}
-              className="relative"
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                className="relative"
-              >
-                {/* Glow effect behind image */}
-                <div className="absolute inset-0 bg-accent/20 blur-[100px] rounded-full" />
-
-                {/* Main product image */}
-                <div className="relative animate-float">
-                  <Image
-                    src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
-                    alt="OffGrid MagSafe LoRa Device"
-                    width={600}
-                    height={800}
-                    className="relative z-10 rounded-3xl shadow-2xl shadow-black/50"
-                    priority
-                  />
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.6 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          }
         >
-          <div className="w-6 h-10 rounded-full border border-white/20 flex items-start justify-center p-2">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-              className="w-1.5 h-1.5 rounded-full bg-accent"
-            />
-          </div>
-        </motion.div>
+          <Image
+            src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009"
+            alt="OffGrid MagSafe LoRa Device in use outdoors"
+            height={720}
+            width={1400}
+            className="mx-auto rounded-2xl object-cover h-full w-full object-center"
+            draggable={false}
+            priority
+          />
+        </ContainerScroll>
       </section>
 
       {/* Features Section */}
