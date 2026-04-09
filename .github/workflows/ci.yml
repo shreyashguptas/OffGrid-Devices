@@ -50,8 +50,8 @@ jobs:
             exit 0
           fi
           if [ -z "${SHOPIFY_STORE_DOMAIN:-}" ] || [ -z "${SHOPIFY_LINK_1_HANDLE:-}" ]; then
-            echo "::error::Add repository secrets: SHOPIFY_STORE_DOMAIN, SHOPIFY_LINK_1_HANDLE, and a Storefront token (private or public)."
-            exit 1
+            echo "::notice::Shopify secrets not set in repo Actions — skipping live verify. Add SHOPIFY_STORE_DOMAIN, SHOPIFY_LINK_1_HANDLE, and a Storefront token to run this in CI. Vercel/production can still run verify:shopify when env is configured there."
+            exit 0
           fi
           pnpm verify:shopify
 
