@@ -5,6 +5,7 @@ import { startTransition, useEffect, useState } from "react";
 import Image from "next/image";
 import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { InfiniteGridBackground } from "@/components/ui/the-infinite-grid";
 import {
   TestimonialsV2Section,
   type TestimonialV2Item,
@@ -101,107 +102,105 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative flex flex-col pb-24 md:pb-32">
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-radial from-accent/5 via-transparent to-transparent pointer-events-none" />
+        <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-radial from-accent/5 via-transparent to-transparent" />
 
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.02] pointer-events-none"
-          style={{
-            backgroundImage: `linear-gradient(var(--app-grid-line) 1px, transparent 1px),
-                              linear-gradient(90deg, var(--app-grid-line) 1px, transparent 1px)`,
-            backgroundSize: "100px 100px",
-          }}
-        />
+        <InfiniteGridBackground className="absolute inset-0 z-0" />
 
-        <ContainerScroll
-          titleComponent={
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
-            >
-              <motion.h1
-                variants={fadeInUp}
-                className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-5"
-              >
-                Stay Connected.
-                <br />
-                <span className="gradient-text">Go Anywhere.</span>
-              </motion.h1>
-
-              <motion.p
-                variants={fadeInUp}
-                className="text-base md:text-lg text-muted-light max-w-md mx-auto mb-8 leading-snug"
-              >
-                <span className="text-foreground font-medium">OffGrid Link 1</span>{" "}
-                is the world&apos;s first MagSafe-compatible LoRa mesh radio—built
-                to stay on the phone you never leave behind.
-              </motion.p>
-
+        <div className="relative z-10">
+          <ContainerScroll
+            titleComponent={
               <motion.div
-                variants={fadeInUp}
-                className="flex flex-col sm:flex-row gap-4 justify-center"
+                initial="hidden"
+                animate="visible"
+                variants={staggerContainer}
               >
-                <Link1CheckoutButton
-                  defaultLabel="Buy now"
-                  className="px-8 py-4 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
-                />
-                <a
-                  href="/products/link-1"
-                  className="px-8 py-4 bg-fill-muted border border-border-emphasis rounded-full font-semibold text-foreground hover:bg-fill-hover hover:border-border-emphasis-hover transition-all duration-300"
+                <motion.h1
+                  variants={fadeInUp}
+                  className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-5"
                 >
-                  Learn more
-                </a>
-              </motion.div>
+                  Stay Connected.
+                  <br />
+                  <span className="gradient-text">Go Anywhere.</span>
+                </motion.h1>
 
-              {/* Social proof: stacked reviewer faces + caption (compact trust pill) */}
-              <motion.div
-                variants={fadeInUp}
-                className="mt-8 flex justify-center"
-              >
-                <div className="flex items-center rounded-full border border-border bg-background px-1.5 py-1.5 sm:px-2 sm:py-2 shadow shadow-black/5">
-                  <div className="flex -space-x-2">
-                    {reviewerAvatars.map((avatar) =>
-                      avatar.image ? (
-                        <Image
-                          key={avatar.name}
-                          src={avatar.image}
-                          alt={avatar.name}
-                          width={28}
-                          height={28}
-                          className="size-7 rounded-full ring-2 ring-background object-cover"
-                        />
-                      ) : (
-                        <div
-                          key={avatar.name}
-                          className="flex size-7 shrink-0 items-center justify-center rounded-full bg-surface-elevated text-[11px] font-semibold text-muted-light ring-2 ring-background"
-                          aria-hidden
-                        >
-                          {avatar.initials}
-                        </div>
-                      ),
-                    )}
+                <motion.p
+                  variants={fadeInUp}
+                  className="text-base md:text-lg text-muted-light max-w-md mx-auto mb-8 leading-snug"
+                >
+                  <span className="text-foreground font-medium">
+                    OffGrid Link 1
+                  </span>{" "}
+                  is the world&apos;s first MagSafe-compatible LoRa mesh
+                  radio—built to stay on the phone you never leave behind.
+                </motion.p>
+
+                <motion.div
+                  variants={fadeInUp}
+                  className="flex flex-col sm:flex-row gap-4 justify-center"
+                >
+                  <Link1CheckoutButton
+                    defaultLabel="Buy now"
+                    className="px-8 py-4 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
+                  />
+                  <a
+                    href="/products/link-1"
+                    className="px-8 py-4 bg-fill-muted border border-border-emphasis rounded-full font-semibold text-foreground hover:bg-fill-hover hover:border-border-emphasis-hover transition-all duration-300"
+                  >
+                    Learn more
+                  </a>
+                </motion.div>
+
+                {/* Social proof: stacked reviewer faces + caption (compact trust pill) */}
+                <motion.div
+                  variants={fadeInUp}
+                  className="mt-8 flex justify-center"
+                >
+                  <div className="flex items-center rounded-full border border-border bg-background px-1.5 py-1.5 sm:px-2 sm:py-2 shadow shadow-black/5">
+                    <div className="flex -space-x-2">
+                      {reviewerAvatars.map((avatar) =>
+                        avatar.image ? (
+                          <Image
+                            key={avatar.name}
+                            src={avatar.image}
+                            alt={avatar.name}
+                            width={28}
+                            height={28}
+                            className="size-7 rounded-full ring-2 ring-background object-cover"
+                          />
+                        ) : (
+                          <div
+                            key={avatar.name}
+                            className="flex size-7 shrink-0 items-center justify-center rounded-full bg-surface-elevated text-[11px] font-semibold text-muted-light ring-2 ring-background"
+                            aria-hidden
+                          >
+                            {avatar.initials}
+                          </div>
+                        ),
+                      )}
+                    </div>
+                    <p className="px-2.5 text-sm text-muted-foreground sm:px-3">
+                      Loved by{" "}
+                      <strong className="font-medium text-foreground">
+                        28+
+                      </strong>{" "}
+                      customers.
+                    </p>
                   </div>
-                  <p className="px-2.5 text-sm text-muted-foreground sm:px-3">
-                    Loved by{" "}
-                    <strong className="font-medium text-foreground">28+</strong>{" "}
-                    customers.
-                  </p>
-                </div>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          }
-        >
-          <Image
-            src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009"
-            alt="OffGrid Link 1 MagSafe LoRa radio in use outdoors"
-            height={720}
-            width={1400}
-            className="mx-auto rounded-2xl object-cover h-full w-full object-center"
-            draggable={false}
-            priority
-          />
-        </ContainerScroll>
+            }
+          >
+            <Image
+              src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009"
+              alt="OffGrid Link 1 MagSafe LoRa radio in use outdoors"
+              height={720}
+              width={1400}
+              className="mx-auto rounded-2xl object-cover h-full w-full object-center"
+              draggable={false}
+              priority
+            />
+          </ContainerScroll>
+        </div>
       </section>
 
       {/* Features Section */}

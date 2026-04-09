@@ -143,6 +143,11 @@
   --color-border: var(--app-border-card);
   --color-secondary: var(--app-surface-elevated);
   --color-muted-foreground: var(--app-muted-light);
+
+  /* Align with site accent (infinite grid, shadcn-style buttons) */
+  --color-primary: var(--app-accent);
+  --color-primary-foreground: var(--app-on-accent);
+  --color-secondary-foreground: var(--app-fg);
 }
 
 /* Custom scrollbar */
