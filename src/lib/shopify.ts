@@ -12,7 +12,7 @@ type ShopifyResponse<T> = {
   errors?: ShopifyGraphQLError[];
 };
 
-export type Link1StorefrontProduct = {
+type Link1StorefrontProduct = {
   title: string;
   handle: string;
   availableForSale: boolean;

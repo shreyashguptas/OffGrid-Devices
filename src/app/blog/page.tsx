@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,40 +16,9 @@ const blogPosts = [
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
   },
-  {
-    slug: "lora-vs-cellular-comparison",
-    title: "LoRa vs Cellular: Why Off-Grid Communication Matters",
-    excerpt:
-      "Discover why LoRa technology outperforms cellular networks in remote areas and emergency situations.",
-    date: "January 2026",
-    readTime: "6 min read",
-    category: "Education",
-    image:
-      "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
-  },
-  {
-    slug: "mesh-network-explained",
-    title: "How Mesh Networks Work: The Technology Behind OffGrid",
-    excerpt:
-      "A deep dive into mesh networking technology and how it creates resilient, decentralized communication systems.",
-    date: "January 2026",
-    readTime: "10 min read",
-    category: "Technology",
-    image:
-      "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
-  },
 ];
 
-const categories = ["All", "Tutorials", "Education", "Technology", "News"];
-
 export default function BlogPage() {
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const filteredPosts =
-    activeCategory === "All"
-      ? blogPosts
-      : blogPosts.filter((post) => post.category === activeCategory);
-
   return (
     <div className="min-h-screen pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-6">
@@ -70,88 +38,54 @@ export default function BlogPage() {
           </p>
         </motion.div>
 
-        {/* Category filters */}
+        {/* Blog posts grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex flex-wrap justify-center gap-3 mb-16"
+          transition={{ duration: 0.3 }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === category
-                  ? "bg-accent text-on-accent"
-                  : "bg-fill-glass-2 border border-border-card hover:bg-fill-glass-elevated text-muted-light hover:text-foreground"
-              }`}
+          {blogPosts.map((post, index) => (
+            <motion.article
+              key={post.slug}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="group"
             >
-              {category}
-            </button>
+              <Link href={`/blog/${post.slug}`} className="block">
+                <div className="relative overflow-hidden rounded-2xl mb-6">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    width={600}
+                    height={400}
+                    className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="px-3 py-1.5 text-xs font-medium bg-accent/90 text-on-accent rounded-full">
+                      {post.category}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 text-sm text-muted mb-3">
+                  <span>{post.date}</span>
+                  <span className="w-1 h-1 rounded-full bg-muted" />
+                  <span>{post.readTime}</span>
+                </div>
+
+                <h2 className="font-display text-xl font-semibold mb-3 group-hover:text-accent transition-colors duration-300">
+                  {post.title}
+                </h2>
+
+                <p className="text-muted-light leading-relaxed">
+                  {post.excerpt}
+                </p>
+              </Link>
+            </motion.article>
           ))}
         </motion.div>
-
-        {/* Blog posts grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {filteredPosts.length > 0 ? (
-              filteredPosts.map((post, index) => (
-                <motion.article
-                  key={post.slug}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="group"
-                >
-                  <Link href={`/blog/${post.slug}`} className="block">
-                    <div className="relative overflow-hidden rounded-2xl mb-6">
-                      <Image
-                        src={post.image}
-                        alt={post.title}
-                        width={600}
-                        height={400}
-                        className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1.5 text-xs font-medium bg-accent/90 text-on-accent rounded-full">
-                          {post.category}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3 text-sm text-muted mb-3">
-                      <span>{post.date}</span>
-                      <span className="w-1 h-1 rounded-full bg-muted" />
-                      <span>{post.readTime}</span>
-                    </div>
-
-                    <h2 className="font-display text-xl font-semibold mb-3 group-hover:text-accent transition-colors duration-300">
-                      {post.title}
-                    </h2>
-
-                    <p className="text-muted-light leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                  </Link>
-                </motion.article>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-16">
-                <p className="text-muted-light text-lg">
-                  No posts in this category yet.
-                </p>
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
       </div>
     </div>
   );

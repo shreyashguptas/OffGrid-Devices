@@ -45,43 +45,6 @@ const blogPostsData: Record<string, BlogPost> = {
       { type: "paragraph", content: "That's it! You're now part of the mesh network. Any other Meshtastic users within range will be able to communicate with you—no cell towers required." },
     ],
   },
-  "lora-vs-cellular-comparison": {
-    title: "LoRa vs Cellular: Why Off-Grid Communication Matters",
-    date: "January 10, 2026",
-    readTime: "6 min read",
-    category: "Education",
-    image: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
-    sections: [
-      { type: "paragraph", content: "In an increasingly connected world, we often take cellular coverage for granted. But what happens when the towers go down, or when you venture into remote wilderness? That's where LoRa technology shines." },
-      { type: "heading", content: "The Limitations of Cellular" },
-      { type: "paragraph", content: "Cellular networks depend on infrastructure—towers, power grids, and backhaul connections. In emergencies or remote areas, this infrastructure can fail or simply not exist." },
-      { type: "heading", content: "How LoRa is Different" },
-      { type: "paragraph", content: "LoRa (Long Range) technology operates independently of infrastructure. Each device is both a transmitter and receiver, creating a mesh network that routes messages through multiple hops to reach their destination." },
-      { type: "heading", content: "Real-World Applications" },
-      { type: "list", items: ["Hiking & Camping: Stay connected with your group in areas without cell service", "Emergency Preparedness: Communicate when disaster strikes and infrastructure fails", "Events & Gatherings: Create instant communication networks for large events"] },
-      { type: "heading", content: "The OffGrid Advantage" },
-      { type: "paragraph", content: "With our MagSafe design, your mesh device is always with you. No more forgetting it at home—it attaches right to your phone and goes wherever you go." },
-    ],
-  },
-  "mesh-network-explained": {
-    title: "How Mesh Networks Work: The Technology Behind OffGrid",
-    date: "January 5, 2026",
-    readTime: "10 min read",
-    category: "Technology",
-    image: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
-    sections: [
-      { type: "paragraph", content: "Mesh networking might sound complex, but the concept is beautifully simple: instead of relying on a central hub, every device in the network helps relay messages to their destination." },
-      { type: "heading", content: "The Power of Decentralization" },
-      { type: "paragraph", content: "Traditional networks have single points of failure. If a router goes down, everyone connected to it loses access. Mesh networks solve this by creating multiple paths between any two points." },
-      { type: "heading", content: "How Messages Travel" },
-      { type: "paragraph", content: "When you send a message on a mesh network:" },
-      { type: "orderedList", items: ["Your device broadcasts the message via LoRa radio", "Any device in range receives it", "If it's not the intended recipient, it rebroadcasts", "The message hops from device to device until it reaches the destination"] },
-      { type: "heading", content: "The RAK WisBlock Inside" },
-      { type: "paragraph", content: "At the heart of your OffGrid device is a RAK WisBlock system—a modular, powerful platform that handles all the radio communication. Combined with our custom antenna, it provides excellent range and reliability." },
-      { type: "heading", content: "Building Community" },
-      { type: "paragraph", content: "The more devices on the network, the stronger and more resilient it becomes. Each new user extends the range and reliability for everyone else. That's the beauty of mesh technology." },
-    ],
-  },
 };
 
 function ContentSection({ section }: { section: Section }) {

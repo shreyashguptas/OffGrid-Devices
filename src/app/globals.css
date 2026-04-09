@@ -26,7 +26,6 @@
   --app-fill-glass-elevated: rgba(255, 255, 255, 0.04);
   --app-fill-muted: rgba(255, 255, 255, 0.1);
   --app-fill-hover: rgba(255, 255, 255, 0.15);
-  --app-fill-chip: rgba(255, 255, 255, 0.06);
 
   --app-overlay-badge: rgba(0, 0, 0, 0.3);
   --app-overlay-card: rgba(0, 0, 0, 0.4);
@@ -43,11 +42,9 @@
 
   --app-glass-border: rgba(255, 255, 255, 0.05);
   --app-glass-border-strong: rgba(255, 255, 255, 0.08);
-  --app-section-divider-mid: rgba(255, 255, 255, 0.1);
   --app-gradient-text-from: #fafafa;
   --app-gradient-text-to: #fafafa;
   --app-image-hover-shadow: rgba(0, 0, 0, 0.5);
-  --app-noise-opacity: 0.03;
 
   /* Hero 3D card: layered shadow (reads on dark page + dark card frame) */
   --app-hero-card-shadow:
@@ -82,7 +79,6 @@
     --app-fill-glass-elevated: rgba(0, 0, 0, 0.05);
     --app-fill-muted: rgba(0, 0, 0, 0.08);
     --app-fill-hover: rgba(0, 0, 0, 0.11);
-    --app-fill-chip: rgba(0, 0, 0, 0.06);
 
     --app-overlay-badge: rgba(0, 0, 0, 0.35);
     --app-overlay-card: rgba(0, 0, 0, 0.45);
@@ -99,11 +95,9 @@
 
     --app-glass-border: rgba(0, 0, 0, 0.08);
     --app-glass-border-strong: rgba(0, 0, 0, 0.12);
-    --app-section-divider-mid: rgba(0, 0, 0, 0.1);
     --app-gradient-text-from: #0a0a0a;
     --app-gradient-text-to: #0a0a0a;
     --app-image-hover-shadow: rgba(0, 0, 0, 0.18);
-    --app-noise-opacity: 0.04;
 
     /* Slightly stronger diffuse shadow so it stays visible on light gray page bg */
     --app-hero-card-shadow:
@@ -139,7 +133,6 @@
   --color-fill-glass-elevated: var(--app-fill-glass-elevated);
   --color-fill-muted: var(--app-fill-muted);
   --color-fill-hover: var(--app-fill-hover);
-  --color-fill-chip: var(--app-fill-chip);
 
   --color-overlay-badge: var(--app-overlay-badge);
   --color-overlay-card: var(--app-overlay-card);
@@ -217,26 +210,6 @@ body {
   background-clip: text;
 }
 
-/* Noise overlay */
-.noise-overlay::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: var(--app-noise-opacity);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Glow effects */
-.glow-accent {
-  box-shadow: 0 0 40px rgba(0, 212, 170, 0.15);
-}
-
-.glow-accent-strong {
-  box-shadow: 0 0 60px rgba(0, 212, 170, 0.3);
-}
-
 /* Image hover effect */
 .image-hover {
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
@@ -246,37 +219,6 @@ body {
 .image-hover:hover {
   transform: scale(1.02) translateY(-5px);
   box-shadow: 0 30px 60px var(--app-image-hover-shadow);
-}
-
-/* Reveal animation delays */
-.reveal-1 {
-  animation-delay: 0.1s;
-}
-.reveal-2 {
-  animation-delay: 0.2s;
-}
-.reveal-3 {
-  animation-delay: 0.3s;
-}
-.reveal-4 {
-  animation-delay: 0.4s;
-}
-.reveal-5 {
-  animation-delay: 0.5s;
-}
-.reveal-6 {
-  animation-delay: 0.6s;
-}
-
-/* Section divider */
-.section-divider {
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--app-section-divider-mid),
-    transparent
-  );
 }
 
 /* Link underline effect */
