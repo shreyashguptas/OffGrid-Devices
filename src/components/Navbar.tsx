@@ -10,14 +10,14 @@ import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 const products = [
   {
     name: "Link 1",
-    subtitle: "MagSafe LoRa Mesh Device",
+    subtitle: "OffGrid · MagSafe LoRa mesh radio",
     href: "/products/link-1",
     image: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
     badge: null,
   },
   {
     name: "Link 2",
-    subtitle: "Next-Gen Mesh Device",
+    subtitle: "OffGrid · Next in the Link line",
     href: "/products/link-2",
     image: null,
     badge: "New",
@@ -234,7 +234,7 @@ function NavbarContent() {
             Blog
           </Link>
           <Link1CheckoutButton
-            defaultLabel="Shop Now"
+            defaultLabel="Buy Link 1"
             loadingLabel="Opening Checkout..."
             className="px-6 py-2.5 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 border border-accent-light/50"
           />
@@ -359,7 +359,7 @@ function NavbarContent() {
                 Blog
               </Link>
               <Link1CheckoutButton
-                defaultLabel="Shop Now"
+                defaultLabel="Buy Link 1"
                 loadingLabel="Opening Checkout..."
                 className="mt-2 px-5 py-3 bg-accent text-on-accent font-medium rounded-full text-center hover:bg-accent-light transition-all duration-300"
               />

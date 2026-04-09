@@ -129,7 +129,9 @@ export default function Home() {
                 variants={fadeInUp}
                 className="text-base md:text-lg text-muted-light max-w-md mx-auto mb-8 leading-snug"
               >
-                The world&apos;s first MagSafe-compatible LoRa mesh device.
+                <span className="text-foreground font-medium">OffGrid Link 1</span>{" "}
+                is the world&apos;s first MagSafe-compatible LoRa mesh radio—built
+                to stay on the phone you never leave behind.
               </motion.p>
 
               <motion.div
@@ -137,14 +139,14 @@ export default function Home() {
                 className="flex flex-col sm:flex-row gap-4 justify-center"
               >
                 <Link1CheckoutButton
-                  defaultLabel="Buy Now"
+                  defaultLabel="Buy now"
                   className="px-8 py-4 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
                 />
                 <a
                   href="/products/link-1"
                   className="px-8 py-4 bg-fill-muted border border-border-emphasis rounded-full font-semibold text-foreground hover:bg-fill-hover hover:border-border-emphasis-hover transition-all duration-300"
                 >
-                  Learn More
+                  Learn more
                 </a>
               </motion.div>
 
@@ -190,7 +192,7 @@ export default function Home() {
                       </svg>
                     ))}
                   </div>
-                  <p className="text-sm text-muted leading-tight">
+                  <p className="text-sm text-foreground/90 leading-tight font-medium">
                     Loved by 28+ customers
                   </p>
                 </div>
@@ -200,7 +202,7 @@ export default function Home() {
         >
           <Image
             src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009"
-            alt="OffGrid MagSafe LoRa Device in use outdoors"
+            alt="OffGrid Link 1 MagSafe LoRa radio in use outdoors"
             height={720}
             width={1400}
             className="mx-auto rounded-2xl object-cover h-full w-full object-center"
@@ -227,8 +229,8 @@ export default function Home() {
               <span className="text-muted">Stays With You.</span>
             </h2>
             <p className="text-lg text-muted-light max-w-2xl mx-auto">
-              Your mesh device belongs on the phone you already never leave
-              behind.
+              Link 1 belongs on the phone you already never leave behind—so your
+              mesh radio is always in reach.
             </p>
           </motion.div>
 
@@ -434,7 +436,7 @@ export default function Home() {
               <div className="overflow-hidden rounded-3xl">
                 <Image
                   src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009"
-                  alt="OffGrid device outdoor use"
+                  alt="OffGrid Link 1 outdoor use"
                   width={800}
                   height={1000}
                   className="w-full h-auto image-hover"
@@ -452,7 +454,7 @@ export default function Home() {
               <div className="overflow-hidden rounded-3xl">
                 <Image
                   src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042"
-                  alt="OffGrid device detail view"
+                  alt="OffGrid Link 1 detail view"
                   width={800}
                   height={1000}
                   className="w-full h-auto image-hover"
@@ -486,8 +488,9 @@ export default function Home() {
                 <span className="text-accent">Off-Grid Excellence</span>
               </h2>
               <p className="text-lg text-muted-light mb-12">
-                Every component chosen for reliability, range, and real-world
-                performance. Compatible with Meshtastic and MeshCore firmware.
+                Every component in Link 1 is chosen for reliability, range, and
+                real-world performance. Compatible with Meshtastic and MeshCore
+                firmware.
               </p>
 
               <motion.div
@@ -527,7 +530,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-accent/10 blur-[80px] rounded-full" />
               <Image
                 src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
-                alt="OffGrid device specifications"
+                alt="OffGrid Link 1 specifications"
                 width={600}
                 height={800}
                 className="relative rounded-3xl shadow-2xl shadow-black/50"
@@ -658,14 +661,14 @@ export default function Home() {
 
             <div className="relative z-10">
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-                Ready to Go Off-Grid?
+                Ready for OffGrid Link 1?
               </h2>
               <p className="text-lg text-muted-light mb-10 max-w-xl mx-auto">
-                Join the growing community of adventurers, preppers, and tech
-                enthusiasts who never lose connection.
+                Pick up OffGrid Link 1 and join the adventurers, preppers, and
+                mesh enthusiasts who stay connected off-grid.
               </p>
               <Link1CheckoutButton
-                defaultLabel="Buy Now"
+                defaultLabel="Buy Link 1"
                 loadingLabel="Opening Checkout..."
                 showArrow
                 className="inline-flex items-center gap-3 px-10 py-5 bg-[#F1641E] text-white font-semibold text-lg rounded-full hover:bg-[#D9571A] transition-all duration-300 hover:shadow-xl hover:shadow-[#F1641E]/30 hover:-translate-y-1"
@@ -692,13 +695,13 @@ const featureHighlights = [
     kicker: "Daily carry",
     title: "Snap it on and go",
     tab: "MagSafe carry",
-    caption: "The device follows the phone.",
+    caption: "Link 1 follows the phone.",
     description:
-      "MagSafe turns the radio into something you carry automatically instead of something you remember later.",
+      "MagSafe puts Link 1 on the phone you already carry—so the radio isn’t something you remember later.",
     chips: ["MagSafe", "No loose gear"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
-    alt: "OffGrid MagSafe device mounted to a phone",
+    alt: "OffGrid Link 1 MagSafe-mounted to a phone",
   },
   {
     icon: "📡",
@@ -711,7 +714,7 @@ const featureHighlights = [
     chips: ["Off-grid", "Peer to peer"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
-    alt: "OffGrid device used outdoors",
+    alt: "OffGrid Link 1 used outdoors",
   },
   {
     icon: "🔋",
@@ -720,24 +723,24 @@ const featureHighlights = [
     tab: "Battery",
     caption: "Less babysitting, more moving.",
     description:
-      "Rechargeable power and USB-C make the device easy to top off and easy to trust.",
+      "Rechargeable power and USB-C make Link 1 easy to top off and easy to trust.",
     chips: ["USB-C", "Adventure ready"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
-    alt: "OffGrid device showing internal hardware and battery",
+    alt: "OffGrid Link 1 internal hardware and battery",
   },
   {
     icon: "👁️",
     kicker: "Built to be seen",
     title: "Let the hardware do the talking",
     tab: "Transparent shell",
-    caption: "The product looks as technical as it is.",
+    caption: "Link 1 looks as technical as it is.",
     description:
-      "The transparent back gives the device personality without asking for more copy.",
+      "The transparent shell shows the hardware inside—no extra pitch required.",
     chips: ["Visible internals", "Distinctive look"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
-    alt: "Transparent OffGrid device close-up",
+    alt: "Transparent OffGrid Link 1 close-up",
   },
   {
     icon: "⚙️",
@@ -746,11 +749,11 @@ const featureHighlights = [
     tab: "Dual firmware",
     caption: "Meshtastic or MeshCore.",
     description:
-      "It fits into the ecosystem you already use instead of forcing a new workflow.",
+      "Link 1 fits the Meshtastic or MeshCore workflow you already use.",
     chips: ["Meshtastic", "MeshCore"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
-    alt: "OffGrid mesh device product view",
+    alt: "OffGrid Link 1 product view",
   },
   {
     icon: "🌐",
@@ -763,13 +766,13 @@ const featureHighlights = [
     chips: ["Shared coverage", "Resilient"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
-    alt: "OffGrid device used during an outdoor trip",
+    alt: "OffGrid Link 1 used during an outdoor trip",
   },
 ];
 
 const quickSignals = [
   { label: "Mount", value: "MagSafe" },
-  { label: "Link", value: "LoRa mesh" },
+  { label: "Mesh", value: "LoRa" },
   { label: "Charge", value: "USB-C" },
 ];
 

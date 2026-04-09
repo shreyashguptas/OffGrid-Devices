@@ -98,24 +98,33 @@ export default function Link1Product() {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
               >
                 <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-sm text-muted-light">Link 1</span>
+                <span className="text-sm text-muted-light">OffGrid</span>
+                <span className="text-muted/50" aria-hidden>
+                  ·
+                </span>
+                <span className="text-sm font-medium text-foreground">Link 1</span>
               </motion.div>
 
               <motion.h1
                 variants={fadeInUp}
                 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
               >
-                Stay Connected.
-                <br />
-                <span className="gradient-text">Go Anywhere.</span>
+                Link 1
               </motion.h1>
+
+              <motion.p
+                variants={fadeInUp}
+                className="text-lg md:text-xl text-muted-light max-w-lg mx-auto lg:mx-0 mb-2 leading-relaxed"
+              >
+                MagSafe LoRa mesh radio
+              </motion.p>
 
               <motion.p
                 variants={fadeInUp}
                 className="text-lg md:text-xl text-muted-light max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed"
               >
-                The world&apos;s first MagSafe-compatible LoRa mesh device.
-                Off-grid communication that attaches to your phone and goes
+                From OffGrid: the world&apos;s first MagSafe-compatible LoRa mesh
+                radio—off-grid communication that snaps to your phone and goes
                 wherever you go.
               </motion.p>
 
@@ -124,7 +133,7 @@ export default function Link1Product() {
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
                 <Link1CheckoutButton
-                  defaultLabel="Buy Now"
+                  defaultLabel="Buy Link 1"
                   loadingLabel="Opening Checkout..."
                   className="px-8 py-4 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
                 />
@@ -151,7 +160,7 @@ export default function Link1Product() {
                 <div className="relative animate-float">
                   <Image
                     src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
-                    alt="OffGrid Link 1 Device"
+                    alt="OffGrid Link 1 MagSafe LoRa radio"
                     width={600}
                     height={800}
                     className="relative z-10 rounded-3xl shadow-2xl shadow-black/50"
@@ -180,8 +189,8 @@ export default function Link1Product() {
               <span className="text-muted">Always Connected.</span>
             </h2>
             <p className="text-lg text-muted-light max-w-2xl mx-auto">
-              Designed to solve a real problem: keeping your mesh device with
-              you, always. No more leaving it at home.
+              Designed to solve a real problem: keeping Link 1 with you, always.
+              No more leaving your mesh radio at home.
             </p>
           </motion.div>
 
@@ -245,7 +254,7 @@ export default function Link1Product() {
               <div className="overflow-hidden rounded-3xl">
                 <Image
                   src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009"
-                  alt="OffGrid device outdoor use"
+                  alt="OffGrid Link 1 outdoor use"
                   width={800}
                   height={1000}
                   className="w-full h-auto image-hover"
@@ -263,7 +272,7 @@ export default function Link1Product() {
               <div className="overflow-hidden rounded-3xl">
                 <Image
                   src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042"
-                  alt="OffGrid device detail view"
+                  alt="OffGrid Link 1 detail view"
                   width={800}
                   height={1000}
                   className="w-full h-auto image-hover"
@@ -297,8 +306,9 @@ export default function Link1Product() {
                 <span className="text-accent">Off-Grid Excellence</span>
               </h2>
               <p className="text-lg text-muted-light mb-12">
-                Every component chosen for reliability, range, and real-world
-                performance. Compatible with Meshtastic and MeshCore firmware.
+                Every component in Link 1 is chosen for reliability, range, and
+                real-world performance. Compatible with Meshtastic and MeshCore
+                firmware.
               </p>
 
               <motion.div
@@ -338,7 +348,7 @@ export default function Link1Product() {
               <div className="absolute inset-0 bg-accent/10 blur-[80px] rounded-full" />
               <Image
                 src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
-                alt="OffGrid Link 1 specifications"
+                alt="OffGrid Link 1 hardware specifications"
                 width={600}
                 height={800}
                 className="relative rounded-3xl shadow-2xl shadow-black/50"
@@ -467,14 +477,14 @@ export default function Link1Product() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-accent/10 blur-[120px] rounded-full" />
             <div className="relative z-10">
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-                Ready to Go Off-Grid?
+                Ready for Link 1?
               </h2>
               <p className="text-lg text-muted-light mb-10 max-w-xl mx-auto">
-                Join the growing community of adventurers, preppers, and tech
-                enthusiasts who never lose connection.
+                Get OffGrid Link 1 and join the adventurers, preppers, and mesh
+                enthusiasts who stay connected off-grid.
               </p>
               <Link1CheckoutButton
-                defaultLabel="Buy Now"
+                defaultLabel="Buy Link 1"
                 loadingLabel="Opening Checkout..."
                 showArrow
                 className="inline-flex items-center gap-3 px-10 py-5 bg-[#F1641E] text-white font-semibold text-lg rounded-full hover:bg-[#D9571A] transition-all duration-300 hover:shadow-xl hover:shadow-[#F1641E]/30 hover:-translate-y-1"
@@ -492,7 +502,7 @@ const features = [
     icon: "🧲",
     title: "MagSafe Compatible",
     description:
-      "Attaches securely to any MagSafe-compatible phone or case. Your mesh device goes where your phone goes—no more forgetting it at home.",
+      "Attaches securely to any MagSafe-compatible phone or case. Link 1 goes where your phone goes—no more forgetting your radio at home.",
   },
   {
     icon: "📡",

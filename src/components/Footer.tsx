@@ -201,7 +201,7 @@ export function Footer() {
               <Link
                 href="/products/link-1"
                 className="text-muted hover:text-accent transition-colors duration-300"
-                aria-label="Link 1 Product"
+                aria-label="OffGrid Link 1 product page"
               >
                 <svg
                   width="18"

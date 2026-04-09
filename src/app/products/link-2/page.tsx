@@ -38,7 +38,11 @@ export default function Link2Product() {
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
               New
             </span>
-            <span className="text-sm text-muted-light">Link 2</span>
+            <span className="text-sm text-muted-light">OffGrid</span>
+            <span className="text-muted/50" aria-hidden>
+              ·
+            </span>
+            <span className="text-sm font-medium text-foreground">Link 2</span>
           </motion.div>
 
           {/* Logo */}
@@ -66,7 +70,7 @@ export default function Link2Product() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
           >
-            Link 2
+            OffGrid Link 2
           </motion.h1>
 
           <motion.p
@@ -84,8 +88,8 @@ export default function Link2Product() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="text-lg text-muted-light max-w-md mx-auto mb-12 leading-relaxed"
           >
-            The next evolution of off-grid communication. Stay tuned for
-            something extraordinary.
+            The next hardware in the OffGrid Link line. Stay tuned for something
+            extraordinary.
           </motion.p>
 
           <motion.div

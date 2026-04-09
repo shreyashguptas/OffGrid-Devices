@@ -25,9 +25,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "OffGrid | MagSafe Mesh Communication Device",
+  title: "OffGrid Link 1 | MagSafe LoRa Mesh Radio",
   description:
-    "Never lose connection. The world's first MagSafe-compatible LoRa mesh device. Off-grid communication that goes wherever you go.",
+    "OffGrid makes Link 1—the MagSafe-compatible LoRa mesh radio with Meshtastic-ready firmware. Off-grid communication that stays on the phone you already carry.",
   keywords: [
     "LoRa",
     "Meshtastic",
@@ -48,9 +48,9 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "OffGrid | MagSafe Mesh Communication Device",
+    title: "OffGrid Link 1 | MagSafe LoRa Mesh Radio",
     description:
-      "Never lose connection. The world's first MagSafe-compatible LoRa mesh device.",
+      "OffGrid Link 1: the MagSafe-compatible LoRa mesh radio—Meshtastic-ready, built to stay on your phone.",
     type: "website",
     images: ["/logo-1024.png"],
   },

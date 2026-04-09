@@ -7,9 +7,9 @@ import Link from "next/link";
 const blogPosts = [
   {
     slug: "getting-started-with-meshtastic",
-    title: "Your OffGrid already runs Meshtastic—here’s how to go live",
+    title: "OffGrid Link 1 already runs Meshtastic—here’s how to go live",
     excerpt:
-      "Meshtastic is open firmware you can install on other hardware—but OffGrid ships with it ready. Unbox, pair, and hit the mesh without the firmware homework.",
+      "Meshtastic is open firmware you can install on other hardware—but Link 1 ships from OffGrid with it ready. Unbox, pair, and hit the mesh without the firmware homework.",
     date: "January 2026",
     readTime: "8 min read",
     category: "Guides",
