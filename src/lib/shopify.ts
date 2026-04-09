@@ -244,5 +244,8 @@ export async function createLink1CheckoutUrl() {
     throw new Error("Shopify did not return a checkout URL.");
   }
 
-  return checkoutUrl;
+  const url = new URL(checkoutUrl);
+  url.searchParams.set("channel", "headless-storefronts");
+
+  return url.toString();
 }
