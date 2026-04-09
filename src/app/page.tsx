@@ -106,6 +106,12 @@ export default function Home() {
 
         <InfiniteGridBackground className="absolute inset-0 z-0" />
 
+        {/* Fade hero decorations into solid page bg so the card shadow does not sit on a hard backdrop change at the section edge */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-44 bg-gradient-to-b from-transparent via-background/55 to-background md:h-56 md:via-background/65"
+          aria-hidden
+        />
+
         <div className="relative z-10">
           <ContainerScroll
             titleComponent={
@@ -205,7 +211,12 @@ export default function Home() {
 
       {/* Features Section */}
       <section id="features" className="relative py-32">
-        <div className="absolute inset-x-0 top-24 h-64 bg-accent/10 blur-3xl pointer-events-none" />
+        {/* Top wash matches page bg so the first paint layer is not a hard line under the hero */}
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-32 bg-gradient-to-b from-background to-transparent md:h-40"
+          aria-hidden
+        />
+        <div className="absolute inset-x-0 top-24 z-0 h-64 bg-accent/10 blur-3xl pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial="hidden"

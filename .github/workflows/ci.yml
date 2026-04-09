@@ -6,8 +6,12 @@ on:
   pull_request:
     branches: [main, master]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  lint-and-build:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,5 +31,41 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Dependency audit (supply chain)
+        run: pnpm audit --audit-level=high
+
+      - name: Verify Shopify Link 1 (live)
+        env:
+          SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
+          SHOPIFY_STOREFRONT_PRIVATE_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PRIVATE_TOKEN }}
+          SHOPIFY_STOREFRONT_PUBLIC_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PUBLIC_TOKEN }}
+          SHOPIFY_LINK_1_HANDLE: ${{ secrets.SHOPIFY_LINK_1_HANDLE }}
+          SHOPIFY_STOREFRONT_API_VERSION: ${{ secrets.SHOPIFY_STOREFRONT_API_VERSION }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
+            echo "::notice::Fork PR — skipping live Shopify verify in GitHub Actions. Production deploys are still blocked by Vercel build (verify:shopify) when env is configured there."
+            exit 0
+          fi
+          if [ -z "${SHOPIFY_STORE_DOMAIN:-}" ] || [ -z "${SHOPIFY_LINK_1_HANDLE:-}" ]; then
+            echo "::error::Add repository secrets: SHOPIFY_STORE_DOMAIN, SHOPIFY_LINK_1_HANDLE, and a Storefront token (private or public)."
+            exit 1
+          fi
+          pnpm verify:shopify
+
       - name: Build
         run: pnpm build
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install chromium --with-deps
+
+      - name: End-to-end tests
+        env:
+          SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
+          SHOPIFY_STOREFRONT_PRIVATE_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PRIVATE_TOKEN }}
+          SHOPIFY_STOREFRONT_PUBLIC_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PUBLIC_TOKEN }}
+          SHOPIFY_LINK_1_HANDLE: ${{ secrets.SHOPIFY_LINK_1_HANDLE }}
+          SHOPIFY_STOREFRONT_API_VERSION: ${{ secrets.SHOPIFY_STOREFRONT_API_VERSION }}
+        run: pnpm test:e2e

@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with `[create-next-
 
 ## Requirements
 
-- **Node.js** 20.9 or newer (see `engines` in `package.json`)
+- **Node.js** 22 or newer (see `engines` in `package.json`)
 - **pnpm** 10.x, pinned via the `packageManager` field (use [Corepack](https://nodejs.org/api/corepack.html): `corepack enable`)
 
 This repository uses **pnpm only**. Do not use `npm install` or Yarn for dependencies; a `preinstall` check blocks accidental `npm install`. More detail: [docs/pnpm.md](docs/pnpm.md).
@@ -29,6 +29,11 @@ You can start editing the page by modifying `src/app/page.tsx`. The page auto-up
 | `pnpm start`    | Run production server |
 | `pnpm lint`     | ESLint                |
 | `pnpm lint:fix` | ESLint with auto-fix  |
+| `pnpm test`     | Vitest (unit / API)   |
+| `pnpm test:e2e` | Playwright            |
+| `pnpm verify:shopify` | Live Link 1 + checkout check (needs `.env.local`) |
+
+CI, secrets, and deploy gates: [docs/ci.md](docs/ci.md).
 
 
 This project uses `[next/font](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)` to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
