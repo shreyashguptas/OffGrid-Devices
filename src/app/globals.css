@@ -138,6 +138,11 @@
   --color-overlay-card: var(--app-overlay-card);
 
   --color-mark-watermark: var(--app-mark-watermark);
+
+  /* shadcn-style aliases (Avatar, trust badges) */
+  --color-border: var(--app-border-card);
+  --color-secondary: var(--app-surface-elevated);
+  --color-muted-foreground: var(--app-muted-light);
 }
 
 /* Custom scrollbar */
