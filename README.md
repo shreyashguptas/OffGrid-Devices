@@ -1,26 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) project bootstrapped with `[create-next-app](https://nextjs.org/docs/app/api-reference/cli/create-next-app)`.
 
-## Getting Started
+## Requirements
 
-First, run the development server:
+- **Node.js** 20.9 or newer (see `engines` in `package.json`)
+- **pnpm** 10.x, pinned via the `packageManager` field (use [Corepack](https://nodejs.org/api/corepack.html): `corepack enable`)
+
+This repository uses **pnpm only**. Do not use `npm install` or Yarn for dependencies; a `preinstall` check blocks accidental `npm install`. More detail: [docs/pnpm.md](docs/pnpm.md).
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+corepack enable
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Scripts
 
-## Learn More
+
+| Command         | Description           |
+| --------------- | --------------------- |
+| `pnpm dev`      | Development server    |
+| `pnpm build`    | Production build      |
+| `pnpm start`    | Run production server |
+| `pnpm lint`     | ESLint                |
+| `pnpm lint:fix` | ESLint with auto-fix  |
+
+
+This project uses `[next/font](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)` to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn more
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -32,5 +45,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Vercel detects **pnpm** from `pnpm-lock.yaml` and uses the install command appropriate for this repo.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
