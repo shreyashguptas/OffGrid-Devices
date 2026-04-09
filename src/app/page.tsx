@@ -148,13 +148,12 @@ export default function Home() {
                 </a>
               </motion.div>
 
-              {/* Customer avatars — visual proof only, no extra copy */}
+              {/* Social proof: avatars + rating + caption */}
               <motion.div
                 variants={fadeInUp}
-                className="mt-8 flex justify-center"
-                aria-label="Customers"
+                className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-6"
               >
-                <div className="flex -space-x-2">
+                <div className="flex -space-x-2 sm:shrink-0">
                   {reviewerAvatars.map((avatar) => (
                     <div
                       key={avatar.name}
@@ -173,6 +172,27 @@ export default function Home() {
                       )}
                     </div>
                   ))}
+                </div>
+                <div className="flex flex-col items-center gap-0.5 sm:items-start sm:text-left">
+                  <div
+                    className="flex items-center gap-1 text-accent"
+                    aria-hidden="true"
+                  >
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <svg
+                        key={i}
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-sm text-muted leading-tight">
+                    Loved by 28+ customers
+                  </p>
                 </div>
               </motion.div>
             </motion.div>
