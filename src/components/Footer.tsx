@@ -3,8 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
-
 export function Footer() {
   return (
     <footer className="relative mt-32">
@@ -57,13 +55,6 @@ export function Footer() {
                         New
                       </span>
                     </Link>
-                  </li>
-                  <li>
-                    <Link1CheckoutButton
-                      defaultLabel="Buy Link 1"
-                      loadingLabel="Opening Checkout..."
-                      className="text-foreground/80 hover:text-accent transition-colors duration-300 text-left"
-                    />
                   </li>
                 </ul>
               </div>
@@ -130,14 +121,6 @@ export function Footer() {
                     >
                       YouTube
                     </a>
-                  </li>
-                  <li>
-                    <Link
-                      href="/products/link-1"
-                      className="text-foreground/80 hover:text-accent transition-colors duration-300"
-                    >
-                      Shopify Checkout
-                    </Link>
                   </li>
                 </ul>
               </div>
