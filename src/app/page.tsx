@@ -5,6 +5,10 @@ import { startTransition, useEffect, useState } from "react";
 import Image from "next/image";
 import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import {
+  TestimonialsV2Section,
+  type TestimonialV2Item,
+} from "@/components/ui/testimonial-v2";
 
 // Smoother animation variants with transitions included
 const fadeInUp = {
@@ -540,111 +544,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="relative py-32">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="text-center mb-20"
-          >
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Don&apos;t Take Our Word.
-              <br />
-              <span className="text-muted">Take Theirs.</span>
-            </h2>
-            <div className="flex items-center justify-center gap-3 mt-6">
-              <div className="flex items-center gap-1 text-accent">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <svg
-                    key={i}
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                  </svg>
-                ))}
-              </div>
-              <span className="text-lg text-muted-light font-medium">
-                5.0 from 28+ customers
-              </span>
+      <TestimonialsV2Section
+        badge="Reviews"
+        title="Don't take our word. Take theirs."
+        description="Real feedback from Link 1 owners—MagSafe carry, mesh range, and support that shows up."
+        items={testimonialV2Items}
+        headerExtra={
+          <>
+            <div className="flex items-center justify-center gap-1 text-accent">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <svg
+                  key={i}
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              ))}
             </div>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {testimonials.map((testimonial) => (
-              <motion.div
-                key={testimonial.name}
-                variants={cardVariant}
-                className="p-6 rounded-2xl glass hover:bg-fill-glass-elevated transition-all duration-300 flex flex-col"
-              >
-                <div className="flex items-center gap-1 text-accent mb-4">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <svg
-                      key={i}
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-foreground/90 leading-relaxed mb-6 flex-1">
-                  &ldquo;{testimonial.review}&rdquo;
-                </p>
-                {testimonial.image && (
-                  <div className="w-full h-48 rounded-xl overflow-hidden border border-border-subtle mb-4">
-                    <Image
-                      src={testimonial.image}
-                      alt={`Review photo from ${testimonial.name}`}
-                      width={400}
-                      height={300}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
-                  <div>
-                    <p className="font-display font-semibold text-sm">
-                      {testimonial.name}
-                    </p>
-                    <p className="text-xs text-muted mt-0.5">
-                      {testimonial.date}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-muted">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M20 6L9 17l-5-5" />
-                    </svg>
-                    Verified Buyer
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+            <span className="text-lg text-muted-light font-medium">
+              5.0 from 28+ customers
+            </span>
+          </>
+        }
+      />
 
       {/* CTA Section */}
       <section className="relative py-32">
@@ -829,3 +755,15 @@ const testimonials = [
     image: null,
   },
 ];
+
+const testimonialV2Items: TestimonialV2Item[] = testimonials.map((t) => {
+  const reviewer = reviewerAvatars.find(
+    (r) => r.name.toLowerCase() === t.name.toLowerCase()
+  );
+  return {
+    text: t.review,
+    name: t.name,
+    role: `${t.date} · Verified buyer`,
+    avatarSrc: reviewer?.image ?? t.image ?? null,
+  };
+});
