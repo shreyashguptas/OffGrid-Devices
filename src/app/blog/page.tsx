@@ -7,12 +7,12 @@ import Link from "next/link";
 const blogPosts = [
   {
     slug: "getting-started-with-meshtastic",
-    title: "Getting Started with Meshtastic: A Complete Beginner's Guide",
+    title: "Your OffGrid already runs Meshtastic—here’s how to go live",
     excerpt:
-      "Learn how to set up your OffGrid device with Meshtastic firmware and start communicating off-grid in minutes.",
+      "Meshtastic is open firmware you can install on other hardware—but OffGrid ships with it ready. Unbox, pair, and hit the mesh without the firmware homework.",
     date: "January 2026",
     readTime: "8 min read",
-    category: "Tutorials",
+    category: "Guides",
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
   },

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { BfCacheShell } from "@/components/BfCacheShell";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -63,9 +64,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
       <body className="bg-background text-foreground antialiased">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <BfCacheShell>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </BfCacheShell>
       </body>
     </html>
   );
