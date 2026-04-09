@@ -12,8 +12,8 @@ export default function Link2Product() {
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(var(--app-grid-line) 1px, transparent 1px),
+                            linear-gradient(90deg, var(--app-grid-line) 1px, transparent 1px)`,
           backgroundSize: "100px 100px",
         }}
       />
@@ -95,7 +95,7 @@ export default function Link2Product() {
           >
             <Link
               href="/"
-              className="px-8 py-4 bg-white/10 border border-white/20 rounded-full font-semibold text-foreground hover:bg-white/15 hover:border-white/30 transition-all duration-300 inline-flex items-center gap-2"
+              className="px-8 py-4 bg-fill-muted border border-border-emphasis rounded-full font-semibold text-foreground hover:bg-fill-hover hover:border-border-emphasis-hover transition-all duration-300 inline-flex items-center gap-2"
             >
               <svg
                 width="16"

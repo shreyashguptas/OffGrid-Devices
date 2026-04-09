@@ -95,7 +95,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="flex flex-col overflow-hidden relative">
+      <section className="relative flex flex-col pb-24 md:pb-32">
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-radial from-accent/5 via-transparent to-transparent pointer-events-none" />
 
@@ -103,8 +103,8 @@ export default function Home() {
         <div
           className="absolute inset-0 opacity-[0.02] pointer-events-none"
           style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(var(--app-grid-line) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--app-grid-line) 1px, transparent 1px)`,
             backgroundSize: "100px 100px",
           }}
         />
@@ -116,19 +116,9 @@ export default function Home() {
               animate="visible"
               variants={staggerContainer}
             >
-              <motion.div
-                variants={fadeInUp}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
-              >
-                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-sm text-muted-light">
-                  Trusted by adventurers worldwide
-                </span>
-              </motion.div>
-
               <motion.h1
                 variants={fadeInUp}
-                className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
+                className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-5"
               >
                 Stay Connected.
                 <br />
@@ -137,11 +127,9 @@ export default function Home() {
 
               <motion.p
                 variants={fadeInUp}
-                className="text-lg md:text-xl text-muted-light max-w-lg mx-auto mb-8 leading-relaxed"
+                className="text-base md:text-lg text-muted-light max-w-md mx-auto mb-8 leading-snug"
               >
                 The world&apos;s first MagSafe-compatible LoRa mesh device.
-                Off-grid communication that attaches to your phone and goes
-                wherever you go.
               </motion.p>
 
               <motion.div
@@ -150,20 +138,21 @@ export default function Home() {
               >
                 <Link1CheckoutButton
                   defaultLabel="Buy Now"
-                  className="px-8 py-4 bg-accent text-background font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
+                  className="px-8 py-4 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
                 />
                 <a
                   href="/products/link-1"
-                  className="px-8 py-4 bg-white/10 border border-white/20 rounded-full font-semibold text-foreground hover:bg-white/15 hover:border-white/30 transition-all duration-300"
+                  className="px-8 py-4 bg-fill-muted border border-border-emphasis rounded-full font-semibold text-foreground hover:bg-fill-hover hover:border-border-emphasis-hover transition-all duration-300"
                 >
                   Learn More
                 </a>
               </motion.div>
 
-              {/* Social proof */}
+              {/* Customer avatars — visual proof only, no extra copy */}
               <motion.div
                 variants={fadeInUp}
-                className="mt-12 flex items-center gap-6 justify-center"
+                className="mt-8 flex justify-center"
+                aria-label="Customers"
               >
                 <div className="flex -space-x-2">
                   {reviewerAvatars.map((avatar) => (
@@ -184,22 +173,6 @@ export default function Home() {
                       )}
                     </div>
                   ))}
-                </div>
-                <div className="text-left">
-                  <div className="flex items-center gap-1 text-accent">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <svg
-                        key={i}
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted">Loved by 28+ customers</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -245,7 +218,7 @@ export default function Home() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
               variants={fadeInLeft}
-              className="relative min-h-[560px] overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03]"
+              className="relative min-h-[560px] overflow-hidden rounded-[2rem] border border-border-card bg-fill-glass"
             >
               <AnimatePresence mode="wait">
                 <motion.div
@@ -267,9 +240,9 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
 
-              <div className="absolute left-6 top-6 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-2 backdrop-blur-xl">
-                <span className="text-sm">{currentFeature.icon}</span>
-                <span className="text-xs uppercase tracking-[0.24em] text-muted-light">
+              <div className="absolute left-6 top-6 z-10 inline-flex items-center gap-2 rounded-full border border-white/20 bg-overlay-badge px-4 py-2 backdrop-blur-xl">
+                <span className="text-sm text-white">{currentFeature.icon}</span>
+                <span className="text-xs uppercase tracking-[0.24em] text-white/75">
                   Feature Tour
                 </span>
               </div>
@@ -283,21 +256,21 @@ export default function Home() {
                   transition={{ duration: 0.45 }}
                   className="absolute inset-x-6 bottom-6 z-10"
                 >
-                  <div className="max-w-xl rounded-[1.75rem] border border-white/10 bg-black/40 p-6 backdrop-blur-xl">
-                    <p className="mb-3 text-xs uppercase tracking-[0.28em] text-accent/90">
+                  <div className="max-w-xl rounded-[1.75rem] border border-white/15 bg-overlay-card p-6 backdrop-blur-xl">
+                    <p className="mb-3 text-xs uppercase tracking-[0.28em] text-accent-light">
                       {currentFeature.kicker}
                     </p>
-                    <h3 className="font-display text-3xl md:text-4xl font-semibold leading-tight">
+                    <h3 className="font-display text-3xl md:text-4xl font-semibold leading-tight text-white">
                       {currentFeature.title}
                     </h3>
-                    <p className="mt-3 max-w-md text-base text-muted-light leading-relaxed">
+                    <p className="mt-3 max-w-md text-base text-white/80 leading-relaxed">
                       {currentFeature.description}
                     </p>
                     <div className="mt-5 flex flex-wrap gap-2">
                       {currentFeature.chips.map((chip) => (
                         <span
                           key={chip}
-                          className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-foreground/90"
+                          className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white/95"
                         >
                           {chip}
                         </span>
@@ -315,7 +288,7 @@ export default function Home() {
               variants={fadeInRight}
               className="flex flex-col gap-4"
             >
-              <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 md:p-8">
+              <div className="rounded-[2rem] border border-border-card bg-fill-glass p-6 md:p-8">
                 <div className="mb-6 flex items-center justify-between gap-4">
                   <div>
                     <p className="text-sm uppercase tracking-[0.22em] text-muted">
@@ -326,7 +299,7 @@ export default function Home() {
                       it rotate on its own.
                     </p>
                   </div>
-                  <div className="rounded-full border border-white/10 px-4 py-2 text-sm font-mono text-muted-light">
+                  <div className="rounded-full border border-border-card px-4 py-2 text-sm font-mono text-muted-light">
                     {String(activeFeature + 1).padStart(2, "0")} /{" "}
                     {String(featureHighlights.length).padStart(2, "0")}
                   </div>
@@ -348,7 +321,7 @@ export default function Home() {
                         className={`w-full rounded-[1.5rem] border px-4 py-4 text-left transition-all duration-300 ${
                           isActive
                             ? "border-accent/40 bg-accent/10 shadow-lg shadow-accent/10"
-                            : "border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05]"
+                            : "border-border-subtle bg-fill-glass-2 hover:bg-fill-glass-elevated"
                         }`}
                       >
                         <div className="flex items-center justify-between gap-4">
@@ -357,7 +330,7 @@ export default function Home() {
                               className={`flex h-11 w-11 items-center justify-center rounded-2xl border text-lg transition-colors ${
                                 isActive
                                   ? "border-accent/30 bg-accent/[0.15]"
-                                  : "border-white/10 bg-white/[0.04]"
+                                  : "border-border-card bg-fill-glass-elevated"
                               }`}
                             >
                               {feature.icon}
@@ -377,7 +350,7 @@ export default function Home() {
                             </span>
                             <span
                               className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                                isActive ? "bg-accent" : "bg-white/10"
+                                isActive ? "bg-accent" : "bg-fill-muted"
                               }`}
                             />
                           </div>
@@ -392,7 +365,7 @@ export default function Home() {
                 {quickSignals.map((signal) => (
                   <div
                     key={signal.label}
-                    className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-4"
+                    className="rounded-[1.5rem] border border-border-card bg-fill-glass p-4"
                   >
                     <p className="text-xs uppercase tracking-[0.24em] text-muted">
                       {signal.label}
@@ -590,7 +563,7 @@ export default function Home() {
               <motion.div
                 key={testimonial.name}
                 variants={cardVariant}
-                className="p-6 rounded-2xl glass hover:bg-white/[0.04] transition-all duration-300 flex flex-col"
+                className="p-6 rounded-2xl glass hover:bg-fill-glass-elevated transition-all duration-300 flex flex-col"
               >
                 <div className="flex items-center gap-1 text-accent mb-4">
                   {[1, 2, 3, 4, 5].map((i) => (
@@ -609,7 +582,7 @@ export default function Home() {
                   &ldquo;{testimonial.review}&rdquo;
                 </p>
                 {testimonial.image && (
-                  <div className="w-full h-48 rounded-xl overflow-hidden border border-white/[0.06] mb-4">
+                  <div className="w-full h-48 rounded-xl overflow-hidden border border-border-subtle mb-4">
                     <Image
                       src={testimonial.image}
                       alt={`Review photo from ${testimonial.name}`}
@@ -619,7 +592,7 @@ export default function Home() {
                     />
                   </div>
                 )}
-                <div className="flex items-center justify-between pt-4 border-t border-white/[0.06]">
+                <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
                   <div>
                     <p className="font-display font-semibold text-sm">
                       {testimonial.name}

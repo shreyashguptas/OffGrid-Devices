@@ -9,7 +9,7 @@ export function Footer() {
   return (
     <footer className="relative mt-32">
       {/* Top Section - Bold Statement */}
-      <div className="border-t border-white/5">
+      <div className="border-t border-border-subtle">
         <div className="max-w-7xl mx-auto px-6 py-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -147,7 +147,7 @@ export function Footer() {
       </div>
 
       {/* Bottom Section - Large Brand Mark */}
-      <div className="border-t border-white/5 overflow-hidden">
+      <div className="border-t border-border-subtle overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 text-center">
           {/* Copyright and Social Icons Row */}
           <div className="py-8 flex flex-col md:flex-row justify-between items-center gap-6">
@@ -228,7 +228,7 @@ export function Footer() {
             transition={{ duration: 0.8 }}
             className="relative py-12 select-none flex justify-center"
           >
-            <div className="font-display text-[18vw] md:text-[14vw] lg:text-[12vw] font-bold tracking-tighter leading-none text-white/[0.15] text-center">
+            <div className="font-display text-[18vw] md:text-[14vw] lg:text-[12vw] font-bold tracking-tighter leading-none text-mark-watermark text-center">
               OFFGRID
             </div>
             {/* Gradient overlay for fade effect */}

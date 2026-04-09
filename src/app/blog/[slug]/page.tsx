@@ -132,7 +132,7 @@ export default function BlogPostPage() {
           </p>
           <Link
             href="/blog"
-            className="px-6 py-3 bg-accent text-background font-medium rounded-full"
+            className="px-6 py-3 bg-accent text-on-accent font-medium rounded-full"
           >
             Back to Blog
           </Link>
@@ -236,7 +236,7 @@ export default function BlogPostPage() {
             defaultLabel="Buy Now"
             loadingLabel="Opening Checkout..."
             showArrow
-            className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-background font-semibold rounded-full hover:bg-accent-light transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300"
           />
         </motion.div>
       </div>

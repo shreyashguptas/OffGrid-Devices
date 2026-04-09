@@ -79,8 +79,8 @@ export default function Link1Product() {
         <div
           className="absolute inset-0 opacity-[0.02]"
           style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(var(--app-grid-line) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--app-grid-line) 1px, transparent 1px)`,
             backgroundSize: "100px 100px",
           }}
         />
@@ -126,11 +126,11 @@ export default function Link1Product() {
                 <Link1CheckoutButton
                   defaultLabel="Buy Now"
                   loadingLabel="Opening Checkout..."
-                  className="px-8 py-4 bg-accent text-background font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
+                  className="px-8 py-4 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
                 />
                 <a
                   href="#features"
-                  className="px-8 py-4 bg-white/10 border border-white/20 rounded-full font-semibold text-foreground hover:bg-white/15 hover:border-white/30 transition-all duration-300"
+                  className="px-8 py-4 bg-fill-muted border border-border-emphasis rounded-full font-semibold text-foreground hover:bg-fill-hover hover:border-border-emphasis-hover transition-all duration-300"
                 >
                   View Features
                 </a>
@@ -196,7 +196,7 @@ export default function Link1Product() {
               <motion.div
                 key={feature.title}
                 variants={cardVariant}
-                className="group p-8 rounded-3xl glass hover:bg-white/[0.04] transition-all duration-300"
+                className="group p-8 rounded-3xl glass hover:bg-fill-glass-elevated transition-all duration-300"
               >
                 <div className="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-accent/20 transition-all duration-300">
                   <span className="text-2xl">{feature.icon}</span>
@@ -394,7 +394,7 @@ export default function Link1Product() {
               <motion.div
                 key={testimonial.name}
                 variants={cardVariant}
-                className="p-6 rounded-2xl glass hover:bg-white/[0.04] transition-all duration-300 flex flex-col"
+                className="p-6 rounded-2xl glass hover:bg-fill-glass-elevated transition-all duration-300 flex flex-col"
               >
                 <div className="flex items-center gap-1 text-accent mb-4">
                   {[1, 2, 3, 4, 5].map((i) => (
@@ -413,7 +413,7 @@ export default function Link1Product() {
                   &ldquo;{testimonial.review}&rdquo;
                 </p>
                 {testimonial.image && (
-                  <div className="w-full h-48 rounded-xl overflow-hidden border border-white/[0.06] mb-4">
+                  <div className="w-full h-48 rounded-xl overflow-hidden border border-border-subtle mb-4">
                     <Image
                       src={testimonial.image}
                       alt={`Review photo from ${testimonial.name}`}
@@ -423,7 +423,7 @@ export default function Link1Product() {
                     />
                   </div>
                 )}
-                <div className="flex items-center justify-between pt-4 border-t border-white/[0.06]">
+                <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
                   <div>
                     <p className="font-display font-semibold text-sm">
                       {testimonial.name}

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
@@ -15,6 +15,13 @@ const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#050505" },
+  ],
+};
 
 export const metadata: Metadata = {
   title: "OffGrid | MagSafe Mesh Communication Device",

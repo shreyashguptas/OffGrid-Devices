@@ -85,11 +85,13 @@ function NavbarContent() {
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out"
       style={{
         padding: isScrolled ? "1rem 0" : "1.5rem 0",
-        backgroundColor: isScrolled ? "rgba(10, 10, 10, 0.8)" : "transparent",
+        backgroundColor: isScrolled
+          ? "var(--app-nav-scrolled)"
+          : "transparent",
         backdropFilter: isScrolled ? "blur(20px)" : "none",
         WebkitBackdropFilter: isScrolled ? "blur(20px)" : "none",
         borderBottom: isScrolled
-          ? "1px solid rgba(255, 255, 255, 0.05)"
+          ? "1px solid var(--app-border-subtle)"
           : "1px solid transparent",
       }}
     >
@@ -149,15 +151,22 @@ function NavbarContent() {
                   transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
                   className="absolute left-1/2 -translate-x-1/2 top-full mt-4 w-80"
                 >
-                  <div className="rounded-2xl p-2 shadow-2xl shadow-black/50 border border-white/[0.08]" style={{ background: "rgba(18, 18, 18, 0.95)", backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)" }}>
+                  <div
+                    className="rounded-2xl p-2 shadow-2xl shadow-black/20 border border-border-subtle"
+                    style={{
+                      background: "var(--app-dropdown)",
+                      backdropFilter: "blur(40px)",
+                      WebkitBackdropFilter: "blur(40px)",
+                    }}
+                  >
                     {products.map((product) => (
                       <Link
                         key={product.name}
                         href={product.href}
-                        className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/[0.05] transition-all duration-200 group"
+                        className="flex items-center gap-4 p-3 rounded-xl hover:bg-fill-glass-elevated transition-all duration-200 group"
                       >
                         {/* Product thumbnail */}
-                        <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-surface-elevated border border-white/[0.06]">
+                        <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-surface-elevated border border-border-subtle">
                           {product.image ? (
                             <Image
                               src={product.image}
@@ -227,7 +236,7 @@ function NavbarContent() {
           <Link1CheckoutButton
             defaultLabel="Shop Now"
             loadingLabel="Opening Checkout..."
-            className="px-6 py-2.5 bg-accent text-background font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 border border-accent-light/50"
+            className="px-6 py-2.5 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 border border-accent-light/50"
           />
         </div>
 
@@ -308,7 +317,7 @@ function NavbarContent() {
                           onClick={() => setIsMobileMenuOpen(false)}
                           className="flex items-center gap-3 text-muted-light hover:text-foreground transition-colors"
                         >
-                          <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-surface-elevated border border-white/[0.06]">
+                          <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-surface-elevated border border-border-subtle">
                             {product.image ? (
                               <Image
                                 src={product.image}
@@ -352,7 +361,7 @@ function NavbarContent() {
               <Link1CheckoutButton
                 defaultLabel="Shop Now"
                 loadingLabel="Opening Checkout..."
-                className="mt-2 px-5 py-3 bg-accent text-background font-medium rounded-full text-center hover:bg-accent-light transition-all duration-300"
+                className="mt-2 px-5 py-3 bg-accent text-on-accent font-medium rounded-full text-center hover:bg-accent-light transition-all duration-300"
               />
             </div>
           </motion.div>

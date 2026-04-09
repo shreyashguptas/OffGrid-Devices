@@ -83,8 +83,8 @@ export default function BlogPage() {
               onClick={() => setActiveCategory(category)}
               className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeCategory === category
-                  ? "bg-accent text-background"
-                  : "bg-white/5 border border-white/10 hover:bg-white/10 text-muted-light hover:text-foreground"
+                  ? "bg-accent text-on-accent"
+                  : "bg-fill-glass-2 border border-border-card hover:bg-fill-glass-elevated text-muted-light hover:text-foreground"
               }`}
             >
               {category}
@@ -121,7 +121,7 @@ export default function BlogPage() {
                         className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1.5 text-xs font-medium bg-accent/90 text-background rounded-full">
+                        <span className="px-3 py-1.5 text-xs font-medium bg-accent/90 text-on-accent rounded-full">
                           {post.category}
                         </span>
                       </div>

@@ -8,24 +8,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "#050505",
-        foreground: "#fafafa",
-        accent: {
-          DEFAULT: "#00d4aa",
-          light: "#00f5c4",
-          dark: "#00a88a",
-        },
-        surface: {
-          DEFAULT: "#0a0a0a",
-          elevated: "#141414",
-          glass: "rgba(255, 255, 255, 0.03)",
-        },
-        muted: {
-          DEFAULT: "#737373",
-          light: "#a3a3a3",
-        },
-      },
       fontFamily: {
         display: ["var(--font-syne)", "system-ui", "sans-serif"],
         body: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
