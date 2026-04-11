@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { BfCacheShell } from "@/components/BfCacheShell";
@@ -69,6 +70,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </BfCacheShell>
+        <Analytics />
       </body>
     </html>
   );
