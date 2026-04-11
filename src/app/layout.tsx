@@ -4,6 +4,14 @@ import { BfCacheShell } from "@/components/BfCacheShell";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
+const metadataBaseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000");
+
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#fafafa" },
@@ -15,6 +23,7 @@ export const metadata: Metadata = {
   title: "OffGrid Link 1 | MagSafe LoRa Mesh Radio",
   description:
     "OffGrid makes Link 1—the MagSafe-compatible LoRa mesh radio with Meshtastic-ready firmware. Off-grid communication that stays on the phone you already carry.",
+  metadataBase: new URL(metadataBaseUrl),
   keywords: [
     "LoRa",
     "Meshtastic",
