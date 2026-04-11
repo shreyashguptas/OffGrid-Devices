@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { BfCacheShell } from "@/components/BfCacheShell";
 import { Navbar } from "@/components/Navbar";
@@ -65,6 +66,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </BfCacheShell>
+        <Analytics />
       </body>
     </html>
   );
