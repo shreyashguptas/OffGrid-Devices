@@ -77,6 +77,24 @@ function NavbarContent() {
     };
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    const desktopQuery = window.matchMedia("(min-width: 768px)");
+    const handleDesktopMode = (event?: MediaQueryListEvent) => {
+      if ((event?.matches ?? desktopQuery.matches) === false) {
+        return;
+      }
+
+      setIsMobileMenuOpen(false);
+      setIsMobileProductsOpen(false);
+    };
+
+    handleDesktopMode();
+    desktopQuery.addEventListener("change", handleDesktopMode);
+    return () => {
+      desktopQuery.removeEventListener("change", handleDesktopMode);
+    };
+  }, []);
+
   const handleMouseEnter = () => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);

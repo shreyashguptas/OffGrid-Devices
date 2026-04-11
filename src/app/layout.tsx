@@ -14,14 +14,26 @@ function getFirstNonEmptyString(...values: Array<string | undefined>) {
   return undefined;
 }
 
-const metadataBaseUrl =
-  getFirstNonEmptyString(
-    process.env.NEXT_PUBLIC_SITE_URL,
-    process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : undefined,
-    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
-  ) ?? "http://localhost:3000";
+function createMetadataBase() {
+  const rawValue =
+    getFirstNonEmptyString(
+      process.env.NEXT_PUBLIC_SITE_URL,
+      process.env.VERCEL_PROJECT_PRODUCTION_URL,
+      process.env.VERCEL_URL,
+    ) ?? "http://localhost:3000";
+
+  const normalizedValue = /^[a-zA-Z][a-zA-Z\d+\-.]*:\/\//.test(rawValue)
+    ? rawValue
+    : `https://${rawValue}`;
+
+  try {
+    return new URL(normalizedValue);
+  } catch {
+    return new URL("http://localhost:3000");
+  }
+}
+
+const metadataBase = createMetadataBase();
 
 export const viewport: Viewport = {
   themeColor: [
@@ -34,7 +46,7 @@ export const metadata: Metadata = {
   title: "OffGrid Link 1 | MagSafe LoRa Mesh Radio",
   description:
     "OffGrid makes Link 1—the MagSafe-compatible LoRa mesh radio with Meshtastic-ready firmware. Off-grid communication that stays on the phone you already carry.",
-  metadataBase: new URL(metadataBaseUrl),
+  metadataBase,
   keywords: [
     "LoRa",
     "Meshtastic",
