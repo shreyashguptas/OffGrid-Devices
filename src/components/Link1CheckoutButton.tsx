@@ -25,10 +25,17 @@ let link1ProductPromise: Promise<ProductState> | null = null;
 const PRODUCT_CACHE_KEY = "offgrid:link1-product";
 const PRODUCT_CACHE_TTL_MS = 60_000;
 
-function readCachedProduct(): ProductState | null {
+type CachedProductState = {
+  hit: boolean;
+  product: ProductState;
+};
+
+function readCachedProduct(): CachedProductState {
   try {
     const raw = sessionStorage.getItem(PRODUCT_CACHE_KEY);
-    if (!raw) return null;
+    if (!raw) {
+      return { hit: false, product: null };
+    }
     const parsed = JSON.parse(raw) as {
       expiresAt?: number;
       product?: ProductState;
@@ -39,11 +46,11 @@ function readCachedProduct(): ProductState | null {
       !("product" in parsed)
     ) {
       sessionStorage.removeItem(PRODUCT_CACHE_KEY);
-      return null;
+      return { hit: false, product: null };
     }
-    return parsed.product ?? null;
+    return { hit: true, product: parsed.product ?? null };
   } catch {
-    return null;
+    return { hit: false, product: null };
   }
 }
 
@@ -60,8 +67,8 @@ function writeCachedProduct(product: ProductState) {
 
 async function fetchLink1Product() {
   const cachedProduct = readCachedProduct();
-  if (cachedProduct) {
-    return cachedProduct;
+  if (cachedProduct.hit) {
+    return cachedProduct.product;
   }
 
   if (!link1ProductPromise) {
