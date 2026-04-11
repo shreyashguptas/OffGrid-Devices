@@ -1,6 +1,12 @@
 "use client";
 import React, { useRef } from "react";
-import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
+import {
+  useScroll,
+  useTransform,
+  motion,
+  MotionValue,
+  useReducedMotion,
+} from "framer-motion";
 
 export const ContainerScroll = ({
   titleComponent,
@@ -14,16 +20,16 @@ export const ContainerScroll = ({
     target: containerRef,
     offset: ["start start", "end start"],
   });
+  const prefersReducedMotion = useReducedMotion();
   const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+    const compactViewportQuery = window.matchMedia("(max-width: 768px)");
+    const checkMobile = () => setIsMobile(compactViewportQuery.matches);
     checkMobile();
-    window.addEventListener("resize", checkMobile);
+    compactViewportQuery.addEventListener("change", checkMobile);
     return () => {
-      window.removeEventListener("resize", checkMobile);
+      compactViewportQuery.removeEventListener("change", checkMobile);
     };
   }, []);
 
@@ -31,13 +37,21 @@ export const ContainerScroll = ({
     return isMobile ? [0.7, 0.9] : [1.05, 1];
   };
 
-  const rotate = useTransform(scrollYProgress, [0, 0.4], [20, 0]);
+  const rotate = useTransform(
+    scrollYProgress,
+    [0, 0.4],
+    prefersReducedMotion ? [0, 0] : [20, 0],
+  );
   const scale = useTransform(scrollYProgress, [0, 0.4], scaleDimensions());
-  const translate = useTransform(scrollYProgress, [0, 0.4], [0, -100]);
+  const translate = useTransform(
+    scrollYProgress,
+    [0, 0.4],
+    prefersReducedMotion ? [0, 0] : [0, -100],
+  );
 
   return (
     <div
-      className="h-[60rem] md:h-[80rem] flex items-center justify-center relative p-2 md:p-20 pt-24 md:pt-20"
+      className="h-[48rem] sm:h-[52rem] md:h-[80rem] flex items-center justify-center relative p-2 md:p-20 pt-24 md:pt-20"
       ref={containerRef}
     >
       <div
@@ -90,7 +104,7 @@ function Card({
         scale,
         boxShadow: "var(--app-hero-card-shadow)",
       }}
-      className="max-w-5xl mx-auto h-[30rem] md:h-[40rem] w-full border-2 border-border-subtle p-2 md:p-6 bg-surface rounded-[30px]"
+      className="max-w-5xl mx-auto h-[20rem] sm:h-[26rem] md:h-[40rem] w-full border-2 border-border-subtle p-2 md:p-6 bg-surface rounded-[24px] md:rounded-[30px]"
     >
       <div className="h-full w-full overflow-hidden rounded-2xl bg-background md:rounded-2xl md:p-4">
         {children}

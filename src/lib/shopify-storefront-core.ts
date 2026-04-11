@@ -1,3 +1,5 @@
+import { unstable_cache } from "next/cache";
+
 type ShopifyGraphQLError = {
   message: string;
   extensions?: {
@@ -193,6 +195,19 @@ export async function getLink1Product(): Promise<Link1StorefrontProduct | null> 
     featuredImage: data.product.featuredImage,
     variant: data.product.selectedOrFirstAvailableVariant,
   };
+}
+
+const getLink1ProductCached = unstable_cache(
+  async () => getLink1Product(),
+  ["shopify-link-1-product"],
+  {
+    revalidate: 30,
+    tags: ["shopify-link-1-product"],
+  },
+);
+
+export async function getLink1ProductWithCache() {
+  return getLink1ProductCached();
 }
 
 export async function createLink1CheckoutUrl() {

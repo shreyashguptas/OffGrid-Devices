@@ -81,5 +81,26 @@ export function BfCacheShell({ children }: BfCacheShellProps) {
     };
   }, [shellKey]);
 
+  useEffect(() => {
+    const connection = navigator.connection;
+    if (connection?.saveData) {
+      return;
+    }
+
+    const warmShopifyCache = () => {
+      void fetch("/api/shopify/link-1", { method: "GET" }).catch(() => undefined);
+    };
+
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(warmShopifyCache, {
+        timeout: 2000,
+      });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = window.setTimeout(warmShopifyCache, 500);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
   return <div key={shellKey}>{children}</div>;
 }
