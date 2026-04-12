@@ -21,6 +21,80 @@ type Link1CheckoutButtonProps = {
   showArrow?: boolean;
 };
 
+let link1ProductPromise: Promise<ProductState> | null = null;
+const PRODUCT_CACHE_KEY = "offgrid:link1-product";
+const PRODUCT_CACHE_TTL_MS = 60_000;
+
+type CachedProductState = {
+  hit: boolean;
+  product: ProductState;
+};
+
+function readCachedProduct(): CachedProductState {
+  try {
+    const raw = sessionStorage.getItem(PRODUCT_CACHE_KEY);
+    if (!raw) {
+      return { hit: false, product: null };
+    }
+    const parsed = JSON.parse(raw) as {
+      expiresAt?: number;
+      product?: ProductState;
+    };
+    if (
+      typeof parsed.expiresAt !== "number" ||
+      parsed.expiresAt < Date.now() ||
+      !("product" in parsed)
+    ) {
+      sessionStorage.removeItem(PRODUCT_CACHE_KEY);
+      return { hit: false, product: null };
+    }
+    return { hit: true, product: parsed.product ?? null };
+  } catch {
+    return { hit: false, product: null };
+  }
+}
+
+function writeCachedProduct(product: ProductState) {
+  try {
+    sessionStorage.setItem(
+      PRODUCT_CACHE_KEY,
+      JSON.stringify({ product, expiresAt: Date.now() + PRODUCT_CACHE_TTL_MS }),
+    );
+  } catch {
+    // ignore cache failures (private mode / quota)
+  }
+}
+
+async function fetchLink1Product() {
+  const cachedProduct = readCachedProduct();
+  if (cachedProduct.hit) {
+    return cachedProduct.product;
+  }
+
+  if (!link1ProductPromise) {
+    link1ProductPromise = fetch("/api/shopify/link-1")
+      .then(async (response) => {
+        if (!response.ok) {
+          return null;
+        }
+
+        const data = (await response.json()) as {
+          product?: ProductState;
+        };
+
+        const product = data.product ?? null;
+        writeCachedProduct(product);
+        return product;
+      })
+      .catch(() => null)
+      .finally(() => {
+        link1ProductPromise = null;
+      });
+  }
+
+  return link1ProductPromise;
+}
+
 export function Link1CheckoutButton({
   className,
   defaultLabel,
@@ -37,24 +111,11 @@ export function Link1CheckoutButton({
 
     async function loadProduct() {
       try {
-        const response = await fetch("/api/shopify/link-1", {
-          cache: "no-store",
-        });
-
-        if (!response.ok) {
-          if (!isCancelled) {
-            setIsUnavailable(true);
-          }
-          return;
-        }
-
-        const data = (await response.json()) as {
-          product?: ProductState;
-        };
+        const productData = await fetchLink1Product();
 
         if (!isCancelled) {
-          setProduct(data.product ?? null);
-          setIsUnavailable(!data.product);
+          setProduct(productData);
+          setIsUnavailable(!productData);
         }
       } catch {
         if (!isCancelled) {

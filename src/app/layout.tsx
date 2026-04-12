@@ -1,22 +1,39 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { BfCacheShell } from "@/components/BfCacheShell";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-const syne = Syne({
-  subsets: ["latin"],
-  variable: "--font-syne",
-  display: "swap",
-});
+function getFirstNonEmptyString(...values: Array<string | undefined>) {
+  for (const value of values) {
+    if (typeof value === "string" && value.trim().length > 0) {
+      return value.trim();
+    }
+  }
+  return undefined;
+}
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
-  display: "swap",
-});
+function createMetadataBase() {
+  const rawValue =
+    getFirstNonEmptyString(
+      process.env.NEXT_PUBLIC_SITE_URL,
+      process.env.VERCEL_PROJECT_PRODUCTION_URL,
+      process.env.VERCEL_URL,
+    ) ?? "http://localhost:3000";
+
+  const normalizedValue = /^[a-zA-Z][a-zA-Z\d+\-.]*:\/\//.test(rawValue)
+    ? rawValue
+    : `https://${rawValue}`;
+
+  try {
+    return new URL(normalizedValue);
+  } catch {
+    return new URL("http://localhost:3000");
+  }
+}
+
+const metadataBase = createMetadataBase();
 
 export const viewport: Viewport = {
   themeColor: [
@@ -29,6 +46,7 @@ export const metadata: Metadata = {
   title: "OffGrid Link 1 | MagSafe LoRa Mesh Radio",
   description:
     "OffGrid makes Link 1—the MagSafe-compatible LoRa mesh radio with Meshtastic-ready firmware. Off-grid communication that stays on the phone you already carry.",
+  metadataBase,
   keywords: [
     "LoRa",
     "Meshtastic",
@@ -63,7 +81,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
+    <html lang="en">
       <body className="bg-background text-foreground antialiased">
         <BfCacheShell>
           <Navbar />

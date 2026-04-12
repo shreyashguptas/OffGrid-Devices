@@ -14,6 +14,12 @@ type BfCacheShellProps = {
   children: ReactNode;
 };
 
+type NavigatorWithConnection = Navigator & {
+  connection?: {
+    saveData?: boolean;
+  };
+};
+
 export function BfCacheShell({ children }: BfCacheShellProps) {
   const [shellKey, setShellKey] = useState(0);
   const pendingScrollRef = useRef<number | null>(null);
@@ -80,6 +86,38 @@ export function BfCacheShell({ children }: BfCacheShellProps) {
       cancelAnimationFrame(raf2);
     };
   }, [shellKey]);
+
+  useEffect(() => {
+    const connection = (navigator as NavigatorWithConnection).connection;
+    if (connection?.saveData) {
+      return;
+    }
+    const browserWindow = window as Window & {
+      requestIdleCallback?: (
+        callback: IdleRequestCallback,
+        options?: IdleRequestOptions,
+      ) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+
+    const warmShopifyCache = () => {
+      void fetch("/api/shopify/link-1", { method: "GET" }).catch(() => undefined);
+    };
+
+    if (typeof browserWindow.requestIdleCallback === "function") {
+      const idleId = browserWindow.requestIdleCallback(warmShopifyCache, {
+        timeout: 2000,
+      });
+      return () => {
+        if (typeof browserWindow.cancelIdleCallback === "function") {
+          browserWindow.cancelIdleCallback(idleId);
+        }
+      };
+    }
+
+    const timeoutId = browserWindow.setTimeout(warmShopifyCache, 500);
+    return () => browserWindow.clearTimeout(timeoutId);
+  }, []);
 
   return <div key={shellKey}>{children}</div>;
 }

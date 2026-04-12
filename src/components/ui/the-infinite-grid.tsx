@@ -30,11 +30,15 @@ export function InfiniteGridBackground({
 
   const gridOffsetX = useMotionValue(0);
   const gridOffsetY = useMotionValue(0);
+  const [isLowMotionMode, setIsLowMotionMode] = React.useState(false);
 
   const speedX = 0.5;
   const speedY = 0.5;
 
   useAnimationFrame(() => {
+    if (isLowMotionMode) {
+      return;
+    }
     const currentX = gridOffsetX.get();
     const currentY = gridOffsetY.get();
     gridOffsetX.set((currentX + speedX) % 40);
@@ -42,19 +46,47 @@ export function InfiniteGridBackground({
   });
 
   useEffect(() => {
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const compactViewportQuery = window.matchMedia("(max-width: 768px)");
+    const updateMode = () => {
+      setIsLowMotionMode(
+        reducedMotionQuery.matches || compactViewportQuery.matches,
+      );
+    };
+
+    updateMode();
+    reducedMotionQuery.addEventListener("change", updateMode);
+    compactViewportQuery.addEventListener("change", updateMode);
+    return () => {
+      reducedMotionQuery.removeEventListener("change", updateMode);
+      compactViewportQuery.removeEventListener("change", updateMode);
+    };
+  }, []);
+
+  useEffect(() => {
     const root = rootRef.current;
     const bounds = root?.parentElement;
     if (!bounds) return;
 
+    let raf = 0;
     const handlePointerMove = (e: PointerEvent) => {
-      const rect = bounds.getBoundingClientRect();
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
+      if (isLowMotionMode || raf) {
+        return;
+      }
+      raf = requestAnimationFrame(() => {
+        const rect = bounds.getBoundingClientRect();
+        mouseX.set(e.clientX - rect.left);
+        mouseY.set(e.clientY - rect.top);
+        raf = 0;
+      });
     };
 
-    bounds.addEventListener("pointermove", handlePointerMove);
-    return () => bounds.removeEventListener("pointermove", handlePointerMove);
-  }, [mouseX, mouseY]);
+    bounds.addEventListener("pointermove", handlePointerMove, { passive: true });
+    return () => {
+      bounds.removeEventListener("pointermove", handlePointerMove);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [isLowMotionMode, mouseX, mouseY]);
 
   const maskImage = useMotionTemplate`radial-gradient(300px circle at ${mouseX}px ${mouseY}px, black, transparent)`;
 

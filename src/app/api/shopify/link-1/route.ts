@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { getLink1Product, hasShopifyStorefrontConfig } from "@/lib/shopify";
+import {
+  getLink1ProductWithCache,
+  hasShopifyStorefrontConfig,
+} from "@/lib/shopify";
 
 export async function GET() {
   if (!hasShopifyStorefrontConfig()) {
@@ -10,7 +13,7 @@ export async function GET() {
   }
 
   try {
-    const product = await getLink1Product();
+    const product = await getLink1ProductWithCache();
 
     if (!product) {
       return NextResponse.json(
@@ -19,9 +22,16 @@ export async function GET() {
       );
     }
 
-    return NextResponse.json({
-      product,
-    });
+    return NextResponse.json(
+      {
+        product,
+      },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=30, stale-while-revalidate=120",
+        },
+      },
+    );
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Failed to fetch Shopify product.";

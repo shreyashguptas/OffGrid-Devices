@@ -442,6 +442,7 @@ export default function Home() {
                   width={800}
                   height={1000}
                   className="w-full h-auto image-hover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
               <div className="absolute bottom-6 left-6 right-6 p-6 glass rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -460,6 +461,7 @@ export default function Home() {
                   width={800}
                   height={1000}
                   className="w-full h-auto image-hover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
               <div className="absolute bottom-6 left-6 right-6 p-6 glass rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
