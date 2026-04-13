@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 
 const fadeInUp = {
@@ -33,7 +33,7 @@ const fadeInRight = {
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.95 },
+  hidden: { opacity: 0, scale: 0.97 },
   visible: {
     opacity: 1,
     scale: 1,
@@ -59,34 +59,11 @@ const cardVariant = {
 };
 
 export default function Link1Product() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  const heroImageY = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
   return (
     <>
-      {/* Product Hero */}
-      <section
-        ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
-      >
-        <div className="absolute inset-0 bg-gradient-radial from-accent/5 via-transparent to-transparent" />
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `linear-gradient(var(--app-grid-line) 1px, transparent 1px),
-                              linear-gradient(90deg, var(--app-grid-line) 1px, transparent 1px)`,
-            backgroundSize: "100px 100px",
-          }}
-        />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <section className="border-b border-border-subtle bg-background pt-28 pb-20 md:pt-32 md:pb-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
             <motion.div
               initial="hidden"
               animate="visible"
@@ -95,102 +72,117 @@ export default function Link1Product() {
             >
               <motion.div
                 variants={fadeInUp}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
+                className="inline-flex items-center gap-3 rounded-full border border-border-card bg-surface px-4 py-2 text-sm text-muted-light"
               >
-                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-sm text-muted-light">OffGrid</span>
-                <span className="text-muted/50" aria-hidden>
-                  ·
-                </span>
-                <span className="text-sm font-medium text-foreground">Link 1</span>
+                <span className="h-2 w-2 rounded-full bg-accent" />
+                OffGrid Link 1
               </motion.div>
 
               <motion.h1
                 variants={fadeInUp}
-                className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
+                className="mt-8 font-display text-5xl font-bold leading-[1.02] tracking-tight md:text-7xl"
               >
                 Link 1
               </motion.h1>
 
               <motion.p
                 variants={fadeInUp}
-                className="text-lg md:text-xl text-muted-light max-w-lg mx-auto lg:mx-0 mb-2 leading-relaxed"
+                className="mt-4 text-xl text-muted-light md:text-2xl"
               >
                 MagSafe LoRa mesh radio
               </motion.p>
 
               <motion.p
                 variants={fadeInUp}
-                className="text-lg md:text-xl text-muted-light max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed"
+                className="mt-6 max-w-xl text-lg leading-relaxed text-muted-light lg:max-w-2xl"
               >
-                From OffGrid: the world&apos;s first MagSafe-compatible LoRa mesh
-                radio—off-grid communication that snaps to your phone and goes
-                wherever you go.
+                The world&apos;s first MagSafe-compatible LoRa mesh radio from
+                OffGrid. It snaps to your phone, carries cleanly, and stays
+                ready for the places where phones still matter but towers do
+                not.
               </motion.p>
 
               <motion.div
                 variants={fadeInUp}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start"
               >
                 <Link1CheckoutButton
                   defaultLabel="Buy Link 1"
                   loadingLabel="Opening Checkout..."
-                  className="px-8 py-4 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center rounded-full bg-accent px-8 py-4 font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
                 />
                 <a
                   href="#features"
-                  className="px-8 py-4 bg-fill-muted border border-border-emphasis rounded-full font-semibold text-foreground hover:bg-fill-hover hover:border-border-emphasis-hover transition-all duration-300"
+                  className="inline-flex items-center justify-center rounded-full border border-border-emphasis bg-surface px-8 py-4 font-semibold text-foreground transition-colors duration-300 hover:border-border-emphasis-hover hover:bg-surface-elevated"
                 >
-                  View Features
+                  Explore features
                 </a>
+              </motion.div>
+
+              <motion.div
+                variants={fadeInUp}
+                className="mt-10 grid gap-4 sm:grid-cols-3"
+              >
+                {heroSignals.map((signal) => (
+                  <div
+                    key={signal.label}
+                    className="rounded-[1.5rem] border border-border-card bg-surface-elevated px-4 py-5 text-left"
+                  >
+                    <p className="text-xs uppercase tracking-[0.24em] text-muted">
+                      {signal.label}
+                    </p>
+                    <p className="mt-2 font-display text-xl font-semibold text-foreground">
+                      {signal.value}
+                    </p>
+                  </div>
+                ))}
               </motion.div>
             </motion.div>
 
             <motion.div
-              style={{ y: heroImageY, opacity: heroOpacity }}
-              className="relative"
+              initial="hidden"
+              animate="visible"
+              variants={scaleIn}
+              className="section-stage rounded-[2.5rem] p-5 md:p-8"
             >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                className="relative"
-              >
-                <div className="absolute inset-0 bg-accent/20 blur-[100px] rounded-full" />
-                <div className="relative animate-float">
-                  <Image
-                    src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
-                    alt="OffGrid Link 1 MagSafe LoRa radio"
-                    width={600}
-                    height={800}
-                    className="relative z-10 rounded-3xl shadow-2xl shadow-black/50"
-                    priority
-                  />
-                </div>
-              </motion.div>
+              <div className="overflow-hidden rounded-[2rem] bg-white p-4 md:p-8">
+                <Image
+                  src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
+                  alt="OffGrid Link 1 MagSafe LoRa radio"
+                  width={900}
+                  height={1100}
+                  className="mx-auto h-auto w-full max-w-[680px]"
+                  priority
+                />
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="relative py-32">
-        <div className="max-w-7xl mx-auto px-6">
+      <section
+        id="features"
+        className="border-b border-border-subtle bg-surface-elevated py-20 md:py-24"
+      >
+        <div className="mx-auto max-w-7xl px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="text-center mb-20"
+            className="mx-auto mb-14 max-w-3xl text-center"
           >
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Never Forget It.
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+              Why Link 1
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+              Never forget it.
               <br />
-              <span className="text-muted">Always Connected.</span>
+              <span className="text-muted">Always connected.</span>
             </h2>
-            <p className="text-lg text-muted-light max-w-2xl mx-auto">
-              Designed to solve a real problem: keeping Link 1 with you, always.
-              No more leaving your mesh radio at home.
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
+              Link 1 is designed around one simple idea: the radio should stay
+              with the phone you already reach for.
             </p>
           </motion.div>
 
@@ -199,21 +191,21 @@ export default function Link1Product() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
             {features.map((feature) => (
               <motion.div
                 key={feature.title}
                 variants={cardVariant}
-                className="group p-8 rounded-3xl glass hover:bg-fill-glass-elevated transition-all duration-300"
+                className="section-card rounded-[2rem] p-8"
               >
-                <div className="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-accent/20 transition-all duration-300">
-                  <span className="text-2xl">{feature.icon}</span>
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/20 bg-accent/10 text-2xl">
+                  {feature.icon}
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-3">
+                <h3 className="mt-6 font-display text-2xl font-semibold">
                   {feature.title}
                 </h3>
-                <p className="text-muted leading-relaxed">
+                <p className="mt-4 text-base leading-relaxed text-muted-light">
                   {feature.description}
                 </p>
               </motion.div>
@@ -222,24 +214,29 @@ export default function Link1Product() {
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section id="gallery" className="relative py-32 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
+      <section
+        id="gallery"
+        className="border-b border-border-subtle bg-background py-20 md:py-24"
+      >
+        <div className="mx-auto max-w-7xl px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="text-center mb-20"
+            className="mx-auto mb-14 max-w-3xl text-center"
           >
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Transparent Design.
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+              Design details
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+              Transparent design.
               <br />
-              <span className="text-muted">Nothing to Hide.</span>
+              <span className="text-muted">No extra styling required.</span>
             </h2>
-            <p className="text-lg text-muted-light max-w-2xl mx-auto">
-              See the technology that keeps you connected. Our transparent back
-              showcases the craftsmanship inside.
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
+              The hardware is part of the product story. Link 1 keeps the build
+              visible instead of burying it in decoration.
             </p>
           </motion.div>
 
@@ -248,94 +245,80 @@ export default function Link1Product() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
-            className="grid md:grid-cols-2 gap-8"
+            className="grid gap-6 md:grid-cols-2"
           >
-            <motion.div variants={fadeInLeft} className="relative group">
-              <div className="overflow-hidden rounded-3xl">
-                <Image
-                  src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009"
-                  alt="OffGrid Link 1 outdoor use"
-                  width={800}
-                  height={1000}
-                  className="w-full h-auto image-hover"
-                />
-              </div>
-              <div className="absolute bottom-6 left-6 right-6 p-6 glass rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="font-display font-semibold">Built for Adventure</p>
-                <p className="text-sm text-muted-light">
-                  Take it anywhere—trails, mountains, or urban exploration.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div variants={fadeInRight} className="relative group">
-              <div className="overflow-hidden rounded-3xl">
-                <Image
-                  src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042"
-                  alt="OffGrid Link 1 detail view"
-                  width={800}
-                  height={1000}
-                  className="w-full h-auto image-hover"
-                />
-              </div>
-              <div className="absolute bottom-6 left-6 right-6 p-6 glass rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="font-display font-semibold">Transparent Beauty</p>
-                <p className="text-sm text-muted-light">
-                  See the RAK board, battery, and antenna that power your
-                  connection.
-                </p>
-              </div>
-            </motion.div>
+            {galleryCards.map((card, index) => (
+              <motion.div
+                key={card.title}
+                variants={index === 0 ? fadeInLeft : fadeInRight}
+                className="section-card overflow-hidden rounded-[2rem]"
+              >
+                <div className="bg-surface-elevated p-5 md:p-8">
+                  <div className="overflow-hidden rounded-[1.5rem] bg-background">
+                    <Image
+                      src={card.image}
+                      alt={card.alt}
+                      width={900}
+                      height={1100}
+                      className="h-auto w-full image-hover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </div>
+                <div className="px-6 pb-8 pt-2 md:px-8">
+                  <p className="text-xs uppercase tracking-[0.24em] text-muted">
+                    {card.kicker}
+                  </p>
+                  <h3 className="mt-3 font-display text-2xl font-semibold">
+                    {card.title}
+                  </h3>
+                  <p className="mt-3 text-base leading-relaxed text-muted-light">
+                    {card.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Specs Section */}
-      <section id="specs" className="relative py-32">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <section
+        id="specs"
+        className="border-b border-border-subtle bg-surface-elevated py-20 md:py-24"
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid items-start gap-8 lg:grid-cols-[0.95fr_1.05fr]">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
               variants={fadeInLeft}
             >
-              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-                Engineered for
-                <br />
-                <span className="text-accent">Off-Grid Excellence</span>
+              <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+                Specifications
+              </p>
+              <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-5xl">
+                Engineered for range, reliability, and carry.
               </h2>
-              <p className="text-lg text-muted-light mb-12">
-                Every component in Link 1 is chosen for reliability, range, and
-                real-world performance. Compatible with Meshtastic and MeshCore
-                firmware.
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-light">
+                Every component in Link 1 is chosen for real-world use. It works
+                with the mesh tools people already trust and keeps the hardware
+                package simple enough to carry daily.
               </p>
 
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={staggerContainer}
-                className="space-y-4"
-              >
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {specs.map((spec) => (
-                  <motion.div
+                  <div
                     key={spec.label}
-                    variants={cardVariant}
-                    className="flex items-center gap-4 p-4 rounded-2xl glass"
+                    className="section-card rounded-[1.5rem] p-5"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
-                      <span className="text-accent font-mono text-sm font-bold">
-                        {spec.icon}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted">{spec.label}</p>
-                      <p className="font-display font-semibold">{spec.value}</p>
-                    </div>
-                  </motion.div>
+                    <p className="text-sm text-muted">{spec.label}</p>
+                    <p className="mt-2 font-display text-xl font-semibold text-foreground">
+                      {spec.value}
+                    </p>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             </motion.div>
 
             <motion.div
@@ -343,54 +326,55 @@ export default function Link1Product() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
               variants={scaleIn}
-              className="relative"
+              className="space-y-6"
             >
-              <div className="absolute inset-0 bg-accent/10 blur-[80px] rounded-full" />
-              <Image
-                src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
-                alt="OffGrid Link 1 hardware specifications"
-                width={600}
-                height={800}
-                className="relative rounded-3xl shadow-2xl shadow-black/50"
-              />
+              <div className="section-stage rounded-[2rem] p-6 md:p-8">
+                <Image
+                  src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
+                  alt="OffGrid Link 1 hardware specifications"
+                  width={900}
+                  height={1100}
+                  className="mx-auto rounded-[1.75rem]"
+                />
+              </div>
+
+              <div className="section-card rounded-[2rem] p-6 md:p-8">
+                <p className="text-xs uppercase tracking-[0.24em] text-muted">
+                  Firmware support
+                </p>
+                <h3 className="mt-3 font-display text-2xl font-semibold">
+                  Built for Meshtastic and MeshCore workflows.
+                </h3>
+                <p className="mt-3 text-base leading-relaxed text-muted-light">
+                  Link 1 fits the setup people already use instead of forcing a
+                  new process just to get on the mesh.
+                </p>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="relative py-32">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="border-b border-border-subtle bg-background py-20 md:py-24">
+        <div className="mx-auto max-w-7xl px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="text-center mb-20"
+            className="mx-auto mb-14 max-w-3xl text-center"
           >
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Don&apos;t Take Our Word.
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+              Customer feedback
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+              Don&apos;t take our word.
               <br />
-              <span className="text-muted">Take Theirs.</span>
+              <span className="text-muted">Take theirs.</span>
             </h2>
-            <div className="flex items-center justify-center gap-3 mt-6">
-              <div className="flex items-center gap-1 text-accent">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <svg
-                    key={i}
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                  </svg>
-                ))}
-              </div>
-              <span className="text-lg text-muted-light font-medium">
-                5.0 from 28+ customers
-              </span>
-            </div>
+            <p className="mt-5 text-lg leading-relaxed text-muted-light">
+              5.0 from 28+ customers
+            </p>
           </motion.div>
 
           <motion.div
@@ -398,15 +382,15 @@ export default function Link1Product() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
             variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
             {testimonials.map((testimonial) => (
               <motion.div
                 key={testimonial.name}
                 variants={cardVariant}
-                className="p-6 rounded-2xl glass hover:bg-fill-glass-elevated transition-all duration-300 flex flex-col"
+                className="section-card flex flex-col rounded-[2rem] p-6"
               >
-                <div className="flex items-center gap-1 text-accent mb-4">
+                <div className="mb-4 flex items-center gap-1 text-accent">
                   {[1, 2, 3, 4, 5].map((i) => (
                     <svg
                       key={i}
@@ -419,44 +403,28 @@ export default function Link1Product() {
                     </svg>
                   ))}
                 </div>
-                <p className="text-foreground/90 leading-relaxed mb-6 flex-1">
+                <p className="mb-6 flex-1 leading-relaxed text-foreground/90">
                   &ldquo;{testimonial.review}&rdquo;
                 </p>
-                {testimonial.image && (
-                  <div className="w-full h-48 rounded-xl overflow-hidden border border-border-subtle mb-4">
+                {testimonial.image ? (
+                  <div className="mb-4 overflow-hidden rounded-[1.25rem] border border-border-subtle">
                     <Image
                       src={testimonial.image}
                       alt={`Review photo from ${testimonial.name}`}
                       width={400}
                       height={300}
-                      className="w-full h-full object-cover"
+                      className="h-48 w-full object-cover"
                     />
                   </div>
-                )}
-                <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
+                ) : null}
+                <div className="flex items-center justify-between border-t border-border-subtle pt-4">
                   <div>
-                    <p className="font-display font-semibold text-sm">
+                    <p className="font-display text-sm font-semibold">
                       {testimonial.name}
                     </p>
-                    <p className="text-xs text-muted mt-0.5">
-                      {testimonial.date}
-                    </p>
+                    <p className="mt-0.5 text-xs text-muted">{testimonial.date}</p>
                   </div>
-                  <div className="flex items-center gap-1 text-xs text-muted">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M20 6L9 17l-5-5" />
-                    </svg>
-                    Verified Buyer
-                  </div>
+                  <span className="text-xs text-muted">Verified buyer</span>
                 </div>
               </motion.div>
             ))}
@@ -464,31 +432,38 @@ export default function Link1Product() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative py-32">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <section className="border-b border-border-subtle bg-surface-elevated py-20 md:py-24">
+        <div className="mx-auto max-w-5xl px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={scaleIn}
-            className="p-12 md:p-16 rounded-[2.5rem] glass-strong relative overflow-hidden"
+            className="section-card rounded-[2.5rem] px-8 py-12 text-center md:px-14 md:py-16"
           >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-accent/10 blur-[120px] rounded-full" />
-            <div className="relative z-10">
-              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-                Ready for Link 1?
-              </h2>
-              <p className="text-lg text-muted-light mb-10 max-w-xl mx-auto">
-                Get OffGrid Link 1 and join the adventurers, preppers, and mesh
-                enthusiasts who stay connected off-grid.
-              </p>
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+              Off-grid ready
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+              Ready for Link 1?
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
+              Get OffGrid Link 1 and keep the radio with the device you already
+              carry.
+            </p>
+            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
               <Link1CheckoutButton
                 defaultLabel="Buy Link 1"
                 loadingLabel="Opening Checkout..."
                 showArrow
-                className="inline-flex items-center gap-3 px-10 py-5 bg-[#F1641E] text-white font-semibold text-lg rounded-full hover:bg-[#D9571A] transition-all duration-300 hover:shadow-xl hover:shadow-[#F1641E]/30 hover:-translate-y-1"
+                className="inline-flex items-center justify-center gap-3 rounded-full bg-accent px-10 py-5 text-lg font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
               />
+              <Link
+                href="/blog/getting-started-with-meshtastic"
+                className="inline-flex items-center justify-center rounded-full border border-border-emphasis bg-surface-elevated px-10 py-5 text-lg font-semibold text-foreground transition-colors duration-300 hover:border-border-emphasis-hover hover:bg-background"
+              >
+                Read setup guide
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -497,52 +472,79 @@ export default function Link1Product() {
   );
 }
 
+const heroSignals = [
+  { label: "Mount", value: "MagSafe" },
+  { label: "Mesh", value: "LoRa" },
+  { label: "Charge", value: "USB-C" },
+];
+
 const features = [
   {
     icon: "🧲",
-    title: "MagSafe Compatible",
+    title: "MagSafe compatible",
     description:
-      "Attaches securely to any MagSafe-compatible phone or case. Link 1 goes where your phone goes—no more forgetting your radio at home.",
+      "Attaches securely to MagSafe-compatible phones and cases so Link 1 stays with the device you already carry.",
   },
   {
     icon: "📡",
-    title: "Long-Range LoRa",
+    title: "Long-range LoRa",
     description:
-      "Communicate miles away without cell service. LoRa technology provides reliable, long-range communication in any environment.",
+      "Communicate miles away without cell service using LoRa mesh networking built for low-power, off-grid use.",
   },
   {
     icon: "🔋",
-    title: "All-Day Battery",
+    title: "All-day battery",
     description:
-      "Built-in rechargeable battery keeps you connected throughout your adventures. Charge via USB-C when you're back at base.",
+      "A rechargeable internal battery and USB-C charging make Link 1 simple to top off before the next trip.",
   },
   {
     icon: "👁️",
-    title: "Transparent Design",
+    title: "Transparent shell",
     description:
-      "See the tech inside through our frosted transparent back. The RAK board, battery, and antenna—all visible, all beautiful.",
+      "The enclosure shows the board, battery, and antenna instead of hiding the hardware behind unnecessary styling.",
   },
   {
     icon: "⚙️",
-    title: "Dual Firmware Support",
+    title: "Dual firmware support",
     description:
-      "Run Meshtastic or MeshCore firmware. Choose the platform that fits your needs—or switch between them.",
+      "Run Meshtastic or MeshCore depending on the workflow you already use and the network you want to join.",
   },
   {
     icon: "🌐",
-    title: "Mesh Networking",
+    title: "Mesh networking",
     description:
-      "Connect with others on the network. Messages hop between devices, extending range and creating resilient communication.",
+      "Messages hop between devices, extending range and building a more resilient communication network as more nodes join.",
+  },
+];
+
+const galleryCards = [
+  {
+    kicker: "Daily carry",
+    title: "Built for the phone, not the backpack.",
+    description:
+      "Link 1 snaps to the device you already reach for, so you don't have to remember a separate radio before heading out.",
+    image:
+      "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
+    alt: "OffGrid Link 1 outdoor use",
+  },
+  {
+    kicker: "Visible internals",
+    title: "The hardware stays part of the experience.",
+    description:
+      "The transparent shell makes the engineering visible and keeps the product looking as technical as it actually is.",
+    image:
+      "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
+    alt: "OffGrid Link 1 detail view",
   },
 ];
 
 const specs = [
-  { icon: "RAK", label: "Core Module", value: "RAK WisBlock System" },
-  { icon: "BT", label: "Connectivity", value: "Bluetooth 5.0 + LoRa" },
-  { icon: "mAh", label: "Battery", value: "Rechargeable Li-Po" },
-  { icon: "km", label: "Range", value: "Up to 10+ km line of sight" },
-  { icon: "USB", label: "Charging", value: "USB-C Fast Charging" },
-  { icon: "3D", label: "Enclosure", value: "Custom 3D Printed + MagSafe" },
+  { label: "Core module", value: "RAK WisBlock System" },
+  { label: "Connectivity", value: "Bluetooth 5.0 + LoRa" },
+  { label: "Battery", value: "Rechargeable Li-Po" },
+  { label: "Range", value: "Up to 10+ km line of sight" },
+  { label: "Charging", value: "USB-C fast charging" },
+  { label: "Firmware", value: "Meshtastic or MeshCore" },
 ];
 
 const testimonials = [
@@ -563,8 +565,7 @@ const testimonials = [
   {
     name: "Christopher",
     date: "February 2026",
-    review:
-      "Great product, even included a personal handwritten note.",
+    review: "Great product, even included a personal handwritten note.",
     image: "/reviews/christopher-review.webp",
   },
   {

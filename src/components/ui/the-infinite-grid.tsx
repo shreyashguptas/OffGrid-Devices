@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useRef, useEffect, useId } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   motion,
-  useMotionValue,
-  useMotionTemplate,
   useAnimationFrame,
+  useMotionTemplate,
+  useMotionValue,
   type MotionValue,
 } from "framer-motion";
 
@@ -14,11 +14,6 @@ type InfiniteGridBackgroundProps = {
   className?: string;
 };
 
-/**
- * Animated grid + cursor-follow mask + gradient blobs.
- * Mount inside a `relative` section; uses the section (parent) for pointer tracking
- * so the mask updates when moving over stacked hero content.
- */
 export function InfiniteGridBackground({
   className,
 }: InfiniteGridBackgroundProps) {
@@ -27,27 +22,23 @@ export function InfiniteGridBackground({
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
   const gridOffsetX = useMotionValue(0);
   const gridOffsetY = useMotionValue(0);
-  const [isLowMotionMode, setIsLowMotionMode] = React.useState(false);
-
-  const speedX = 0.5;
-  const speedY = 0.5;
+  const [isLowMotionMode, setIsLowMotionMode] = useState(false);
 
   useAnimationFrame(() => {
     if (isLowMotionMode) {
       return;
     }
-    const currentX = gridOffsetX.get();
-    const currentY = gridOffsetY.get();
-    gridOffsetX.set((currentX + speedX) % 40);
-    gridOffsetY.set((currentY + speedY) % 40);
+
+    gridOffsetX.set((gridOffsetX.get() + 0.5) % 40);
+    gridOffsetY.set((gridOffsetY.get() + 0.5) % 40);
   });
 
   useEffect(() => {
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const compactViewportQuery = window.matchMedia("(max-width: 768px)");
+
     const updateMode = () => {
       setIsLowMotionMode(
         reducedMotionQuery.matches || compactViewportQuery.matches,
@@ -57,6 +48,7 @@ export function InfiniteGridBackground({
     updateMode();
     reducedMotionQuery.addEventListener("change", updateMode);
     compactViewportQuery.addEventListener("change", updateMode);
+
     return () => {
       reducedMotionQuery.removeEventListener("change", updateMode);
       compactViewportQuery.removeEventListener("change", updateMode);
@@ -66,25 +58,36 @@ export function InfiniteGridBackground({
   useEffect(() => {
     const root = rootRef.current;
     const bounds = root?.parentElement;
-    if (!bounds) return;
+
+    if (!bounds) {
+      return;
+    }
 
     let raf = 0;
-    const handlePointerMove = (e: PointerEvent) => {
+    const rect = bounds.getBoundingClientRect();
+    mouseX.set(rect.width / 2);
+    mouseY.set(rect.height / 2);
+
+    const handlePointerMove = (event: PointerEvent) => {
       if (isLowMotionMode || raf) {
         return;
       }
+
       raf = requestAnimationFrame(() => {
-        const rect = bounds.getBoundingClientRect();
-        mouseX.set(e.clientX - rect.left);
-        mouseY.set(e.clientY - rect.top);
+        const nextRect = bounds.getBoundingClientRect();
+        mouseX.set(event.clientX - nextRect.left);
+        mouseY.set(event.clientY - nextRect.top);
         raf = 0;
       });
     };
 
     bounds.addEventListener("pointermove", handlePointerMove, { passive: true });
+
     return () => {
       bounds.removeEventListener("pointermove", handlePointerMove);
-      if (raf) cancelAnimationFrame(raf);
+      if (raf) {
+        cancelAnimationFrame(raf);
+      }
     };
   }, [isLowMotionMode, mouseX, mouseY]);
 
@@ -96,15 +99,16 @@ export function InfiniteGridBackground({
       className={cn("pointer-events-none overflow-hidden", className)}
       aria-hidden
     >
-      <div className="absolute inset-0 z-0 opacity-[0.05]">
+      <div className="absolute inset-0 z-0 opacity-[0.035]">
         <GridPattern
           patternId={`grid-pattern-faint-${patternId}`}
           offsetX={gridOffsetX}
           offsetY={gridOffsetY}
         />
       </div>
+
       <motion.div
-        className="absolute inset-0 z-0 opacity-40"
+        className="absolute inset-0 z-0 opacity-25"
         style={{ maskImage, WebkitMaskImage: maskImage }}
       >
         <GridPattern
@@ -115,9 +119,9 @@ export function InfiniteGridBackground({
       </motion.div>
 
       <div className="absolute inset-0 z-0">
-        <div className="absolute right-[-20%] top-[-20%] h-[40%] w-[40%] rounded-full bg-orange-500/40 blur-[120px] dark:bg-orange-600/20" />
-        <div className="absolute right-[10%] top-[-10%] h-[20%] w-[20%] rounded-full bg-primary/30 blur-[100px]" />
-        <div className="absolute bottom-[-20%] left-[-10%] h-[40%] w-[40%] rounded-full bg-blue-500/40 blur-[120px] dark:bg-blue-600/20" />
+        <div className="absolute right-[-20%] top-[-20%] h-[40%] w-[40%] rounded-full bg-orange-300/10 blur-[120px]" />
+        <div className="absolute right-[10%] top-[-10%] h-[20%] w-[20%] rounded-full bg-primary/8 blur-[100px]" />
+        <div className="absolute bottom-[-20%] left-[-10%] h-[40%] w-[40%] rounded-full bg-sky-300/10 blur-[120px]" />
       </div>
     </div>
   );

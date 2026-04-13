@@ -20,7 +20,7 @@ const products = [
     subtitle: "OffGrid · Next in the Link line",
     href: "/products/link-2",
     image: null,
-    badge: "New",
+    badge: "Coming soon",
   },
 ];
 
@@ -121,12 +121,14 @@ function NavbarContent() {
       transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out"
       style={{
-        padding: isScrolled ? "1rem 0" : "1.5rem 0",
+        padding: isScrolled ? "0.75rem 0" : "1rem 0",
         backgroundColor: isScrolled
           ? "var(--app-nav-scrolled)"
           : "transparent",
-        backdropFilter: isScrolled ? "blur(20px)" : "none",
-        WebkitBackdropFilter: isScrolled ? "blur(20px)" : "none",
+        backdropFilter: isScrolled ? "saturate(180%) blur(18px)" : "none",
+        WebkitBackdropFilter: isScrolled
+          ? "saturate(180%) blur(18px)"
+          : "none",
         borderBottom: isScrolled
           ? "1px solid var(--app-border-subtle)"
           : "1px solid transparent",
@@ -134,7 +136,7 @@ function NavbarContent() {
     >
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="group flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl overflow-hidden group-hover:ring-2 group-hover:ring-accent/30 transition-all duration-300">
+          <div className="w-10 h-10 rounded-xl overflow-hidden transition-all duration-300 group-hover:opacity-90">
             <Image
               src="/logo-512.png"
               alt="OffGrid Logo"
@@ -150,7 +152,7 @@ function NavbarContent() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-7">
           {/* Products Dropdown */}
           <div
             className="relative"
@@ -158,7 +160,7 @@ function NavbarContent() {
             onMouseLeave={handleMouseLeave}
           >
             <button
-              className="flex items-center gap-1.5 text-muted-light hover:text-foreground transition-colors duration-300 link-underline"
+              className="flex items-center gap-1.5 text-sm text-muted-light hover:text-foreground transition-colors duration-300"
               onClick={() => setIsProductsOpen(!isProductsOpen)}
             >
               Products
@@ -189,7 +191,7 @@ function NavbarContent() {
                   className="absolute left-1/2 -translate-x-1/2 top-full mt-4 w-80"
                 >
                   <div
-                    className="rounded-2xl p-2 shadow-2xl shadow-black/20 border border-border-subtle"
+                    className="media-shadow rounded-2xl border border-border-subtle p-2"
                     style={{
                       background: "var(--app-dropdown)",
                       backdropFilter: "blur(40px)",
@@ -232,7 +234,7 @@ function NavbarContent() {
                               {product.name}
                             </span>
                             {product.badge && (
-                              <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                              <span className="rounded-full border border-orange-500/30 bg-orange-500/20 px-2 py-0.5 text-[10px] font-bold tracking-[0.08em] text-orange-400">
                                 {product.badge}
                               </span>
                             )}
@@ -266,14 +268,14 @@ function NavbarContent() {
 
           <Link
             href="/blog"
-            className="text-muted-light hover:text-foreground transition-colors duration-300 link-underline"
+            className="text-sm text-muted-light hover:text-foreground transition-colors duration-300"
           >
             Blog
           </Link>
           <Link1CheckoutButton
             defaultLabel="Buy Link 1"
             loadingLabel="Opening Checkout..."
-            className="px-6 py-2.5 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 border border-accent-light/50"
+            className="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
           />
         </div>
 
@@ -311,7 +313,7 @@ function NavbarContent() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden glass-strong mt-2 mx-4 rounded-2xl overflow-hidden"
+            className="md:hidden glass-strong mt-2 mx-4 overflow-hidden rounded-[1.75rem]"
           >
             <div className="p-6 flex flex-col gap-4">
               {/* Products Expandable */}

@@ -3,15 +3,16 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { startTransition, useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { InfiniteGridBackground } from "@/components/ui/the-infinite-grid";
+import { ZoomParallax } from "@/components/ui/zoom-parallax";
 import {
   TestimonialsV2Section,
   type TestimonialV2Item,
 } from "@/components/ui/testimonial-v2";
 
-// Smoother animation variants with transitions included
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: {
@@ -49,7 +50,7 @@ const fadeInRight = {
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.95 },
+  hidden: { opacity: 0, scale: 0.97 },
   visible: {
     opacity: 1,
     scale: 1,
@@ -99,69 +100,39 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative flex flex-col pb-24 md:pb-32">
-        {/* Background gradient */}
-        <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-radial from-accent/5 via-transparent to-transparent" />
-
+      <section className="relative overflow-hidden border-b border-border-subtle bg-background pt-6 pb-8 md:pt-8 md:pb-12">
         <InfiniteGridBackground className="absolute inset-0 z-0" />
 
-        {/* Fade hero decorations into solid page bg so the card shadow does not sit on a hard backdrop change at the section edge */}
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-44 bg-gradient-to-b from-transparent via-background/55 to-background md:h-56 md:via-background/65"
-          aria-hidden
-        />
-
-        <div className="relative z-10">
+        <div className="relative z-10 mx-auto max-w-7xl px-6">
           <ContainerScroll
             titleComponent={
               <motion.div
                 initial="hidden"
                 animate="visible"
                 variants={staggerContainer}
+                className="mx-auto max-w-4xl text-center"
               >
+                <motion.p
+                  variants={fadeInUp}
+                  className="font-display text-3xl font-semibold tracking-tight text-foreground md:text-5xl"
+                >
+                  Link 1
+                </motion.p>
+
                 <motion.h1
                   variants={fadeInUp}
-                  className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-5"
+                  className="mt-4 font-display text-5xl font-bold leading-[1.02] tracking-tight md:text-7xl"
                 >
                   Stay Connected.
                   <br />
-                  <span className="gradient-text">Go Anywhere.</span>
+                  <span className="text-muted">Go Anywhere.</span>
                 </motion.h1>
 
-                <motion.p
-                  variants={fadeInUp}
-                  className="text-base md:text-lg text-muted-light max-w-md mx-auto mb-8 leading-snug"
-                >
-                  <span className="text-foreground font-medium">
-                    OffGrid Link 1
-                  </span>{" "}
-                  is the world&apos;s first MagSafe-compatible LoRa mesh
-                  radio—built to stay on the phone you never leave behind.
-                </motion.p>
-
                 <motion.div
                   variants={fadeInUp}
-                  className="flex flex-col sm:flex-row gap-4 justify-center"
+                  className="mt-6 flex justify-center"
                 >
-                  <Link1CheckoutButton
-                    defaultLabel="Buy now"
-                    className="px-8 py-4 bg-accent text-on-accent font-semibold rounded-full hover:bg-accent-light transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
-                  />
-                  <a
-                    href="/products/link-1"
-                    className="px-8 py-4 bg-fill-muted border border-border-emphasis rounded-full font-semibold text-foreground hover:bg-fill-hover hover:border-border-emphasis-hover transition-all duration-300"
-                  >
-                    Learn more
-                  </a>
-                </motion.div>
-
-                {/* Social proof: stacked reviewer faces + caption (compact trust pill) */}
-                <motion.div
-                  variants={fadeInUp}
-                  className="mt-8 flex justify-center"
-                >
-                  <div className="flex items-center rounded-full border border-border bg-background px-1.5 py-1.5 sm:px-2 sm:py-2 shadow shadow-black/5">
+                  <div className="surface-shadow flex items-center rounded-full border border-border bg-surface px-1.5 py-1.5 sm:px-2 sm:py-2">
                     <div className="flex -space-x-2">
                       {reviewerAvatars.map((avatar) =>
                         avatar.image ? (
@@ -171,12 +142,12 @@ export default function Home() {
                             alt={avatar.name}
                             width={28}
                             height={28}
-                            className="size-7 rounded-full ring-2 ring-background object-cover"
+                            className="size-7 rounded-full ring-2 ring-surface object-cover"
                           />
                         ) : (
                           <div
                             key={avatar.name}
-                            className="flex size-7 shrink-0 items-center justify-center rounded-full bg-surface-elevated text-[11px] font-semibold text-muted-light ring-2 ring-background"
+                            className="flex size-7 shrink-0 items-center justify-center rounded-full bg-surface-elevated text-[11px] font-semibold text-muted-light ring-2 ring-surface"
                             aria-hidden
                           >
                             {avatar.initials}
@@ -184,122 +155,168 @@ export default function Home() {
                         ),
                       )}
                     </div>
-                    <p className="px-2.5 text-sm text-muted-foreground sm:px-3">
+                    <p className="px-2.5 text-sm text-muted sm:px-3">
                       Loved by{" "}
-                      <strong className="font-medium text-foreground">
-                        28+
-                      </strong>{" "}
+                      <strong className="font-medium text-foreground">28+</strong>{" "}
                       customers.
                     </p>
                   </div>
                 </motion.div>
               </motion.div>
             }
+            footerComponent={
+              <Link1CheckoutButton
+                defaultLabel="Buy"
+                className="inline-flex items-center justify-center rounded-full bg-accent px-8 py-3 text-base font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
+              />
+            }
           >
-            <Image
-              src="/products/link1-hero-v1.png"
-              alt="OffGrid Link 1 MagSafe LoRa radio hero image"
-              height={1024}
-              width={1536}
-              className="mx-auto h-full w-full rounded-2xl bg-black object-contain object-center"
-              draggable={false}
-              priority
-            />
+            <div className="hero-media-frame relative h-full w-full">
+              <Image
+                src="/products/link1-hero-v1.png"
+                alt="OffGrid Link 1 MagSafe LoRa radio hero image"
+                height={1024}
+                width={1536}
+                className="mx-auto h-full w-full object-contain object-center"
+                draggable={false}
+                priority
+              />
+            </div>
           </ContainerScroll>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="relative py-32">
-        {/* Top wash matches page bg so the first paint layer is not a hard line under the hero */}
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-32 bg-gradient-to-b from-background to-transparent md:h-40"
-          aria-hidden
-        />
-        <div className="absolute inset-x-0 top-24 z-0 h-64 bg-accent/10 blur-3xl pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="border-b border-border-subtle bg-background py-20 md:py-24">
+        <div className="mx-auto max-w-7xl px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="text-center mb-16"
+            className="mx-auto mb-14 max-w-3xl text-center"
           >
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+              Product details
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+              A closer look at Link 1.
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
+              This section is ready for your detail shots, in-hand photos, and
+              hardware closeups. Drop images into the named paths and they will
+              replace the placeholders automatically.
+            </p>
+          </motion.div>
+        </div>
+
+        <ZoomParallax images={parallaxImages} />
+      </section>
+
+      <section
+        id="features"
+        className="border-b border-border-subtle bg-surface-elevated py-20 md:py-24"
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="mx-auto mb-12 max-w-3xl text-center"
+          >
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+              Product story
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
               Snaps On.
               <br />
               <span className="text-muted">Stays With You.</span>
             </h2>
-            <p className="text-lg text-muted-light max-w-2xl mx-auto">
-              Link 1 belongs on the phone you already never leave behind—so your
-              mesh radio is always in reach.
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
+              Link 1 belongs on the phone you already never leave behind, so
+              your mesh radio is always in reach.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-stretch">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+            className="mb-8 grid gap-4 sm:grid-cols-3"
+          >
+            {quickSignals.map((signal) => (
+              <motion.div
+                key={signal.label}
+                variants={cardVariant}
+                className="section-card rounded-[1.75rem] p-5"
+              >
+                <p className="text-xs uppercase tracking-[0.24em] text-muted">
+                  {signal.label}
+                </p>
+                <p className="mt-2 font-display text-2xl font-semibold text-foreground">
+                  {signal.value}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <div className="grid items-stretch gap-8 lg:grid-cols-[1.05fr_0.95fr]">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
               variants={fadeInLeft}
-              className="relative min-h-[560px] overflow-hidden rounded-[2rem] border border-border-card bg-fill-glass"
+              className="section-card rounded-[2rem] p-5 md:p-6"
             >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentFeature.title}
-                  initial={{ opacity: 0, scale: 1.04 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={currentFeature.image}
-                    alt={currentFeature.alt}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/35" />
-                </motion.div>
-              </AnimatePresence>
-
-              <div className="absolute left-6 top-6 z-10 inline-flex items-center gap-2 rounded-full border border-white/20 bg-overlay-badge px-4 py-2 backdrop-blur-xl">
-                <span className="text-sm text-white">{currentFeature.icon}</span>
-                <span className="text-xs uppercase tracking-[0.24em] text-white/75">
-                  Feature Tour
-                </span>
+              <div className="overflow-hidden rounded-[1.75rem] bg-background">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentFeature.title}
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.45 }}
+                    className="relative aspect-[4/5] sm:aspect-[5/4]"
+                  >
+                    <Image
+                      src={currentFeature.image}
+                      alt={currentFeature.alt}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 60vw"
+                      className="object-cover"
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={`${currentFeature.title}-overlay`}
-                  initial={{ opacity: 0, y: 18 }}
+                  key={`${currentFeature.title}-copy`}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 12 }}
-                  transition={{ duration: 0.45 }}
-                  className="absolute inset-x-6 bottom-6 z-10"
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 0.35 }}
+                  className="mt-6"
                 >
-                  <div className="max-w-xl rounded-[1.75rem] border border-white/15 bg-overlay-card p-6 backdrop-blur-xl">
-                    <p className="mb-3 text-xs uppercase tracking-[0.28em] text-accent-light">
-                      {currentFeature.kicker}
-                    </p>
-                    <h3 className="font-display text-3xl md:text-4xl font-semibold leading-tight text-white">
-                      {currentFeature.title}
-                    </h3>
-                    <p className="mt-3 max-w-md text-base text-white/80 leading-relaxed">
-                      {currentFeature.description}
-                    </p>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {currentFeature.chips.map((chip) => (
-                        <span
-                          key={chip}
-                          className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white/95"
-                        >
-                          {chip}
-                        </span>
-                      ))}
-                    </div>
+                  <p className="text-xs uppercase tracking-[0.28em] text-muted">
+                    {currentFeature.kicker}
+                  </p>
+                  <h3 className="mt-3 font-display text-3xl font-semibold leading-tight md:text-4xl">
+                    {currentFeature.title}
+                  </h3>
+                  <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-light">
+                    {currentFeature.description}
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {currentFeature.chips.map((chip) => (
+                      <span
+                        key={chip}
+                        className="rounded-full border border-border-card bg-surface-elevated px-3 py-1.5 text-sm text-muted"
+                      >
+                        {chip}
+                      </span>
+                    ))}
                   </div>
                 </motion.div>
               </AnimatePresence>
@@ -310,295 +327,266 @@ export default function Home() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
               variants={fadeInRight}
-              className="flex flex-col gap-4"
+              className="section-card rounded-[2rem] p-6 md:p-8"
             >
-              <div className="rounded-[2rem] border border-border-card bg-fill-glass p-6 md:p-8">
-                <div className="mb-6 flex items-center justify-between gap-4">
-                  <div>
-                    <p className="text-sm uppercase tracking-[0.22em] text-muted">
-                      Quick view
-                    </p>
-                    <p className="mt-2 text-base text-muted-light">
-                      The essentials, without the spec sheet. Tap a card, or let
-                      it rotate on its own.
-                    </p>
-                  </div>
-                  <div className="rounded-full border border-border-card px-4 py-2 text-sm font-mono text-muted-light">
-                    {String(activeFeature + 1).padStart(2, "0")} /{" "}
-                    {String(featureHighlights.length).padStart(2, "0")}
-                  </div>
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-sm uppercase tracking-[0.22em] text-muted">
+                    Quick view
+                  </p>
+                  <p className="mt-2 max-w-md text-base leading-relaxed text-muted-light">
+                    The essentials, without the spec sheet. Tap a card, or let
+                    it rotate on its own.
+                  </p>
                 </div>
-
-                <div className="space-y-3">
-                  {featureHighlights.map((feature, index) => {
-                    const isActive = index === activeFeature;
-
-                    return (
-                      <button
-                        key={feature.title}
-                        type="button"
-                        onClick={() =>
-                          startTransition(() => {
-                            setActiveFeature(index);
-                          })
-                        }
-                        className={`w-full rounded-[1.5rem] border px-4 py-4 text-left transition-all duration-300 ${
-                          isActive
-                            ? "border-accent/40 bg-accent/10 shadow-lg shadow-accent/10"
-                            : "border-border-subtle bg-fill-glass-2 hover:bg-fill-glass-elevated"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between gap-4">
-                          <div className="flex items-center gap-3">
-                            <div
-                              className={`flex h-11 w-11 items-center justify-center rounded-2xl border text-lg transition-colors ${
-                                isActive
-                                  ? "border-accent/30 bg-accent/[0.15]"
-                                  : "border-border-card bg-fill-glass-elevated"
-                              }`}
-                            >
-                              {feature.icon}
-                            </div>
-                            <div>
-                              <p className="font-display text-lg font-semibold">
-                                {feature.tab}
-                              </p>
-                              <p className="text-sm text-muted-light">
-                                {feature.caption}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-mono text-muted">
-                              {String(index + 1).padStart(2, "0")}
-                            </span>
-                            <span
-                              className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                                isActive ? "bg-accent" : "bg-fill-muted"
-                              }`}
-                            />
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
+                <div className="rounded-full border border-border-card bg-surface-elevated px-4 py-2 text-sm font-mono text-muted">
+                  {String(activeFeature + 1).padStart(2, "0")} /{" "}
+                  {String(featureHighlights.length).padStart(2, "0")}
                 </div>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-3">
-                {quickSignals.map((signal) => (
-                  <div
-                    key={signal.label}
-                    className="rounded-[1.5rem] border border-border-card bg-fill-glass p-4"
-                  >
-                    <p className="text-xs uppercase tracking-[0.24em] text-muted">
-                      {signal.label}
-                    </p>
-                    <p className="mt-2 font-display text-xl font-semibold">
-                      {signal.value}
-                    </p>
-                  </div>
-                ))}
+              <div className="space-y-3">
+                {featureHighlights.map((feature, index) => {
+                  const isActive = index === activeFeature;
+
+                  return (
+                    <button
+                      key={feature.title}
+                      type="button"
+                      onClick={() =>
+                        startTransition(() => {
+                          setActiveFeature(index);
+                        })
+                      }
+                      className={`w-full rounded-[1.5rem] border px-4 py-4 text-left transition-all duration-300 ${
+                        isActive
+                          ? "border-accent/30 bg-accent/10 shadow-sm shadow-accent/10"
+                          : "border-border-subtle bg-surface hover:bg-surface-elevated"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`flex h-11 w-11 items-center justify-center rounded-2xl border text-lg ${
+                              isActive
+                                ? "border-accent/25 bg-accent/10"
+                                : "border-border-card bg-surface-elevated"
+                            }`}
+                          >
+                            {feature.icon}
+                          </div>
+                          <div>
+                            <p className="font-display text-lg font-semibold text-foreground">
+                              {feature.tab}
+                            </p>
+                            <p className="text-sm text-muted-light">
+                              {feature.caption}
+                            </p>
+                          </div>
+                        </div>
+                        <span
+                          className={`h-2.5 w-2.5 rounded-full ${
+                            isActive ? "bg-accent" : "bg-border-card"
+                          }`}
+                        />
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section id="gallery" className="relative py-32 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
+      <section
+        id="gallery"
+        className="border-b border-border-subtle bg-background py-20 md:py-24"
+      >
+        <div className="mx-auto max-w-7xl px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="text-center mb-20"
+            className="mx-auto mb-14 max-w-3xl text-center"
           >
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+              Hardware
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
               Transparent Design.
               <br />
               <span className="text-muted">Nothing to Hide.</span>
             </h2>
-            <p className="text-lg text-muted-light max-w-2xl mx-auto">
-              See the technology that keeps you connected. Our transparent back
-              showcases the craftsmanship inside.
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
+              See the technology that keeps you connected. The enclosure shows
+              the hardware instead of hiding it behind effects.
             </p>
           </motion.div>
 
-          {/* Gallery grid */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
-            className="grid md:grid-cols-2 gap-8"
+            className="grid gap-6 md:grid-cols-2"
           >
-            <motion.div variants={fadeInLeft} className="relative group">
-              <div className="overflow-hidden rounded-3xl">
-                <Image
-                  src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009"
-                  alt="OffGrid Link 1 outdoor use"
-                  width={800}
-                  height={1000}
-                  className="w-full h-auto image-hover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-              <div className="absolute bottom-6 left-6 right-6 p-6 glass rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="font-display font-semibold">Built for Adventure</p>
-                <p className="text-sm text-muted-light">
-                  Take it anywhere—trails, mountains, or urban exploration.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div variants={fadeInRight} className="relative group">
-              <div className="overflow-hidden rounded-3xl">
-                <Image
-                  src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042"
-                  alt="OffGrid Link 1 detail view"
-                  width={800}
-                  height={1000}
-                  className="w-full h-auto image-hover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-              <div className="absolute bottom-6 left-6 right-6 p-6 glass rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="font-display font-semibold">Transparent Beauty</p>
-                <p className="text-sm text-muted-light">
-                  See the RAK board, battery, and antenna that power your
-                  connection.
-                </p>
-              </div>
-            </motion.div>
+            {galleryCards.map((card, index) => (
+              <motion.div
+                key={card.title}
+                variants={index === 0 ? fadeInLeft : fadeInRight}
+                className="section-card overflow-hidden rounded-[2rem]"
+              >
+                <div className="bg-surface-elevated p-5 md:p-8">
+                  <div className="overflow-hidden rounded-[1.5rem] bg-background">
+                    <Image
+                      src={card.image}
+                      alt={card.alt}
+                      width={900}
+                      height={1100}
+                      className="h-auto w-full image-hover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </div>
+                <div className="px-6 pb-8 pt-2 md:px-8">
+                  <p className="text-xs uppercase tracking-[0.24em] text-muted">
+                    {card.kicker}
+                  </p>
+                  <h3 className="mt-3 font-display text-2xl font-semibold">
+                    {card.title}
+                  </h3>
+                  <p className="mt-3 text-base leading-relaxed text-muted-light">
+                    {card.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Specs Section */}
-      <section id="specs" className="relative py-32">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={fadeInLeft}
-            >
-              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-                Engineered for
-                <br />
-                <span className="text-accent">Off-Grid Excellence</span>
-              </h2>
-              <p className="text-lg text-muted-light mb-12">
-                Every component in Link 1 is chosen for reliability, range, and
-                real-world performance. Compatible with Meshtastic and MeshCore
-                firmware.
-              </p>
-
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={staggerContainer}
-                className="space-y-4"
-              >
-                {specs.map((spec) => (
-                  <motion.div
-                    key={spec.label}
-                    variants={cardVariant}
-                    className="flex items-center gap-4 p-4 rounded-2xl glass"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
-                      <span className="text-accent font-mono text-sm font-bold">
-                        {spec.icon}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted">{spec.label}</p>
-                      <p className="font-display font-semibold">{spec.value}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-
+      <section
+        id="specs"
+        className="border-b border-border-subtle bg-surface-elevated py-20 md:py-24"
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr]">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
               variants={scaleIn}
-              className="relative"
+              className="section-stage rounded-[2rem] p-6 md:p-8"
             >
-              <div className="absolute inset-0 bg-accent/10 blur-[80px] rounded-full" />
               <Image
                 src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037"
                 alt="OffGrid Link 1 specifications"
-                width={600}
-                height={800}
-                className="relative rounded-3xl shadow-2xl shadow-black/50"
+                width={800}
+                height={1000}
+                className="mx-auto rounded-[1.75rem]"
               />
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={fadeInRight}
+            >
+              <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+                Specifications
+              </p>
+              <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-5xl">
+                Engineered for the real world.
+              </h2>
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-light">
+                Every component in Link 1 is chosen for range, reliability, and
+                everyday carry. The experience stays simple; the hardware does
+                not.
+              </p>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {specs.map((spec) => (
+                  <div
+                    key={spec.label}
+                    className="section-card rounded-[1.5rem] p-5"
+                  >
+                    <p className="text-sm text-muted">{spec.label}</p>
+                    <p className="mt-2 font-display text-xl font-semibold text-foreground">
+                      {spec.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      <TestimonialsV2Section
-        badge="Reviews"
-        title="Don't take our word. Take theirs."
-        description="Real feedback from Link 1 owners—MagSafe carry, mesh range, and support that shows up."
-        items={testimonialV2Items}
-        headerExtra={
-          <>
-            <div className="flex items-center justify-center gap-1 text-accent">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <svg
-                  key={i}
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-              ))}
-            </div>
-            <span className="text-lg text-muted-light font-medium">
-              5.0 from 28+ customers
-            </span>
-          </>
-        }
-      />
+      <section className="border-b border-border-subtle bg-background">
+        <TestimonialsV2Section
+          badge="Reviews"
+          title="Don't take our word. Take theirs."
+          description="Real feedback from Link 1 owners: MagSafe carry, mesh range, and support that shows up."
+          items={testimonialV2Items}
+          headerExtra={
+            <>
+              <div className="flex items-center justify-center gap-1 text-accent">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <svg
+                    key={i}
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden
+                  >
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="text-lg font-medium text-muted-light">
+                5.0 from 28+ customers
+              </span>
+            </>
+          }
+        />
+      </section>
 
-      {/* CTA Section */}
-      <section className="relative py-32">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <section className="border-b border-border-subtle bg-surface-elevated py-20 md:py-24">
+        <div className="mx-auto max-w-5xl px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={scaleIn}
-            className="p-12 md:p-16 rounded-[2.5rem] glass-strong relative overflow-hidden"
+            className="section-card rounded-[2.5rem] px-8 py-12 text-center md:px-14 md:py-16"
           >
-            {/* Background glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-accent/10 blur-[120px] rounded-full" />
-
-            <div className="relative z-10">
-              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-                Ready for OffGrid Link 1?
-              </h2>
-              <p className="text-lg text-muted-light mb-10 max-w-xl mx-auto">
-                Pick up OffGrid Link 1 and join the adventurers, preppers, and
-                mesh enthusiasts who stay connected off-grid.
-              </p>
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+              Ready when you are
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+              Ready for OffGrid Link 1?
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
+              Pick up OffGrid Link 1 and join the adventurers, preppers, and
+              mesh enthusiasts who stay connected off-grid.
+            </p>
+            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
               <Link1CheckoutButton
                 defaultLabel="Buy Link 1"
                 loadingLabel="Opening Checkout..."
                 showArrow
-                className="inline-flex items-center gap-3 px-10 py-5 bg-[#F1641E] text-white font-semibold text-lg rounded-full hover:bg-[#D9571A] transition-all duration-300 hover:shadow-xl hover:shadow-[#F1641E]/30 hover:-translate-y-1"
+                className="inline-flex items-center justify-center gap-3 rounded-full bg-accent px-10 py-5 text-lg font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
               />
+              <Link
+                href="/blog"
+                className="inline-flex items-center justify-center rounded-full border border-border-emphasis bg-surface-elevated px-10 py-5 text-lg font-semibold text-foreground transition-colors duration-300 hover:border-border-emphasis-hover hover:bg-background"
+              >
+                Read the blog
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -607,7 +595,6 @@ export default function Home() {
   );
 }
 
-// Data
 const reviewerAvatars = [
   { name: "Jesus", image: "/reviewers/jesus.jpg", initials: null },
   { name: "Brazen", image: "/reviewers/brazen.webp", initials: null },
@@ -615,6 +602,7 @@ const reviewerAvatars = [
   { name: "John", image: null, initials: "J" },
   { name: "Bob", image: null, initials: "B" },
 ];
+
 const featureHighlights = [
   {
     icon: "🧲",
@@ -623,7 +611,7 @@ const featureHighlights = [
     tab: "MagSafe carry",
     caption: "Link 1 follows the phone.",
     description:
-      "MagSafe puts Link 1 on the phone you already carry—so the radio isn’t something you remember later.",
+      "MagSafe puts Link 1 on the phone you already carry, so the radio is with you when you actually need it.",
     chips: ["MagSafe", "No loose gear"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
@@ -636,7 +624,7 @@ const featureHighlights = [
     tab: "LoRa range",
     caption: "Built for places without bars.",
     description:
-      "When cell service drops away, LoRa keeps messages moving through the mesh.",
+      "When cell service drops away, LoRa keeps messages moving through the mesh without relying on a tower.",
     chips: ["Off-grid", "Peer to peer"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
@@ -649,7 +637,7 @@ const featureHighlights = [
     tab: "Battery",
     caption: "Less babysitting, more moving.",
     description:
-      "Rechargeable power and USB-C make Link 1 easy to top off and easy to trust.",
+      "Rechargeable power and USB-C make Link 1 easy to top off before a trip and easy to trust once you're out.",
     chips: ["USB-C", "Adventure ready"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
@@ -662,7 +650,7 @@ const featureHighlights = [
     tab: "Transparent shell",
     caption: "Link 1 looks as technical as it is.",
     description:
-      "The transparent shell shows the hardware inside—no extra pitch required.",
+      "The transparent shell shows the hardware inside instead of hiding it behind extra styling.",
     chips: ["Visible internals", "Distinctive look"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
@@ -675,7 +663,7 @@ const featureHighlights = [
     tab: "Dual firmware",
     caption: "Meshtastic or MeshCore.",
     description:
-      "Link 1 fits the Meshtastic or MeshCore workflow you already use.",
+      "Link 1 fits the Meshtastic or MeshCore workflow you already use instead of forcing a new one.",
     chips: ["Meshtastic", "MeshCore"],
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
@@ -702,13 +690,72 @@ const quickSignals = [
   { label: "Charge", value: "USB-C" },
 ];
 
+const galleryCards = [
+  {
+    kicker: "Outdoor use",
+    title: "Built for trips where phones still matter",
+    description:
+      "MagSafe keeps the radio with the device already in your hand, whether you're on a trail, at an event, or off the grid.",
+    image:
+      "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
+    alt: "OffGrid Link 1 outdoor use",
+  },
+  {
+    kicker: "Transparent shell",
+    title: "The hardware is part of the look",
+    description:
+      "The enclosure shows the RAK board, battery, and antenna with no extra visual noise around it.",
+    image:
+      "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
+    alt: "OffGrid Link 1 detail view",
+  },
+];
+
+const parallaxImages = [
+  {
+    src: "/products/parallax/link1-detail-hero.jpg",
+    alt: "OffGrid Link 1 hero detail",
+    label: "Hero detail",
+  },
+  {
+    src: "/products/parallax/link1-product-story-hand.jpg",
+    alt: "OffGrid Link 1 in hand",
+    label: "In hand",
+  },
+  {
+    src: "/products/parallax/link1-hardware-antenna.jpg",
+    alt: "OffGrid Link 1 antenna detail",
+    label: "Antenna detail",
+  },
+  {
+    src: "/products/parallax/link1-specifications-front.jpg",
+    alt: "OffGrid Link 1 front specifications image",
+    label: "Front view",
+  },
+  {
+    src: "/products/parallax/link1-hardware-board.jpg",
+    alt: "OffGrid Link 1 board closeup",
+    label: "Board closeup",
+  },
+  {
+    src: "/products/parallax/link1-product-story-pocket.jpg",
+    alt: "OffGrid Link 1 carry shot",
+    label: "Carry shot",
+  },
+  {
+    src: "/products/parallax/link1-specifications-side.jpg",
+    alt: "OffGrid Link 1 side specifications image",
+    label: "Side profile",
+  },
+];
+
 const specs = [
-  { icon: "RAK", label: "Core Module", value: "RAK WisBlock System" },
-  { icon: "BT", label: "Connectivity", value: "Bluetooth 5.0 + LoRa" },
-  { icon: "mAh", label: "Battery", value: "Rechargeable Li-Po" },
-  { icon: "km", label: "Range", value: "Up to 10+ km line of sight" },
-  { icon: "USB", label: "Charging", value: "USB-C Fast Charging" },
-  { icon: "3D", label: "Enclosure", value: "Custom 3D Printed + MagSafe" },
+  { label: "Core module", value: "RAK WisBlock System" },
+  { label: "Connectivity", value: "Bluetooth 5.0 + LoRa" },
+  { label: "Battery", value: "Rechargeable Li-Po" },
+  { label: "Range", value: "Up to 10+ km line of sight" },
+  { label: "Charging", value: "USB-C fast charging" },
+  { label: "Firmware", value: "Meshtastic or MeshCore" },
 ];
 
 const testimonials = [
@@ -729,8 +776,7 @@ const testimonials = [
   {
     name: "Christopher",
     date: "February 2026",
-    review:
-      "Great product, even included a personal handwritten note.",
+    review: "Great product, even included a personal handwritten note.",
     image: "/reviews/christopher-review.webp",
   },
   {
@@ -758,8 +804,9 @@ const testimonials = [
 
 const testimonialV2Items: TestimonialV2Item[] = testimonials.map((t) => {
   const reviewer = reviewerAvatars.find(
-    (r) => r.name.toLowerCase() === t.name.toLowerCase()
+    (r) => r.name.toLowerCase() === t.name.toLowerCase(),
   );
+
   return {
     text: t.review,
     name: t.name,

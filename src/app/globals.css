@@ -1,110 +1,61 @@
 @import "tailwindcss";
 
-/* Dark palette (default — matches existing site; no-preference stays dark) */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --app-bg: #050505;
-  --app-fg: #fafafa;
-  --app-on-accent: #050505;
-  --app-accent: #00d4aa;
-  --app-accent-light: #00f5c4;
-  --app-accent-dark: #00a88a;
-  --app-surface: #0a0a0a;
-  --app-surface-elevated: #141414;
-  --app-surface-glass: rgba(255, 255, 255, 0.03);
-  --app-muted: #737373;
-  --app-muted-light: #a3a3a3;
+  --app-bg: #fbfbfd;
+  --app-fg: #1d1d1f;
+  --app-on-accent: #f7fffc;
+  --app-accent: #0f8f6f;
+  --app-accent-light: #19a986;
+  --app-accent-dark: #0b6f56;
+  --app-surface: #ffffff;
+  --app-surface-elevated: #f5f5f7;
+  --app-surface-glass: rgba(255, 255, 255, 0.9);
+  --app-muted: #6e6e73;
+  --app-muted-light: #86868b;
 
-  --app-border-subtle: rgba(255, 255, 255, 0.06);
-  --app-border-card: rgba(255, 255, 255, 0.1);
-  --app-border-emphasis: rgba(255, 255, 255, 0.2);
-  --app-border-emphasis-hover: rgba(255, 255, 255, 0.3);
+  --app-border-subtle: rgba(29, 29, 31, 0.08);
+  --app-border-card: rgba(29, 29, 31, 0.12);
+  --app-border-emphasis: rgba(29, 29, 31, 0.18);
+  --app-border-emphasis-hover: rgba(29, 29, 31, 0.26);
 
-  --app-fill-glass: rgba(255, 255, 255, 0.03);
-  --app-fill-glass-2: rgba(255, 255, 255, 0.02);
-  --app-fill-glass-elevated: rgba(255, 255, 255, 0.04);
-  --app-fill-muted: rgba(255, 255, 255, 0.1);
-  --app-fill-hover: rgba(255, 255, 255, 0.15);
+  --app-fill-glass: rgba(255, 255, 255, 0.92);
+  --app-fill-glass-2: rgba(245, 245, 247, 0.92);
+  --app-fill-glass-elevated: rgba(255, 255, 255, 1);
+  --app-fill-muted: rgba(29, 29, 31, 0.04);
+  --app-fill-hover: rgba(29, 29, 31, 0.06);
 
-  --app-overlay-badge: rgba(0, 0, 0, 0.3);
-  --app-overlay-card: rgba(0, 0, 0, 0.4);
+  --app-overlay-badge: rgba(29, 29, 31, 0.6);
+  --app-overlay-card: rgba(29, 29, 31, 0.56);
+  --app-overlay-border: rgba(255, 255, 255, 0.22);
+  --app-overlay-text: rgba(252, 251, 247, 0.98);
+  --app-overlay-text-muted: rgba(252, 251, 247, 0.78);
+  --app-overlay-chip: rgba(255, 255, 255, 0.1);
 
-  --app-nav-scrolled: rgba(10, 10, 10, 0.8);
-  --app-dropdown: rgba(18, 18, 18, 0.95);
-  --app-mark-watermark: rgba(255, 255, 255, 0.15);
+  --app-nav-scrolled: rgba(251, 251, 253, 0.78);
+  --app-dropdown: rgba(255, 255, 255, 0.88);
+  --app-mark-watermark: rgba(29, 29, 31, 0.06);
 
-  --app-grid-line: rgba(255, 255, 255, 0.1);
-  --app-scrollbar-track: #0a0a0a;
-  --app-scrollbar-thumb: #333;
-  --app-scrollbar-thumb-hover: #444;
-  --app-selection-fg: #fafafa;
+  --app-grid-line: rgba(29, 29, 31, 0.08);
+  --app-scrollbar-track: #f1f1f3;
+  --app-scrollbar-thumb: #c9cad1;
+  --app-scrollbar-thumb-hover: #b0b2ba;
+  --app-selection-fg: #1d1d1f;
 
-  --app-glass-border: rgba(255, 255, 255, 0.05);
-  --app-glass-border-strong: rgba(255, 255, 255, 0.08);
-  --app-gradient-text-from: #fafafa;
-  --app-gradient-text-to: #fafafa;
-  --app-image-hover-shadow: rgba(0, 0, 0, 0.5);
-
-  /* Hero 3D card: layered shadow (reads on dark page + dark card frame) */
+  --app-glass-border: rgba(255, 255, 255, 0.92);
+  --app-glass-border-strong: rgba(255, 255, 255, 0.96);
+  --app-gradient-text-from: #1d1d1f;
+  --app-gradient-text-to: #434346;
+  --app-image-hover-shadow: rgba(29, 29, 31, 0.1);
+  --app-card-shadow: 0 12px 32px rgba(29, 29, 31, 0.08);
+  --app-media-shadow:
+    0 20px 54px rgba(29, 29, 31, 0.12),
+    0 8px 24px rgba(29, 29, 31, 0.06);
   --app-hero-card-shadow:
-    0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042,
-    0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003,
-    0 0 120px rgba(0, 212, 170, 0.07);
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color-scheme: light;
-
-    --app-bg: #fafafa;
-    --app-fg: #0a0a0a;
-    --app-on-accent: #050505;
-    --app-accent: #00b894;
-    --app-accent-light: #00d4aa;
-    --app-accent-dark: #00997a;
-    --app-surface: #ffffff;
-    --app-surface-elevated: #f0f0f0;
-    --app-surface-glass: rgba(0, 0, 0, 0.03);
-    --app-muted: #525252;
-    --app-muted-light: #737373;
-
-    --app-border-subtle: rgba(0, 0, 0, 0.08);
-    --app-border-card: rgba(0, 0, 0, 0.1);
-    --app-border-emphasis: rgba(0, 0, 0, 0.18);
-    --app-border-emphasis-hover: rgba(0, 0, 0, 0.28);
-
-    --app-fill-glass: rgba(0, 0, 0, 0.03);
-    --app-fill-glass-2: rgba(0, 0, 0, 0.02);
-    --app-fill-glass-elevated: rgba(0, 0, 0, 0.05);
-    --app-fill-muted: rgba(0, 0, 0, 0.08);
-    --app-fill-hover: rgba(0, 0, 0, 0.11);
-
-    --app-overlay-badge: rgba(0, 0, 0, 0.35);
-    --app-overlay-card: rgba(0, 0, 0, 0.45);
-
-    --app-nav-scrolled: rgba(255, 255, 255, 0.82);
-    --app-dropdown: rgba(255, 255, 255, 0.96);
-    --app-mark-watermark: rgba(0, 0, 0, 0.07);
-
-    --app-grid-line: rgba(0, 0, 0, 0.08);
-    --app-scrollbar-track: #f0f0f0;
-    --app-scrollbar-thumb: #c4c4c4;
-    --app-scrollbar-thumb-hover: #a3a3a3;
-    --app-selection-fg: #0a0a0a;
-
-    --app-glass-border: rgba(0, 0, 0, 0.08);
-    --app-glass-border-strong: rgba(0, 0, 0, 0.12);
-    --app-gradient-text-from: #0a0a0a;
-    --app-gradient-text-to: #0a0a0a;
-    --app-image-hover-shadow: rgba(0, 0, 0, 0.18);
-
-    /* Slightly stronger diffuse shadow so it stays visible on light gray page bg */
-    --app-hero-card-shadow:
-      0 0 #0000002e, 0 8px 18px #00000024, 0 32px 34px #0000001f,
-      0 72px 48px #00000014, 0 128px 56px #00000008, 0 200px 60px #00000004,
-      0 0 100px rgba(0, 184, 148, 0.12);
-  }
+    0 18px 42px rgba(29, 29, 31, 0.12),
+    0 8px 24px rgba(29, 29, 31, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.72);
 }
 
 @theme {
@@ -138,6 +89,10 @@
 
   --color-overlay-badge: var(--app-overlay-badge);
   --color-overlay-card: var(--app-overlay-card);
+  --color-overlay-border: var(--app-overlay-border);
+  --color-overlay-text: var(--app-overlay-text);
+  --color-overlay-text-muted: var(--app-overlay-text-muted);
+  --color-overlay-chip: var(--app-overlay-chip);
 
   --color-mark-watermark: var(--app-mark-watermark);
 
@@ -179,6 +134,7 @@
 /* Smooth scroll */
 html {
   scroll-behavior: smooth;
+  background-color: var(--app-bg);
 }
 
 body {
@@ -190,22 +146,52 @@ body {
 /* Glass effect utility */
 .glass {
   background: var(--app-surface-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--app-glass-border);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border: 1px solid var(--app-border-card);
+  box-shadow: var(--app-card-shadow);
 }
 
 .glass-strong {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid var(--app-glass-border-strong);
+  background: #fff;
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  border: 1px solid var(--app-border-card);
+  box-shadow: var(--app-media-shadow);
 }
 
-@media (prefers-color-scheme: light) {
-  .glass-strong {
-    background: rgba(0, 0, 0, 0.04);
-  }
+.surface-shadow {
+  box-shadow: var(--app-card-shadow);
+}
+
+.media-shadow {
+  box-shadow: var(--app-media-shadow);
+}
+
+.hero-media-frame {
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
+}
+
+.image-overlay-scrim {
+  background: linear-gradient(
+    180deg,
+    rgba(29, 29, 31, 0.04) 0%,
+    rgba(29, 29, 31, 0.14) 38%,
+    rgba(29, 29, 31, 0.72) 100%
+  );
+}
+
+.section-stage {
+  background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
+  border: 1px solid var(--app-border-card);
+  box-shadow: var(--app-media-shadow);
+}
+
+.section-card {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border-card);
+  box-shadow: var(--app-card-shadow);
 }
 
 /* Gradient text */
@@ -229,7 +215,7 @@ body {
 }
 
 .image-hover:hover {
-  transform: scale(1.02) translateY(-5px);
+  transform: scale(1.01) translateY(-3px);
   box-shadow: 0 30px 60px var(--app-image-hover-shadow);
 }
 

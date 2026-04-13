@@ -44,9 +44,7 @@ describe("GET /api/shopify/link-1", () => {
       featuredImage: null,
       variant: {
         id: "gid://shopify/ProductVariant/1",
-        title: "Default",
         availableForSale: true,
-        price: { amount: "10.00", currencyCode: "USD" },
       },
     });
 

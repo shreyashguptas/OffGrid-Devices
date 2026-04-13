@@ -12,7 +12,7 @@ type ShopifyResponse<T> = {
   errors?: ShopifyGraphQLError[];
 };
 
-export type Link1StorefrontProduct = {
+type Link1StorefrontProduct = {
   title: string;
   handle: string;
   availableForSale: boolean;
@@ -22,12 +22,7 @@ export type Link1StorefrontProduct = {
   } | null;
   variant: {
     id: string;
-    title: string;
     availableForSale: boolean;
-    price: {
-      amount: string;
-      currencyCode: string;
-    };
   } | null;
 };
 
@@ -42,12 +37,7 @@ type ProductQueryData = {
     } | null;
     selectedOrFirstAvailableVariant: {
       id: string;
-      title: string;
       availableForSale: boolean;
-      price: {
-        amount: string;
-        currencyCode: string;
-      };
     } | null;
   } | null;
 };
@@ -171,12 +161,7 @@ export async function getLink1Product(): Promise<Link1StorefrontProduct | null> 
           }
           selectedOrFirstAvailableVariant {
             id
-            title
             availableForSale
-            price {
-              amount
-              currencyCode
-            }
           }
         }
       }
