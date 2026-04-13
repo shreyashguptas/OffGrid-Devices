@@ -34,7 +34,6 @@ function createMetadataBase() {
 }
 
 const metadataBase = createMetadataBase();
-
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#fafafa" },

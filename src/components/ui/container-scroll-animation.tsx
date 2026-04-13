@@ -34,7 +34,7 @@ export const ContainerScroll = ({
   }, []);
 
   const scaleDimensions = () => {
-    return isMobile ? [0.7, 0.9] : [1.05, 1];
+    return isMobile ? [0.72, 0.9] : [1.02, 1];
   };
 
   const rotate = useTransform(
@@ -51,11 +51,11 @@ export const ContainerScroll = ({
 
   return (
     <div
-      className="h-[48rem] sm:h-[52rem] md:h-[80rem] flex items-center justify-center relative p-2 md:p-20 pt-24 md:pt-20"
+      className="relative flex h-[48rem] items-center justify-center p-2 pt-24 sm:h-[52rem] md:h-[80rem] md:p-20 md:pt-20"
       ref={containerRef}
     >
       <div
-        className="py-10 md:py-32 w-full relative"
+        className="relative w-full py-10 md:py-24"
         style={{
           perspective: "1000px",
         }}
@@ -81,7 +81,7 @@ function Header({
       style={{
         translateY: translate,
       }}
-      className="max-w-5xl mx-auto text-center relative z-10 pb-12"
+      className="relative z-10 mx-auto max-w-5xl pb-10 text-center"
     >
       {titleComponent}
     </motion.div>
@@ -104,7 +104,7 @@ function Card({
         scale,
         boxShadow: "var(--app-hero-card-shadow)",
       }}
-      className="max-w-5xl mx-auto h-[20rem] sm:h-[26rem] md:h-[40rem] w-full border-2 border-border-subtle p-2 md:p-6 bg-surface rounded-[24px] md:rounded-[30px]"
+      className="mx-auto h-[20rem] w-full max-w-5xl rounded-[24px] border-2 border-border-subtle bg-surface p-2 sm:h-[26rem] md:h-[40rem] md:rounded-[30px] md:p-6"
     >
       <div className="h-full w-full overflow-hidden rounded-2xl bg-background md:rounded-2xl md:p-4">
         {children}

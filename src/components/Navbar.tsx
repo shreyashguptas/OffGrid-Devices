@@ -94,7 +94,6 @@ function NavbarContent() {
       desktopQuery.removeEventListener("change", handleDesktopMode);
     };
   }, []);
-
   const handleMouseEnter = () => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
