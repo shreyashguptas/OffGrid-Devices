@@ -3,11 +3,11 @@
 import React, { useRef } from "react";
 import {
   useReducedMotion,
-  useScroll,
   useTransform,
   motion,
   type MotionValue,
 } from "framer-motion";
+import { useSectionScrollProgress } from "@/lib/use-section-scroll-progress";
 
 export const ContainerScroll = ({
   titleComponent,
@@ -17,10 +17,7 @@ export const ContainerScroll = ({
   children: React.ReactNode;
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
+  const scrollYProgress = useSectionScrollProgress(containerRef, "end-start");
   const prefersReducedMotion = useReducedMotion();
   const [isMobile, setIsMobile] = React.useState(false);
 

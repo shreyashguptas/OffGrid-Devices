@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
+import { motion, useMotionTemplate, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
+import { useSectionScrollProgress } from "@/lib/use-section-scroll-progress";
 import { cn } from "@/lib/utils";
 
 interface ZoomParallaxImage {
@@ -28,14 +29,11 @@ const framePositions = [
 export function ZoomParallax({ images, className }: ZoomParallaxProps) {
   const mobileContainerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: mobileScrollYProgress } = useScroll({
-    target: mobileContainerRef,
-    offset: ["start start", "end end"],
-  });
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  const mobileScrollYProgress = useSectionScrollProgress(
+    mobileContainerRef,
+    "end-end",
+  );
+  const scrollYProgress = useSectionScrollProgress(containerRef, "end-end");
   const mobileImages = images.slice(0, 3);
   const mobileLeadImage = mobileImages[2] ?? mobileImages[0];
   const mobileSupportImages = mobileImages.slice(0, 2);
