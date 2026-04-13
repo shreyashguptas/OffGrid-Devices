@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { startTransition, useEffect, useState } from "react";
 import Image from "next/image";
 import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
+import { InfiniteGridBackground } from "@/components/ui/the-infinite-grid";
 import {
   TestimonialsV2Section,
   type TestimonialV2Item,
@@ -96,8 +97,10 @@ export default function Home() {
 
   return (
     <>
-      <section className="border-b border-border-subtle bg-background pt-28 pb-20 md:pt-32 md:pb-24">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="relative overflow-hidden border-b border-border-subtle bg-background pt-28 pb-20 md:pt-32 md:pb-24">
+        <InfiniteGridBackground className="absolute inset-0 z-0" />
+
+        <div className="relative z-10 mx-auto max-w-6xl px-6">
           <motion.div
             initial="hidden"
             animate="visible"
