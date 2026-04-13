@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useMotionTemplate, useTransform } from "framer-motion";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { useSectionScrollProgress } from "@/lib/use-section-scroll-progress";
 import { cn } from "@/lib/utils";
@@ -201,11 +202,12 @@ function ParallaxTile({
           </div>
         </div>
       ) : (
-        <img
+        <Image
           src={src}
           alt={alt ?? label ?? "Zoom parallax image"}
-          className="h-full w-full object-cover"
-          loading="lazy"
+          fill
+          sizes="(max-width: 768px) 94vw, 25vw"
+          className="object-cover"
           onError={() => setHasError(true)}
         />
       )}
