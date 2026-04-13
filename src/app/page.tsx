@@ -197,11 +197,11 @@ export default function Home() {
             }
           >
             <Image
-              src="https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009"
-              alt="OffGrid Link 1 MagSafe LoRa radio in use outdoors"
-              height={720}
-              width={1400}
-              className="mx-auto rounded-2xl object-cover h-full w-full object-center"
+              src="/products/link1-hero-v1.png"
+              alt="OffGrid Link 1 MagSafe LoRa radio hero image"
+              height={1024}
+              width={1536}
+              className="mx-auto h-full w-full rounded-2xl bg-black object-contain object-center"
               draggable={false}
               priority
             />
