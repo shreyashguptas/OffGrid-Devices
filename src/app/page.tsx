@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { InfiniteGridBackground } from "@/components/ui/the-infinite-grid";
+import { ZoomParallax } from "@/components/ui/zoom-parallax";
 import {
   TestimonialsV2Section,
   type TestimonialV2Item,
@@ -390,6 +391,32 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="border-b border-border-subtle bg-background py-20 md:py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="mx-auto mb-14 max-w-3xl text-center"
+          >
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+              Product details
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+              A closer look at Link 1.
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
+              This section is ready for your detail shots, in-hand photos, and
+              hardware closeups. Drop images into the named paths and they will
+              replace the placeholders automatically.
+            </p>
+          </motion.div>
+        </div>
+
+        <ZoomParallax images={parallaxImages} />
+      </section>
+
       <section
         id="gallery"
         className="border-b border-border-subtle bg-background py-20 md:py-24"
@@ -699,6 +726,44 @@ const galleryCards = [
     image:
       "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
     alt: "OffGrid Link 1 detail view",
+  },
+];
+
+const parallaxImages = [
+  {
+    src: "/products/parallax/link1-detail-hero.jpg",
+    alt: "OffGrid Link 1 hero detail",
+    label: "Hero detail",
+  },
+  {
+    src: "/products/parallax/link1-product-story-hand.jpg",
+    alt: "OffGrid Link 1 in hand",
+    label: "In hand",
+  },
+  {
+    src: "/products/parallax/link1-hardware-antenna.jpg",
+    alt: "OffGrid Link 1 antenna detail",
+    label: "Antenna detail",
+  },
+  {
+    src: "/products/parallax/link1-specifications-front.jpg",
+    alt: "OffGrid Link 1 front specifications image",
+    label: "Front view",
+  },
+  {
+    src: "/products/parallax/link1-hardware-board.jpg",
+    alt: "OffGrid Link 1 board closeup",
+    label: "Board closeup",
+  },
+  {
+    src: "/products/parallax/link1-product-story-pocket.jpg",
+    alt: "OffGrid Link 1 carry shot",
+    label: "Carry shot",
+  },
+  {
+    src: "/products/parallax/link1-specifications-side.jpg",
+    alt: "OffGrid Link 1 side specifications image",
+    label: "Side profile",
   },
 ];
 
