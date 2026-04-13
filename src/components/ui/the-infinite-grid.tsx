@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   motion,
@@ -126,8 +126,6 @@ export function InfiniteGridBackground({
     </div>
   );
 }
-
-export const Component = InfiniteGridBackground;
 
 function GridPattern({
   patternId,

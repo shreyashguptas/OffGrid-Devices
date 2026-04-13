@@ -6,10 +6,6 @@ type ProductState = {
   availableForSale: boolean;
   variant: {
     availableForSale: boolean;
-    price: {
-      amount: string;
-      currencyCode: string;
-    };
   } | null;
 } | null;
 

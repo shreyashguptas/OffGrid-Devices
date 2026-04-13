@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { startTransition, useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { InfiniteGridBackground } from "@/components/ui/the-infinite-grid";
@@ -580,12 +581,12 @@ export default function Home() {
                 showArrow
                 className="inline-flex items-center justify-center gap-3 rounded-full bg-accent px-10 py-5 text-lg font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
               />
-              <a
+              <Link
                 href="/blog"
                 className="inline-flex items-center justify-center rounded-full border border-border-emphasis bg-surface-elevated px-10 py-5 text-lg font-semibold text-foreground transition-colors duration-300 hover:border-border-emphasis-hover hover:bg-background"
               >
                 Read the blog
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>
