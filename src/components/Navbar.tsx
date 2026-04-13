@@ -20,7 +20,7 @@ const products = [
     subtitle: "OffGrid · Next in the Link line",
     href: "/products/link-2",
     image: null,
-    badge: "New",
+    badge: "Coming soon",
   },
 ];
 
@@ -234,7 +234,7 @@ function NavbarContent() {
                               {product.name}
                             </span>
                             {product.badge && (
-                              <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                              <span className="rounded-full border border-orange-500/30 bg-orange-500/20 px-2 py-0.5 text-[10px] font-bold tracking-[0.08em] text-orange-400">
                                 {product.badge}
                               </span>
                             )}

@@ -95,14 +95,7 @@ async function fetchLink1Product() {
   return link1ProductPromise;
 }
 
-export function Link1CheckoutButton({
-  className,
-  defaultLabel,
-  soldOutLabel = "Sold Out",
-  loadingLabel = "Opening Checkout...",
-  showArrow = false,
-}: Link1CheckoutButtonProps) {
-  const [isLoading, setIsLoading] = useState(false);
+function useLink1Product() {
   const [product, setProduct] = useState<ProductState>(null);
   const [isUnavailable, setIsUnavailable] = useState(false);
 
@@ -131,17 +124,31 @@ export function Link1CheckoutButton({
     };
   }, []);
 
+  return { product, isUnavailable };
+}
+
+export function Link1CheckoutButton({
+  className,
+  defaultLabel,
+  soldOutLabel = "Sold Out",
+  loadingLabel = "Opening Checkout...",
+  showArrow = false,
+}: Link1CheckoutButtonProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasCheckoutError, setHasCheckoutError] = useState(false);
+  const { product, isUnavailable } = useLink1Product();
+
   const isSoldOut =
     product !== null &&
     (!product.availableForSale ||
       !product.variant ||
       !product.variant.availableForSale);
-  const isDisabled = isLoading || isSoldOut || isUnavailable;
+  const isDisabled = isLoading || isSoldOut || isUnavailable || hasCheckoutError;
   const label = isLoading
     ? loadingLabel
     : isSoldOut
       ? soldOutLabel
-      : isUnavailable
+      : isUnavailable || hasCheckoutError
         ? "Checkout Unavailable"
         : defaultLabel;
 
@@ -171,7 +178,7 @@ export function Link1CheckoutButton({
 
       window.location.assign(data.checkoutUrl);
     } catch {
-      setIsUnavailable(true);
+      setHasCheckoutError(true);
       setIsLoading(false);
     }
   }

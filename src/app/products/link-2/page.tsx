@@ -16,8 +16,8 @@ export default function Link2Product() {
             className="mx-auto max-w-3xl"
           >
             <div className="inline-flex items-center gap-3 rounded-full border border-border-card bg-surface px-4 py-2 text-sm text-muted-light">
-              <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-orange-500">
-                New
+              <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold tracking-[0.08em] text-orange-500">
+                Coming soon
               </span>
               OffGrid Link 2
             </div>

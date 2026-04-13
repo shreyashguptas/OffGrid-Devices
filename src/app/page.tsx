@@ -99,7 +99,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-border-subtle bg-background pt-8 pb-8 md:pt-10 md:pb-12">
+      <section className="relative overflow-hidden border-b border-border-subtle bg-background pt-6 pb-8 md:pt-8 md:pb-12">
         <InfiniteGridBackground className="absolute inset-0 z-0" />
 
         <div className="relative z-10 mx-auto max-w-7xl px-6">
@@ -111,50 +111,25 @@ export default function Home() {
                 variants={staggerContainer}
                 className="mx-auto max-w-4xl text-center"
               >
-                <motion.div
+                <motion.p
                   variants={fadeInUp}
-                  className="mx-auto inline-flex items-center gap-3 rounded-full border border-border-card bg-surface px-4 py-2 text-sm text-muted-light"
+                  className="font-display text-3xl font-semibold tracking-tight text-foreground md:text-5xl"
                 >
-                  <span className="h-2 w-2 rounded-full bg-accent" />
-                  OffGrid Link 1
-                </motion.div>
+                  Link 1
+                </motion.p>
 
                 <motion.h1
                   variants={fadeInUp}
-                  className="mt-8 font-display text-5xl font-bold leading-[1.02] tracking-tight md:text-7xl"
+                  className="mt-4 font-display text-5xl font-bold leading-[1.02] tracking-tight md:text-7xl"
                 >
                   Stay Connected.
                   <br />
                   <span className="text-muted">Go Anywhere.</span>
                 </motion.h1>
 
-                <motion.p
-                  variants={fadeInUp}
-                  className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-light md:text-xl"
-                >
-                  OffGrid Link 1 is the MagSafe-compatible LoRa mesh radio built
-                  to stay on the phone you already carry.
-                </motion.p>
-
                 <motion.div
                   variants={fadeInUp}
-                  className="mt-10 flex flex-col justify-center gap-4 sm:flex-row"
-                >
-                  <Link1CheckoutButton
-                    defaultLabel="Buy Link 1"
-                    className="inline-flex items-center justify-center rounded-full bg-accent px-8 py-4 font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
-                  />
-                  <a
-                    href="/products/link-1"
-                    className="inline-flex items-center justify-center rounded-full border border-border-emphasis bg-surface px-8 py-4 font-semibold text-foreground transition-colors duration-300 hover:border-border-emphasis-hover hover:bg-surface-elevated"
-                  >
-                    Learn more
-                  </a>
-                </motion.div>
-
-                <motion.div
-                  variants={fadeInUp}
-                  className="mt-8 flex justify-center"
+                  className="mt-6 flex justify-center"
                 >
                   <div className="surface-shadow flex items-center rounded-full border border-border bg-surface px-1.5 py-1.5 sm:px-2 sm:py-2">
                     <div className="flex -space-x-2">
@@ -188,6 +163,12 @@ export default function Home() {
                 </motion.div>
               </motion.div>
             }
+            footerComponent={
+              <Link1CheckoutButton
+                defaultLabel="Buy"
+                className="inline-flex items-center justify-center rounded-full bg-accent px-8 py-3 text-base font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
+              />
+            }
           >
             <div className="hero-media-frame relative h-full w-full">
               <Image
@@ -202,6 +183,32 @@ export default function Home() {
             </div>
           </ContainerScroll>
         </div>
+      </section>
+
+      <section className="border-b border-border-subtle bg-background py-20 md:py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="mx-auto mb-14 max-w-3xl text-center"
+          >
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+              Product details
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+              A closer look at Link 1.
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
+              This section is ready for your detail shots, in-hand photos, and
+              hardware closeups. Drop images into the named paths and they will
+              replace the placeholders automatically.
+            </p>
+          </motion.div>
+        </div>
+
+        <ZoomParallax images={parallaxImages} />
       </section>
 
       <section
@@ -389,32 +396,6 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-      </section>
-
-      <section className="border-b border-border-subtle bg-background py-20 md:py-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="mx-auto mb-14 max-w-3xl text-center"
-          >
-            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
-              Product details
-            </p>
-            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
-              A closer look at Link 1.
-            </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
-              This section is ready for your detail shots, in-hand photos, and
-              hardware closeups. Drop images into the named paths and they will
-              replace the placeholders automatically.
-            </p>
-          </motion.div>
-        </div>
-
-        <ZoomParallax images={parallaxImages} />
       </section>
 
       <section

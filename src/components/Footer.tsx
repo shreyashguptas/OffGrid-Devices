@@ -47,8 +47,8 @@ export function Footer() {
                   className="inline-flex items-center gap-2 text-foreground/80 transition-colors duration-300 hover:text-accent"
                 >
                   Link 2
-                  <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-orange-500">
-                    New
+                  <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold tracking-[0.08em] text-orange-500">
+                    Coming soon
                   </span>
                 </Link>
               </div>
