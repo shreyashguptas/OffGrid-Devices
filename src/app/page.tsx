@@ -161,7 +161,7 @@ export default function Home() {
                   variants={fadeInUp}
                   className="mt-8 flex justify-center"
                 >
-                  <div className="flex items-center rounded-full border border-border bg-background px-1.5 py-1.5 sm:px-2 sm:py-2 shadow shadow-black/5">
+                  <div className="surface-shadow flex items-center rounded-full border border-border bg-background px-1.5 py-1.5 sm:px-2 sm:py-2">
                     <div className="flex -space-x-2">
                       {reviewerAvatars.map((avatar) =>
                         avatar.image ? (
@@ -201,7 +201,7 @@ export default function Home() {
               alt="OffGrid Link 1 MagSafe LoRa radio hero image"
               height={1024}
               width={1536}
-              className="mx-auto h-full w-full rounded-2xl bg-black object-contain object-center"
+              className="hero-media-frame media-shadow mx-auto h-full w-full rounded-2xl bg-surface object-contain object-center"
               draggable={false}
               priority
             />
@@ -260,13 +260,15 @@ export default function Home() {
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/35" />
+                  <div className="image-overlay-scrim absolute inset-0" />
                 </motion.div>
               </AnimatePresence>
 
-              <div className="absolute left-6 top-6 z-10 inline-flex items-center gap-2 rounded-full border border-white/20 bg-overlay-badge px-4 py-2 backdrop-blur-xl">
-                <span className="text-sm text-white">{currentFeature.icon}</span>
-                <span className="text-xs uppercase tracking-[0.24em] text-white/75">
+              <div className="absolute left-6 top-6 z-10 inline-flex items-center gap-2 rounded-full border border-overlay-border bg-overlay-badge px-4 py-2 backdrop-blur-xl">
+                <span className="text-overlay-text text-sm">
+                  {currentFeature.icon}
+                </span>
+                <span className="text-overlay-text-muted text-xs uppercase tracking-[0.24em]">
                   Feature Tour
                 </span>
               </div>
@@ -280,21 +282,21 @@ export default function Home() {
                   transition={{ duration: 0.45 }}
                   className="absolute inset-x-6 bottom-6 z-10"
                 >
-                  <div className="max-w-xl rounded-[1.75rem] border border-white/15 bg-overlay-card p-6 backdrop-blur-xl">
+                  <div className="max-w-xl rounded-[1.75rem] border border-overlay-border bg-overlay-card p-6 backdrop-blur-xl">
                     <p className="mb-3 text-xs uppercase tracking-[0.28em] text-accent-light">
                       {currentFeature.kicker}
                     </p>
-                    <h3 className="font-display text-3xl md:text-4xl font-semibold leading-tight text-white">
+                    <h3 className="text-overlay-text font-display text-3xl font-semibold leading-tight md:text-4xl">
                       {currentFeature.title}
                     </h3>
-                    <p className="mt-3 max-w-md text-base text-white/80 leading-relaxed">
+                    <p className="text-overlay-text-muted mt-3 max-w-md text-base leading-relaxed">
                       {currentFeature.description}
                     </p>
                     <div className="mt-5 flex flex-wrap gap-2">
                       {currentFeature.chips.map((chip) => (
                         <span
                           key={chip}
-                          className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white/95"
+                          className="text-overlay-text rounded-full border border-overlay-border bg-overlay-chip px-3 py-1.5 text-sm"
                         >
                           {chip}
                         </span>
@@ -537,7 +539,7 @@ export default function Home() {
                 alt="OffGrid Link 1 specifications"
                 width={600}
                 height={800}
-                className="relative rounded-3xl shadow-2xl shadow-black/50"
+                className="media-shadow relative rounded-3xl"
               />
             </motion.div>
           </div>

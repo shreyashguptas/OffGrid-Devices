@@ -189,7 +189,7 @@ function NavbarContent() {
                   className="absolute left-1/2 -translate-x-1/2 top-full mt-4 w-80"
                 >
                   <div
-                    className="rounded-2xl p-2 shadow-2xl shadow-black/20 border border-border-subtle"
+                    className="media-shadow rounded-2xl border border-border-subtle p-2"
                     style={{
                       background: "var(--app-dropdown)",
                       backdropFilter: "blur(40px)",

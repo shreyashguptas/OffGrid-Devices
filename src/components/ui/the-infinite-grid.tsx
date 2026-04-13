@@ -115,9 +115,9 @@ export function InfiniteGridBackground({
       </motion.div>
 
       <div className="absolute inset-0 z-0">
-        <div className="absolute right-[-20%] top-[-20%] h-[40%] w-[40%] rounded-full bg-orange-500/40 blur-[120px] dark:bg-orange-600/20" />
-        <div className="absolute right-[10%] top-[-10%] h-[20%] w-[20%] rounded-full bg-primary/30 blur-[100px]" />
-        <div className="absolute bottom-[-20%] left-[-10%] h-[40%] w-[40%] rounded-full bg-blue-500/40 blur-[120px] dark:bg-blue-600/20" />
+        <div className="absolute right-[-20%] top-[-20%] h-[40%] w-[40%] rounded-full bg-orange-400/24 blur-[120px]" />
+        <div className="absolute right-[10%] top-[-10%] h-[20%] w-[20%] rounded-full bg-primary/18 blur-[100px]" />
+        <div className="absolute bottom-[-20%] left-[-10%] h-[40%] w-[40%] rounded-full bg-sky-400/24 blur-[120px]" />
       </div>
     </div>
   );

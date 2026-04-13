@@ -58,7 +58,7 @@ function TestimonialCard({ item }: { item: TestimonialV2Item }) {
         y: -8,
         transition: { type: "spring", stiffness: 400, damping: 17 },
       }}
-      className="p-8 md:p-10 rounded-3xl border border-border-subtle glass shadow-lg shadow-black/5 max-w-xs w-full transition-all duration-300 cursor-default select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+      className="surface-shadow glass max-w-xs w-full cursor-default select-none rounded-3xl border border-border-subtle p-8 transition-all duration-300 group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 md:p-10"
     >
       <blockquote className="m-0 p-0">
         <div className="flex items-center gap-1 text-accent mb-4">

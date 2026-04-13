@@ -35,10 +35,7 @@ function createMetadataBase() {
 
 const metadataBase = createMetadataBase();
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
-    { media: "(prefers-color-scheme: dark)", color: "#050505" },
-  ],
+  themeColor: "#f3f7f2",
 };
 
 export const metadata: Metadata = {

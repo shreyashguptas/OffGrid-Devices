@@ -163,7 +163,7 @@ export default function Link1Product() {
                     alt="OffGrid Link 1 MagSafe LoRa radio"
                     width={600}
                     height={800}
-                    className="relative z-10 rounded-3xl shadow-2xl shadow-black/50"
+                    className="media-shadow relative z-10 rounded-3xl"
                     priority
                   />
                 </div>
@@ -351,7 +351,7 @@ export default function Link1Product() {
                 alt="OffGrid Link 1 hardware specifications"
                 width={600}
                 height={800}
-                className="relative rounded-3xl shadow-2xl shadow-black/50"
+                className="media-shadow relative rounded-3xl"
               />
             </motion.div>
           </div>
