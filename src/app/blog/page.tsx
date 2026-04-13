@@ -9,7 +9,7 @@ const blogPosts = [
     slug: "getting-started-with-meshtastic",
     title: "OffGrid Link 1 already runs Meshtastic—here’s how to go live",
     excerpt:
-      "Meshtastic is open firmware you can install on other hardware—but Link 1 ships from OffGrid with it ready. Unbox, pair, and hit the mesh without the firmware homework.",
+      "Meshtastic is open firmware you can install on other hardware, but Link 1 ships from OffGrid with it ready. Unbox, pair, and hit the mesh without the firmware homework.",
     date: "January 2026",
     readTime: "8 min read",
     category: "Guides",
@@ -20,73 +20,86 @@ const blogPosts = [
 
 export default function BlogPage() {
   return (
-    <div className="min-h-screen pt-32 pb-20">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h1 className="font-display text-5xl md:text-6xl font-bold mb-6">
-            The OffGrid <span className="text-accent">Blog</span>
-          </h1>
-          <p className="text-lg text-muted-light max-w-2xl mx-auto">
-            Tutorials, guides, and insights about off-grid communication, mesh
-            networking, and the technology that keeps you connected.
+    <>
+      <section className="border-b border-border-subtle bg-background pt-28 pb-16 md:pt-32 md:pb-20">
+        <div className="mx-auto max-w-5xl px-6 text-center">
+          <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+            Journal
           </p>
-        </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mt-4 font-display text-5xl font-bold tracking-tight md:text-7xl"
+          >
+            The OffGrid Blog
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.05 }}
+            className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-light md:text-xl"
+          >
+            Tutorials, setup guides, and practical notes on off-grid
+            communication, mesh networking, and the hardware that keeps it
+            usable.
+          </motion.p>
+        </div>
+      </section>
 
-        {/* Blog posts grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {blogPosts.map((post, index) => (
-            <motion.article
-              key={post.slug}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group"
-            >
-              <Link href={`/blog/${post.slug}`} className="block">
-                <div className="relative overflow-hidden rounded-2xl mb-6">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    width={600}
-                    height={400}
-                    className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1.5 text-xs font-medium bg-accent/90 text-on-accent rounded-full">
-                      {post.category}
-                    </span>
+      <section className="border-b border-border-subtle bg-surface-elevated py-16 md:py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="grid gap-6 lg:grid-cols-2"
+          >
+            {blogPosts.map((post, index) => (
+              <motion.article
+                key={post.slug}
+                initial={{ opacity: 0, y: 32 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.08 }}
+                className="group section-card overflow-hidden rounded-[2rem]"
+              >
+                <Link href={`/blog/${post.slug}`} className="block">
+                  <div className="bg-background p-5 md:p-6">
+                    <div className="overflow-hidden rounded-[1.5rem] bg-surface-elevated">
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        width={1000}
+                        height={700}
+                        className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-3 text-sm text-muted mb-3">
-                  <span>{post.date}</span>
-                  <span className="w-1 h-1 rounded-full bg-muted" />
-                  <span>{post.readTime}</span>
-                </div>
+                  <div className="px-6 pb-8 md:px-8">
+                    <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
+                      <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">
+                        {post.category}
+                      </span>
+                      <span>{post.date}</span>
+                      <span className="h-1 w-1 rounded-full bg-muted" />
+                      <span>{post.readTime}</span>
+                    </div>
 
-                <h2 className="font-display text-xl font-semibold mb-3 group-hover:text-accent transition-colors duration-300">
-                  {post.title}
-                </h2>
+                    <h2 className="mt-5 font-display text-3xl font-semibold tracking-tight transition-colors duration-300 group-hover:text-accent">
+                      {post.title}
+                    </h2>
 
-                <p className="text-muted-light leading-relaxed">
-                  {post.excerpt}
-                </p>
-              </Link>
-            </motion.article>
-          ))}
-        </motion.div>
-      </div>
-    </div>
+                    <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-light">
+                      {post.excerpt}
+                    </p>
+                  </div>
+                </Link>
+              </motion.article>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+    </>
   );
 }
