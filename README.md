@@ -1,11 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with `[create-next-app](https://nextjs.org/docs/app/api-reference/cli/create-next-app)`.
+# OffGrid Devices Web
+
+Marketing site and storefront shell for OffGrid devices, built with Next.js App Router.
+
+Current product coverage:
+
+- `Link 1` product storytelling, reviews, and Shopify checkout
+- `Link 2` placeholder page with `Coming soon` status
+- blog content for setup and onboarding
 
 ## Requirements
 
-- **Node.js** 22 or newer (see `engines` in `package.json`)
-- **pnpm** 10.x, pinned via the `packageManager` field (use [Corepack](https://nodejs.org/api/corepack.html): `corepack enable`)
+- Node.js 22 or newer
+- pnpm 10.x
 
-This repository uses **pnpm only**. Do not use `npm install` or Yarn for dependencies; a `preinstall` check blocks accidental `npm install`. More detail: [docs/pnpm.md](docs/pnpm.md).
+This repo uses `pnpm` only. `npm install` is blocked on purpose.
 
 ## Getting started
 
@@ -15,42 +23,70 @@ pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
+## Main app structure
 
-### Scripts
+- `src/app/page.tsx` - homepage composition
+- `src/app/products/link-1/page.tsx` - Link 1 product page
+- `src/app/products/link-2/page.tsx` - Link 2 placeholder page
+- `src/app/blog/page.tsx` - blog listing
+- `src/app/blog/[slug]/page.tsx` - blog detail page
+- `src/content/` - shared product and blog content
+- `src/components/home/` - homepage sections
+- `src/components/link1/` - Link 1 product sections and CTA
 
+## Commands
 
-| Command         | Description           |
-| --------------- | --------------------- |
-| `pnpm dev`      | Development server    |
-| `pnpm build`    | Production build      |
-| `pnpm start`    | Run production server |
-| `pnpm lint`     | ESLint                |
-| `pnpm lint:fix` | ESLint with auto-fix  |
-| `pnpm test`     | Vitest (unit / API)   |
-| `pnpm test:e2e` | Playwright            |
-| `pnpm verify:shopify` | Live Link 1 + checkout check (needs `.env.local`) |
+| Command | Purpose |
+| --- | --- |
+| `pnpm dev` | Start local dev server |
+| `pnpm build` | Create production build |
+| `pnpm start` | Serve the production build |
+| `pnpm lint` | Run ESLint |
+| `pnpm test` | Run Vitest unit tests |
+| `pnpm test:e2e:install` | Install Playwright Chromium locally |
+| `pnpm test:e2e` | Run Playwright end-to-end tests |
+| `pnpm verify:shopify` | Run live Shopify verification |
 
-CI, secrets, and deploy gates: [docs/ci.md](docs/ci.md).
+## Shopify environment variables
 
+Local Shopify-backed flows need `.env.local` with:
 
-This project uses `[next/font](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)` to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `SHOPIFY_STORE_DOMAIN`
+- `SHOPIFY_LINK_1_HANDLE`
+- `SHOPIFY_STOREFRONT_PRIVATE_TOKEN` or `SHOPIFY_STOREFRONT_PUBLIC_TOKEN`
 
-## Learn more
+Optional:
 
-To learn more about Next.js, take a look at the following resources:
+- `SHOPIFY_STOREFRONT_API_VERSION`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Without these values:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- API route unit tests still run
+- live Shopify verification fails
+- live Playwright Shopify checks skip
 
-## Deploy on Vercel
+## Testing notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Run the normal local verification path:
 
-Vercel detects **pnpm** from `pnpm-lock.yaml` and uses the install command appropriate for this repo.
+```bash
+pnpm lint
+pnpm test
+pnpm build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For browser tests on a clean machine, install Playwright browsers first:
+
+```bash
+pnpm test:e2e:install
+pnpm test:e2e
+```
+
+The E2E server runs on port `3123` by default so it does not clash with `pnpm dev`.
+
+## Deployment and CI
+
+- CI and deploy gate details live in [docs/ci.md](docs/ci.md)
+- Vercel env sync helper: `pnpm vercel:env-push`

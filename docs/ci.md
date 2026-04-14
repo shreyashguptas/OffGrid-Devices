@@ -50,6 +50,7 @@ pnpm lint
 pnpm test
 pnpm verify:shopify   # needs .env.local with Shopify vars
 pnpm build
+pnpm test:e2e:install # one-time local Playwright browser install
 pnpm test:e2e         # builds are required; Playwright starts `pnpm start`
 ```
 

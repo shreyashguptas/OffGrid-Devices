@@ -4,6 +4,7 @@ import "./globals.css";
 import { BfCacheShell } from "@/components/BfCacheShell";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { link1Content } from "@/content/link1";
 
 function getFirstNonEmptyString(...values: Array<string | undefined>) {
   for (const value of values) {
@@ -39,9 +40,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "OffGrid Link 1 | MagSafe LoRa Mesh Radio",
+  title: `${link1Content.summary.brandedName} | MagSafe LoRa Mesh Radio`,
   description:
-    "OffGrid makes Link 1—the MagSafe-compatible LoRa mesh radio with Meshtastic-ready firmware. Off-grid communication that stays on the phone you already carry.",
+    `OffGrid makes ${link1Content.summary.name} - the MagSafe-compatible LoRa mesh radio with Meshtastic-ready firmware. Off-grid communication that stays on the phone you already carry.`,
   metadataBase,
   keywords: [
     "LoRa",
@@ -63,9 +64,9 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "OffGrid Link 1 | MagSafe LoRa Mesh Radio",
+    title: `${link1Content.summary.brandedName} | MagSafe LoRa Mesh Radio`,
     description:
-      "OffGrid Link 1: the MagSafe-compatible LoRa mesh radio—Meshtastic-ready, built to stay on your phone.",
+      `${link1Content.summary.brandedName}: the MagSafe-compatible LoRa mesh radio - Meshtastic-ready, built to stay on your phone.`,
     type: "website",
     images: ["/logo-1024.png"],
   },
