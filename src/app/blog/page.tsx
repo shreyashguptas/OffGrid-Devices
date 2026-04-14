@@ -1,22 +1,6 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-
-const blogPosts = [
-  {
-    slug: "getting-started-with-meshtastic",
-    title: "OffGrid Link 1 already runs Meshtastic—here’s how to go live",
-    excerpt:
-      "Meshtastic is open firmware you can install on other hardware, but Link 1 ships from OffGrid with it ready. Unbox, pair, and hit the mesh without the firmware homework.",
-    date: "January 2026",
-    readTime: "8 min read",
-    category: "Guides",
-    image:
-      "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
-  },
-];
+import { blogPosts } from "@/content/blog";
 
 export default function BlogPage() {
   return (
@@ -26,41 +10,23 @@ export default function BlogPage() {
           <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
             Journal
           </p>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mt-4 font-display text-5xl font-bold tracking-tight md:text-7xl"
-          >
+          <h1 className="mt-4 font-display text-5xl font-bold tracking-tight md:text-7xl">
             The OffGrid Blog
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-light md:text-xl"
-          >
+          </h1>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-light md:text-xl">
             Tutorials, setup guides, and practical notes on off-grid
             communication, mesh networking, and the hardware that keeps it
             usable.
-          </motion.p>
+          </p>
         </div>
       </section>
 
       <section className="border-b border-border-subtle bg-surface-elevated py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="grid gap-6 lg:grid-cols-2"
-          >
-            {blogPosts.map((post, index) => (
-              <motion.article
+          <div className="grid gap-6 lg:grid-cols-2">
+            {blogPosts.map((post) => (
+              <article
                 key={post.slug}
-                initial={{ opacity: 0, y: 32 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.08 }}
                 className="group section-card overflow-hidden rounded-[2rem]"
               >
                 <Link href={`/blog/${post.slug}`} className="block">
@@ -95,9 +61,9 @@ export default function BlogPage() {
                     </p>
                   </div>
                 </Link>
-              </motion.article>
+              </article>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
     </>

@@ -3,8 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { siteProducts } from "@/content/products";
 
 export function Footer() {
+  const [primaryProduct, secondaryProduct] = siteProducts;
+
   return (
     <footer className="border-t border-border-subtle bg-surface-elevated">
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
@@ -37,19 +40,21 @@ export function Footer() {
               </h3>
               <div className="mt-5 space-y-4">
                 <Link
-                  href="/products/link-1"
+                  href={primaryProduct.href}
                   className="block text-foreground/80 transition-colors duration-300 hover:text-accent"
                 >
-                  Link 1
+                  {primaryProduct.name}
                 </Link>
                 <Link
-                  href="/products/link-2"
+                  href={secondaryProduct.href}
                   className="inline-flex items-center gap-2 text-foreground/80 transition-colors duration-300 hover:text-accent"
                 >
-                  Link 2
-                  <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold tracking-[0.08em] text-orange-500">
-                    Coming soon
-                  </span>
+                  {secondaryProduct.name}
+                  {secondaryProduct.badge ? (
+                    <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold tracking-[0.08em] text-orange-500">
+                      {secondaryProduct.badge}
+                    </span>
+                  ) : null}
                 </Link>
               </div>
             </div>
@@ -126,10 +131,10 @@ export function Footer() {
 
           <div className="flex items-center gap-5">
             <Link
-              href="/products/link-1"
+              href={primaryProduct.href}
               className="transition-colors duration-300 hover:text-accent"
             >
-              Link 1
+              {primaryProduct.name}
             </Link>
             <Link
               href="/blog"

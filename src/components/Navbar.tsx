@@ -6,23 +6,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
-
-const products = [
-  {
-    name: "Link 1",
-    subtitle: "OffGrid · MagSafe LoRa mesh radio",
-    href: "/products/link-1",
-    image: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
-    badge: null,
-  },
-  {
-    name: "Link 2",
-    subtitle: "OffGrid · Next in the Link line",
-    href: "/products/link-2",
-    image: null,
-    badge: "Coming soon",
-  },
-];
+import { link1Content } from "@/content/link1";
+import { siteProducts } from "@/content/products";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -198,7 +183,7 @@ function NavbarContent() {
                       WebkitBackdropFilter: "blur(40px)",
                     }}
                   >
-                    {products.map((product) => (
+                    {siteProducts.map((product) => (
                       <Link
                         key={product.name}
                         href={product.href}
@@ -273,8 +258,8 @@ function NavbarContent() {
             Blog
           </Link>
           <Link1CheckoutButton
-            defaultLabel="Buy Link 1"
-            loadingLabel="Opening Checkout..."
+            defaultLabel={link1Content.summary.buyLabel}
+            loadingLabel={link1Content.summary.loadingLabel}
             className="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
           />
         </div>
@@ -349,7 +334,7 @@ function NavbarContent() {
                     className="overflow-hidden"
                   >
                     <div className="pl-4 flex flex-col gap-3 pb-2">
-                      {products.map((product) => (
+                      {siteProducts.map((product) => (
                         <Link
                           key={product.name}
                           href={product.href}
@@ -398,8 +383,8 @@ function NavbarContent() {
                 Blog
               </Link>
               <Link1CheckoutButton
-                defaultLabel="Buy Link 1"
-                loadingLabel="Opening Checkout..."
+                defaultLabel={link1Content.summary.buyLabel}
+                loadingLabel={link1Content.summary.loadingLabel}
                 className="mt-2 px-5 py-3 bg-accent text-on-accent font-medium rounded-full text-center hover:bg-accent-light transition-all duration-300"
               />
             </div>
