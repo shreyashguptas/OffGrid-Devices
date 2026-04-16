@@ -4,56 +4,66 @@ import "./globals.css";
 import { BfCacheShell } from "@/components/BfCacheShell";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { link1Content } from "@/content/link1";
+import { getMetadataBase } from "@/lib/siteUrl";
+import {
+  jsonLdScriptProps,
+  organizationJsonLd,
+  websiteJsonLd,
+} from "@/lib/jsonLd";
 
-function getFirstNonEmptyString(...values: Array<string | undefined>) {
-  for (const value of values) {
-    if (typeof value === "string" && value.trim().length > 0) {
-      return value.trim();
-    }
-  }
-  return undefined;
-}
+const metadataBase = getMetadataBase();
 
-function createMetadataBase() {
-  const rawValue =
-    getFirstNonEmptyString(
-      process.env.NEXT_PUBLIC_SITE_URL,
-      process.env.VERCEL_PROJECT_PRODUCTION_URL,
-      process.env.VERCEL_URL,
-    ) ?? "http://localhost:3000";
-
-  const normalizedValue = /^[a-zA-Z][a-zA-Z\d+\-.]*:\/\//.test(rawValue)
-    ? rawValue
-    : `https://${rawValue}`;
-
-  try {
-    return new URL(normalizedValue);
-  } catch {
-    return new URL("http://localhost:3000");
-  }
-}
-
-const metadataBase = createMetadataBase();
 export const viewport: Viewport = {
   themeColor: "#f3f7f2",
 };
 
+const SITE_NAME = "OffGrid Devices";
+const DEFAULT_TITLE =
+  "OffGrid Link 1 | MagSafe LoRa Mesh Radio for Off-Grid Communication";
+const DEFAULT_DESCRIPTION =
+  "OffGrid Devices makes Link 1 — the MagSafe-compatible LoRa mesh radio with Meshtastic pre-installed. Off-grid communication that stays with the phone you already carry.";
+
 export const metadata: Metadata = {
-  title: `${link1Content.summary.brandedName} | MagSafe LoRa Mesh Radio`,
-  description:
-    `OffGrid makes ${link1Content.summary.name} - the MagSafe-compatible LoRa mesh radio with Meshtastic-ready firmware. Off-grid communication that stays on the phone you already carry.`,
   metadataBase,
+  title: {
+    default: DEFAULT_TITLE,
+    template: "%s | OffGrid Devices",
+  },
+  description: DEFAULT_DESCRIPTION,
+  applicationName: SITE_NAME,
   keywords: [
-    "LoRa",
+    "LoRa mesh radio",
     "Meshtastic",
+    "MagSafe Meshtastic",
     "MeshCore",
     "off-grid communication",
-    "MagSafe",
+    "off-grid radio",
     "mesh network",
-    "RAK",
-    "emergency communication",
+    "RAK WisBlock",
+    "emergency communication device",
+    "backup comms",
+    "hiking two-way radio",
+    "OffGrid Devices",
+    "OffGrid Link 1",
   ],
+  authors: [{ name: "Shreyash Gupta" }],
+  creator: "Shreyash Gupta",
+  publisher: SITE_NAME,
+  category: "technology",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
@@ -64,10 +74,25 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: `${link1Content.summary.brandedName} | MagSafe LoRa Mesh Radio`,
-    description:
-      `${link1Content.summary.brandedName}: the MagSafe-compatible LoRa mesh radio - Meshtastic-ready, built to stay on your phone.`,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
     type: "website",
+    url: "/",
+    siteName: SITE_NAME,
+    locale: "en_US",
+    images: [
+      {
+        url: "/logo-1024.png",
+        width: 1024,
+        height: 1024,
+        alt: "OffGrid Devices — MagSafe LoRa mesh radio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
     images: ["/logo-1024.png"],
   },
 };
@@ -79,6 +104,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="preconnect"
+          href="https://cdn.shopify.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://cdn.shopify.com" />
+        <script {...jsonLdScriptProps(organizationJsonLd())} />
+        <script {...jsonLdScriptProps(websiteJsonLd())} />
+      </head>
       <body className="bg-background text-foreground antialiased">
         <BfCacheShell>
           <Navbar />
