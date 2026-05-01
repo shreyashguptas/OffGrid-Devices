@@ -3,8 +3,38 @@ import {
   getLink1ProductWithCache,
   hasShopifyStorefrontConfig,
 } from "@/lib/shopify";
+import {
+  checkRateLimit,
+  getRateLimitKey,
+  rateLimitHeaders,
+} from "@/lib/rate-limit";
 
-export async function GET() {
+const PRODUCT_RATE_LIMIT = {
+  limit: 120,
+  windowMs: 60_000,
+};
+
+export async function GET(request?: Request) {
+  const rateLimit = checkRateLimit({
+    key: getRateLimitKey(request, "shopify-link-1-product"),
+    ...PRODUCT_RATE_LIMIT,
+  });
+
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests." },
+      {
+        status: 429,
+        headers: {
+          ...rateLimitHeaders(rateLimit),
+          "Retry-After": String(
+            Math.max(1, Math.ceil((rateLimit.resetAt - Date.now()) / 1000)),
+          ),
+        },
+      },
+    );
+  }
+
   if (!hasShopifyStorefrontConfig()) {
     return NextResponse.json(
       { error: "Shopify Storefront API is not configured." },
@@ -29,16 +59,16 @@ export async function GET() {
       {
         headers: {
           "Cache-Control": "public, s-maxage=30, stale-while-revalidate=120",
+          ...rateLimitHeaders(rateLimit),
         },
       },
     );
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Failed to fetch Shopify product.";
+    console.error("Failed to fetch Shopify product.", error);
 
     return NextResponse.json(
       {
-        error: message,
+        error: "Failed to fetch Shopify product.",
       },
       { status: 500 },
     );

@@ -48,6 +48,30 @@ describe("POST /api/shopify/link-1/checkout", () => {
     const body = await res.json();
 
     expect(res.status).toBe(500);
-    expect(body.error).toMatch(/sold out/i);
+    expect(body.error).toMatch(/failed to create/i);
+  });
+
+  it("rate limits repeated checkout creation attempts", async () => {
+    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(true);
+    vi.mocked(shopify.createLink1CheckoutUrl).mockResolvedValue(
+      "https://example.myshopify.com/checkouts/cn/abc",
+    );
+
+    const request = new Request("https://offgridevices.com/api/shopify/link-1/checkout", {
+      method: "POST",
+      headers: { "x-forwarded-for": "203.0.113.10" },
+    });
+
+    for (let i = 0; i < 10; i += 1) {
+      const res = await POST(request);
+      expect(res.status).toBe(200);
+    }
+
+    const limited = await POST(request);
+    const body = await limited.json();
+
+    expect(limited.status).toBe(429);
+    expect(body.error).toMatch(/too many/i);
+    expect(limited.headers.get("retry-after")).toBeTruthy();
   });
 });
