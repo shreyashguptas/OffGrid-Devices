@@ -1,7 +1,37 @@
 import { NextResponse } from "next/server";
 import { createLink1CheckoutUrl, hasShopifyStorefrontConfig } from "@/lib/shopify";
+import {
+  checkRateLimit,
+  getRateLimitKey,
+  rateLimitHeaders,
+} from "@/lib/rate-limit";
 
-export async function POST() {
+const CHECKOUT_RATE_LIMIT = {
+  limit: 10,
+  windowMs: 60_000,
+};
+
+export async function POST(request?: Request) {
+  const rateLimit = checkRateLimit({
+    key: getRateLimitKey(request, "shopify-link-1-checkout"),
+    ...CHECKOUT_RATE_LIMIT,
+  });
+
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests." },
+      {
+        status: 429,
+        headers: {
+          ...rateLimitHeaders(rateLimit),
+          "Retry-After": String(
+            Math.max(1, Math.ceil((rateLimit.resetAt - Date.now()) / 1000)),
+          ),
+        },
+      },
+    );
+  }
+
   if (!hasShopifyStorefrontConfig()) {
     return NextResponse.json(
       { error: "Shopify Storefront API is not configured." },
@@ -12,14 +42,16 @@ export async function POST() {
   try {
     const checkoutUrl = await createLink1CheckoutUrl();
 
-    return NextResponse.json({ checkoutUrl, source: "shopify" });
+    return NextResponse.json(
+      { checkoutUrl, source: "shopify" },
+      { headers: rateLimitHeaders(rateLimit) },
+    );
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Failed to create Shopify checkout.";
+    console.error("Failed to create Shopify checkout.", error);
 
     return NextResponse.json(
       {
-        error: message,
+        error: "Failed to create Shopify checkout.",
       },
       { status: 500 },
     );

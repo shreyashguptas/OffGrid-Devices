@@ -156,7 +156,7 @@ export function ZoomParallax({ images, className }: ZoomParallaxProps) {
         <div className="sticky top-0 h-screen overflow-hidden">
           {images.map((image, index) => (
             <motion.div
-              key={image.src}
+              key={`${image.src}-${index}`}
               style={{ scale: scales[index % scales.length] }}
               className={cn(
                 "absolute top-0 flex h-full w-full items-center justify-center",

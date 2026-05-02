@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { COMING_SOON_LABEL, link2Content } from "@/content/products";
+
+export const metadata: Metadata = {
+  title: `${link2Content.brandedName} — Coming Soon`,
+  description: `${link2Content.brandedName} is in development at OffGrid Devices. In the meantime, Link 1 is shipping now.`,
+  alternates: { canonical: "/products/link-2" },
+  // Placeholder page — keep out of search until real content lands.
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function Link2Product() {
   return (

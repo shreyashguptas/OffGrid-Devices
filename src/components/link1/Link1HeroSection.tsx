@@ -15,7 +15,7 @@ export function Link1HeroSection() {
             </div>
 
             <h1 className="mt-8 font-display text-5xl font-bold leading-[1.02] tracking-tight md:text-7xl">
-              {link1Content.summary.name}
+              {link1Content.summary.brandedName}
             </h1>
 
             <p className="mt-4 text-xl text-muted-light md:text-2xl">

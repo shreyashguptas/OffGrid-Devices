@@ -1,10 +1,48 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { blogPosts } from "@/content/blog";
+import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
+
+export const metadata: Metadata = {
+  title: "OffGrid Blog — Meshtastic, LoRa & Off-Grid Communication",
+  description:
+    "Guides, comparisons, and practical notes on Meshtastic, LoRa mesh networking, and off-grid communication — from the team behind OffGrid Link 1.",
+  keywords: [
+    "Meshtastic blog",
+    "LoRa mesh guides",
+    "off-grid communication blog",
+    "OffGrid Devices blog",
+    "Meshtastic tutorials",
+    "LoRa radio comparisons",
+  ],
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    type: "website",
+    url: "/blog",
+    title: "OffGrid Blog — Meshtastic, LoRa & Off-Grid Communication",
+    description:
+      "Guides, comparisons, and practical notes on Meshtastic, LoRa, and off-grid communication.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OffGrid Blog — Meshtastic, LoRa & Off-Grid Communication",
+    description:
+      "Guides, comparisons, and practical notes on Meshtastic, LoRa, and off-grid communication.",
+  },
+};
 
 export default function BlogPage() {
   return (
     <>
+      <script
+        {...jsonLdScriptProps(
+          breadcrumbJsonLd([
+            { name: "Home", url: "/" },
+            { name: "Blog", url: "/blog" },
+          ]),
+        )}
+      />
       <section className="border-b border-border-subtle bg-background pt-28 pb-16 md:pt-32 md:pb-20">
         <div className="mx-auto max-w-5xl px-6 text-center">
           <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">

@@ -54,6 +54,26 @@ type CartCreateData = {
   };
 };
 
+function getShopifyHost(domain: string) {
+  const raw = domain.trim();
+  const withProtocol = /^[a-zA-Z][a-zA-Z\d+\-.]*:\/\//.test(raw)
+    ? raw
+    : `https://${raw}`;
+  const url = new URL(withProtocol);
+
+  return url.hostname.toLowerCase();
+}
+
+function isAllowedCheckoutHost(checkoutHost: string, configuredDomain: string) {
+  const configuredHost = getShopifyHost(configuredDomain);
+  const normalizedCheckoutHost = checkoutHost.toLowerCase();
+
+  return (
+    normalizedCheckoutHost === configuredHost ||
+    normalizedCheckoutHost.endsWith(".myshopify.com")
+  );
+}
+
 function getShopifyEnv() {
   const domain = process.env.SHOPIFY_STORE_DOMAIN?.trim();
   const privateToken = process.env.SHOPIFY_STOREFRONT_PRIVATE_TOKEN?.trim();
@@ -97,9 +117,10 @@ async function shopifyFetch<T>(
   );
 
   let lastError: Error | null = null;
+  const shopifyHost = getShopifyHost(domain);
 
   for (const token of attemptedTokens) {
-    const response = await fetch(`https://${domain}/api/${apiVersion}/graphql.json`, {
+    const response = await fetch(`https://${shopifyHost}/api/${apiVersion}/graphql.json`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -196,6 +217,7 @@ export async function getLink1ProductWithCache() {
 }
 
 export async function createLink1CheckoutUrl() {
+  const { domain } = getShopifyEnv();
   const product = await getLink1Product();
 
   if (!product) {
@@ -238,11 +260,15 @@ export async function createLink1CheckoutUrl() {
   }
 
   const checkoutUrl = data.cartCreate.cart?.checkoutUrl;
-  if (!checkoutUrl) {
+  if (!checkoutUrl || !domain) {
     throw new Error("Shopify did not return a checkout URL.");
   }
 
   const url = new URL(checkoutUrl);
+  if (url.protocol !== "https:" || !isAllowedCheckoutHost(url.hostname, domain)) {
+    throw new Error("Shopify returned an unexpected checkout URL.");
+  }
+
   url.searchParams.set("channel", "headless-storefronts");
 
   return url.toString();
