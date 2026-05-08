@@ -55,8 +55,8 @@ importers:
         specifier: ^19
         version: 19.2.3(@types/react@19.2.14)
       dotenv:
-        specifier: ^17.2.3
-        version: 17.4.1
+        specifier: ^17.4.2
+        version: 17.4.2
       eslint:
         specifier: ^9
         version: 9.39.4(jiti@2.6.1)
@@ -1419,8 +1419,8 @@ packages:
   dom-accessibility-api@0.5.16:
     resolution: {integrity: sha512-X7BJ2yElsnOJ30pZF4uIIDfBEVgF4XEBxL9Bxhy6dnrm5hkzqmsWHGTiHqRiITNhMyFLyAiWndIJP7Z1NTteDg==}
 
-  dotenv@17.4.1:
-    resolution: {integrity: sha512-k8DaKGP6r1G30Lx8V4+pCsLzKr8vLmV2paqEj1Y55GdAgJuIqpRp5FfajGF8KtwMxCz9qJc6wUIJnm053d/WCw==}
+  dotenv@17.4.2:
+    resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -3887,7 +3887,7 @@ snapshots:
 
   dom-accessibility-api@0.5.16: {}
 
-  dotenv@17.4.1: {}
+  dotenv@17.4.2: {}
 
   dunder-proto@1.0.1:
     dependencies:
