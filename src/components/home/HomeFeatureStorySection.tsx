@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { cardVariant, staggerContainer } from "@/components/shared/motion";
 import { link1Content } from "@/content/link1";
@@ -76,7 +77,7 @@ export function HomeFeatureStorySection() {
               Where it earns its keep.
             </h2>
           </div>
-          <a
+          <Link
             href="/blog"
             className="text-sand hover:text-ember transition-colors"
             style={{
@@ -88,7 +89,7 @@ export function HomeFeatureStorySection() {
             }}
           >
             All field notes →
-          </a>
+          </Link>
         </div>
 
         <motion.div

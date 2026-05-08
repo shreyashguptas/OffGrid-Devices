@@ -76,10 +76,15 @@
 }
 
 @theme {
-  --font-display: "Archivo", "Inter Tight", system-ui, sans-serif;
-  --font-body: "Inter Tight", "Inter", system-ui, sans-serif;
-  --font-editorial: "Newsreader", "Iowan Old Style", Georgia, serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display:
+    var(--font-archivo), "Archivo", "Inter Tight", system-ui, sans-serif;
+  --font-body:
+    var(--font-inter-tight), "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-editorial:
+    var(--font-newsreader), "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-mono:
+    var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular,
+    Menlo, monospace;
 
   --color-background: var(--app-bg);
   --color-foreground: var(--app-fg);

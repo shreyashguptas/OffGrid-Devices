@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { fadeInLeft, fadeInRight } from "@/components/shared/motion";
-import { link1Content } from "@/content/link1";
 
 const HARDWARE_ROWS: ReadonlyArray<readonly [string, string]> = [
   ["SHELL", "Transparent polycarbonate"],
