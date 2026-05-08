@@ -303,3 +303,79 @@ body {
   -webkit-mask-image: radial-gradient(ellipse at 70% 0%, black, transparent 60%);
   mask-image: radial-gradient(ellipse at 70% 0%, black, transparent 60%);
 }
+
+/* Print stylesheet — used by the /start setup page so customers can print
+   a physical reference card. Strips chrome, expands accordions, and
+   forces high-contrast typography on the dark Beacon theme. */
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Hide site chrome — the printed version is content-only. */
+  header[role="banner"],
+  nav,
+  footer,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Section frames: drop dark backgrounds and shadows. */
+  section {
+    background: #ffffff !important;
+    border-bottom: 1px solid #d1d5db !important;
+    page-break-inside: auto;
+  }
+
+  .section-card,
+  .section-stage,
+  .beacon-card {
+    background: #ffffff !important;
+    border: 1px solid #d1d5db !important;
+    box-shadow: none !important;
+  }
+
+  /* Force foreground text dark for readability on white. */
+  .text-foreground,
+  .text-bone,
+  .text-sand,
+  .text-muted,
+  .text-muted-light {
+    color: #111111 !important;
+  }
+
+  /* Accordion: force open and remove the collapse affordance. */
+  details {
+    page-break-inside: avoid;
+  }
+  details > summary {
+    list-style: none;
+    cursor: default;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+  details:not([open]) > *:not(summary) {
+    display: revert !important;
+  }
+
+  /* Avoid orphan headings. */
+  h1,
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  /* Show the URL behind links so the printed page is self-referential. */
+  a[href^="http"]::after,
+  a[href^="mailto:"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #4b5563;
+  }
+  a[href^="#"]::after {
+    content: "";
+  }
+}
