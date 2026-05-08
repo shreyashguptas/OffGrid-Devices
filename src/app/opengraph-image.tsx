@@ -16,85 +16,96 @@ export default function OgImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "80px",
+          padding: "72px 80px",
           background:
-            "linear-gradient(135deg, #0b1f1c 0%, #0f2a27 50%, #133731 100%)",
-          color: "#f3f7f2",
+            "radial-gradient(ellipse 120% 80% at 80% 30%, #4a3826 0%, transparent 50%), radial-gradient(ellipse 90% 100% at 20% 110%, #2a1f15 0%, transparent 60%), linear-gradient(180deg, #221c14 0%, #1B1813 100%)",
+          color: "#F1ECE0",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+        {/* Top — wordmark */}
+        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+          <svg
+            width="56"
+            height="56"
+            viewBox="0 0 200 200"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              stroke="#E8743C"
+              strokeWidth="9"
+              fill="none"
+              strokeLinejoin="miter"
+            >
+              <path d="M 100 50 L 150 100 L 100 150 L 50 100 Z" />
+              <line x1="100" y1="50" x2="100" y2="150" />
+              <line x1="50" y1="100" x2="150" y2="100" />
+            </g>
+            <circle cx="100" cy="50" r="11" fill="#E8743C" />
+            <circle cx="150" cy="100" r="8" fill="#F1ECE0" />
+            <circle cx="100" cy="150" r="8" fill="#F1ECE0" />
+            <circle cx="50" cy="100" r="8" fill="#F1ECE0" />
+            <circle cx="100" cy="100" r="9" fill="#E8743C" />
+          </svg>
           <div
             style={{
-              width: 56,
-              height: 56,
-              borderRadius: 16,
-              background: "#f3f7f2",
-              color: "#0b1f1c",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 28,
+              fontSize: 32,
               fontWeight: 800,
-              letterSpacing: -1,
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
             }}
           >
-            OG
+            OffGrid
+          </div>
+        </div>
+
+        {/* Middle — display copy */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+          <div
+            style={{
+              fontSize: 96,
+              fontWeight: 900,
+              lineHeight: 0.92,
+              letterSpacing: "-0.04em",
+              textTransform: "uppercase",
+              maxWidth: 1040,
+            }}
+          >
+            Stay connected.
+            <br />
+            <span style={{ color: "#E8743C" }}>Go anywhere.</span>
           </div>
           <div
             style={{
               fontSize: 30,
-              fontWeight: 600,
-              letterSpacing: 0.2,
-              color: "#c7d8d2",
+              color: "#D9C9A8",
+              fontStyle: "italic",
+              maxWidth: 920,
+              lineHeight: 1.35,
             }}
           >
-            OffGrid Devices
+            MagSafe LoRa mesh radio. No towers. No SIMs. No subscriptions.
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          <div
-            style={{
-              fontSize: 84,
-              fontWeight: 800,
-              lineHeight: 1.05,
-              letterSpacing: -2,
-              maxWidth: 1040,
-            }}
-          >
-            MagSafe LoRa Mesh Radio
-          </div>
-          <div
-            style={{
-              fontSize: 36,
-              color: "#a8c1b9",
-              maxWidth: 960,
-              lineHeight: 1.3,
-            }}
-          >
-            Meshtastic-ready. Off-grid communication that stays with the phone
-            you already carry.
-          </div>
-        </div>
-
+        {/* Bottom — meta */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            fontSize: 22,
+            letterSpacing: "0.18em",
+            color: "#D9C9A8",
+            textTransform: "uppercase",
           }}
         >
-          <div style={{ fontSize: 26, color: "#8fb0a6" }}>
-            offgridevices.com
-          </div>
+          <div>offgridevices.com</div>
           <div
             style={{
-              fontSize: 24,
               padding: "12px 22px",
-              borderRadius: 999,
-              border: "1px solid #2f5b52",
-              color: "#c7d8d2",
+              border: "1px solid #D9C9A855",
+              color: "#F1ECE0",
             }}
           >
             OffGrid Link 1

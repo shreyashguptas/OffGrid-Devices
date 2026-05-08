@@ -5,7 +5,7 @@ import type { BlogPost } from "@/content/blog";
 const ORGANIZATION_NAME = "OffGrid Devices";
 const ORGANIZATION_LEGAL = "OffGrid Devices";
 const DEFAULT_AUTHOR_NAME = "Shreyash Gupta";
-const LOGO_PATH = "/logo-1024.png";
+const LOGO_PATH = "/logo.svg";
 
 export function organizationJsonLd() {
   return {
@@ -18,8 +18,6 @@ export function organizationJsonLd() {
     logo: {
       "@type": "ImageObject",
       url: absoluteUrl(LOGO_PATH),
-      width: 1024,
-      height: 1024,
     },
     founder: {
       "@type": "Person",

@@ -1,4 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import {
+  Archivo,
+  Inter_Tight,
+  JetBrains_Mono,
+  Newsreader,
+} from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { BfCacheShell } from "@/components/BfCacheShell";
@@ -11,11 +17,43 @@ import {
   websiteJsonLd,
 } from "@/lib/jsonLd";
 
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800", "900"],
+  display: "swap",
+  variable: "--font-archivo",
+});
+
+const interTight = Inter_Tight({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-inter-tight",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-newsreader",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  display: "swap",
+  variable: "--font-jetbrains-mono",
+});
+
 const metadataBase = getMetadataBase();
 
 export const viewport: Viewport = {
-  themeColor: "#f3f7f2",
+  themeColor: "#1B1813",
 };
+
+const BEACON_FAVICON =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%231B1813'/%3E%3Cg stroke='%23F1ECE0' stroke-width='12' fill='none' stroke-linecap='square'%3E%3Cpath d='M 32 56 L 32 32 L 56 32'/%3E%3Cpath d='M 144 32 L 168 32 L 168 56'/%3E%3Cpath d='M 168 144 L 168 168 L 144 168'/%3E%3Cpath d='M 56 168 L 32 168 L 32 144'/%3E%3C/g%3E%3Cg stroke='%23E8743C' stroke-width='14' fill='none' stroke-linejoin='miter' stroke-linecap='butt'%3E%3Cpath d='M 100 58 L 142 100 L 100 142 L 58 100 Z'/%3E%3Cline x1='100' y1='58' x2='100' y2='142'/%3E%3Cline x1='58' y1='100' x2='142' y2='100'/%3E%3C/g%3E%3Ccircle cx='100' cy='58' r='12' fill='%23E8743C'/%3E%3Ccircle cx='142' cy='100' r='9' fill='%23F1ECE0'/%3E%3Ccircle cx='100' cy='142' r='9' fill='%23F1ECE0'/%3E%3Ccircle cx='58' cy='100' r='9' fill='%23F1ECE0'/%3E%3Ccircle cx='100' cy='100' r='10' fill='%23E8743C'/%3E%3C/svg%3E";
 
 const SITE_NAME = "OffGrid Devices";
 const DEFAULT_TITLE =
@@ -66,12 +104,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { url: BEACON_FAVICON, type: "image/svg+xml" },
+      { url: "/logo.svg", type: "image/svg+xml" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: { url: "/logo.svg", type: "image/svg+xml" },
   },
   openGraph: {
     title: DEFAULT_TITLE,
@@ -82,9 +118,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/logo-1024.png",
-        width: 1024,
-        height: 1024,
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
         alt: "OffGrid Devices — MagSafe LoRa mesh radio",
       },
     ],
@@ -93,7 +129,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: ["/logo-1024.png"],
+    images: ["/opengraph-image"],
   },
 };
 
@@ -103,7 +139,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${archivo.variable} ${interTight.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
+    >
       <head>
         <link
           rel="preconnect"

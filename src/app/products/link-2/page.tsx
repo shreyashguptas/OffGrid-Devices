@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { WaypointMark } from "@/components/shared/WaypointMark";
 import { COMING_SOON_LABEL, link2Content } from "@/content/products";
 
 export const metadata: Metadata = {
@@ -38,15 +38,9 @@ export default function Link2Product() {
             </p>
           </div>
 
-          <div className="section-stage mx-auto mt-12 max-w-3xl rounded-[2.5rem] p-10">
-            <div className="mx-auto flex h-28 w-28 items-center justify-center overflow-hidden rounded-[2rem] bg-white shadow-sm">
-              <Image
-                src="/logo-512.png"
-                alt="OffGrid Logo"
-                width={112}
-                height={112}
-                className="h-full w-full object-cover"
-              />
+          <div className="section-stage mx-auto mt-12 max-w-3xl p-10">
+            <div className="mx-auto flex h-28 w-28 items-center justify-center border border-sand/20 bg-pitch-deep">
+              <WaypointMark size={84} />
             </div>
           </div>
         </div>
