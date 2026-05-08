@@ -70,7 +70,7 @@ export function HomeHeroSection() {
           <div>
             <motion.div
               variants={fadeInUp}
-              className="inline-flex items-center gap-2 border border-sand/25 px-3.5 py-2"
+              className="inline-flex items-center gap-2.5 border border-sand/25 px-3.5 py-2"
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: "11px",
@@ -78,7 +78,8 @@ export function HomeHeroSection() {
                 color: "var(--app-sand)",
               }}
             >
-              EST. 2025 · MADE IN SAN FRANCISCO
+              <span>EST. 2026 · MADE IN THE USA</span>
+              <UsFlag />
             </motion.div>
 
             <motion.h1
@@ -200,46 +201,100 @@ export function HomeHeroSection() {
       {/* Marquee stats — sits inside hero zone, like the design */}
       <div className="relative z-10 border-t border-bark">
         <div className="mx-auto grid max-w-7xl grid-cols-2 md:grid-cols-4">
-          {[
-            ["10+ km", "of off-grid range"],
-            ["64 g", "about a deck of cards"],
-            ["MagSafe", "snaps to your phone"],
-            ["USB-C", "fast-charge ready"],
-          ].map(([metric, label], index) => (
+          {STATS.map((stat, index) => (
             <div
-              key={metric}
-              className={`px-6 py-10 text-center md:px-8 ${
-                index === 0
-                  ? ""
-                  : "border-l border-bark"
-              } ${index >= 2 ? "border-t border-bark md:border-t-0" : ""}`}
+              key={stat.metric}
+              className={`flex min-w-0 flex-col items-center px-5 py-10 text-center md:px-6 ${
+                // vertical rail between every column on desktop;
+                // on mobile, rails between columns and a row-rail above the second row.
+                index % 2 === 0 ? "" : "border-l border-bark"
+              } ${index >= 2 ? "border-t border-bark md:border-t-0" : ""} ${
+                index === 2 ? "md:border-l md:border-bark" : ""
+              }`}
             >
               <div
-                className="text-bone"
+                className="w-full truncate text-bone"
                 style={{
                   fontFamily: "var(--font-display)",
                   fontWeight: 900,
-                  fontSize: "clamp(40px, 5vw, 72px)",
+                  fontSize: stat.kind === "number"
+                    ? "clamp(38px, 4.6vw, 64px)"
+                    : "clamp(28px, 3vw, 40px)",
                   lineHeight: 1,
-                  letterSpacing: "-0.04em",
+                  letterSpacing: "-0.03em",
                 }}
               >
-                {metric}
+                {stat.metric}
               </div>
               <div
                 className="mt-3 text-sand"
                 style={{
                   fontFamily: "var(--font-editorial)",
                   fontStyle: "italic",
-                  fontSize: 16,
+                  fontSize: 15,
                 }}
               >
-                {label}
+                {stat.label}
               </div>
             </div>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+type Stat = {
+  metric: string;
+  label: string;
+  kind: "number" | "word";
+};
+
+const STATS: Stat[] = [
+  { metric: "10+ km", label: "of off-grid range", kind: "number" },
+  { metric: "64 g", label: "about a deck of cards", kind: "number" },
+  { metric: "MagSafe", label: "snaps to your phone", kind: "word" },
+  { metric: "USB-C", label: "fast-charge ready", kind: "word" },
+];
+
+function UsFlag() {
+  return (
+    <svg
+      viewBox="0 0 30 22"
+      width={20}
+      height={14}
+      aria-hidden
+      style={{
+        display: "block",
+        flexShrink: 0,
+        border: "1px solid rgba(217, 201, 168, 0.3)",
+      }}
+    >
+      {/* 13 alternating red/white stripes */}
+      {Array.from({ length: 13 }, (_, index) => (
+        <rect
+          key={index}
+          x="0"
+          y={index * (22 / 13)}
+          width="30"
+          height={22 / 13}
+          fill={index % 2 === 0 ? "#B22234" : "#FFFFFF"}
+        />
+      ))}
+      {/* Canton */}
+      <rect x="0" y="0" width="13" height={22 * (7 / 13)} fill="#3C3B6E" />
+      {/* Star dots — abstracted at this size */}
+      {Array.from({ length: 4 }, (_, row) =>
+        Array.from({ length: 5 }, (_, col) => (
+          <circle
+            key={`${row}-${col}`}
+            cx={1.4 + col * 2.5}
+            cy={1.4 + row * 2.5}
+            r="0.55"
+            fill="#FFFFFF"
+          />
+        )),
+      )}
+    </svg>
   );
 }

@@ -14,6 +14,7 @@ type Link1CheckoutButtonProps = {
   defaultLabel: string;
   soldOutLabel?: string;
   loadingLabel?: string;
+  unavailableLabel?: string;
   showArrow?: boolean;
 };
 
@@ -128,6 +129,7 @@ export function Link1CheckoutButton({
   defaultLabel,
   soldOutLabel = "Sold Out",
   loadingLabel = "Opening Checkout...",
+  unavailableLabel = "Releasing Soon",
   showArrow = false,
 }: Link1CheckoutButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -145,7 +147,7 @@ export function Link1CheckoutButton({
     : isSoldOut
       ? soldOutLabel
       : isUnavailable || hasCheckoutError
-        ? "Checkout Unavailable"
+        ? unavailableLabel
         : defaultLabel;
 
   async function handleClick() {

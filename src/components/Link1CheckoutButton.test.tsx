@@ -89,7 +89,7 @@ describe("Link1CheckoutButton", () => {
     });
   });
 
-  it("shows Checkout Unavailable when product lookup fails", async () => {
+  it("shows Releasing Soon when product lookup fails", async () => {
     fetchMock.mockResolvedValueOnce(jsonResponse({}, 500));
 
     render(
@@ -100,7 +100,7 @@ describe("Link1CheckoutButton", () => {
     );
 
     await waitFor(() => {
-      expect(getButton("Checkout Unavailable").disabled).toBe(true);
+      expect(getButton("Releasing Soon").disabled).toBe(true);
     });
   });
 
@@ -172,7 +172,7 @@ describe("Link1CheckoutButton", () => {
     fireEvent.click(button);
 
     await waitFor(() => {
-      expect(getButton("Checkout Unavailable").disabled).toBe(true);
+      expect(getButton("Releasing Soon").disabled).toBe(true);
     });
   });
 });
