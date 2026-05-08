@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
+import { BeaconWordmark, WaypointMark } from "@/components/shared/WaypointMark";
 import { link1Content } from "@/content/link1";
 import { siteProducts } from "@/content/products";
 
@@ -120,24 +121,16 @@ function NavbarContent() {
       }}
     >
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <Link href="/" className="group flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl overflow-hidden transition-all duration-300 group-hover:opacity-90">
-            <Image
-              src="/logo-512.png"
-              alt="OffGrid Logo"
-              width={40}
-              height={40}
-              className="w-full h-full object-cover"
-              priority
-            />
-          </div>
-          <span className="font-display text-xl font-bold tracking-tight">
-            OffGrid
-          </span>
+        <Link
+          href="/"
+          className="group flex items-center transition-opacity duration-300 hover:opacity-85"
+          aria-label="OffGrid home"
+        >
+          <BeaconWordmark size={20} />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden md:flex items-center gap-9">
           {/* Products Dropdown */}
           <div
             className="relative"
@@ -145,7 +138,8 @@ function NavbarContent() {
             onMouseLeave={handleMouseLeave}
           >
             <button
-              className="flex items-center gap-1.5 text-sm text-muted-light hover:text-foreground transition-colors duration-300"
+              className="flex items-center gap-1.5 text-[12px] font-semibold tracking-[0.18em] uppercase text-sand hover:text-bone transition-colors duration-300"
+              style={{ fontFamily: "var(--font-display)" }}
               onClick={() => setIsProductsOpen(!isProductsOpen)}
             >
               Products
@@ -176,7 +170,7 @@ function NavbarContent() {
                   className="absolute left-1/2 -translate-x-1/2 top-full mt-4 w-80"
                 >
                   <div
-                    className="media-shadow rounded-2xl border border-border-subtle p-2"
+                    className="media-shadow border border-border-card p-2"
                     style={{
                       background: "var(--app-dropdown)",
                       backdropFilter: "blur(40px)",
@@ -187,10 +181,10 @@ function NavbarContent() {
                       <Link
                         key={product.name}
                         href={product.href}
-                        className="flex items-center gap-4 p-3 rounded-xl hover:bg-fill-glass-elevated transition-all duration-200 group"
+                        className="flex items-center gap-4 p-3 hover:bg-fill-glass-elevated transition-all duration-200 group"
                       >
                         {/* Product thumbnail */}
-                        <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-surface-elevated border border-border-subtle">
+                        <div className="w-12 h-12 overflow-hidden shrink-0 bg-bark-soft border border-border-card">
                           {product.image ? (
                             <Image
                               src={product.image}
@@ -201,13 +195,7 @@ function NavbarContent() {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
-                              <Image
-                                src="/logo-512.png"
-                                alt={product.name}
-                                width={28}
-                                height={28}
-                                className="opacity-40"
-                              />
+                              <WaypointMark size={28} />
                             </div>
                           )}
                         </div>
@@ -215,16 +203,25 @@ function NavbarContent() {
                         {/* Product info */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="font-display font-semibold text-sm text-foreground">
+                            <span
+                              className="font-display text-[13px] font-bold uppercase tracking-[0.04em] text-bone"
+                              style={{ fontFamily: "var(--font-display)" }}
+                            >
                               {product.name}
                             </span>
                             {product.badge && (
-                              <span className="rounded-full border border-orange-500/30 bg-orange-500/20 px-2 py-0.5 text-[10px] font-bold tracking-[0.08em] text-orange-400">
+                              <span className="border border-ember/40 bg-ember/15 px-2 py-0.5 text-[10px] font-bold tracking-[0.16em] uppercase text-ember">
                                 {product.badge}
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-muted mt-0.5 truncate">
+                          <p
+                            className="mt-0.5 truncate text-[11px] text-sand/70"
+                            style={{
+                              fontFamily: "var(--font-mono)",
+                              letterSpacing: "0.06em",
+                            }}
+                          >
                             {product.subtitle}
                           </p>
                         </div>
@@ -239,7 +236,7 @@ function NavbarContent() {
                           strokeWidth="2"
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          className="text-muted group-hover:text-foreground group-hover:translate-x-0.5 transition-all duration-200 shrink-0"
+                          className="text-sand/60 group-hover:text-bone group-hover:translate-x-0.5 transition-all duration-200 shrink-0"
                         >
                           <path d="M9 18l6-6-6-6" />
                         </svg>
@@ -253,14 +250,15 @@ function NavbarContent() {
 
           <Link
             href="/blog"
-            className="text-sm text-muted-light hover:text-foreground transition-colors duration-300"
+            className="text-[12px] font-semibold tracking-[0.18em] uppercase text-sand hover:text-bone transition-colors duration-300"
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Blog
           </Link>
           <Link1CheckoutButton
             defaultLabel={link1Content.summary.buyLabel}
             loadingLabel={link1Content.summary.loadingLabel}
-            className="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
+            className="bg-bone px-5 py-3 font-display text-[12px] font-bold tracking-[0.16em] uppercase text-pitch transition-all duration-300 hover:bg-ember hover:text-pitch disabled:opacity-60 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -272,17 +270,17 @@ function NavbarContent() {
         >
           <div className="relative w-6 h-5">
             <span
-              className={`absolute left-0 w-full h-0.5 bg-foreground transition-all duration-300 ${
+              className={`absolute left-0 w-full h-0.5 bg-bone transition-all duration-300 ${
                 isMobileMenuOpen ? "top-2 rotate-45" : "top-0"
               }`}
             />
             <span
-              className={`absolute left-0 top-2 w-full h-0.5 bg-foreground transition-all duration-300 ${
+              className={`absolute left-0 top-2 w-full h-0.5 bg-bone transition-all duration-300 ${
                 isMobileMenuOpen ? "opacity-0" : "opacity-100"
               }`}
             />
             <span
-              className={`absolute left-0 w-full h-0.5 bg-foreground transition-all duration-300 ${
+              className={`absolute left-0 w-full h-0.5 bg-bone transition-all duration-300 ${
                 isMobileMenuOpen ? "top-2 -rotate-45" : "top-4"
               }`}
             />
@@ -298,13 +296,14 @@ function NavbarContent() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden glass-strong mt-2 mx-4 overflow-hidden rounded-[1.75rem]"
+            className="md:hidden glass-strong mt-2 mx-4 overflow-hidden"
           >
             <div className="p-6 flex flex-col gap-4">
               {/* Products Expandable */}
               <button
                 onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
-                className="flex items-center justify-between text-lg text-muted-light hover:text-foreground transition-colors w-full text-left"
+                className="flex items-center justify-between text-[14px] font-bold tracking-[0.18em] uppercase text-sand hover:text-bone transition-colors w-full text-left"
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 Products
                 <svg
@@ -339,9 +338,9 @@ function NavbarContent() {
                           key={product.name}
                           href={product.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex items-center gap-3 text-muted-light hover:text-foreground transition-colors"
+                          className="flex items-center gap-3 text-sand hover:text-bone transition-colors"
                         >
-                          <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-surface-elevated border border-border-subtle">
+                          <div className="w-8 h-8 overflow-hidden shrink-0 bg-bark-soft border border-border-card">
                             {product.image ? (
                               <Image
                                 src={product.image}
@@ -352,19 +351,18 @@ function NavbarContent() {
                               />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center">
-                                <Image
-                                  src="/logo-512.png"
-                                  alt={product.name}
-                                  width={20}
-                                  height={20}
-                                  className="opacity-40"
-                                />
+                                <WaypointMark size={20} />
                               </div>
                             )}
                           </div>
-                          <span className="text-base">{product.name}</span>
+                          <span
+                            className="text-[13px] font-bold uppercase tracking-[0.06em]"
+                            style={{ fontFamily: "var(--font-display)" }}
+                          >
+                            {product.name}
+                          </span>
                           {product.badge && (
-                            <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                            <span className="text-[10px] font-bold uppercase tracking-[0.16em] px-1.5 py-0.5 bg-ember/15 text-ember border border-ember/40">
                               {product.badge}
                             </span>
                           )}
@@ -378,14 +376,15 @@ function NavbarContent() {
               <Link
                 href="/blog"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg text-muted-light hover:text-foreground transition-colors"
+                className="text-[14px] font-bold tracking-[0.18em] uppercase text-sand hover:text-bone transition-colors"
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 Blog
               </Link>
               <Link1CheckoutButton
                 defaultLabel={link1Content.summary.buyLabel}
                 loadingLabel={link1Content.summary.loadingLabel}
-                className="mt-2 px-5 py-3 bg-accent text-on-accent font-medium rounded-full text-center hover:bg-accent-light transition-all duration-300"
+                className="mt-2 px-5 py-4 bg-bone text-pitch font-display text-[12px] font-bold tracking-[0.16em] uppercase text-center hover:bg-ember transition-all duration-300"
               />
             </div>
           </motion.div>

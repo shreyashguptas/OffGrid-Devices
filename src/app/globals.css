@@ -1,68 +1,85 @@
 @import "tailwindcss";
 
+/*
+  Beacon — OffGrid brand language.
+  Rugged, gear-forward, outdoor-premium. Pitch + bark + sand + bone + ember.
+  Sharp corners over pillows. Type does the heavy lifting; chrome is quiet.
+*/
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  --app-bg: #fbfbfd;
-  --app-fg: #1d1d1f;
-  --app-on-accent: #f7fffc;
-  --app-accent: #0f8f6f;
-  --app-accent-light: #19a986;
-  --app-accent-dark: #0b6f56;
-  --app-surface: #ffffff;
-  --app-surface-elevated: #f5f5f7;
-  --app-surface-glass: rgba(255, 255, 255, 0.9);
-  --app-muted: #6e6e73;
-  --app-muted-light: #86868b;
+  /* Beacon palette */
+  --app-pitch: #1B1813;
+  --app-pitch-deep: #100D09;
+  --app-pitch-low: #15110C;
+  --app-bark: #3A2E22;
+  --app-bark-soft: #2A2118;
+  --app-sand: #D9C9A8;
+  --app-bone: #F1ECE0;
+  --app-ember: #E8743C;
+  --app-ember-low: #C95F2B;
 
-  --app-border-subtle: rgba(29, 29, 31, 0.08);
-  --app-border-card: rgba(29, 29, 31, 0.12);
-  --app-border-emphasis: rgba(29, 29, 31, 0.18);
-  --app-border-emphasis-hover: rgba(29, 29, 31, 0.26);
+  --app-bg: var(--app-pitch);
+  --app-fg: var(--app-bone);
+  --app-on-accent: var(--app-pitch);
+  --app-accent: var(--app-ember);
+  --app-accent-light: #F08851;
+  --app-accent-dark: var(--app-ember-low);
 
-  --app-fill-glass: rgba(255, 255, 255, 0.92);
-  --app-fill-glass-2: rgba(245, 245, 247, 0.92);
-  --app-fill-glass-elevated: rgba(255, 255, 255, 1);
-  --app-fill-muted: rgba(29, 29, 31, 0.04);
-  --app-fill-hover: rgba(29, 29, 31, 0.06);
+  --app-surface: var(--app-pitch);
+  --app-surface-elevated: var(--app-pitch-low);
+  --app-surface-glass: rgba(27, 24, 19, 0.78);
+  --app-muted: var(--app-sand);
+  --app-muted-light: rgba(217, 201, 168, 0.72);
 
-  --app-overlay-badge: rgba(29, 29, 31, 0.6);
-  --app-overlay-card: rgba(29, 29, 31, 0.56);
-  --app-overlay-border: rgba(255, 255, 255, 0.22);
-  --app-overlay-text: rgba(252, 251, 247, 0.98);
-  --app-overlay-text-muted: rgba(252, 251, 247, 0.78);
-  --app-overlay-chip: rgba(255, 255, 255, 0.1);
+  --app-border-subtle: rgba(217, 201, 168, 0.10);
+  --app-border-card: rgba(217, 201, 168, 0.18);
+  --app-border-emphasis: rgba(217, 201, 168, 0.32);
+  --app-border-emphasis-hover: rgba(217, 201, 168, 0.55);
 
-  --app-nav-scrolled: rgba(251, 251, 253, 0.78);
-  --app-dropdown: rgba(255, 255, 255, 0.88);
-  --app-mark-watermark: rgba(29, 29, 31, 0.06);
+  --app-fill-glass: rgba(27, 24, 19, 0.78);
+  --app-fill-glass-2: rgba(21, 17, 12, 0.82);
+  --app-fill-glass-elevated: rgba(58, 46, 34, 0.55);
+  --app-fill-muted: rgba(217, 201, 168, 0.05);
+  --app-fill-hover: rgba(217, 201, 168, 0.08);
 
-  --app-grid-line: rgba(29, 29, 31, 0.08);
-  --app-scrollbar-track: #f1f1f3;
-  --app-scrollbar-thumb: #c9cad1;
-  --app-scrollbar-thumb-hover: #b0b2ba;
-  --app-selection-fg: #1d1d1f;
+  --app-overlay-badge: rgba(15, 12, 8, 0.65);
+  --app-overlay-card: rgba(15, 12, 8, 0.6);
+  --app-overlay-border: rgba(217, 201, 168, 0.22);
+  --app-overlay-text: rgba(241, 236, 224, 0.98);
+  --app-overlay-text-muted: rgba(217, 201, 168, 0.78);
+  --app-overlay-chip: rgba(217, 201, 168, 0.12);
 
-  --app-glass-border: rgba(255, 255, 255, 0.92);
-  --app-glass-border-strong: rgba(255, 255, 255, 0.96);
-  --app-gradient-text-from: #1d1d1f;
-  --app-gradient-text-to: #434346;
-  --app-image-hover-shadow: rgba(29, 29, 31, 0.1);
-  --app-card-shadow: 0 12px 32px rgba(29, 29, 31, 0.08);
+  --app-nav-scrolled: rgba(15, 12, 8, 0.82);
+  --app-dropdown: rgba(21, 17, 12, 0.94);
+  --app-mark-watermark: rgba(217, 201, 168, 0.06);
+
+  --app-grid-line: rgba(217, 201, 168, 0.08);
+  --app-scrollbar-track: var(--app-pitch-deep);
+  --app-scrollbar-thumb: var(--app-bark);
+  --app-scrollbar-thumb-hover: rgba(217, 201, 168, 0.32);
+  --app-selection-fg: var(--app-pitch);
+
+  --app-glass-border: rgba(217, 201, 168, 0.20);
+  --app-glass-border-strong: rgba(217, 201, 168, 0.32);
+  --app-gradient-text-from: var(--app-bone);
+  --app-gradient-text-to: var(--app-sand);
+  --app-image-hover-shadow: rgba(0, 0, 0, 0.5);
+  --app-card-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   --app-media-shadow:
-    0 20px 54px rgba(29, 29, 31, 0.12),
-    0 8px 24px rgba(29, 29, 31, 0.06);
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    0 8px 24px rgba(0, 0, 0, 0.35);
   --app-hero-card-shadow:
-    0 18px 42px rgba(29, 29, 31, 0.12),
-    0 8px 24px rgba(29, 29, 31, 0.06),
-    0 0 0 1px rgba(255, 255, 255, 0.72);
+    0 18px 42px rgba(0, 0, 0, 0.55),
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(217, 201, 168, 0.12);
 }
 
 @theme {
-  --font-display:
-    "Avenir Next", "Segoe UI", Inter, ui-sans-serif, system-ui, sans-serif;
-  --font-body:
-    Inter, "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo", "Inter Tight", system-ui, sans-serif;
+  --font-body: "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-editorial: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --color-background: var(--app-bg);
   --color-foreground: var(--app-fg);
@@ -75,6 +92,15 @@
   --color-surface-glass: var(--app-surface-glass);
   --color-muted: var(--app-muted);
   --color-muted-light: var(--app-muted-light);
+
+  --color-pitch: var(--app-pitch);
+  --color-pitch-deep: var(--app-pitch-deep);
+  --color-pitch-low: var(--app-pitch-low);
+  --color-bark: var(--app-bark);
+  --color-bark-soft: var(--app-bark-soft);
+  --color-sand: var(--app-sand);
+  --color-bone: var(--app-bone);
+  --color-ember: var(--app-ember);
 
   --color-border-subtle: var(--app-border-subtle);
   --color-border-card: var(--app-border-card);
@@ -96,18 +122,15 @@
 
   --color-mark-watermark: var(--app-mark-watermark);
 
-  /* shadcn-style aliases (Avatar, trust badges) */
   --color-border: var(--app-border-card);
   --color-secondary: var(--app-surface-elevated);
   --color-muted-foreground: var(--app-muted-light);
 
-  /* Align with site accent (infinite grid, shadcn-style buttons) */
   --color-primary: var(--app-accent);
   --color-primary-foreground: var(--app-on-accent);
   --color-secondary-foreground: var(--app-fg);
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -118,20 +141,18 @@
 
 ::-webkit-scrollbar-thumb {
   background: var(--app-scrollbar-thumb);
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--app-scrollbar-thumb-hover);
 }
 
-/* Selection styling */
 ::selection {
-  background: rgba(0, 212, 170, 0.3);
-  color: var(--app-selection-fg);
+  background: var(--app-ember);
+  color: var(--app-pitch);
 }
 
-/* Smooth scroll */
 html {
   scroll-behavior: smooth;
   background-color: var(--app-bg);
@@ -143,19 +164,39 @@ body {
   font-family: var(--font-body);
 }
 
-/* Glass effect utility */
+/* Typographic helpers */
+.font-editorial {
+  font-family: var(--font-editorial);
+  font-style: italic;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.tracking-instrument {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.tracking-mono {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Beacon surface utilities — sharp, low chrome, no pillow corners */
 .glass {
   background: var(--app-surface-glass);
-  backdrop-filter: saturate(180%) blur(18px);
-  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
   border: 1px solid var(--app-border-card);
   box-shadow: var(--app-card-shadow);
 }
 
 .glass-strong {
-  background: #fff;
-  backdrop-filter: saturate(180%) blur(24px);
-  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  background: var(--app-pitch-deep);
+  backdrop-filter: saturate(140%) blur(20px);
+  -webkit-backdrop-filter: saturate(140%) blur(20px);
   border: 1px solid var(--app-border-card);
   box-shadow: var(--app-media-shadow);
 }
@@ -169,38 +210,46 @@ body {
 }
 
 .hero-media-frame {
-  background:
-    linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
+  background: linear-gradient(180deg, var(--app-pitch-low) 0%, var(--app-pitch-deep) 100%);
+  border: 1px solid var(--app-border-subtle);
 }
 
 .image-overlay-scrim {
   background: linear-gradient(
     180deg,
-    rgba(29, 29, 31, 0.04) 0%,
-    rgba(29, 29, 31, 0.14) 38%,
-    rgba(29, 29, 31, 0.72) 100%
+    rgba(15, 12, 8, 0.05) 0%,
+    rgba(15, 12, 8, 0.32) 38%,
+    rgba(15, 12, 8, 0.86) 100%
   );
 }
 
 .section-stage {
-  background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
+  background: linear-gradient(180deg, var(--app-pitch-low) 0%, var(--app-pitch-deep) 100%);
   border: 1px solid var(--app-border-card);
   box-shadow: var(--app-media-shadow);
 }
 
 .section-card {
-  background: var(--app-surface);
-  border: 1px solid var(--app-border-card);
-  box-shadow: var(--app-card-shadow);
+  background: var(--app-pitch-low);
+  border: 1px solid var(--app-border-subtle);
 }
 
-/* Gradient text */
+/* Beacon-specific surfaces */
+.beacon-card {
+  background: var(--app-bark-soft);
+  border: 1px solid rgba(217, 201, 168, 0.12);
+}
+
+.beacon-divider {
+  border-color: var(--app-bark);
+}
+
 .gradient-text {
   background: linear-gradient(
     135deg,
-    var(--app-gradient-text-from) 0%,
-    var(--app-accent) 50%,
-    var(--app-gradient-text-to) 100%
+    var(--app-bone) 0%,
+    var(--app-ember) 50%,
+    var(--app-sand) 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -208,7 +257,6 @@ body {
   background-clip: text;
 }
 
-/* Image hover effect */
 .image-hover {
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
     box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -219,7 +267,6 @@ body {
   box-shadow: 0 30px 60px var(--app-image-hover-shadow);
 }
 
-/* Link underline effect */
 .link-underline {
   position: relative;
 }
@@ -231,10 +278,23 @@ body {
   left: 0;
   width: 0;
   height: 1px;
-  background: var(--app-accent);
+  background: var(--app-ember);
   transition: width 0.3s ease;
 }
 
 .link-underline:hover::after {
   width: 100%;
+}
+
+/* Topo line texture — used as overlay on hero / closing sections */
+.topo-overlay {
+  background-image: repeating-linear-gradient(
+    38deg,
+    rgba(58, 46, 34, 0.45),
+    rgba(58, 46, 34, 0.45) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+  -webkit-mask-image: radial-gradient(ellipse at 70% 0%, black, transparent 60%);
+  mask-image: radial-gradient(ellipse at 70% 0%, black, transparent 60%);
 }

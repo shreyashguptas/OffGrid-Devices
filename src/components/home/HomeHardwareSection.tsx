@@ -1,60 +1,58 @@
-import Image from "next/image";
-import { SectionIntro } from "@/components/shared/SectionIntro";
-import { link1Content } from "@/content/link1";
+"use client";
+
+import { motion } from "framer-motion";
+import { WaypointMark } from "@/components/shared/WaypointMark";
+import { fadeInUp, staggerContainer } from "@/components/shared/motion";
+
+const QUOTE =
+  "It feels less like a gadget and more like a piece of expedition gear. The kind of thing you stop noticing in your pocket — until the moment you need it.";
 
 export function HomeHardwareSection() {
   return (
     <section
       id="gallery"
-      className="border-b border-border-subtle bg-background py-20 md:py-24"
+      className="relative border-b border-bark bg-pitch py-28 md:py-40"
     >
-      <div className="mx-auto max-w-7xl px-6">
-        <SectionIntro
-          badge={link1Content.home.hardware.badge}
-          title={
-            <>
-              {link1Content.home.hardware.title}
-              <br />
-              <span className="text-muted">{link1Content.home.hardware.subtitle}</span>
-            </>
-          }
-          description={link1Content.home.hardware.description}
-          className="mb-14"
-        />
+      <div aria-hidden className="absolute inset-0 topo-overlay opacity-40" />
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {link1Content.homeGalleryCards.map((card) => (
-            <article
-              key={card.title}
-              className="section-card overflow-hidden rounded-[2rem]"
-            >
-              <div className="bg-surface-elevated p-5 md:p-8">
-                <div className="overflow-hidden rounded-[1.5rem] bg-background">
-                  <Image
-                    src={card.image}
-                    alt={card.alt}
-                    width={900}
-                    height={1100}
-                    className="h-auto w-full image-hover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-              </div>
-              <div className="px-6 pb-8 pt-2 md:px-8">
-                <p className="text-xs uppercase tracking-[0.24em] text-muted">
-                  {card.kicker}
-                </p>
-                <h3 className="mt-3 font-display text-2xl font-semibold">
-                  {card.title}
-                </h3>
-                <p className="mt-3 text-base leading-relaxed text-muted-light">
-                  {card.description}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={staggerContainer}
+        className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-[auto_1fr] md:gap-16"
+      >
+        <motion.div variants={fadeInUp} className="shrink-0 self-start">
+          <WaypointMark size={140} />
+        </motion.div>
+
+        <motion.div variants={fadeInUp}>
+          <p
+            className="text-bone"
+            style={{
+              fontFamily: "var(--font-editorial)",
+              fontStyle: "italic",
+              fontSize: "clamp(28px, 3.5vw, 44px)",
+              lineHeight: 1.18,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            “{QUOTE}”
+          </p>
+          <div
+            className="mt-9 text-sand"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
+              fontSize: 13,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+            }}
+          >
+            From a Link 1 owner · Mesh Trip · 2026
+          </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

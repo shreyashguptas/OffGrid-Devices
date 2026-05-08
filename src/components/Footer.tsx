@@ -1,150 +1,163 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
+import { BeaconWordmark } from "@/components/shared/WaypointMark";
 import { siteProducts } from "@/content/products";
+
+type FooterColumn = {
+  heading: string;
+  links: Array<{
+    label: string;
+    href: string;
+    badge?: string | null;
+    external?: boolean;
+  }>;
+};
 
 export function Footer() {
   const [primaryProduct, secondaryProduct] = siteProducts;
 
+  const columns: FooterColumn[] = [
+    {
+      heading: "Carry",
+      links: [
+        { label: primaryProduct.name, href: primaryProduct.href },
+        {
+          label: secondaryProduct.name,
+          href: secondaryProduct.href,
+          badge: secondaryProduct.badge,
+        },
+      ],
+    },
+    {
+      heading: "Mesh",
+      links: [
+        { label: "Meshtastic", href: "https://meshtastic.org", external: true },
+        { label: "MeshCore", href: "https://meshcore.co.uk", external: true },
+      ],
+    },
+    {
+      heading: "Trail",
+      links: [
+        { label: "Field notes", href: "/blog" },
+      ],
+    },
+    {
+      heading: "Crew",
+      links: [
+        {
+          label: "X / Twitter",
+          href: "https://x.com/ShreyashGuptas",
+          external: true,
+        },
+        {
+          label: "YouTube",
+          href: "https://www.youtube.com/channel/UCe0X6IPIEuNpCvuQtOlKNrA",
+          external: true,
+        },
+      ],
+    },
+  ];
+
   return (
-    <footer className="border-t border-border-subtle bg-surface-elevated">
-      <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr]"
-        >
+    <footer className="border-t border-bark bg-pitch-deep">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="mx-auto max-w-7xl px-6 py-16 md:py-20"
+      >
+        <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
           <div>
-            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
-              OffGrid
-            </p>
-            <h2 className="mt-4 font-display text-4xl font-bold leading-[1.08] tracking-tight md:text-5xl">
-              Stay Connected.
-              <br />
-              <span className="text-muted">Go Anywhere.</span>
-            </h2>
-            <p className="mt-5 max-w-md text-lg leading-relaxed text-muted-light">
-              Off-grid communication hardware designed to stay with the phone
-              you already carry.
+            <BeaconWordmark size={20} />
+            <p
+              className="mt-5 max-w-xs text-sand/75"
+              style={{
+                fontFamily: "var(--font-editorial)",
+                fontStyle: "italic",
+                fontSize: 15,
+                lineHeight: 1.55,
+              }}
+            >
+              OffGrid builds rugged mesh hardware for the field — designed to
+              stay with the phone you already carry.
             </p>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-3">
-            <div>
-              <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
-                Products
+          {columns.map((column) => (
+            <div key={column.heading}>
+              <h3
+                className="text-bone"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: 11,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                }}
+              >
+                {column.heading}
               </h3>
-              <div className="mt-5 space-y-4">
-                <Link
-                  href={primaryProduct.href}
-                  className="block text-foreground/80 transition-colors duration-300 hover:text-accent"
-                >
-                  {primaryProduct.name}
-                </Link>
-                <Link
-                  href={secondaryProduct.href}
-                  className="inline-flex items-center gap-2 text-foreground/80 transition-colors duration-300 hover:text-accent"
-                >
-                  {secondaryProduct.name}
-                  {secondaryProduct.badge ? (
-                    <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold tracking-[0.08em] text-orange-500">
-                      {secondaryProduct.badge}
+              <ul className="mt-5 space-y-3">
+                {column.links.map((link) => {
+                  const content = (
+                    <span className="inline-flex items-center gap-2">
+                      <span>{link.label}</span>
+                      {link.badge ? (
+                        <span className="border border-ember/40 bg-ember/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-ember">
+                          {link.badge}
+                        </span>
+                      ) : null}
                     </span>
-                  ) : null}
-                </Link>
-              </div>
+                  );
+
+                  const className =
+                    "text-[13px] text-sand transition-colors duration-300 hover:text-ember";
+
+                  if (link.external) {
+                    return (
+                      <li key={link.label}>
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={className}
+                        >
+                          {content}
+                        </a>
+                      </li>
+                    );
+                  }
+
+                  return (
+                    <li key={link.label}>
+                      <Link href={link.href} className={className}>
+                        {content}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
-
-            <div>
-              <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
-                Resources
-              </h3>
-              <div className="mt-5 space-y-4">
-                <Link
-                  href="/blog"
-                  className="block text-foreground/80 transition-colors duration-300 hover:text-accent"
-                >
-                  Blog
-                </Link>
-                <a
-                  href="https://meshtastic.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-foreground/80 transition-colors duration-300 hover:text-accent"
-                >
-                  Meshtastic
-                </a>
-                <a
-                  href="https://meshcore.co.uk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-foreground/80 transition-colors duration-300 hover:text-accent"
-                >
-                  MeshCore
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
-                Social
-              </h3>
-              <div className="mt-5 space-y-4">
-                <a
-                  href="https://x.com/ShreyashGuptas"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-foreground/80 transition-colors duration-300 hover:text-accent"
-                >
-                  X / Twitter
-                </a>
-                <a
-                  href="https://www.youtube.com/channel/UCe0X6IPIEuNpCvuQtOlKNrA"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-foreground/80 transition-colors duration-300 hover:text-accent"
-                >
-                  YouTube
-                </a>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      <div className="border-t border-border-subtle">
-        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-6 py-6 text-sm text-muted md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-4">
-            <Image
-              src="/logo-512.png"
-              alt="OffGrid Logo"
-              width={28}
-              height={28}
-              className="rounded-lg"
-            />
-            <p>&copy; {new Date().getFullYear()} OffGrid. All rights reserved.</p>
-          </div>
-
-          <div className="flex items-center gap-5">
-            <Link
-              href={primaryProduct.href}
-              className="transition-colors duration-300 hover:text-accent"
-            >
-              {primaryProduct.name}
-            </Link>
-            <Link
-              href="/blog"
-              className="transition-colors duration-300 hover:text-accent"
-            >
-              Blog
-            </Link>
-          </div>
+          ))}
         </div>
-      </div>
+
+        <div
+          className="mt-14 flex flex-col gap-3 border-t border-bark pt-6 text-sand/65 md:flex-row md:items-center md:justify-between"
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 11,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+          }}
+        >
+          <span>&copy; {new Date().getFullYear()} OFFGRID · MADE IN SF</span>
+          <span>Built to be carried</span>
+          <span>NO TOWERS · NO SIMS · NO SUBSCRIPTIONS</span>
+        </div>
+      </motion.div>
     </footer>
   );
 }
