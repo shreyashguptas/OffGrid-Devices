@@ -4,10 +4,18 @@ import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.local") });
 config({ path: resolve(process.cwd(), ".env") });
 
-// On Vercel, VERCEL_ENV is "production" | "preview" | "development".
-// Outside Vercel (local builds, CI) it's undefined — treat that as strict.
-const vercelEnv = process.env.VERCEL_ENV;
-const isPreviewDeploy = vercelEnv === "preview" || vercelEnv === "development";
+// Only the production Vercel build keeps a hard gate. Everywhere else —
+// Vercel previews, GitHub Actions, local builds — turns into a warning so
+// transient Shopify product state (e.g. variant sold out) doesn't block
+// unrelated PRs or main pushes. The intent of this gate is "don't ship
+// broken checkout to customers"; only the production deploy actually puts
+// customers in front of checkout.
+const isProductionDeploy = process.env.VERCEL_ENV === "production";
+const environmentLabel =
+  process.env.VERCEL_ENV ??
+  (process.env.GITHUB_ACTIONS === "true"
+    ? `github-actions:${process.env.GITHUB_EVENT_NAME ?? "unknown"}`
+    : "local");
 
 async function main() {
   if (process.env.SKIP_SHOPIFY_VERIFY === "1") {
@@ -29,13 +37,9 @@ main().catch((error) => {
   const message =
     error instanceof Error ? error.message : "Shopify verification failed.";
 
-  // Production and local builds keep the hard gate so a real checkout
-  // regression cannot ship. Preview deploys soft-fail so unrelated PRs
-  // (docs, content, marketing copy) aren't blocked by transient Shopify
-  // product / variant state.
-  if (isPreviewDeploy) {
+  if (!isProductionDeploy) {
     console.warn(
-      `⚠️  Shopify verify failed on VERCEL_ENV=${vercelEnv} — continuing build. Reason: ${message}`,
+      `⚠️  Shopify verify failed on env=${environmentLabel} — continuing. Reason: ${message}`,
     );
     return;
   }
