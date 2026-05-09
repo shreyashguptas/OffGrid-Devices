@@ -19,13 +19,38 @@ test.describe("Shopify Link 1 (live)", () => {
     expect(body.product.title).toBeTruthy();
   });
 
-  test("POST /api/shopify/link-1/checkout returns checkout URL", async ({
+  test("POST /api/shopify/link-1/checkout matches live variant state", async ({
     request,
   }) => {
+    // Decide what "correct" looks like based on what Shopify is currently
+    // serving. If the variant is buyable, checkout must return a URL; if
+    // it's sold out, checkout must refuse with a server error rather than
+    // pretend to succeed. Either branch verifies the integration is wired
+    // up — only stuck-in-the-middle responses fail this test.
+    const productRes = await request.get("/api/shopify/link-1");
+    expect(productRes.ok(), await productRes.text()).toBeTruthy();
+    const { product } = (await productRes.json()) as {
+      product?: {
+        availableForSale?: boolean;
+        variant?: { availableForSale?: boolean } | null;
+      };
+    };
+    const isBuyable = Boolean(
+      product?.availableForSale && product?.variant?.availableForSale,
+    );
+
     const res = await request.post("/api/shopify/link-1/checkout");
-    expect(res.ok(), await res.text()).toBeTruthy();
-    const body = await res.json();
-    expect(body.checkoutUrl).toMatch(/^https?:\/\//);
-    expect(body.source).toBe("shopify");
+
+    if (isBuyable) {
+      expect(res.ok(), await res.text()).toBeTruthy();
+      const body = await res.json();
+      expect(body.checkoutUrl).toMatch(/^https?:\/\//);
+      expect(body.source).toBe("shopify");
+    } else {
+      expect(res.ok(), await res.text()).toBeFalsy();
+      expect(res.status()).toBe(500);
+      const body = (await res.json()) as { error?: string };
+      expect(body.error).toBeTruthy();
+    }
   });
 });
