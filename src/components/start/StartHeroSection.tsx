@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WaypointMark } from "@/components/shared/WaypointMark";
 import { startContent } from "@/content/start";
 
 export function StartHeroSection() {
@@ -11,19 +11,12 @@ export function StartHeroSection() {
       <div className="mx-auto w-full max-w-3xl px-6">
         <div className="flex flex-col items-start gap-6">
           <div className="flex items-center gap-3">
-            <Image
-              src="/logo-512.png"
-              alt="OffGrid"
-              width={48}
-              height={48}
-              className="rounded-xl"
-              priority
-            />
+            <WaypointMark size={44} />
             <div>
               <p className="font-display text-base font-semibold tracking-tight text-foreground">
                 OffGrid
               </p>
-              <p className="text-xs uppercase tracking-[0.22em] text-muted">
+              <p className="tracking-instrument text-xs text-muted">
                 {hero.eyebrow}
               </p>
             </div>

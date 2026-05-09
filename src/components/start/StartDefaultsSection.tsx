@@ -47,7 +47,7 @@ export function StartDefaultsSection() {
                   key={row.label}
                   className={cn(
                     idx > 0 && "border-t border-border-subtle",
-                    row.emphasis && "bg-red-500/[0.04]",
+                    row.emphasis && "bg-red-500/[0.07]",
                   )}
                 >
                   <th
@@ -59,7 +59,7 @@ export function StartDefaultsSection() {
                   <td
                     className={cn(
                       "px-5 py-4 align-top md:px-6",
-                      row.emphasis ? "text-red-700 font-medium" : "text-foreground/85",
+                      row.emphasis ? "text-red-300 font-medium" : "text-foreground/85",
                     )}
                   >
                     {row.value}
@@ -72,7 +72,7 @@ export function StartDefaultsSection() {
                   <td
                     className={cn(
                       "hidden px-5 py-4 align-top text-sm md:table-cell md:px-6",
-                      row.emphasis ? "text-red-700 font-medium" : "text-muted",
+                      row.emphasis ? "text-red-300 font-medium" : "text-muted",
                     )}
                   >
                     {row.note ?? "—"}

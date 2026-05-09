@@ -5,10 +5,10 @@ import { StartSection } from "./StartSection";
 const KIND_STYLES = {
   warning: {
     block:
-      "border-red-500/30 bg-red-500/[0.06] ring-1 ring-inset ring-red-500/10",
-    eyebrow: "text-red-700",
-    iconWrap: "border-red-500/30 bg-red-500/15 text-red-700",
-    bullet: "bg-red-600",
+      "border-red-500/40 bg-red-500/[0.08] ring-1 ring-inset ring-red-500/15",
+    eyebrow: "text-red-300",
+    iconWrap: "border-red-500/40 bg-red-500/15 text-red-200",
+    bullet: "bg-red-400",
   },
   info: {
     block:

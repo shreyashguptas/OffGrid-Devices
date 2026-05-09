@@ -15,11 +15,11 @@ export function StartRegionNoticeSection() {
           <div className="flex items-center gap-3 border-b border-red-500/20 bg-red-500/10 px-6 py-3 md:px-8">
             <span
               aria-hidden="true"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-red-500/40 bg-red-500/15 text-sm font-bold text-red-700"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-red-500/40 bg-red-500/15 text-sm font-bold text-red-200"
             >
               !
             </span>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-red-700 dark:text-red-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-red-200">
               {notice.eyebrow}
             </p>
           </div>
@@ -43,7 +43,7 @@ export function StartRegionNoticeSection() {
                 <li key={step} className="flex items-start gap-3">
                   <span
                     aria-hidden="true"
-                    className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-red-500/30 bg-red-500/10 font-mono text-xs font-semibold text-red-700"
+                    className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-red-500/30 bg-red-500/10 font-mono text-xs font-semibold text-red-200"
                   >
                     {index + 1}
                   </span>

@@ -18,10 +18,10 @@ const KIND_STYLES: Record<
 > = {
   warning: {
     container:
-      "border-red-500/30 bg-red-500/[0.06] ring-1 ring-inset ring-red-500/10",
-    eyebrow: "text-red-700 dark:text-red-500",
-    title: "text-red-800 dark:text-red-400",
-    iconWrap: "border-red-500/30 bg-red-500/10 text-red-700",
+      "border-red-500/40 bg-red-500/[0.08] ring-1 ring-inset ring-red-500/15",
+    eyebrow: "text-red-300",
+    title: "text-red-200",
+    iconWrap: "border-red-500/40 bg-red-500/15 text-red-200",
   },
   info: {
     container:

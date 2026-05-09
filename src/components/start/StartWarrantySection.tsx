@@ -75,8 +75,8 @@ function CoverageList({
           bullet: "bg-accent",
         }
       : {
-          eyebrow: "text-red-700",
-          bullet: "bg-red-500",
+          eyebrow: "text-red-300",
+          bullet: "bg-red-400",
         };
 
   return (
