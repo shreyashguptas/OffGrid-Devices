@@ -4,6 +4,11 @@ import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.local") });
 config({ path: resolve(process.cwd(), ".env") });
 
+// On Vercel, VERCEL_ENV is "production" | "preview" | "development".
+// Outside Vercel (local builds, CI) it's undefined — treat that as strict.
+const vercelEnv = process.env.VERCEL_ENV;
+const isPreviewDeploy = vercelEnv === "preview" || vercelEnv === "development";
+
 async function main() {
   if (process.env.SKIP_SHOPIFY_VERIFY === "1") {
     console.warn(
@@ -21,8 +26,20 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error(
-    error instanceof Error ? error.message : "Shopify verification failed.",
-  );
+  const message =
+    error instanceof Error ? error.message : "Shopify verification failed.";
+
+  // Production and local builds keep the hard gate so a real checkout
+  // regression cannot ship. Preview deploys soft-fail so unrelated PRs
+  // (docs, content, marketing copy) aren't blocked by transient Shopify
+  // product / variant state.
+  if (isPreviewDeploy) {
+    console.warn(
+      `⚠️  Shopify verify failed on VERCEL_ENV=${vercelEnv} — continuing build. Reason: ${message}`,
+    );
+    return;
+  }
+
+  console.error(message);
   process.exit(1);
 });
