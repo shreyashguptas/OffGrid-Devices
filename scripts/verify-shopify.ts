@@ -6,10 +6,10 @@ config({ path: resolve(process.cwd(), ".env") });
 
 // Only the production Vercel build keeps a hard gate. Everywhere else —
 // Vercel previews, GitHub Actions, local builds — turns into a warning so
-// transient Shopify product state (e.g. variant sold out) doesn't block
-// unrelated PRs or main pushes. The intent of this gate is "don't ship
-// broken checkout to customers"; only the production deploy actually puts
-// customers in front of checkout.
+// transient Shopify product state doesn't block unrelated PRs or main
+// pushes. The intent of this gate is "don't ship broken checkout to
+// customers"; a sold-out variant isn't broken checkout, so even on
+// production we warn instead of failing for SoldOutError.
 const isProductionDeploy = process.env.VERCEL_ENV === "production";
 const environmentLabel =
   process.env.VERCEL_ENV ??
@@ -36,8 +36,11 @@ async function main() {
 main().catch((error) => {
   const message =
     error instanceof Error ? error.message : "Shopify verification failed.";
+  // Duck-typed so we don't have to statically import the error class
+  // (which would pull Shopify modules in before dotenv runs).
+  const isSoldOut = error instanceof Error && error.name === "SoldOutError";
 
-  if (!isProductionDeploy) {
+  if (!isProductionDeploy || isSoldOut) {
     console.warn(
       `⚠️  Shopify verify failed on env=${environmentLabel} — continuing. Reason: ${message}`,
     );
