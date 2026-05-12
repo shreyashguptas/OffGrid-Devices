@@ -20,14 +20,14 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: "/start" },
+  alternates: { canonical: "/beacon-2/start" },
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
     type: "website",
-    url: "/start",
+    url: "/beacon-2/start",
     title: TITLE,
     description: DESCRIPTION,
   },
