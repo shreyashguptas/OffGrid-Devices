@@ -40,10 +40,10 @@ const DEFAULT_AUTHOR: BlogAuthor = { name: "Shreyash Gupta" };
 export const blogPosts = [
   {
     slug: "getting-started-with-meshtastic",
-    title: "OffGrid Link 1 already runs Meshtastic - here's how to go live",
-    seoTitle: "Meshtastic Setup Guide for OffGrid Link 1 (MagSafe LoRa Radio)",
+    title: "OffGrid Beacon 1 already runs Meshtastic - here's how to go live",
+    seoTitle: "Meshtastic Setup Guide for OffGrid Beacon 1 (MagSafe LoRa Radio)",
     metaDescription:
-      "Set up your OffGrid Link 1 MagSafe LoRa radio on the Meshtastic mesh in under 10 minutes: pair over Bluetooth, pick a region, choose a channel, and you're live.",
+      "Set up your OffGrid Beacon 1 MagSafe LoRa radio on the Meshtastic mesh in under 10 minutes: pair over Bluetooth, pick a region, choose a channel, and you're live.",
     keywords: [
       "Meshtastic setup",
       "pre-configured Meshtastic",
@@ -53,10 +53,10 @@ export const blogPosts = [
       "off-grid communication device",
       "Meshtastic for iPhone",
       "no-flash Meshtastic",
-      "OffGrid Link 1 setup",
+      "OffGrid Beacon 1 setup",
     ],
     excerpt:
-      "Meshtastic is open firmware you can install on other hardware, but Link 1 ships from OffGrid with it ready. Unbox, pair, and hit the mesh without the firmware homework.",
+      "Meshtastic is open firmware you can install on other hardware, but Beacon 1 ships from OffGrid with it ready. Unbox, pair, and hit the mesh without the firmware homework.",
     date: "January 2026",
     publishedAt: "2026-01-15",
     updatedAt: "2026-04-16",
@@ -68,7 +68,7 @@ export const blogPosts = [
       {
         type: "paragraph",
         content:
-          "OffGrid builds mesh hardware for when the grid isn't reliable: hikes, events, travel, or backup comms when towers are overloaded or down. Link 1 is our MagSafe-friendly radio, and it already ships ready to join a Meshtastic mesh.",
+          "OffGrid builds mesh hardware for when the grid isn't reliable: hikes, events, travel, or backup comms when towers are overloaded or down. Beacon 1 is our MagSafe-friendly radio, and it already ships ready to join a Meshtastic mesh.",
       },
       { type: "heading", content: "Meshtastic in one minute" },
       {
@@ -76,11 +76,11 @@ export const blogPosts = [
         content:
           "Meshtastic is open-source software that turns compatible LoRa hardware into a long-range, low-power mesh network. Nodes pass messages hop by hop with no SIM, no carrier, and no Wi-Fi required.",
       },
-      { type: "heading", content: "What you skip with Link 1" },
+      { type: "heading", content: "What you skip with Beacon 1" },
       {
         type: "paragraph",
         content:
-          "Link 1 ships from OffGrid with Meshtastic already on the radio. You don't hunt down a board, flash firmware, or debug a first boot before you've sent a single message. The job left to you is the useful part: pair it and use it.",
+          "Beacon 1 ships from OffGrid with Meshtastic already on the radio. You don't hunt down a board, flash firmware, or debug a first boot before you've sent a single message. The job left to you is the useful part: pair it and use it.",
       },
       {
         type: "list",
@@ -94,14 +94,14 @@ export const blogPosts = [
       {
         type: "paragraph",
         content:
-          "Install the official app on the phone you'll use with Link 1.",
+          "Install the official app on the phone you'll use with Beacon 1.",
       },
       { type: "list", items: ["iOS: App Store", "Android: Google Play"] },
-      { type: "heading", content: "Step 2: Pair your Link 1" },
+      { type: "heading", content: "Step 2: Pair your Beacon 1" },
       {
         type: "paragraph",
         content:
-          "Bluetooth links your phone to the radio. With Meshtastic already on Link 1, you're connecting rather than provisioning from scratch.",
+          "Bluetooth links your phone to the radio. With Meshtastic already on Beacon 1, you're connecting rather than provisioning from scratch.",
       },
       {
         type: "orderedList",
@@ -109,7 +109,7 @@ export const blogPosts = [
           "Enable Bluetooth on your phone",
           "Open the Meshtastic app",
           'Tap "+" to add a device',
-          "Choose your Link 1 from the list and complete pairing",
+          "Choose your Beacon 1 from the list and complete pairing",
         ],
       },
       { type: "heading", content: "Step 3: Set region, name, and channel" },
@@ -127,29 +127,29 @@ export const blogPosts = [
     ],
     faq: [
       {
-        question: "Do I need to flash Meshtastic firmware on OffGrid Link 1?",
+        question: "Do I need to flash Meshtastic firmware on OffGrid Beacon 1?",
         answer:
-          "No. OffGrid Link 1 ships with Meshtastic firmware pre-installed. You do not need to download firmware, connect a USB cable to a computer, or use a web flasher. Pair the radio over Bluetooth from the Meshtastic app and you are on the mesh.",
+          "No. OffGrid Beacon 1 ships with Meshtastic firmware pre-installed. You do not need to download firmware, connect a USB cable to a computer, or use a web flasher. Pair the radio over Bluetooth from the Meshtastic app and you are on the mesh.",
       },
       {
-        question: "Does Link 1 work with iPhone and MagSafe?",
+        question: "Does Beacon 1 work with iPhone and MagSafe?",
         answer:
-          "Yes. Link 1 is MagSafe-compatible and works with the official Meshtastic iOS app over Bluetooth 5.0. It snaps to MagSafe-ready iPhones and most MagSafe cases, including popular third-party cases such as dbrand.",
+          "Yes. Beacon 1 is MagSafe-compatible and works with the official Meshtastic iOS app over Bluetooth 5.0. It snaps to MagSafe-ready iPhones and most MagSafe cases, including popular third-party cases such as dbrand.",
       },
       {
-        question: "What range can I expect from Link 1?",
+        question: "What range can I expect from Beacon 1?",
         answer:
-          "Line-of-sight range on LoRa is up to 10+ km for Link 1, depending on terrain, antenna orientation, and interference. Real-world range in suburban or forested terrain is shorter, but mesh routing extends effective coverage as more nodes join.",
+          "Line-of-sight range on LoRa is up to 10+ km for Beacon 1, depending on terrain, antenna orientation, and interference. Real-world range in suburban or forested terrain is shorter, but mesh routing extends effective coverage as more nodes join.",
       },
       {
         question: "Do I need a license to use Meshtastic in the United States?",
         answer:
-          "No license is required. Meshtastic operates on the unlicensed 915 MHz ISM band in the US. Always select the correct region setting in the Meshtastic app so your Link 1 complies with local regulations on frequency and duty cycle.",
+          "No license is required. Meshtastic operates on the unlicensed 915 MHz ISM band in the US. Always select the correct region setting in the Meshtastic app so your Beacon 1 complies with local regulations on frequency and duty cycle.",
       },
       {
-        question: "Can I talk to other Meshtastic users near me with Link 1?",
+        question: "Can I talk to other Meshtastic users near me with Beacon 1?",
         answer:
-          "Yes. Link 1 uses the standard Meshtastic protocol, so it can exchange messages with any other Meshtastic node that shares the same region, frequency channel, and encryption key.",
+          "Yes. Beacon 1 uses the standard Meshtastic protocol, so it can exchange messages with any other Meshtastic node that shares the same region, frequency channel, and encryption key.",
       },
     ],
     relatedSlugs: [
@@ -227,7 +227,7 @@ export const blogPosts = [
       {
         type: "paragraph",
         content:
-          "A LoRa radio running a mesh protocol like Meshtastic, and the companion app on your phone. OffGrid Link 1 ships with Meshtastic pre-installed and snaps to your phone via MagSafe, so you can skip firmware setup entirely and get onto the mesh in minutes.",
+          "A LoRa radio running a mesh protocol like Meshtastic, and the companion app on your phone. OffGrid Beacon 1 ships with Meshtastic pre-installed and snaps to your phone via MagSafe, so you can skip firmware setup entirely and get onto the mesh in minutes.",
       },
     ],
     faq: [
@@ -279,7 +279,7 @@ export const blogPosts = [
       {
         type: "paragraph",
         content:
-          "If you're picking between a Meshtastic-capable radio like OffGrid Link 1 and a classic walkie-talkie on FRS or GMRS, the honest answer is they do different jobs. Here's how they compare on the criteria that matter off-grid.",
+          "If you're picking between a Meshtastic-capable radio like OffGrid Beacon 1 and a classic walkie-talkie on FRS or GMRS, the honest answer is they do different jobs. Here's how they compare on the criteria that matter off-grid.",
       },
       { type: "heading", content: "What each radio is good at" },
       {
@@ -299,7 +299,7 @@ export const blogPosts = [
       {
         type: "paragraph",
         content:
-          "Mesh radios win on idle battery. Meshtastic nodes sip power because they only transmit short bursts. Link 1 customers regularly report close to two weeks of standby on a single charge. Walkie-talkies draw far more when transmitting voice.",
+          "Mesh radios win on idle battery. Meshtastic nodes sip power because they only transmit short bursts. Beacon 1 customers regularly report close to two weeks of standby on a single charge. Walkie-talkies draw far more when transmitting voice.",
       },
       { type: "heading", content: "License and legality" },
       {
@@ -311,7 +311,7 @@ export const blogPosts = [
       {
         type: "paragraph",
         content:
-          "If you need live voice for a group on the move and you'll always stay within a mile of each other, a GMRS walkie-talkie is simple and effective. If you want longer range, text messages, location beacons, and a network that gets stronger as your group grows, Meshtastic on a device like OffGrid Link 1 is the better fit. Many groups carry both.",
+          "If you need live voice for a group on the move and you'll always stay within a mile of each other, a GMRS walkie-talkie is simple and effective. If you want longer range, text messages, location beacons, and a network that gets stronger as your group grows, Meshtastic on a device like OffGrid Beacon 1 is the better fit. Many groups carry both.",
       },
     ],
     faq: [
@@ -386,7 +386,7 @@ export const blogPosts = [
       {
         type: "orderedList",
         items: [
-          "Give every household member a Meshtastic-ready radio (Link 1 snaps to the phone they already carry).",
+          "Give every household member a Meshtastic-ready radio (Beacon 1 snaps to the phone they already carry).",
           "Configure a shared encrypted channel and agree on daily check-in times.",
           "Keep each radio topped off via USB-C and a small power bank.",
         ],
@@ -401,7 +401,7 @@ export const blogPosts = [
       {
         type: "paragraph",
         content:
-          "If you want the shortest path to a working backup comms plan, pick up OffGrid Link 1 for each family member, pair it over Bluetooth, pick a shared channel, and practice a 30-second check-in once a month. That's it.",
+          "If you want the shortest path to a working backup comms plan, pick up OffGrid Beacon 1 for each family member, pair it over Bluetooth, pick a shared channel, and practice a 30-second check-in once a month. That's it.",
       },
     ],
     faq: [
@@ -418,7 +418,7 @@ export const blogPosts = [
       {
         question: "What's the minimum setup for a family of four?",
         answer:
-          "Four Meshtastic-capable radios (one per person), a shared encrypted channel, and a power bank per household. OffGrid Link 1 is designed for this use case and runs close to two weeks on a charge.",
+          "Four Meshtastic-capable radios (one per person), a shared encrypted channel, and a power bank per household. OffGrid Beacon 1 is designed for this use case and runs close to two weeks on a charge.",
       },
     ],
     relatedSlugs: [

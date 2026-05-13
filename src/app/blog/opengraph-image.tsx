@@ -53,7 +53,7 @@ export default function BlogIndexOgImage() {
               lineHeight: 1.3,
             }}
           >
-            Practical guides, comparisons, and notes from the team behind Link 1.
+            Practical guides, comparisons, and notes from the team behind Beacon 1.
           </div>
         </div>
 

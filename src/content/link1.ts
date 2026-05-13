@@ -55,20 +55,20 @@ export type Link1Testimonial = {
 
 export const link1Content = {
   summary: {
-    name: "Link 1",
-    brandedName: "OffGrid Link 1",
+    name: "Beacon 1",
+    brandedName: "OffGrid Beacon 1",
     subtitle: "MagSafe LoRa mesh radio",
     href: "/products/link-1",
     shortBuyLabel: "Buy",
-    buyLabel: "Buy Link 1",
+    buyLabel: "Buy Beacon 1",
     loadingLabel: "Opening Checkout...",
     heroImage: {
       src: "/products/link1-hero-v1.png",
-      alt: "OffGrid Link 1 MagSafe LoRa radio hero image",
+      alt: "OffGrid Beacon 1 MagSafe LoRa radio hero image",
     },
     productImage: {
       src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
-      alt: "OffGrid Link 1 MagSafe LoRa radio",
+      alt: "OffGrid Beacon 1 MagSafe LoRa radio",
     },
   },
   reviewSummary: {
@@ -88,7 +88,7 @@ export const link1Content = {
     heroSubtitle: "Go Anywhere.",
     details: {
       badge: "Product details",
-      title: "A closer look at Link 1.",
+      title: "A closer look at Beacon 1.",
       description:
         "This section is ready for your detail shots, in-hand photos, and hardware closeups. Drop images into the named paths and they will replace the placeholders automatically.",
     },
@@ -97,7 +97,7 @@ export const link1Content = {
       title: "Snaps On.",
       subtitle: "Stays With You.",
       description:
-        "Link 1 belongs on the phone you already never leave behind, so your mesh radio is always in reach.",
+        "Beacon 1 belongs on the phone you already never leave behind, so your mesh radio is always in reach.",
       quickViewLabel: "Quick view",
       quickViewDescription:
         "The essentials, without the spec sheet. Tap a card, or let it rotate on its own.",
@@ -113,49 +113,49 @@ export const link1Content = {
       badge: "Specifications",
       title: "Engineered for the real world.",
       description:
-        "Every component in Link 1 is chosen for range, reliability, and everyday carry. The experience stays simple; the hardware does not.",
+        "Every component in Beacon 1 is chosen for range, reliability, and everyday carry. The experience stays simple; the hardware does not.",
     },
     testimonials: {
       badge: "Reviews",
       title: "Don't take our word. Take theirs.",
       description:
-        "Real feedback from Link 1 owners: MagSafe carry, mesh range, and support that shows up.",
+        "Real feedback from Beacon 1 owners: MagSafe carry, mesh range, and support that shows up.",
     },
     cta: {
       eyebrow: "Ready when you are",
-      title: "Ready for OffGrid Link 1?",
+      title: "Ready for OffGrid Beacon 1?",
       description:
-        "Pick up OffGrid Link 1 and join the adventurers, preppers, and mesh enthusiasts who stay connected off-grid.",
+        "Pick up OffGrid Beacon 1 and join the adventurers, preppers, and mesh enthusiasts who stay connected off-grid.",
       secondaryHref: "/blog",
       secondaryLabel: "Read the blog",
     },
   },
   productPage: {
-    eyebrow: "OffGrid Link 1",
+    eyebrow: "OffGrid Beacon 1",
     description:
       "The world's first MagSafe-compatible LoRa mesh radio from OffGrid. It snaps to your phone, carries cleanly, and stays ready for the places where phones still matter but towers do not.",
     why: {
-      badge: "Why Link 1",
+      badge: "Why Beacon 1",
       title: "Never forget it.",
       subtitle: "Always connected.",
       description:
-        "Link 1 is designed around one simple idea: the radio should stay with the phone you already reach for.",
+        "Beacon 1 is designed around one simple idea: the radio should stay with the phone you already reach for.",
     },
     design: {
       badge: "Design details",
       title: "Transparent design.",
       subtitle: "No extra styling required.",
       description:
-        "The hardware is part of the product story. Link 1 keeps the build visible instead of burying it in decoration.",
+        "The hardware is part of the product story. Beacon 1 keeps the build visible instead of burying it in decoration.",
     },
     specs: {
       badge: "Specifications",
       title: "Engineered for range, reliability, and carry.",
       description:
-        "Every component in Link 1 is chosen for real-world use. It works with the mesh tools people already trust and keeps the hardware package simple enough to carry daily.",
+        "Every component in Beacon 1 is chosen for real-world use. It works with the mesh tools people already trust and keeps the hardware package simple enough to carry daily.",
       firmwareTitle: "Built for Meshtastic and MeshCore workflows.",
       firmwareDescription:
-        "Link 1 fits the setup people already use instead of forcing a new process just to get on the mesh.",
+        "Beacon 1 fits the setup people already use instead of forcing a new process just to get on the mesh.",
     },
     testimonials: {
       badge: "Customer feedback",
@@ -164,9 +164,9 @@ export const link1Content = {
     },
     cta: {
       eyebrow: "Off-grid ready",
-      title: "Ready for Link 1?",
+      title: "Ready for Beacon 1?",
       description:
-        "Get OffGrid Link 1 and keep the radio with the device you already carry.",
+        "Get OffGrid Beacon 1 and keep the radio with the device you already carry.",
       secondaryHref: "/blog/getting-started-with-meshtastic",
       secondaryLabel: "Read setup guide",
     },
@@ -174,11 +174,11 @@ export const link1Content = {
   blog: {
     cta: {
       eyebrow: "Ready to start",
-      title: "Ready for Link 1?",
+      title: "Ready for Beacon 1?",
       description:
-        "Get OffGrid Link 1, pair it, and join the mesh without the usual setup friction.",
+        "Get OffGrid Beacon 1, pair it, and join the mesh without the usual setup friction.",
       secondaryHref: "/products/link-1",
-      secondaryLabel: "View Link 1",
+      secondaryLabel: "View Beacon 1",
     },
   },
   featureHighlights: [
@@ -187,13 +187,13 @@ export const link1Content = {
       kicker: "Daily carry",
       title: "Snap it on and go",
       tab: "MagSafe carry",
-      caption: "Link 1 follows the phone.",
+      caption: "Beacon 1 follows the phone.",
       description:
-        "MagSafe puts Link 1 on the phone you already carry, so the radio is with you when you actually need it.",
+        "MagSafe puts Beacon 1 on the phone you already carry, so the radio is with you when you actually need it.",
       chips: ["MagSafe", "No loose gear"],
       image:
         "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
-      alt: "OffGrid Link 1 MagSafe-mounted to a phone",
+      alt: "OffGrid Beacon 1 MagSafe-mounted to a phone",
     },
     {
       icon: "📡",
@@ -206,7 +206,7 @@ export const link1Content = {
       chips: ["Off-grid", "Peer to peer"],
       image:
         "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
-      alt: "OffGrid Link 1 used outdoors",
+      alt: "OffGrid Beacon 1 used outdoors",
     },
     {
       icon: "🔋",
@@ -215,24 +215,24 @@ export const link1Content = {
       tab: "Battery",
       caption: "Less babysitting, more moving.",
       description:
-        "Rechargeable power and USB-C make Link 1 easy to top off before a trip and easy to trust once you're out.",
+        "Rechargeable power and USB-C make Beacon 1 easy to top off before a trip and easy to trust once you're out.",
       chips: ["USB-C", "Adventure ready"],
       image:
         "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
-      alt: "OffGrid Link 1 internal hardware and battery",
+      alt: "OffGrid Beacon 1 internal hardware and battery",
     },
     {
       icon: "👁️",
       kicker: "Built to be seen",
       title: "Let the hardware do the talking",
       tab: "Transparent shell",
-      caption: "Link 1 looks as technical as it is.",
+      caption: "Beacon 1 looks as technical as it is.",
       description:
         "The transparent shell shows the hardware inside instead of hiding it behind extra styling.",
       chips: ["Visible internals", "Distinctive look"],
       image:
         "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
-      alt: "Transparent OffGrid Link 1 close-up",
+      alt: "Transparent OffGrid Beacon 1 close-up",
     },
     {
       icon: "⚙️",
@@ -241,11 +241,11 @@ export const link1Content = {
       tab: "Dual firmware",
       caption: "Meshtastic or MeshCore.",
       description:
-        "Link 1 fits the Meshtastic or MeshCore workflow you already use instead of forcing a new one.",
+        "Beacon 1 fits the Meshtastic or MeshCore workflow you already use instead of forcing a new one.",
       chips: ["Meshtastic", "MeshCore"],
       image:
         "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
-      alt: "OffGrid Link 1 product view",
+      alt: "OffGrid Beacon 1 product view",
     },
     {
       icon: "🌐",
@@ -258,7 +258,7 @@ export const link1Content = {
       chips: ["Shared coverage", "Resilient"],
       image:
         "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
-      alt: "OffGrid Link 1 used during an outdoor trip",
+      alt: "OffGrid Beacon 1 used during an outdoor trip",
     },
   ] satisfies Link1FeatureHighlight[],
   featureCards: [
@@ -266,7 +266,7 @@ export const link1Content = {
       icon: "🧲",
       title: "MagSafe compatible",
       description:
-        "Attaches securely to MagSafe-compatible phones and cases so Link 1 stays with the device you already carry.",
+        "Attaches securely to MagSafe-compatible phones and cases so Beacon 1 stays with the device you already carry.",
     },
     {
       icon: "📡",
@@ -278,7 +278,7 @@ export const link1Content = {
       icon: "🔋",
       title: "All-day battery",
       description:
-        "A rechargeable internal battery and USB-C charging make Link 1 simple to top off before the next trip.",
+        "A rechargeable internal battery and USB-C charging make Beacon 1 simple to top off before the next trip.",
     },
     {
       icon: "👁️",
@@ -312,7 +312,7 @@ export const link1Content = {
         "MagSafe keeps the radio with the device already in your hand, whether you're on a trail, at an event, or off the grid.",
       image:
         "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
-      alt: "OffGrid Link 1 outdoor use",
+      alt: "OffGrid Beacon 1 outdoor use",
     },
     {
       kicker: "Transparent shell",
@@ -321,7 +321,7 @@ export const link1Content = {
         "The enclosure shows the RAK board, battery, and antenna with no extra visual noise around it.",
       image:
         "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
-      alt: "OffGrid Link 1 detail view",
+      alt: "OffGrid Beacon 1 detail view",
     },
   ] satisfies Link1GalleryCard[],
   productGalleryCards: [
@@ -329,10 +329,10 @@ export const link1Content = {
       kicker: "Daily carry",
       title: "Built for the phone, not the backpack.",
       description:
-        "Link 1 snaps to the device you already reach for, so you don't have to remember a separate radio before heading out.",
+        "Beacon 1 snaps to the device you already reach for, so you don't have to remember a separate radio before heading out.",
       image:
         "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
-      alt: "OffGrid Link 1 outdoor use",
+      alt: "OffGrid Beacon 1 outdoor use",
     },
     {
       kicker: "Visible internals",
@@ -341,43 +341,43 @@ export const link1Content = {
         "The transparent shell makes the engineering visible and keeps the product looking as technical as it actually is.",
       image:
         "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
-      alt: "OffGrid Link 1 detail view",
+      alt: "OffGrid Beacon 1 detail view",
     },
   ] satisfies Link1GalleryCard[],
   parallaxImages: [
     {
       src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
-      alt: "OffGrid Link 1 MagSafe-mounted to a phone",
+      alt: "OffGrid Beacon 1 MagSafe-mounted to a phone",
       label: "Hero detail",
     },
     {
       src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
-      alt: "OffGrid Link 1 used outdoors",
+      alt: "OffGrid Beacon 1 used outdoors",
       label: "In hand",
     },
     {
       src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
-      alt: "OffGrid Link 1 antenna and internal hardware detail",
+      alt: "OffGrid Beacon 1 antenna and internal hardware detail",
       label: "Antenna detail",
     },
     {
       src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
-      alt: "OffGrid Link 1 front view",
+      alt: "OffGrid Beacon 1 front view",
       label: "Front view",
     },
     {
       src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
-      alt: "OffGrid Link 1 board closeup",
+      alt: "OffGrid Beacon 1 board closeup",
       label: "Board closeup",
     },
     {
       src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
-      alt: "OffGrid Link 1 carried outdoors",
+      alt: "OffGrid Beacon 1 carried outdoors",
       label: "Carry shot",
     },
     {
       src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
-      alt: "OffGrid Link 1 side profile",
+      alt: "OffGrid Beacon 1 side profile",
       label: "Side profile",
     },
   ] satisfies Link1ParallaxImage[],

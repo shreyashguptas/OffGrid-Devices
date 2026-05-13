@@ -47,7 +47,7 @@ export async function GET(request?: Request) {
 
     if (!product) {
       return NextResponse.json(
-        { error: "Link 1 product was not found in Shopify." },
+        { error: "Beacon 1 product was not found in Shopify." },
         { status: 404 },
       );
     }

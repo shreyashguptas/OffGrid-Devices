@@ -8,7 +8,7 @@ import {
 // sold out right now". Callers can warn-only on SoldOutError without
 // masking real integration breakage.
 export class SoldOutError extends Error {
-  constructor(message = "Link 1 variant exists but is not currently available for sale.") {
+  constructor(message = "Beacon 1 variant exists but is not currently available for sale.") {
     super(message);
     this.name = "SoldOutError";
   }
@@ -17,7 +17,7 @@ export class SoldOutError extends Error {
 /**
  * Live check against Shopify: configured storefront, product handle resolves,
  * variant is purchasable, and checkout URL is returned. Used by deploy/build
- * gates — keep in sync with Link 1 API behavior.
+ * gates — keep in sync with Beacon 1 API behavior.
  */
 export async function verifyLink1Storefront(): Promise<void> {
   if (!hasShopifyStorefrontConfig()) {
@@ -29,12 +29,12 @@ export async function verifyLink1Storefront(): Promise<void> {
   const product = await getLink1Product();
   if (!product) {
     throw new Error(
-      "Link 1 product was not found in Shopify (check SHOPIFY_LINK_1_HANDLE).",
+      "Beacon 1 product was not found in Shopify (check SHOPIFY_LINK_1_HANDLE).",
     );
   }
 
   if (!product.variant) {
-    throw new Error("Link 1 product has no variant configured in Shopify.");
+    throw new Error("Beacon 1 product has no variant configured in Shopify.");
   }
 
   if (!product.variant.availableForSale) {

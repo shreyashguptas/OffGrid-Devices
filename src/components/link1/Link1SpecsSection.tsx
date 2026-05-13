@@ -34,7 +34,7 @@ export function Link1SpecsSection() {
             <div className="section-stage rounded-[2rem] p-6 md:p-8">
               <Image
                 src={link1Content.summary.productImage.src}
-                alt="OffGrid Link 1 hardware specifications"
+                alt="OffGrid Beacon 1 hardware specifications"
                 width={900}
                 height={1100}
                 className="mx-auto rounded-[1.75rem]"

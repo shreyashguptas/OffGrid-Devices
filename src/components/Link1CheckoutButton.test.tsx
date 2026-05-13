@@ -57,13 +57,13 @@ describe("Link1CheckoutButton", () => {
 
     render(
       <Link1CheckoutButton
-        defaultLabel="Buy Link 1"
+        defaultLabel="Buy Beacon 1"
         className="rounded-full"
       />,
     );
 
     await waitFor(() => {
-      expect(getButton("Buy Link 1").disabled).toBe(false);
+      expect(getButton("Buy Beacon 1").disabled).toBe(false);
     });
   });
 
@@ -79,7 +79,7 @@ describe("Link1CheckoutButton", () => {
 
     render(
       <Link1CheckoutButton
-        defaultLabel="Buy Link 1"
+        defaultLabel="Buy Beacon 1"
         className="rounded-full"
       />,
     );
@@ -94,7 +94,7 @@ describe("Link1CheckoutButton", () => {
 
     render(
       <Link1CheckoutButton
-        defaultLabel="Buy Link 1"
+        defaultLabel="Buy Beacon 1"
         className="rounded-full"
       />,
     );
@@ -123,13 +123,13 @@ describe("Link1CheckoutButton", () => {
 
     render(
       <Link1CheckoutButton
-        defaultLabel="Buy Link 1"
+        defaultLabel="Buy Beacon 1"
         loadingLabel="Opening Checkout..."
         className="rounded-full"
       />,
     );
 
-    const button = await screen.findByRole("button", { name: "Buy Link 1" });
+    const button = await screen.findByRole("button", { name: "Buy Beacon 1" });
     fireEvent.click(button);
 
     await waitFor(() => {
@@ -163,12 +163,12 @@ describe("Link1CheckoutButton", () => {
 
     render(
       <Link1CheckoutButton
-        defaultLabel="Buy Link 1"
+        defaultLabel="Buy Beacon 1"
         className="rounded-full"
       />,
     );
 
-    const button = await screen.findByRole("button", { name: "Buy Link 1" });
+    const button = await screen.findByRole("button", { name: "Buy Beacon 1" });
     fireEvent.click(button);
 
     await waitFor(() => {

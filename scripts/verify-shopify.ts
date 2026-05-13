@@ -20,7 +20,7 @@ const environmentLabel =
 async function main() {
   if (process.env.SKIP_SHOPIFY_VERIFY === "1") {
     console.warn(
-      "SKIP_SHOPIFY_VERIFY=1 — skipping Shopify Link 1 verification (emergency override only).",
+      "SKIP_SHOPIFY_VERIFY=1 — skipping Shopify Beacon 1 verification (emergency override only).",
     );
     return;
   }
@@ -30,7 +30,7 @@ async function main() {
   );
 
   await verifyLink1Storefront();
-  console.log("Shopify Link 1 verification OK.");
+  console.log("Shopify Beacon 1 verification OK.");
 }
 
 main().catch((error) => {

@@ -10,9 +10,10 @@ type WaypointMarkProps = {
 };
 
 /**
- * Beacon Waypoint mark (Option A — Bare) with optional bracket frame
- * for animated states. Diamond mesh + lit nodes; the brand mark
- * the chat transcript landed on.
+ * OffGrid Beacon mark — Option A (Bare) by default, Option B (Brackets) for
+ * animated states. Four orange nodes (top broadcaster + L/R/bottom relays),
+ * diamond mesh edges with crossbars, and two concentric broadcast rings above
+ * the top node. All orange ember, no bone/white dots.
  */
 export function WaypointMark({
   size = 40,
@@ -24,7 +25,7 @@ export function WaypointMark({
 }: WaypointMarkProps) {
   return (
     <svg
-      viewBox="0 0 200 200"
+      viewBox="24 20 152 152"
       width={size}
       height={size}
       className={className}
@@ -39,29 +40,29 @@ export function WaypointMark({
           strokeLinecap="square"
           opacity="0.85"
         >
-          <path d="M 32 56 L 32 32 L 56 32" />
-          <path d="M 144 32 L 168 32 L 168 56" />
-          <path d="M 168 144 L 168 168 L 144 168" />
-          <path d="M 56 168 L 32 168 L 32 144" />
+          <path d="M 30 76 L 30 52 L 54 52" />
+          <path d="M 146 52 L 170 52 L 170 76" />
+          <path d="M 170 168 L 170 192 L 146 192" />
+          <path d="M 54 192 L 30 192 L 30 168" />
         </g>
       ) : null}
 
-      <g
-        stroke={accent}
-        strokeWidth="9"
-        fill="none"
-        strokeLinejoin="miter"
-        strokeLinecap="butt"
-      >
-        <path d="M 100 50 L 150 100 L 100 150 L 50 100 Z" />
-        <line x1="100" y1="50" x2="100" y2="150" />
-        <line x1="50" y1="100" x2="150" y2="100" />
+      <g stroke={accent} fill="none" strokeLinecap="round">
+        <circle cx="100" cy="64" r="22" strokeWidth="4" opacity="0.18" />
+        <circle cx="100" cy="64" r="34" strokeWidth="4" opacity="0.10" />
       </g>
-      <circle cx="100" cy="50" r="11" fill={accent} />
-      <circle cx="150" cy="100" r="8" fill={bone} />
-      <circle cx="100" cy="150" r="8" fill={bone} />
-      <circle cx="50" cy="100" r="8" fill={bone} />
-      <circle cx="100" cy="100" r="9" fill={accent} />
+      <g stroke={accent} strokeWidth="5" strokeLinecap="round" opacity="0.85">
+        <line x1="100" y1="64" x2="146" y2="110" />
+        <line x1="146" y1="110" x2="100" y2="156" />
+        <line x1="100" y1="156" x2="54" y2="110" />
+        <line x1="54" y1="110" x2="100" y2="64" />
+        <line x1="100" y1="64" x2="100" y2="156" opacity="0.55" />
+        <line x1="54" y1="110" x2="146" y2="110" opacity="0.55" />
+      </g>
+      <circle cx="100" cy="64" r="13" fill={accent} />
+      <circle cx="146" cy="110" r="9" fill={accent} />
+      <circle cx="100" cy="156" r="9" fill={accent} />
+      <circle cx="54" cy="110" r="9" fill={accent} />
     </svg>
   );
 }
@@ -74,9 +75,6 @@ type WordmarkProps = {
   bone?: string;
 };
 
-/**
- * OffGrid wordmark in Beacon's Archivo Black, paired with the Waypoint mark.
- */
 export function BeaconWordmark({
   size = 22,
   className,
@@ -101,7 +99,7 @@ export function BeaconWordmark({
       }}
     >
       {withMark ? (
-        <WaypointMark size={size * 1.4} accent={accent} bone={bone} />
+        <WaypointMark size={size * 1.6} accent={accent} bone={bone} />
       ) : null}
       <span>OffGrid</span>
     </span>

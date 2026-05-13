@@ -5,7 +5,6 @@ import { StartDefaultsSection } from "@/components/start/StartDefaultsSection";
 import { StartFaqSection } from "@/components/start/StartFaqSection";
 import { StartFirmwareSection } from "@/components/start/StartFirmwareSection";
 import { StartHeroSection } from "@/components/start/StartHeroSection";
-import { StartIdentifySection } from "@/components/start/StartIdentifySection";
 import { StartPageFooter } from "@/components/start/StartPageFooter";
 import { StartRegionNoticeSection } from "@/components/start/StartRegionNoticeSection";
 import { StartSafetySection } from "@/components/start/StartSafetySection";
@@ -44,7 +43,6 @@ export default function StartPage() {
       <StartHeroSection />
       <StartTocSection />
       <StartRegionNoticeSection />
-      <StartIdentifySection />
       <StartSetupSection />
       <StartDefaultsSection />
       <StartCareSection />

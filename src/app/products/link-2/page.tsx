@@ -5,7 +5,7 @@ import { COMING_SOON_LABEL, link2Content } from "@/content/products";
 
 export const metadata: Metadata = {
   title: `${link2Content.brandedName} — Coming Soon`,
-  description: `${link2Content.brandedName} is in development at OffGrid Devices. In the meantime, Link 1 is shipping now.`,
+  description: `${link2Content.brandedName} is in development at OffGrid Devices. In the meantime, Beacon 1 is shipping now.`,
   alternates: { canonical: "/products/link-2" },
   // Placeholder page — keep out of search until real content lands.
   robots: {
@@ -71,10 +71,10 @@ export default function Link2Product() {
               In the meantime
             </p>
             <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-5xl">
-              Link 1 is available now.
+              Beacon 1 is available now.
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-light">
-              If you want the current OffGrid hardware, Link 1 is shipping now
+              If you want the current OffGrid hardware, Beacon 1 is shipping now
               and already works with the mesh tools people use today.
             </p>
             <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
@@ -82,7 +82,7 @@ export default function Link2Product() {
                 href="/products/link-1"
                 className="inline-flex items-center justify-center rounded-full bg-accent px-8 py-4 font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
               >
-                View Link 1
+                View Beacon 1
               </Link>
               <Link
                 href="/"

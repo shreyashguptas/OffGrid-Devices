@@ -19,7 +19,7 @@ const FIELD_NOTES: FieldNote[] = [
   {
     tag: "DAILY · MAGSAFE",
     title: "Snaps to the phone you already carry.",
-    body: "Link 1 lives on the device you reach for every day, so the radio is with you when you actually need it — not in a pack you forgot.",
+    body: "Beacon 1 lives on the device you reach for every day, so the radio is with you when you actually need it — not in a pack you forgot.",
     meta: "MagSafe · N52 ring",
     image: link1Content.featureHighlights[0].image,
     alt: link1Content.featureHighlights[0].alt,
@@ -35,7 +35,7 @@ const FIELD_NOTES: FieldNote[] = [
   {
     tag: "TRIPS · POWER",
     title: "Charge once, stay out longer.",
-    body: "USB-C and a sensible internal battery mean Link 1 is easy to top off before a trip and easy to trust once you're out of range.",
+    body: "USB-C and a sensible internal battery mean Beacon 1 is easy to top off before a trip and easy to trust once you're out of range.",
     meta: "USB-C · adventure-ready",
     image: link1Content.featureHighlights[2].image,
     alt: link1Content.featureHighlights[2].alt,

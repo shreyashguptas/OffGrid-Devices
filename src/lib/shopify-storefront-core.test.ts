@@ -11,7 +11,7 @@ function shopifyResponse(data: unknown) {
 function productData() {
   return {
     product: {
-      title: "Link 1",
+      title: "Beacon 1",
       handle: "link-1",
       availableForSale: true,
       featuredImage: null,

@@ -53,13 +53,13 @@ export const viewport: Viewport = {
 };
 
 const BEACON_FAVICON =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%231B1813'/%3E%3Cg stroke='%23F1ECE0' stroke-width='12' fill='none' stroke-linecap='square'%3E%3Cpath d='M 32 56 L 32 32 L 56 32'/%3E%3Cpath d='M 144 32 L 168 32 L 168 56'/%3E%3Cpath d='M 168 144 L 168 168 L 144 168'/%3E%3Cpath d='M 56 168 L 32 168 L 32 144'/%3E%3C/g%3E%3Cg stroke='%23E8743C' stroke-width='14' fill='none' stroke-linejoin='miter' stroke-linecap='butt'%3E%3Cpath d='M 100 58 L 142 100 L 100 142 L 58 100 Z'/%3E%3Cline x1='100' y1='58' x2='100' y2='142'/%3E%3Cline x1='58' y1='100' x2='142' y2='100'/%3E%3C/g%3E%3Ccircle cx='100' cy='58' r='12' fill='%23E8743C'/%3E%3Ccircle cx='142' cy='100' r='9' fill='%23F1ECE0'/%3E%3Ccircle cx='100' cy='142' r='9' fill='%23F1ECE0'/%3E%3Ccircle cx='58' cy='100' r='9' fill='%23F1ECE0'/%3E%3Ccircle cx='100' cy='100' r='10' fill='%23E8743C'/%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='24 20 152 152'%3E%3Crect x='24' y='20' width='152' height='152' fill='%231B1813'/%3E%3Cg stroke='%23E8743C' fill='none' stroke-linecap='round'%3E%3Ccircle cx='100' cy='64' r='22' stroke-width='4' opacity='0.18'/%3E%3Ccircle cx='100' cy='64' r='34' stroke-width='4' opacity='0.10'/%3E%3C/g%3E%3Cg stroke='%23E8743C' stroke-width='5' stroke-linecap='round' opacity='0.85'%3E%3Cline x1='100' y1='64' x2='146' y2='110'/%3E%3Cline x1='146' y1='110' x2='100' y2='156'/%3E%3Cline x1='100' y1='156' x2='54' y2='110'/%3E%3Cline x1='54' y1='110' x2='100' y2='64'/%3E%3Cline x1='100' y1='64' x2='100' y2='156' opacity='0.55'/%3E%3Cline x1='54' y1='110' x2='146' y2='110' opacity='0.55'/%3E%3C/g%3E%3Ccircle cx='100' cy='64' r='13' fill='%23E8743C'/%3E%3Ccircle cx='146' cy='110' r='9' fill='%23E8743C'/%3E%3Ccircle cx='100' cy='156' r='9' fill='%23E8743C'/%3E%3Ccircle cx='54' cy='110' r='9' fill='%23E8743C'/%3E%3C/svg%3E";
 
 const SITE_NAME = "OffGrid Devices";
 const DEFAULT_TITLE =
-  "OffGrid Link 1 | MagSafe LoRa Mesh Radio for Off-Grid Communication";
+  "OffGrid Beacon 1 | MagSafe LoRa Mesh Radio for Off-Grid Communication";
 const DEFAULT_DESCRIPTION =
-  "OffGrid Devices makes Link 1 — the MagSafe-compatible LoRa mesh radio with Meshtastic pre-installed. Off-grid communication that stays with the phone you already carry.";
+  "OffGrid Devices makes Beacon 1 — the MagSafe-compatible LoRa mesh radio with Meshtastic pre-installed. Off-grid communication that stays with the phone you already carry.";
 
 export const metadata: Metadata = {
   metadataBase,
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
     "backup comms",
     "hiking two-way radio",
     "OffGrid Devices",
-    "OffGrid Link 1",
+    "OffGrid Beacon 1",
   ],
   authors: [{ name: "Shreyash Gupta" }],
   creator: "Shreyash Gupta",

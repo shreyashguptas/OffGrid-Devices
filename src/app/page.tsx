@@ -14,13 +14,13 @@ export const metadata: Metadata = {
       "OffGrid Devices — MagSafe LoRa Mesh Radio for Off-Grid Communication",
   },
   description:
-    "OffGrid Link 1 is the MagSafe LoRa mesh radio with Meshtastic pre-installed. Stay connected off-grid for hiking, events, and emergencies — no cell tower required.",
+    "OffGrid Beacon 1 is the MagSafe LoRa mesh radio with Meshtastic pre-installed. Stay connected off-grid for hiking, events, and emergencies — no cell tower required.",
   alternates: { canonical: "/" },
   openGraph: {
     title:
       "OffGrid Devices — MagSafe LoRa Mesh Radio for Off-Grid Communication",
     description:
-      "OffGrid Link 1: MagSafe-compatible LoRa mesh radio, Meshtastic pre-installed. Off-grid communication that stays on your phone.",
+      "OffGrid Beacon 1: MagSafe-compatible LoRa mesh radio, Meshtastic pre-installed. Off-grid communication that stays on your phone.",
     url: "/",
     type: "website",
   },
