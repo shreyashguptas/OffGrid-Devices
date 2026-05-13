@@ -26,26 +26,27 @@ export default function OgImage() {
         {/* Top — wordmark */}
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
           <svg
-            width="56"
-            height="56"
-            viewBox="0 0 200 200"
+            width="64"
+            height="64"
+            viewBox="24 20 152 152"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g
-              stroke="#E8743C"
-              strokeWidth="9"
-              fill="none"
-              strokeLinejoin="miter"
-            >
-              <path d="M 100 50 L 150 100 L 100 150 L 50 100 Z" />
-              <line x1="100" y1="50" x2="100" y2="150" />
-              <line x1="50" y1="100" x2="150" y2="100" />
+            <g stroke="#E8743C" fill="none" strokeLinecap="round">
+              <circle cx="100" cy="64" r="22" strokeWidth="4" opacity="0.18" />
+              <circle cx="100" cy="64" r="34" strokeWidth="4" opacity="0.10" />
             </g>
-            <circle cx="100" cy="50" r="11" fill="#E8743C" />
-            <circle cx="150" cy="100" r="8" fill="#F1ECE0" />
-            <circle cx="100" cy="150" r="8" fill="#F1ECE0" />
-            <circle cx="50" cy="100" r="8" fill="#F1ECE0" />
-            <circle cx="100" cy="100" r="9" fill="#E8743C" />
+            <g stroke="#E8743C" strokeWidth="5" strokeLinecap="round" opacity="0.85">
+              <line x1="100" y1="64" x2="146" y2="110" />
+              <line x1="146" y1="110" x2="100" y2="156" />
+              <line x1="100" y1="156" x2="54" y2="110" />
+              <line x1="54" y1="110" x2="100" y2="64" />
+              <line x1="100" y1="64" x2="100" y2="156" opacity="0.55" />
+              <line x1="54" y1="110" x2="146" y2="110" opacity="0.55" />
+            </g>
+            <circle cx="100" cy="64" r="13" fill="#E8743C" />
+            <circle cx="146" cy="110" r="9" fill="#E8743C" />
+            <circle cx="100" cy="156" r="9" fill="#E8743C" />
+            <circle cx="54" cy="110" r="9" fill="#E8743C" />
           </svg>
           <div
             style={{
@@ -108,7 +109,7 @@ export default function OgImage() {
               color: "#F1ECE0",
             }}
           >
-            OffGrid Link 1
+            OffGrid Beacon 1
           </div>
         </div>
       </div>

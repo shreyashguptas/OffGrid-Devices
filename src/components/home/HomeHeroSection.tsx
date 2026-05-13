@@ -157,7 +157,7 @@ export function HomeHeroSection() {
                 textTransform: "uppercase",
               }}
             >
-              Field Card · Link 1
+              Field Card · Beacon 1
             </div>
             <div className="my-3 h-px bg-sand/25" />
             <div

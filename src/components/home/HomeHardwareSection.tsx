@@ -49,7 +49,7 @@ export function HomeHardwareSection() {
               textTransform: "uppercase",
             }}
           >
-            From a Link 1 owner · Mesh Trip · 2026
+            From a Beacon 1 owner · Mesh Trip · 2026
           </div>
         </motion.div>
       </motion.div>

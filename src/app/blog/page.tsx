@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
 export const metadata: Metadata = {
   title: "OffGrid Blog — Meshtastic, LoRa & Off-Grid Communication",
   description:
-    "Guides, comparisons, and practical notes on Meshtastic, LoRa mesh networking, and off-grid communication — from the team behind OffGrid Link 1.",
+    "Guides, comparisons, and practical notes on Meshtastic, LoRa mesh networking, and off-grid communication — from the team behind OffGrid Beacon 1.",
   keywords: [
     "Meshtastic blog",
     "LoRa mesh guides",

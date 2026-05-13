@@ -221,11 +221,11 @@ export async function createLink1CheckoutUrl() {
   const product = await getLink1Product();
 
   if (!product) {
-    throw new Error("Link 1 product could not be found in Shopify.");
+    throw new Error("Beacon 1 product could not be found in Shopify.");
   }
 
   if (!product.variant || !product.variant.availableForSale) {
-    throw new Error("Link 1 is not currently available for sale.");
+    throw new Error("Beacon 1 is not currently available for sale.");
   }
 
   const data = await shopifyFetch<CartCreateData>(

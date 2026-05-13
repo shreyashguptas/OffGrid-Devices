@@ -93,20 +93,6 @@ export const startContent = {
     closing:
       "Until you do this, the device will appear to power on and pair, but it will not transmit. This is the most common \"my device doesn't work\" question we get — see Step 6 below for instructions.",
   },
-  identify: {
-    eyebrow: "Identify your device",
-    title: "Confirm you have a Beacon 2.",
-    body: "Look at the bottom of your device. You should see debossed text reading:",
-    deboss: [
-      "OffGrid Beacon 2  •  US915",
-      "Contains FCC ID: 2AF6B-RAK4630",
-      "Li-ion 3.7V 11.1Wh",
-      "OffGrid LLC, MD, USA",
-    ],
-    fallback:
-      "If your device shows a different model identifier or no debossed text, you may have an earlier version or a DIY-kit-built unit. Email hello@offgridevices.com with a photo and we'll point you to the right guide.",
-    photoCaption: "Bottom of device showing debossed regulatory text.",
-  },
   setup: {
     eyebrow: "First-time setup",
     title: "Get on the mesh in 5–10 minutes.",
@@ -151,9 +137,8 @@ export const startContent = {
         number: 5,
         title: "Pair via Bluetooth.",
         body: [
-          "Once the app is installed, open the Meshtastic app and tap \"Connect\" or the radio icon at the top.",
-          "Select \"Bluetooth.\" Wait for your device to appear in the list. The default name format is BCN-XXXX (where XXXX is the last 4 characters of your device's MAC address).",
-          "Tap your device to pair. If prompted for a PIN, the default is 123456 — change this in the app settings after pairing.",
+          "Open the Meshtastic app and go to the Connect section. Your Beacon will appear in the list of available devices.",
+          "Tap your Beacon to pair. When prompted for a password, enter 123456 — change this in the app settings after pairing.",
         ],
         note: "If your device doesn't appear, see the Troubleshooting section below.",
       },
@@ -229,7 +214,7 @@ export const startContent = {
       },
       {
         label: "Device name",
-        value: "BCN-[last 4 of MAC]",
+        value: "Set automatically by the firmware",
         note: "Rename in app if desired",
       },
       {
