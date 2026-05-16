@@ -19,13 +19,25 @@ function getButton(label: string) {
 describe("Link1CheckoutButton", () => {
   const fetchMock = vi.fn();
   const assignMock = vi.fn();
+  const openMock = vi.fn();
   const originalLocation = window.location;
+  const originalOpen = window.open;
 
   beforeEach(() => {
     fetchMock.mockReset();
     assignMock.mockReset();
+    openMock.mockReset();
     sessionStorage.clear();
     vi.stubGlobal("fetch", fetchMock);
+    // Default: simulate a successfully-opened popup so click handlers don't
+    // fall back to same-tab navigation. Individual tests can override.
+    openMock.mockReturnValue({
+      closed: false,
+      opener: {},
+      location: { href: "about:blank" },
+      close: vi.fn(),
+    });
+    window.open = openMock as unknown as typeof window.open;
     Object.defineProperty(window, "location", {
       configurable: true,
       value: {
@@ -39,6 +51,7 @@ describe("Link1CheckoutButton", () => {
     cleanup();
     sessionStorage.clear();
     vi.unstubAllGlobals();
+    window.open = originalOpen;
     Object.defineProperty(window, "location", {
       configurable: true,
       value: originalLocation,
@@ -104,7 +117,7 @@ describe("Link1CheckoutButton", () => {
     });
   });
 
-  it("shows the loading label and redirects after checkout creation", async () => {
+  it("shows the loading label and opens checkout in a new tab", async () => {
     let resolveCheckout: ((value: Response) => void) | undefined;
     const checkoutPromise = new Promise<Response>((resolve) => {
       resolveCheckout = resolve;
@@ -121,6 +134,14 @@ describe("Link1CheckoutButton", () => {
       )
       .mockReturnValueOnce(checkoutPromise);
 
+    const checkoutWindow = {
+      closed: false,
+      opener: {} as unknown,
+      location: { href: "about:blank" },
+      close: vi.fn(),
+    };
+    openMock.mockReturnValueOnce(checkoutWindow);
+
     render(
       <Link1CheckoutButton
         defaultLabel="Buy Beacon 1"
@@ -131,6 +152,9 @@ describe("Link1CheckoutButton", () => {
 
     const button = await screen.findByRole("button", { name: "Buy Beacon 1" });
     fireEvent.click(button);
+
+    expect(openMock).toHaveBeenCalledWith("about:blank", "_blank");
+    expect(checkoutWindow.opener).toBeNull();
 
     await waitFor(() => {
       expect(getButton("Opening Checkout...").disabled).toBe(true);
@@ -143,8 +167,44 @@ describe("Link1CheckoutButton", () => {
     );
 
     await waitFor(() => {
-      expect(assignMock).toHaveBeenCalledWith(
+      expect(checkoutWindow.location.href).toBe(
         "https://example.myshopify.com/checkouts/test",
+      );
+    });
+    expect(assignMock).not.toHaveBeenCalled();
+  });
+
+  it("falls back to same-tab navigation when the popup is blocked", async () => {
+    fetchMock
+      .mockResolvedValueOnce(
+        jsonResponse({
+          product: {
+            availableForSale: true,
+            variant: { availableForSale: true },
+          },
+        }),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse({
+          checkoutUrl: "https://example.myshopify.com/checkouts/blocked",
+        }),
+      );
+
+    openMock.mockReturnValueOnce(null);
+
+    render(
+      <Link1CheckoutButton
+        defaultLabel="Buy Beacon 1"
+        className="rounded-full"
+      />,
+    );
+
+    const button = await screen.findByRole("button", { name: "Buy Beacon 1" });
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(assignMock).toHaveBeenCalledWith(
+        "https://example.myshopify.com/checkouts/blocked",
       );
     });
   });

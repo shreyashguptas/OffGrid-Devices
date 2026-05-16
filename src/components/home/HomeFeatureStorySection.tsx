@@ -4,43 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { cardVariant, staggerContainer } from "@/components/shared/motion";
-import { link1Content } from "@/content/link1";
+import { link2Content } from "@/content/products";
 
-type FieldNote = {
-  tag: string;
-  title: string;
-  body: string;
-  meta: string;
-  image: string;
-  alt: string;
-};
-
-const FIELD_NOTES: FieldNote[] = [
-  {
-    tag: "DAILY · MAGSAFE",
-    title: "Snaps to the phone you already carry.",
-    body: "Beacon 1 lives on the device you reach for every day, so the radio is with you when you actually need it — not in a pack you forgot.",
-    meta: "MagSafe · N52 ring",
-    image: link1Content.featureHighlights[0].image,
-    alt: link1Content.featureHighlights[0].alt,
-  },
-  {
-    tag: "OUTDOORS · LORA",
-    title: "Keeps talking past the dead zone.",
-    body: "When cell service drops out, LoRa keeps messages moving through the mesh without a tower — peer to peer, miles at a time.",
-    meta: "10+ km LoS · 915 MHz",
-    image: link1Content.featureHighlights[1].image,
-    alt: link1Content.featureHighlights[1].alt,
-  },
-  {
-    tag: "TRIPS · POWER",
-    title: "Charge once, stay out longer.",
-    body: "USB-C and a sensible internal battery mean Beacon 1 is easy to top off before a trip and easy to trust once you're out of range.",
-    meta: "USB-C · adventure-ready",
-    image: link1Content.featureHighlights[2].image,
-    alt: link1Content.featureHighlights[2].alt,
-  },
-];
+const FIELD_NOTES = link2Content.home.fieldNotes;
 
 export function HomeFeatureStorySection() {
   return (

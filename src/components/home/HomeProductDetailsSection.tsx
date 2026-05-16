@@ -2,15 +2,9 @@
 
 import { motion } from "framer-motion";
 import { fadeInLeft, fadeInRight } from "@/components/shared/motion";
+import { link2Content } from "@/content/products";
 
-const HARDWARE_ROWS: ReadonlyArray<readonly [string, string]> = [
-  ["SHELL", "Transparent polycarbonate"],
-  ["CORE", "RAK WisBlock System"],
-  ["RADIO", "LoRa SX1262 · 915 MHz"],
-  ["MOUNT", "MagSafe · N52 magnet ring"],
-  ["POWER", "Rechargeable Li-Po · USB-C"],
-  ["RANGE", "10+ km line-of-sight"],
-];
+const HARDWARE_ROWS = link2Content.home.hardwareRows;
 
 export function HomeProductDetailsSection() {
   return (
@@ -57,9 +51,9 @@ export function HomeProductDetailsSection() {
               lineHeight: 1.5,
             }}
           >
-            A transparent shell over the board, battery, and antenna. MagSafe-mounted
-            to the phone you already carry. Built to live in a pocket and shrug off
-            the trip.
+            3D-printed in sun-tolerant filament, magnet-mounted to the phone you
+            already carry, with a replaceable SMA antenna and a 3000 mAh cell.
+            Built to live in a pocket and shrug off the trip.
           </p>
 
           <div

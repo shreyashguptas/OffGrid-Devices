@@ -2,20 +2,20 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 import { GET } from "./route";
 
 vi.mock("@/lib/shopify", () => ({
-  hasShopifyStorefrontConfig: vi.fn(),
-  getLink1ProductWithCache: vi.fn(),
+  hasLink2StorefrontConfig: vi.fn(),
+  getLink2ProductWithCache: vi.fn(),
 }));
 
 import * as shopify from "@/lib/shopify";
 
-describe("GET /api/shopify/link-1", () => {
+describe("GET /api/shopify/link-2", () => {
   beforeEach(() => {
-    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReset();
-    vi.mocked(shopify.getLink1ProductWithCache).mockReset();
+    vi.mocked(shopify.hasLink2StorefrontConfig).mockReset();
+    vi.mocked(shopify.getLink2ProductWithCache).mockReset();
   });
 
   it("returns 500 when storefront is not configured", async () => {
-    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(false);
+    vi.mocked(shopify.hasLink2StorefrontConfig).mockReturnValue(false);
 
     const res = await GET();
     const body = await res.json();
@@ -25,8 +25,8 @@ describe("GET /api/shopify/link-1", () => {
   });
 
   it("returns 404 when product is missing", async () => {
-    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(true);
-    vi.mocked(shopify.getLink1ProductWithCache).mockResolvedValue(null);
+    vi.mocked(shopify.hasLink2StorefrontConfig).mockReturnValue(true);
+    vi.mocked(shopify.getLink2ProductWithCache).mockResolvedValue(null);
 
     const res = await GET();
     const body = await res.json();
@@ -36,16 +36,16 @@ describe("GET /api/shopify/link-1", () => {
   });
 
   it("returns 200 with product when found", async () => {
-    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(true);
-    vi.mocked(shopify.getLink1ProductWithCache).mockResolvedValue({
-      title: "Test",
-      handle: "test",
+    vi.mocked(shopify.hasLink2StorefrontConfig).mockReturnValue(true);
+    vi.mocked(shopify.getLink2ProductWithCache).mockResolvedValue({
+      title: "Beacon 2",
+      handle: "beacon-2",
       availableForSale: true,
       featuredImage: null,
       variant: {
-        id: "gid://shopify/ProductVariant/1",
+        id: "gid://shopify/ProductVariant/2",
         availableForSale: true,
-        price: { amount: "149.00", currencyCode: "USD" },
+        price: { amount: "189.00", currencyCode: "USD" },
       },
     });
 
@@ -53,7 +53,7 @@ describe("GET /api/shopify/link-1", () => {
     const body = await res.json();
 
     expect(res.status).toBe(200);
-    expect(body.product?.title).toBe("Test");
+    expect(body.product?.title).toBe("Beacon 2");
     expect(res.headers.get("cache-control")).toContain("s-maxage=30");
   });
 });

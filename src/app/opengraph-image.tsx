@@ -109,7 +109,7 @@ export default function OgImage() {
               color: "#F1ECE0",
             }}
           >
-            OffGrid Beacon 1
+            OffGrid Beacon 2
           </div>
         </div>
       </div>

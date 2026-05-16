@@ -57,9 +57,9 @@ const BEACON_FAVICON =
 
 const SITE_NAME = "OffGrid Devices";
 const DEFAULT_TITLE =
-  "OffGrid Beacon 1 | MagSafe LoRa Mesh Radio for Off-Grid Communication";
+  "OffGrid Beacon 2 | MagSafe LoRa Mesh Radio for Off-Grid Communication";
 const DEFAULT_DESCRIPTION =
-  "OffGrid Devices makes Beacon 1 — the MagSafe-compatible LoRa mesh radio with Meshtastic pre-installed. Off-grid communication that stays with the phone you already carry.";
+  "OffGrid Devices makes Beacon 2 — the MagSafe-compatible LoRa mesh radio with Meshtastic pre-flashed, a 3000 mAh battery, and a replaceable SMA antenna. Off-grid communication that stays with the phone you already carry.";
 
 export const metadata: Metadata = {
   metadataBase,
@@ -82,6 +82,7 @@ export const metadata: Metadata = {
     "backup comms",
     "hiking two-way radio",
     "OffGrid Devices",
+    "OffGrid Beacon 2",
     "OffGrid Beacon 1",
   ],
   authors: [{ name: "Shreyash Gupta" }],

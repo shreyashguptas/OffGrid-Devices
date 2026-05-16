@@ -8,14 +8,18 @@
 :root {
   color-scheme: dark;
 
-  /* Beacon palette */
+  /* Beacon palette — names match the brand handoff tokens spec.
+     Coal is the canonical handoff name for the deepest dark; we keep
+     pitch-deep as a backward-compatible alias of the same value. */
   --app-pitch: #1B1813;
-  --app-pitch-deep: #100D09;
+  --app-coal: #100D09;
+  --app-pitch-deep: var(--app-coal);
   --app-pitch-low: #15110C;
   --app-bark: #3A2E22;
   --app-bark-soft: #2A2118;
   --app-sand: #D9C9A8;
   --app-bone: #F1ECE0;
+  --app-dim: #9A9082;
   --app-ember: #E8743C;
   --app-ember-low: #C95F2B;
 
@@ -101,10 +105,12 @@
   --color-pitch: var(--app-pitch);
   --color-pitch-deep: var(--app-pitch-deep);
   --color-pitch-low: var(--app-pitch-low);
+  --color-coal: var(--app-coal);
   --color-bark: var(--app-bark);
   --color-bark-soft: var(--app-bark-soft);
   --color-sand: var(--app-sand);
   --color-bone: var(--app-bone);
+  --color-dim: var(--app-dim);
   --color-ember: var(--app-ember);
 
   --color-border-subtle: var(--app-border-subtle);

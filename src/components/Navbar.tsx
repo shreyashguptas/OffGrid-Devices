@@ -5,10 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
+import { Link2CheckoutButton } from "@/components/Link2CheckoutButton";
 import { BeaconWordmark, WaypointMark } from "@/components/shared/WaypointMark";
-import { link1Content } from "@/content/link1";
-import { siteProducts } from "@/content/products";
+import { link2Content, siteProducts } from "@/content/products";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -255,10 +254,10 @@ function NavbarContent() {
           >
             Blog
           </Link>
-          <Link1CheckoutButton
-            defaultLabel={link1Content.summary.buyLabel}
-            loadingLabel={link1Content.summary.loadingLabel}
-            className="bg-bone px-5 py-3 font-display text-[12px] font-bold tracking-[0.16em] uppercase text-pitch transition-all duration-300 hover:bg-ember hover:text-pitch disabled:opacity-60 disabled:cursor-not-allowed"
+          <Link2CheckoutButton
+            defaultLabel={link2Content.summary.buyLabel}
+            loadingLabel={link2Content.summary.loadingLabel}
+            className="bg-bone px-5 py-3 font-display text-[12px] font-bold tracking-[0.14em] uppercase text-pitch transition-all duration-300 hover:bg-ember hover:text-pitch disabled:opacity-60 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -381,10 +380,10 @@ function NavbarContent() {
               >
                 Blog
               </Link>
-              <Link1CheckoutButton
-                defaultLabel={link1Content.summary.buyLabel}
-                loadingLabel={link1Content.summary.loadingLabel}
-                className="mt-2 px-5 py-4 bg-bone text-pitch font-display text-[12px] font-bold tracking-[0.16em] uppercase text-center hover:bg-ember transition-all duration-300"
+              <Link2CheckoutButton
+                defaultLabel={link2Content.summary.buyLabel}
+                loadingLabel={link2Content.summary.loadingLabel}
+                className="mt-2 px-5 py-4 bg-bone text-pitch font-display text-[12px] font-bold tracking-[0.14em] uppercase text-center hover:bg-ember transition-all duration-300"
               />
             </div>
           </motion.div>
