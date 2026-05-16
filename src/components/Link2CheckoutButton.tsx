@@ -5,18 +5,18 @@ import {
   type ShopifyCheckoutButtonProps,
 } from "./ShopifyCheckoutButton";
 
-type Link1CheckoutButtonProps = Omit<
+type Link2CheckoutButtonProps = Omit<
   ShopifyCheckoutButtonProps,
   "productEndpoint" | "checkoutEndpoint" | "cacheKey"
 >;
 
-export function Link1CheckoutButton(props: Link1CheckoutButtonProps) {
+export function Link2CheckoutButton(props: Link2CheckoutButtonProps) {
   return (
     <ShopifyCheckoutButton
       {...props}
-      productEndpoint="/api/shopify/link-1"
-      checkoutEndpoint="/api/shopify/link-1/checkout"
-      cacheKey="offgrid:link1-product"
+      productEndpoint="/api/shopify/link-2"
+      checkoutEndpoint="/api/shopify/link-2/checkout"
+      cacheKey="offgrid:link2-product"
     />
   );
 }

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { cardVariant, staggerContainer } from "@/components/shared/motion";
 import { link1Content } from "@/content/link1";
+import { link2Content } from "@/content/products";
 
 export function HomeTestimonialsSection() {
   const items = link1Content.testimonials.map((testimonial) => {
@@ -35,7 +36,7 @@ export function HomeTestimonialsSection() {
                 textTransform: "uppercase",
               }}
             >
-              IV · The Crew
+              IV · {link2Content.home.testimonials.eyebrow}
             </div>
             <h2
               className="mt-5 text-bone uppercase"
@@ -47,7 +48,7 @@ export function HomeTestimonialsSection() {
                 letterSpacing: "-0.03em",
               }}
             >
-              Don&apos;t take our word.
+              {link2Content.home.testimonials.title}
             </h2>
             <p
               className="mt-6 max-w-2xl text-sand"
@@ -58,7 +59,17 @@ export function HomeTestimonialsSection() {
                 lineHeight: 1.4,
               }}
             >
-              Take theirs.
+              {link2Content.home.testimonials.subtitle}
+            </p>
+            <p
+              className="mt-4 max-w-2xl text-sand/70"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 12,
+                letterSpacing: "0.08em",
+              }}
+            >
+              {link2Content.home.testimonials.footnote}
             </p>
           </div>
           <div className="flex items-center gap-3">

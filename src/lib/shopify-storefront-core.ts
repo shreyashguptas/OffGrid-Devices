@@ -12,7 +12,12 @@ type ShopifyResponse<T> = {
   errors?: ShopifyGraphQLError[];
 };
 
-type Link1StorefrontProduct = {
+export type ShopifyMoney = {
+  amount: string;
+  currencyCode: string;
+};
+
+export type ShopifyStorefrontProduct = {
   title: string;
   handle: string;
   availableForSale: boolean;
@@ -23,8 +28,12 @@ type Link1StorefrontProduct = {
   variant: {
     id: string;
     availableForSale: boolean;
+    price: ShopifyMoney | null;
   } | null;
 };
+
+// Backwards-compat alias retained for callers that imported the old type.
+export type Link1StorefrontProduct = ShopifyStorefrontProduct;
 
 type ProductQueryData = {
   product: {
@@ -38,6 +47,10 @@ type ProductQueryData = {
     selectedOrFirstAvailableVariant: {
       id: string;
       availableForSale: boolean;
+      price: {
+        amount: string;
+        currencyCode: string;
+      } | null;
     } | null;
   } | null;
 };
@@ -81,6 +94,7 @@ function getShopifyEnv() {
   const apiVersion =
     process.env.SHOPIFY_STOREFRONT_API_VERSION?.trim() || "2026-04";
   const link1Handle = process.env.SHOPIFY_LINK_1_HANDLE?.trim();
+  const link2Handle = process.env.SHOPIFY_LINK_2_HANDLE?.trim();
 
   return {
     domain,
@@ -88,14 +102,24 @@ function getShopifyEnv() {
     publicToken,
     apiVersion,
     link1Handle,
-    isConfigured: Boolean(domain && link1Handle),
+    link2Handle,
+    isConfigured: Boolean(domain),
+    hasLink1: Boolean(domain && link1Handle),
+    hasLink2: Boolean(domain && link2Handle),
   };
 }
 
-export function hasShopifyStorefrontConfig() {
-  const { isConfigured, privateToken, publicToken } = getShopifyEnv();
+function hasToken() {
+  const { privateToken, publicToken } = getShopifyEnv();
+  return Boolean(privateToken || publicToken);
+}
 
-  return isConfigured && Boolean(privateToken || publicToken);
+export function hasShopifyStorefrontConfig() {
+  return getShopifyEnv().hasLink1 && hasToken();
+}
+
+export function hasLink2StorefrontConfig() {
+  return getShopifyEnv().hasLink2 && hasToken();
 }
 
 async function shopifyFetch<T>(
@@ -162,16 +186,12 @@ async function shopifyFetch<T>(
   throw lastError ?? new Error("Shopify request failed.");
 }
 
-export async function getLink1Product(): Promise<Link1StorefrontProduct | null> {
-  const { link1Handle, isConfigured } = getShopifyEnv();
-
-  if (!isConfigured || !link1Handle) {
-    return null;
-  }
-
+async function getProductByHandle(
+  handle: string,
+): Promise<ShopifyStorefrontProduct | null> {
   const data = await shopifyFetch<ProductQueryData>(
     `#graphql
-      query Link1Product($handle: String!) {
+      query StorefrontProduct($handle: String!) {
         product(handle: $handle) {
           title
           handle
@@ -183,11 +203,15 @@ export async function getLink1Product(): Promise<Link1StorefrontProduct | null> 
           selectedOrFirstAvailableVariant {
             id
             availableForSale
+            price {
+              amount
+              currencyCode
+            }
           }
         }
       }
     `,
-    { handle: link1Handle },
+    { handle },
   );
 
   if (!data.product) {
@@ -203,34 +227,18 @@ export async function getLink1Product(): Promise<Link1StorefrontProduct | null> 
   };
 }
 
-const getLink1ProductCached = unstable_cache(
-  async () => getLink1Product(),
-  ["shopify-link-1-product"],
-  {
-    revalidate: 30,
-    tags: ["shopify-link-1-product"],
-  },
-);
-
-export async function getLink1ProductWithCache() {
-  return getLink1ProductCached();
-}
-
-export async function createLink1CheckoutUrl() {
+async function createCheckoutUrlForVariant(
+  variantId: string,
+  productLabel: string,
+): Promise<string> {
   const { domain } = getShopifyEnv();
-  const product = await getLink1Product();
-
-  if (!product) {
-    throw new Error("Beacon 1 product could not be found in Shopify.");
-  }
-
-  if (!product.variant || !product.variant.availableForSale) {
-    throw new Error("Beacon 1 is not currently available for sale.");
+  if (!domain) {
+    throw new Error("Shopify Storefront API is not fully configured.");
   }
 
   const data = await shopifyFetch<CartCreateData>(
     `#graphql
-      mutation CreateLink1Cart($input: CartInput!) {
+      mutation CreateStorefrontCart($input: CartInput!) {
         cartCreate(input: $input) {
           cart {
             checkoutUrl
@@ -247,7 +255,7 @@ export async function createLink1CheckoutUrl() {
         lines: [
           {
             quantity: 1,
-            merchandiseId: product.variant.id,
+            merchandiseId: variantId,
           },
         ],
       },
@@ -260,8 +268,8 @@ export async function createLink1CheckoutUrl() {
   }
 
   const checkoutUrl = data.cartCreate.cart?.checkoutUrl;
-  if (!checkoutUrl || !domain) {
-    throw new Error("Shopify did not return a checkout URL.");
+  if (!checkoutUrl) {
+    throw new Error(`Shopify did not return a ${productLabel} checkout URL.`);
   }
 
   const url = new URL(checkoutUrl);
@@ -272,4 +280,78 @@ export async function createLink1CheckoutUrl() {
   url.searchParams.set("channel", "headless-storefronts");
 
   return url.toString();
+}
+
+export async function getLink1Product(): Promise<ShopifyStorefrontProduct | null> {
+  const { link1Handle, hasLink1 } = getShopifyEnv();
+
+  if (!hasLink1 || !link1Handle) {
+    return null;
+  }
+
+  return getProductByHandle(link1Handle);
+}
+
+export async function getLink2Product(): Promise<ShopifyStorefrontProduct | null> {
+  const { link2Handle, hasLink2 } = getShopifyEnv();
+
+  if (!hasLink2 || !link2Handle) {
+    return null;
+  }
+
+  return getProductByHandle(link2Handle);
+}
+
+const getLink1ProductCached = unstable_cache(
+  async () => getLink1Product(),
+  ["shopify-link-1-product"],
+  {
+    revalidate: 30,
+    tags: ["shopify-link-1-product"],
+  },
+);
+
+const getLink2ProductCached = unstable_cache(
+  async () => getLink2Product(),
+  ["shopify-link-2-product"],
+  {
+    revalidate: 30,
+    tags: ["shopify-link-2-product"],
+  },
+);
+
+export async function getLink1ProductWithCache() {
+  return getLink1ProductCached();
+}
+
+export async function getLink2ProductWithCache() {
+  return getLink2ProductCached();
+}
+
+export async function createLink1CheckoutUrl() {
+  const product = await getLink1Product();
+
+  if (!product) {
+    throw new Error("Beacon 1 product could not be found in Shopify.");
+  }
+
+  if (!product.variant || !product.variant.availableForSale) {
+    throw new Error("Beacon 1 is not currently available for sale.");
+  }
+
+  return createCheckoutUrlForVariant(product.variant.id, "Beacon 1");
+}
+
+export async function createLink2CheckoutUrl() {
+  const product = await getLink2Product();
+
+  if (!product) {
+    throw new Error("Beacon 2 product could not be found in Shopify.");
+  }
+
+  if (!product.variant || !product.variant.availableForSale) {
+    throw new Error("Beacon 2 is not currently available for sale.");
+  }
+
+  return createCheckoutUrlForVariant(product.variant.id, "Beacon 2");
 }

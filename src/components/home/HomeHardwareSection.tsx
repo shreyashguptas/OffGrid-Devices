@@ -3,9 +3,10 @@
 import { motion } from "framer-motion";
 import { WaypointMark } from "@/components/shared/WaypointMark";
 import { fadeInUp, staggerContainer } from "@/components/shared/motion";
+import { link2Content } from "@/content/products";
 
-const QUOTE =
-  "It feels less like a gadget and more like a piece of expedition gear. The kind of thing you stop noticing in your pocket — until the moment you need it.";
+const QUOTE = link2Content.home.hardwareQuote;
+const ATTRIBUTION = link2Content.home.hardwareAttribution;
 
 export function HomeHardwareSection() {
   return (
@@ -49,7 +50,7 @@ export function HomeHardwareSection() {
               textTransform: "uppercase",
             }}
           >
-            From a Beacon 1 owner · Mesh Trip · 2026
+            {ATTRIBUTION}
           </div>
         </motion.div>
       </motion.div>

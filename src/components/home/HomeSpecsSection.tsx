@@ -2,30 +2,9 @@
 
 import { motion } from "framer-motion";
 import { cardVariant, staggerContainer } from "@/components/shared/motion";
-import { link1Content } from "@/content/link1";
+import { link2Content } from "@/content/products";
 
-type SpecRow = {
-  label: string;
-  value: string;
-};
-
-const EXTENDED_SPECS: SpecRow[] = [
-  { label: "Range", value: "10+ km LoS" },
-  { label: "Radio", value: "LoRa SX1262 · 915 MHz" },
-  { label: "Battery", value: "Rechargeable Li-Po" },
-  { label: "Charging", value: "USB-C · fast charge" },
-  { label: "Bluetooth", value: "5.0 LE · iOS + Android" },
-  { label: "Encryption", value: "AES-256 per channel" },
-  { label: "Mounting", value: "MagSafe · N52 ring" },
-  { label: "Body", value: "Transparent polycarbonate" },
-  { label: "Core", value: "RAK WisBlock System" },
-  { label: "Firmware", value: "Meshtastic · MeshCore" },
-  { label: "Compliance", value: "FCC · IC" },
-  { label: "Carry", value: "Pocket / phone-mounted" },
-];
-
-// Prefer the live content list if it has more entries; otherwise fall back.
-const SPECS = link1Content.specs.length >= 12 ? link1Content.specs : EXTENDED_SPECS;
+const SPECS = link2Content.specs;
 
 export function HomeSpecsSection() {
   return (
@@ -67,7 +46,7 @@ export function HomeSpecsSection() {
             lineHeight: 1.5,
           }}
         >
-          {link1Content.home.specs.description}
+          {link2Content.home.specsDescription}
         </p>
 
         <motion.div

@@ -2,20 +2,23 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Link1CheckoutButton } from "@/components/Link1CheckoutButton";
+import { Link2CheckoutButton } from "@/components/Link2CheckoutButton";
+import { useShopifyProduct } from "@/components/ShopifyCheckoutButton";
+import { formatPrice } from "@/components/ShopifyPriceTag";
 import { fadeInUp, staggerContainer } from "@/components/shared/motion";
-import { link1Content } from "@/content/link1";
+import { link2Content } from "@/content/products";
 
-const FIELD_CARD_ROWS: ReadonlyArray<readonly [string, string]> = [
-  ["MOUNT", "MagSafe · N52 ring"],
-  ["RADIO", "LoRa · 915 MHz"],
-  ["RANGE", "10+ km line-of-sight"],
-  ["CHARGE", "USB-C · all-day"],
-  ["FIRMWARE", "Meshtastic · MeshCore"],
-  ["BUILD", "Transparent shell"],
-];
+const FIELD_CARD_ROWS = link2Content.home.fieldCard.rows;
+const STATS = link2Content.home.stats;
 
 export function HomeHeroSection() {
+  const { product } = useShopifyProduct(
+    "/api/shopify/link-2",
+    "offgrid:link2-product",
+  );
+  const livePrice = formatPrice(product?.variant?.price ?? null);
+  const buyLabel = livePrice ? `Carry one — ${livePrice}` : "Carry one";
+
   return (
     <section className="relative overflow-hidden border-b border-bark bg-pitch">
       {/* Photographic warm gradient — landscape mood */}
@@ -88,15 +91,16 @@ export function HomeHeroSection() {
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 900,
-                fontSize: "clamp(56px, 11vw, 144px)",
+                // Brand handoff D1 = 128 / 0.88. Hard-cap at 128 instead of 144.
+                fontSize: "clamp(56px, 11vw, 128px)",
                 lineHeight: 0.88,
                 letterSpacing: "-0.04em",
               }}
             >
-              {link1Content.home.heroTitle.replace(/\.$/, "")}
+              {link2Content.home.heroTitle.replace(/\.$/, "")}
               <br />
               <span className="text-ember">
-                {link1Content.home.heroSubtitle.replace(/\.$/, "")}.
+                {link2Content.home.heroSubtitle.replace(/\.$/, "")}.
               </span>
             </motion.h1>
 
@@ -110,19 +114,17 @@ export function HomeHeroSection() {
                 lineHeight: 1.4,
               }}
             >
-              {link1Content.summary.brandedName} is the MagSafe LoRa mesh radio
-              for the trail, the boat, the pass, the tower. No towers. No SIMs.
-              No subscriptions.
+              {link2Content.home.heroIntro}
             </motion.p>
 
             <motion.div
               variants={fadeInUp}
-              className="mt-10 flex flex-wrap items-center gap-5"
+              className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4"
             >
-              <Link1CheckoutButton
-                defaultLabel={`Carry one — ${link1Content.summary.shortBuyLabel}`}
-                loadingLabel={link1Content.summary.loadingLabel}
-                className="bg-ember px-8 py-5 font-display text-[13px] font-bold uppercase tracking-[0.18em] text-pitch transition-colors duration-300 hover:bg-bone disabled:opacity-60 disabled:cursor-not-allowed"
+              <Link2CheckoutButton
+                defaultLabel={buyLabel}
+                loadingLabel={link2Content.summary.loadingLabel}
+                className="bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:opacity-60 disabled:cursor-not-allowed"
                 showArrow={false}
               />
               <a
@@ -131,8 +133,8 @@ export function HomeHeroSection() {
                 style={{
                   fontFamily: "var(--font-display)",
                   fontWeight: 700,
-                  fontSize: 12,
-                  letterSpacing: "0.18em",
+                  fontSize: 13,
+                  letterSpacing: "0.14em",
                   textTransform: "uppercase",
                 }}
               >
@@ -157,7 +159,7 @@ export function HomeHeroSection() {
                 textTransform: "uppercase",
               }}
             >
-              Field Card · Beacon 1
+              {link2Content.home.fieldCard.label}
             </div>
             <div className="my-3 h-px bg-sand/25" />
             <div
@@ -181,14 +183,13 @@ export function HomeHeroSection() {
                 lineHeight: 1.5,
               }}
             >
-              “Snaps onto the phone you already carry — and the mesh comes with
-              it.”
+              {link2Content.home.fieldCard.quote}
             </p>
 
             {/* Subtle product accent */}
             <Image
-              src={link1Content.summary.heroImage.src}
-              alt={link1Content.summary.heroImage.alt}
+              src={link2Content.summary.heroImage.src}
+              alt={link2Content.summary.heroImage.alt}
               width={320}
               height={213}
               className="mt-6 w-full opacity-95"
@@ -204,34 +205,36 @@ export function HomeHeroSection() {
           {STATS.map((stat, index) => (
             <div
               key={stat.metric}
-              className={`flex min-w-0 flex-col items-center px-5 py-10 text-center md:px-6 ${
-                // vertical rail between every column on desktop;
-                // on mobile, rails between columns and a row-rail above the second row.
+              className={`flex min-w-0 flex-col items-center justify-start px-4 py-14 text-center md:px-8 md:py-16 ${
                 index % 2 === 0 ? "" : "border-l border-bark"
               } ${index >= 2 ? "border-t border-bark md:border-t-0" : ""} ${
                 index === 2 ? "md:border-l md:border-bark" : ""
               }`}
             >
               <div
-                className="w-full truncate text-bone"
+                className="text-bone whitespace-nowrap"
                 style={{
                   fontFamily: "var(--font-display)",
                   fontWeight: 900,
-                  fontSize: stat.kind === "number"
-                    ? "clamp(38px, 4.6vw, 64px)"
-                    : "clamp(28px, 3vw, 40px)",
+                  // Sized so the longest metric ("3000 mAh") fits on a
+                  // single line within a 1280/4 column at all breakpoints.
+                  fontSize: "clamp(34px, 4.4vw, 56px)",
                   lineHeight: 1,
-                  letterSpacing: "-0.03em",
+                  letterSpacing: "-0.04em",
+                  textTransform: "uppercase",
+                  fontVariantNumeric: "tabular-nums",
                 }}
               >
-                {stat.metric}
+                {formatMetric(stat.metric)}
               </div>
               <div
-                className="mt-3 text-sand"
+                className="mt-4 text-sand"
                 style={{
                   fontFamily: "var(--font-editorial)",
                   fontStyle: "italic",
-                  fontSize: 15,
+                  fontSize: 17,
+                  lineHeight: 1.35,
+                  letterSpacing: "-0.01em",
                 }}
               >
                 {stat.label}
@@ -244,18 +247,17 @@ export function HomeHeroSection() {
   );
 }
 
-type Stat = {
-  metric: string;
-  label: string;
-  kind: "number" | "word";
-};
-
-const STATS: Stat[] = [
-  { metric: "10+ km", label: "of off-grid range", kind: "number" },
-  { metric: "64 g", label: "about a deck of cards", kind: "number" },
-  { metric: "MagSafe", label: "snaps to your phone", kind: "word" },
-  { metric: "USB-C", label: "fast-charge ready", kind: "word" },
-];
+// Keep a value + unit together on one line so "10+ km" and "3000 mAh"
+// never split across a wrap. We replace the *last* space in the metric
+// with a non-breaking space; single-token metrics like "MagSafe" or
+// "USB-C" pass through unchanged.
+function formatMetric(metric: string): string {
+  const lastSpace = metric.lastIndexOf(" ");
+  if (lastSpace === -1) {
+    return metric;
+  }
+  return `${metric.slice(0, lastSpace)} ${metric.slice(lastSpace + 1)}`;
+}
 
 function UsFlag() {
   return (
