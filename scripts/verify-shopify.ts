@@ -4,12 +4,17 @@ import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.local") });
 config({ path: resolve(process.cwd(), ".env") });
 
-// Only the production Vercel build keeps a hard gate. Everywhere else —
-// Vercel previews, GitHub Actions, local builds — turns into a warning so
-// transient Shopify product state doesn't block unrelated PRs or main
-// pushes. The intent of this gate is "don't ship broken checkout to
-// customers"; a sold-out variant isn't broken checkout, so even on
-// production we warn instead of failing for sold-out errors.
+// Transient Shopify product state (sold out, network blip) should warn
+// outside production so unrelated PRs / main pushes aren't blocked. The
+// intent of this gate is "don't ship broken checkout to customers"; a
+// sold-out variant isn't broken checkout, so even on production we warn
+// for sold-out errors.
+//
+// MissingShopifyConfigError is the exception — missing env vars are a
+// deploy-config bug that will definitely break production, so we hard-fail
+// on it in every environment (including previews). That way the next time
+// an env var is forgotten, the PR's preview deploy catches it instead of
+// silently passing and breaking the next production build.
 const isProductionDeploy = process.env.VERCEL_ENV === "production";
 const environmentLabel =
   process.env.VERCEL_ENV ??
@@ -57,6 +62,16 @@ async function main() {
       const isSoldOut =
         error instanceof Error &&
         (error.name === "SoldOutError" || error.name === "Link2SoldOutError");
+      const isMissingConfig =
+        error instanceof Error && error.name === "MissingShopifyConfigError";
+
+      if (isMissingConfig && !step.warnOnly) {
+        console.error(
+          `Shopify ${step.label} verify failed on env=${environmentLabel}: ${message}`,
+        );
+        hadHardFailure = true;
+        continue;
+      }
 
       if (step.warnOnly || isSoldOut || !isProductionDeploy) {
         console.warn(

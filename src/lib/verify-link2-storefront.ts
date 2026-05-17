@@ -3,6 +3,7 @@ import {
   getLink2Product,
   hasLink2StorefrontConfig,
 } from "./shopify-storefront-core";
+import { MissingShopifyConfigError } from "./shopify-verify-errors";
 
 // Distinguish "Shopify integration is broken" from "product happens to be
 // sold out right now". Callers can warn-only on SoldOutError without
@@ -21,7 +22,7 @@ export class Link2SoldOutError extends Error {
  */
 export async function verifyLink2Storefront(): Promise<void> {
   if (!hasLink2StorefrontConfig()) {
-    throw new Error(
+    throw new MissingShopifyConfigError(
       "Shopify Storefront API is not configured for Beacon 2 (missing domain, handle, or token).",
     );
   }
