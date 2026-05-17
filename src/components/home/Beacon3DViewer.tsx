@@ -28,10 +28,10 @@ const DRAG_MAX_X = Math.PI * 0.45; // ~±81°
 // Response stiffness for the FPS-independent damping. Higher = snappier.
 const ROTATION_STIFFNESS = 14;
 
-// Fraction of the canvas height the model occupies at rest. Generous
-// breathing room so the device — including the antenna and any extreme
-// rotated pose — never clips the canvas edges.
-const FIT_RATIO = 0.68;
+// Fraction of the canvas height the model occupies at rest. Leaves
+// enough margin that extreme rotated poses (antenna sweeping through
+// a near-horizontal tilt) still don't clip the canvas edges.
+const FIT_RATIO = 0.85;
 
 // Zoom range (in multiples of the rest-pose scale).
 const MIN_ZOOM = 0.6;
