@@ -6,52 +6,45 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
 import type { MutableRefObject, ReactNode } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import type { RootState } from "@react-three/fiber";
 import { Environment, useGLTF, useProgress } from "@react-three/drei";
+import { useReducedMotion } from "framer-motion";
 import * as THREE from "three";
+import { cn } from "@/lib/utils";
 
 const MODEL_PATH = "/beacon-2/models/beacon-2.glb";
 
-// Ambient hover envelope — gentle, premium pose-following that fires when
-// the cursor floats around the page and no one is grabbing the device.
 const HOVER_MAX_Y = 0.45; // ~26°
 const HOVER_MAX_X = 0.18; // ~10°
-
-// Active drag envelope — wide enough that users can spin the device around
-// and inspect every face once they grab it with a mouse or finger.
-const DRAG_MAX_Y = Math.PI; // ±180°
-const DRAG_MAX_X = Math.PI * 0.45; // ~±81°
-
-// Response stiffness for the FPS-independent damping. Higher = snappier.
+const DRAG_MAX_Y = Math.PI;
+const DRAG_MAX_X = Math.PI * 0.45;
 const ROTATION_STIFFNESS = 14;
 
-// Fraction of the canvas height the model occupies at rest. Leaves
-// enough margin that extreme rotated poses (antenna sweeping through
-// a near-horizontal tilt) still don't clip the canvas edges.
+// FIT_RATIO leaves enough margin that rotated poses (antenna sweeping
+// through a near-horizontal tilt) still don't clip the canvas edges.
 const FIT_RATIO = 0.85;
 
-// Zoom range (in multiples of the rest-pose scale).
 const MIN_ZOOM = 0.6;
 const MAX_ZOOM = 2.2;
 
-// Per-pixel sensitivities. Tuned so a half-screen drag covers the full
-// rotation envelope and a single wheel tick is a perceptible zoom step.
+// Tuned so a half-screen drag covers the full rotation envelope and a
+// single wheel tick is a perceptible zoom step.
 const MOUSE_DRAG_SENS = 0.008;
 const TOUCH_DRAG_SENS = 0.006;
 const WHEEL_SENS = 0.0014;
+
+// Convergence threshold for the demand-mode loop: once rotation + zoom
+// gaps fall below this, we stop invalidating and the renderer idles.
+const SETTLE_EPSILON = 1e-4;
 
 type ViewerState = {
   targetX: number;
   targetY: number;
   targetZoom: number;
-  // While true, ambient hover-tracking is suspended so the manual pose holds.
   isDragging: boolean;
-  // True when the OS reports prefers-reduced-motion. Locks the device in
-  // its rest pose; explicit drag/pinch still work as user-initiated actions.
-  reducedMotion: boolean;
 };
 
 function BeaconModel({
@@ -63,9 +56,6 @@ function BeaconModel({
   const gltf = useGLTF(MODEL_PATH);
   const currentZoom = useRef(1);
 
-  // Center on origin and uniform-scale into a canvas-relative box. We never
-  // mutate the GLB's source materials — colors come straight from the CAD
-  // export so the render matches the production print.
   const { scene, offset, baseScale } = useMemo(() => {
     const cloned = gltf.scene.clone(true);
     const box = new THREE.Box3().setFromObject(cloned);
@@ -75,14 +65,12 @@ function BeaconModel({
     box.getSize(sizeVec);
     const maxDim = Math.max(sizeVec.x, sizeVec.y, sizeVec.z) || 1;
     // 3.2 units = the visible height at z=0 with our camera (fov 32, z=6).
-    // FIT_RATIO leaves margin so rotated poses don't clip the canvas edges.
     const fit = (3.2 * FIT_RATIO) / maxDim;
     return { scene: cloned, offset: center.multiplyScalar(-1), baseScale: fit };
   }, [gltf.scene]);
 
-  // Dispose of clone-owned geometries on unmount. Materials and textures
-  // are shared with the cached gltf root (which drei reuses), so we only
-  // drop what clone(true) actually duplicated.
+  // Materials and textures are shared with the cached gltf root (drei
+  // reuses it), so we only drop what clone(true) actually duplicated.
   useEffect(() => {
     return () => {
       scene.traverse((obj) => {
@@ -92,15 +80,14 @@ function BeaconModel({
     };
   }, [scene]);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (!groupRef.current) return;
     const g = groupRef.current;
     const s = stateRef.current;
     const alpha = 1 - Math.exp(-ROTATION_STIFFNESS * delta);
 
-    // Take the shortest path on Y so accumulated drag rotation doesn't
-    // unwind visibly when the target jumps (e.g. after the user releases
-    // a long drag and the hover handler resumes with a small target).
+    // Shortest path on Y so accumulated drag rotation doesn't unwind
+    // visibly when the target jumps (e.g. release of a long drag).
     let currentY = g.rotation.y;
     while (currentY - s.targetY > Math.PI) currentY -= Math.PI * 2;
     while (s.targetY - currentY > Math.PI) currentY += Math.PI * 2;
@@ -114,6 +101,12 @@ function BeaconModel({
       alpha,
     );
     g.scale.setScalar(baseScale * currentZoom.current);
+
+    const gap =
+      Math.abs(g.rotation.y - s.targetY) +
+      Math.abs(g.rotation.x - s.targetX) +
+      Math.abs(currentZoom.current - s.targetZoom);
+    if (gap > SETTLE_EPSILON) state.invalidate();
   });
 
   return (
@@ -127,7 +120,7 @@ useGLTF.preload(MODEL_PATH);
 
 function LoadingOverlay() {
   const { active, progress } = useProgress();
-  if (!active && progress >= 100) return null;
+  if (!active) return null;
   return (
     <div
       aria-hidden
@@ -148,8 +141,8 @@ function LoadingOverlay() {
   );
 }
 
-// A GLB fetch failure or GL context loss should never take the whole page
-// down with it — swallow the error, log it, and render nothing so the
+// A GLB fetch failure or GL context loss should never take the whole
+// page down with it — swallow the error and render nothing so the
 // surrounding hero layout stays intact.
 class ViewerErrorBoundary extends Component<
   { children: ReactNode },
@@ -175,59 +168,59 @@ export function Beacon3DViewer({ className }: { className?: string }) {
     targetY: 0,
     targetZoom: 1,
     isDragging: false,
-    reducedMotion: false,
   });
-  const [frameloop, setFrameloop] = useState<"always" | "demand">("always");
+  const invalidateRef = useRef<(() => void) | null>(null);
+  const inViewRef = useRef(true);
+  const reducedMotion = useReducedMotion() ?? false;
+  const reducedMotionRef = useRef(reducedMotion);
 
-  // Respect prefers-reduced-motion: skip ambient cursor-tracking entirely.
-  // The device stays in its rest pose unless the user explicitly grabs it.
+  const invalidate = () => invalidateRef.current?.();
+
+  // When reduced-motion flips on mid-session, drop the hover-tracked
+  // pose back to rest. Drag/pinch still respond as user-initiated input.
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const apply = () => {
-      stateRef.current.reducedMotion = mq.matches;
-      if (mq.matches && !stateRef.current.isDragging) {
-        stateRef.current.targetX = 0;
-        stateRef.current.targetY = 0;
-      }
-    };
-    apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
-  }, []);
+    reducedMotionRef.current = reducedMotion;
+    if (reducedMotion && !stateRef.current.isDragging) {
+      stateRef.current.targetX = 0;
+      stateRef.current.targetY = 0;
+      invalidateRef.current?.();
+    }
+  }, [reducedMotion]);
 
-  // Pause the render loop when the viewer scrolls out of view so the GPU
-  // doesn't burn battery on a device the user can't see.
+  // Pause hover-driven invalidations when the viewer scrolls out of
+  // view so the GPU isn't burning battery on something the user can't
+  // see. Drag and wheel are user-initiated, so they always work.
   useEffect(() => {
     const el = containerRef.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
     const io = new IntersectionObserver(
-      ([entry]) => setFrameloop(entry.isIntersecting ? "always" : "demand"),
+      ([entry]) => {
+        inViewRef.current = entry.isIntersecting;
+      },
       { rootMargin: "100px" },
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
-  // MOUSE HOVER — gentle ambient pose-following across the entire viewport.
-  // Suspends while the user is actively dragging the device so the manual
-  // pose holds, and stays off entirely when prefers-reduced-motion is set.
   useEffect(() => {
     const handleMove = (event: PointerEvent) => {
       if (event.pointerType !== "mouse") return;
       const s = stateRef.current;
-      if (s.isDragging || s.reducedMotion) return;
-      const nx = (event.clientX / window.innerWidth) * 2 - 1; // -1..1
-      const ny = (event.clientY / window.innerHeight) * 2 - 1; // -1..1
+      if (s.isDragging || reducedMotionRef.current || !inViewRef.current) return;
+      const nx = (event.clientX / window.innerWidth) * 2 - 1;
+      const ny = (event.clientY / window.innerHeight) * 2 - 1;
       // Cursor right → device looks right; cursor up → device looks up.
       s.targetY = THREE.MathUtils.clamp(nx, -1, 1) * HOVER_MAX_Y;
       s.targetX = THREE.MathUtils.clamp(ny, -1, 1) * HOVER_MAX_X;
+      invalidate();
     };
 
     const handleLeave = () => {
       if (stateRef.current.isDragging) return;
       stateRef.current.targetX = 0;
       stateRef.current.targetY = 0;
+      invalidate();
     };
 
     window.addEventListener("pointermove", handleMove, { passive: true });
@@ -240,10 +233,6 @@ export function Beacon3DViewer({ className }: { className?: string }) {
     };
   }, []);
 
-  // GRAB + ZOOM — pointer-down on the canvas takes manual control. Drag
-  // rotates 1:1; two-finger pinch and ⌘/Ctrl+wheel zoom; bare wheel events
-  // pass through so the page can still scroll past the hero when the
-  // cursor happens to be over it.
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -290,7 +279,9 @@ export function Beacon3DViewer({ className }: { className?: string }) {
         // map is source of truth so tracking still works without it.
       }
       if (pointers.size === 2) {
-        const [a, b] = Array.from(pointers.values());
+        const it = pointers.values();
+        const a = it.next().value as PointerInfo;
+        const b = it.next().value as PointerInfo;
         pinchStartDist = Math.hypot(a.x - b.x, a.y - b.y);
         pinchStartZoom = stateRef.current.targetZoom;
       }
@@ -301,11 +292,8 @@ export function Beacon3DViewer({ className }: { className?: string }) {
       if (!prev) return;
       const dx = event.clientX - prev.x;
       const dy = event.clientY - prev.y;
-      pointers.set(event.pointerId, {
-        x: event.clientX,
-        y: event.clientY,
-        type: event.pointerType,
-      });
+      prev.x = event.clientX;
+      prev.y = event.clientY;
 
       if (pointers.size === 1) {
         const sens =
@@ -315,14 +303,17 @@ export function Beacon3DViewer({ className }: { className?: string }) {
           -DRAG_MAX_Y,
           DRAG_MAX_Y,
         );
-        // Drag down → device looks down (matches the mouse-hover mapping).
+        // Drag down → device looks down (matches mouse-hover mapping).
         stateRef.current.targetX = THREE.MathUtils.clamp(
           stateRef.current.targetX + dy * sens,
           -DRAG_MAX_X,
           DRAG_MAX_X,
         );
+        invalidate();
       } else if (pointers.size === 2 && pinchStartDist > 0) {
-        const [a, b] = Array.from(pointers.values());
+        const it = pointers.values();
+        const a = it.next().value as PointerInfo;
+        const b = it.next().value as PointerInfo;
         const dist = Math.hypot(a.x - b.x, a.y - b.y);
         const ratio = dist / pinchStartDist;
         stateRef.current.targetZoom = THREE.MathUtils.clamp(
@@ -330,6 +321,7 @@ export function Beacon3DViewer({ className }: { className?: string }) {
           MIN_ZOOM,
           MAX_ZOOM,
         );
+        invalidate();
       }
     };
 
@@ -348,12 +340,10 @@ export function Beacon3DViewer({ className }: { className?: string }) {
     };
 
     const handleWheel = (event: WheelEvent) => {
-      // Only intercept when the user actually means to zoom: trackpad
-      // pinch sets ctrlKey natively, mouse users hold ⌘/Ctrl, and the
-      // mouse-wheel is fair game while a drag is in progress. Otherwise
-      // let the wheel scroll the page — the hero can be full-width on
-      // mobile/tablet so silently swallowing all wheel events strands
-      // the user.
+      // Trackpad pinch sets ctrlKey natively; mouse users hold ⌘/Ctrl;
+      // bare wheel during a drag is also fair game. Otherwise let the
+      // page scroll — the hero can be full-width on mobile so silently
+      // swallowing wheel events would strand the user.
       const zoomIntent =
         event.ctrlKey || event.metaKey || stateRef.current.isDragging;
       if (!zoomIntent) return;
@@ -363,11 +353,12 @@ export function Beacon3DViewer({ className }: { className?: string }) {
         MIN_ZOOM,
         MAX_ZOOM,
       );
+      invalidate();
     };
 
     // Document-level safety net: if pointer release fires outside the
-    // container (drag carried into another window, system gesture, focus
-    // loss), wipe in-flight state so we never get stuck in isDragging.
+    // container (drag carried into another window, system gesture,
+    // focus loss), wipe in-flight state so we never get stuck dragging.
     const handleDocUp = (event: PointerEvent) => {
       if (pointers.has(event.pointerId)) handleUp(event);
     };
@@ -398,10 +389,10 @@ export function Beacon3DViewer({ className }: { className?: string }) {
   return (
     <div
       ref={containerRef}
-      className={`relative h-full w-full select-none ${className ?? ""}`}
+      className={cn("relative h-full w-full select-none", className)}
       style={{
-        // Vertical scroll passes through so mobile users can scroll past
-        // the hero; horizontal drags and two-finger pinch are handled by us.
+        // Vertical scroll passes through so mobile users can scroll
+        // past the hero; horizontal drags + pinch are handled by us.
         touchAction: "pan-y",
         WebkitUserSelect: "none",
         WebkitTouchCallout: "none",
@@ -411,9 +402,12 @@ export function Beacon3DViewer({ className }: { className?: string }) {
       <ViewerErrorBoundary>
         <Canvas
           camera={{ position: [0, 0.2, 6], fov: 32 }}
-          dpr={[1, 2]}
+          dpr={[1, 1.5]}
           gl={{ antialias: true, alpha: true }}
-          frameloop={frameloop}
+          frameloop="demand"
+          onCreated={(state: RootState) => {
+            invalidateRef.current = state.invalidate;
+          }}
         >
           <ambientLight intensity={0.45} />
           {/* Warm key — pulls Ember across the device front */}
@@ -427,8 +421,8 @@ export function Beacon3DViewer({ className }: { className?: string }) {
             <BeaconModel stateRef={stateRef} />
           </Suspense>
         </Canvas>
-        <LoadingOverlay />
       </ViewerErrorBoundary>
+      <LoadingOverlay />
     </div>
   );
 }

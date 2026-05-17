@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export type ShopifyProductState = {
+type ProductState = {
   availableForSale: boolean;
   variant: {
     availableForSale: boolean;
@@ -12,9 +12,6 @@ export type ShopifyProductState = {
     } | null;
   } | null;
 } | null;
-
-// Backwards-compat local alias.
-type ProductState = ShopifyProductState;
 
 export type ShopifyCheckoutButtonProps = {
   className: string;

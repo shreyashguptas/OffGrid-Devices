@@ -6,9 +6,9 @@ import {
 import { MissingShopifyConfigError } from "./shopify-verify-errors";
 
 // Distinguish "Shopify integration is broken" from "product happens to be
-// sold out right now". Callers can warn-only on SoldOutError without
-// masking real integration breakage.
-export class SoldOutError extends Error {
+// sold out right now". Thrown internally; scripts/verify-shopify.ts
+// discriminates on `error.name === "SoldOutError"` rather than instanceof.
+class SoldOutError extends Error {
   constructor(message = "Beacon 1 variant exists but is not currently available for sale.") {
     super(message);
     this.name = "SoldOutError";

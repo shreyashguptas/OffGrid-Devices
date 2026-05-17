@@ -1,7 +1,6 @@
 import { link1Content } from "./link1";
 
-export const COMING_SOON_LABEL = "Coming soon";
-export const SOLD_OUT_LABEL = "Sold out";
+const SOLD_OUT_LABEL = "Sold out";
 
 export type SiteProduct = {
   name: string;

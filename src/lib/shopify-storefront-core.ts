@@ -12,7 +12,7 @@ type ShopifyResponse<T> = {
   errors?: ShopifyGraphQLError[];
 };
 
-export type ShopifyMoney = {
+type ShopifyMoney = {
   amount: string;
   currencyCode: string;
 };
@@ -31,9 +31,6 @@ export type ShopifyStorefrontProduct = {
     price: ShopifyMoney | null;
   } | null;
 };
-
-// Backwards-compat alias retained for callers that imported the old type.
-export type Link1StorefrontProduct = ShopifyStorefrontProduct;
 
 type ProductQueryData = {
   product: {

@@ -4,12 +4,12 @@ export type BlogSection =
   | { type: "paragraph" | "heading"; content: string }
   | { type: "list" | "orderedList"; items: string[] };
 
-export type BlogAuthor = {
+type BlogAuthor = {
   name: string;
   url?: string;
 };
 
-export type BlogFaqItem = {
+type BlogFaqItem = {
   question: string;
   answer: string;
 };

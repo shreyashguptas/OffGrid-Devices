@@ -8,8 +8,6 @@ import { formatPrice } from "@/components/ShopifyPriceTag";
 import { fadeInUp, staggerContainer } from "@/components/shared/motion";
 import { link2Content } from "@/content/products";
 
-// three.js + WebGL are client-only; defer the entire viewer to the client
-// so SSR never has to evaluate it.
 const Beacon3DViewer = dynamic(
   () =>
     import("@/components/home/Beacon3DViewer").then((m) => m.Beacon3DViewer),
@@ -26,8 +24,6 @@ export function HomeHeroSection() {
 
   return (
     <section className="relative flex min-h-svh flex-col overflow-hidden border-b border-bark bg-pitch">
-      {/* Warm landscape gradient — quiet so the 3D device is the loudest
-          thing on the surface. */}
       <div
         aria-hidden
         className="absolute inset-0"
@@ -37,11 +33,9 @@ export function HomeHeroSection() {
         }}
       />
 
-      {/* Topo line texture */}
       <div aria-hidden className="absolute inset-0 topo-overlay opacity-35" />
 
-      {/* Single warm sun glow behind the device. Repositioned per breakpoint
-          so it always sits behind where the model is on screen. */}
+      {/* Sun glow repositioned per breakpoint so it always sits behind the model. */}
       <div
         aria-hidden
         className="absolute left-1/2 top-[55%] h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full md:h-64 md:w-64 lg:left-auto lg:right-[18%] lg:top-[38%] lg:translate-x-0 lg:translate-y-0 lg:h-72 lg:w-72"
@@ -59,7 +53,6 @@ export function HomeHeroSection() {
           variants={staggerContainer}
           className="grid items-center gap-10 md:gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-16"
         >
-          {/* Left column — minimal text + one clean buy button */}
           <div className="max-w-xl">
             <motion.div
               variants={fadeInUp}
@@ -138,9 +131,7 @@ export function HomeHeroSection() {
             </motion.p>
           </div>
 
-          {/* Right column — interactive 3D device. Square frame on mobile
-              and tablet so the device feels like the centerpiece without
-              eating the whole screen; fixed-height column on desktop. */}
+          {/* Square frame on mobile/tablet, fixed-height column on desktop. */}
           <motion.div
             variants={fadeInUp}
             role="img"
