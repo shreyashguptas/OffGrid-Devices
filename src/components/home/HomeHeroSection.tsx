@@ -130,7 +130,7 @@ export function HomeHeroSection() {
             >
               {/* Helper text adapts to the input modality — see globals.css */}
               <span className="show-on-hover">
-                Hover to follow · drag to rotate · scroll to zoom.
+                Hover to follow · drag to rotate · ⌘/Ctrl + scroll to zoom.
               </span>
               <span className="show-on-touch">
                 Drag to rotate · pinch to zoom.

@@ -1,7 +1,14 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef } from "react";
-import type { MutableRefObject } from "react";
+import {
+  Component,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import type { MutableRefObject, ReactNode } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, useGLTF, useProgress } from "@react-three/drei";
 import * as THREE from "three";
@@ -42,6 +49,9 @@ type ViewerState = {
   targetZoom: number;
   // While true, ambient hover-tracking is suspended so the manual pose holds.
   isDragging: boolean;
+  // True when the OS reports prefers-reduced-motion. Locks the device in
+  // its rest pose; explicit drag/pinch still work as user-initiated actions.
+  reducedMotion: boolean;
 };
 
 function BeaconModel({
@@ -69,6 +79,18 @@ function BeaconModel({
     const fit = (3.2 * FIT_RATIO) / maxDim;
     return { scene: cloned, offset: center.multiplyScalar(-1), baseScale: fit };
   }, [gltf.scene]);
+
+  // Dispose of clone-owned geometries on unmount. Materials and textures
+  // are shared with the cached gltf root (which drei reuses), so we only
+  // drop what clone(true) actually duplicated.
+  useEffect(() => {
+    return () => {
+      scene.traverse((obj) => {
+        const mesh = obj as THREE.Mesh;
+        if (mesh.isMesh && mesh.geometry) mesh.geometry.dispose();
+      });
+    };
+  }, [scene]);
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
@@ -126,6 +148,26 @@ function LoadingOverlay() {
   );
 }
 
+// A GLB fetch failure or GL context loss should never take the whole page
+// down with it — swallow the error, log it, and render nothing so the
+// surrounding hero layout stays intact.
+class ViewerErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error: unknown) {
+    console.error("[Beacon3DViewer]", error);
+  }
+  render() {
+    if (this.state.hasError) return null;
+    return this.props.children;
+  }
+}
+
 export function Beacon3DViewer({ className }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const stateRef = useRef<ViewerState>({
@@ -133,22 +175,53 @@ export function Beacon3DViewer({ className }: { className?: string }) {
     targetY: 0,
     targetZoom: 1,
     isDragging: false,
+    reducedMotion: false,
   });
+  const [frameloop, setFrameloop] = useState<"always" | "demand">("always");
+
+  // Respect prefers-reduced-motion: skip ambient cursor-tracking entirely.
+  // The device stays in its rest pose unless the user explicitly grabs it.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => {
+      stateRef.current.reducedMotion = mq.matches;
+      if (mq.matches && !stateRef.current.isDragging) {
+        stateRef.current.targetX = 0;
+        stateRef.current.targetY = 0;
+      }
+    };
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  // Pause the render loop when the viewer scrolls out of view so the GPU
+  // doesn't burn battery on a device the user can't see.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => setFrameloop(entry.isIntersecting ? "always" : "demand"),
+      { rootMargin: "100px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   // MOUSE HOVER — gentle ambient pose-following across the entire viewport.
   // Suspends while the user is actively dragging the device so the manual
-  // pose holds.
+  // pose holds, and stays off entirely when prefers-reduced-motion is set.
   useEffect(() => {
     const handleMove = (event: PointerEvent) => {
       if (event.pointerType !== "mouse") return;
-      if (stateRef.current.isDragging) return;
+      const s = stateRef.current;
+      if (s.isDragging || s.reducedMotion) return;
       const nx = (event.clientX / window.innerWidth) * 2 - 1; // -1..1
       const ny = (event.clientY / window.innerHeight) * 2 - 1; // -1..1
       // Cursor right → device looks right; cursor up → device looks up.
-      stateRef.current.targetY =
-        THREE.MathUtils.clamp(nx, -1, 1) * HOVER_MAX_Y;
-      stateRef.current.targetX =
-        THREE.MathUtils.clamp(ny, -1, 1) * HOVER_MAX_X;
+      s.targetY = THREE.MathUtils.clamp(nx, -1, 1) * HOVER_MAX_Y;
+      s.targetX = THREE.MathUtils.clamp(ny, -1, 1) * HOVER_MAX_X;
     };
 
     const handleLeave = () => {
@@ -167,10 +240,10 @@ export function Beacon3DViewer({ className }: { className?: string }) {
     };
   }, []);
 
-  // GRAB + ZOOM — pointer-down on the canvas takes manual control. While
-  // any pointer is held, the model rotates 1:1 with drag delta inside the
-  // wide envelope, and ambient hover is suspended. Two-finger pinch and
-  // the mouse wheel adjust zoom.
+  // GRAB + ZOOM — pointer-down on the canvas takes manual control. Drag
+  // rotates 1:1; two-finger pinch and ⌘/Ctrl+wheel zoom; bare wheel events
+  // pass through so the page can still scroll past the hero when the
+  // cursor happens to be over it.
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -180,6 +253,28 @@ export function Beacon3DViewer({ className }: { className?: string }) {
     let pinchStartDist = 0;
     let pinchStartZoom = 1;
 
+    const setCursor = () => {
+      container.style.cursor = pointers.size > 0 ? "grabbing" : "grab";
+    };
+
+    const releaseCapture = (id: number) => {
+      try {
+        if (container.hasPointerCapture(id)) {
+          container.releasePointerCapture(id);
+        }
+      } catch {
+        // Element may be detached during teardown; safe to ignore.
+      }
+    };
+
+    const clearAll = () => {
+      pointers.forEach((_, id) => releaseCapture(id));
+      pointers.clear();
+      pinchStartDist = 0;
+      stateRef.current.isDragging = false;
+      setCursor();
+    };
+
     const handleDown = (event: PointerEvent) => {
       pointers.set(event.pointerId, {
         x: event.clientX,
@@ -187,12 +282,12 @@ export function Beacon3DViewer({ className }: { className?: string }) {
         type: event.pointerType,
       });
       stateRef.current.isDragging = true;
-      container.style.cursor = "grabbing";
+      setCursor();
       try {
         container.setPointerCapture(event.pointerId);
       } catch {
-        // setPointerCapture can throw on fast multi-touch; tracking still
-        // works via the map without it.
+        // setPointerCapture can throw on fast multi-touch; the pointer
+        // map is source of truth so tracking still works without it.
       }
       if (pointers.size === 2) {
         const [a, b] = Array.from(pointers.values());
@@ -240,19 +335,28 @@ export function Beacon3DViewer({ className }: { className?: string }) {
 
     const handleUp = (event: PointerEvent) => {
       pointers.delete(event.pointerId);
-      if (container.hasPointerCapture(event.pointerId)) {
-        container.releasePointerCapture(event.pointerId);
-      }
+      releaseCapture(event.pointerId);
+      // If only one pointer remains after a pinch, the next finger drop
+      // needs a fresh baseline — reset distance so we don't reuse stale.
       if (pointers.size < 2) {
         pinchStartDist = 0;
       }
       if (pointers.size === 0) {
         stateRef.current.isDragging = false;
-        container.style.cursor = "grab";
       }
+      setCursor();
     };
 
     const handleWheel = (event: WheelEvent) => {
+      // Only intercept when the user actually means to zoom: trackpad
+      // pinch sets ctrlKey natively, mouse users hold ⌘/Ctrl, and the
+      // mouse-wheel is fair game while a drag is in progress. Otherwise
+      // let the wheel scroll the page — the hero can be full-width on
+      // mobile/tablet so silently swallowing all wheel events strands
+      // the user.
+      const zoomIntent =
+        event.ctrlKey || event.metaKey || stateRef.current.isDragging;
+      if (!zoomIntent) return;
       event.preventDefault();
       stateRef.current.targetZoom = THREE.MathUtils.clamp(
         stateRef.current.targetZoom * Math.exp(-event.deltaY * WHEEL_SENS),
@@ -261,17 +365,33 @@ export function Beacon3DViewer({ className }: { className?: string }) {
       );
     };
 
+    // Document-level safety net: if pointer release fires outside the
+    // container (drag carried into another window, system gesture, focus
+    // loss), wipe in-flight state so we never get stuck in isDragging.
+    const handleDocUp = (event: PointerEvent) => {
+      if (pointers.has(event.pointerId)) handleUp(event);
+    };
+    const handleVisibility = () => {
+      if (document.hidden) clearAll();
+    };
+
     container.addEventListener("pointerdown", handleDown);
     container.addEventListener("pointermove", handleMove);
     container.addEventListener("pointerup", handleUp);
     container.addEventListener("pointercancel", handleUp);
     container.addEventListener("wheel", handleWheel, { passive: false });
+    document.addEventListener("pointerup", handleDocUp);
+    document.addEventListener("pointercancel", handleDocUp);
+    document.addEventListener("visibilitychange", handleVisibility);
     return () => {
       container.removeEventListener("pointerdown", handleDown);
       container.removeEventListener("pointermove", handleMove);
       container.removeEventListener("pointerup", handleUp);
       container.removeEventListener("pointercancel", handleUp);
       container.removeEventListener("wheel", handleWheel);
+      document.removeEventListener("pointerup", handleDocUp);
+      document.removeEventListener("pointercancel", handleDocUp);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, []);
 
@@ -288,24 +408,27 @@ export function Beacon3DViewer({ className }: { className?: string }) {
         cursor: "grab",
       }}
     >
-      <Canvas
-        camera={{ position: [0, 0.2, 6], fov: 32 }}
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <ambientLight intensity={0.45} />
-        {/* Warm key — pulls Ember across the device front */}
-        <directionalLight position={[4, 5, 6]} intensity={1.4} color="#F3A56A" />
-        {/* Cool fill — moonlight against the warm hero gradient */}
-        <directionalLight position={[-5, 2, -3]} intensity={0.55} color="#A9B4C2" />
-        {/* Bone rim — separates the dark silhouette from the dark background */}
-        <directionalLight position={[0, 3, -5]} intensity={0.8} color="#F1ECE0" />
-        <Suspense fallback={null}>
-          <Environment preset="warehouse" environmentIntensity={0.25} />
-          <BeaconModel stateRef={stateRef} />
-        </Suspense>
-      </Canvas>
-      <LoadingOverlay />
+      <ViewerErrorBoundary>
+        <Canvas
+          camera={{ position: [0, 0.2, 6], fov: 32 }}
+          dpr={[1, 2]}
+          gl={{ antialias: true, alpha: true }}
+          frameloop={frameloop}
+        >
+          <ambientLight intensity={0.45} />
+          {/* Warm key — pulls Ember across the device front */}
+          <directionalLight position={[4, 5, 6]} intensity={1.4} color="#F3A56A" />
+          {/* Cool fill — moonlight against the warm hero gradient */}
+          <directionalLight position={[-5, 2, -3]} intensity={0.55} color="#A9B4C2" />
+          {/* Bone rim — separates the dark silhouette from the dark background */}
+          <directionalLight position={[0, 3, -5]} intensity={0.8} color="#F1ECE0" />
+          <Suspense fallback={null}>
+            <Environment preset="warehouse" environmentIntensity={0.25} />
+            <BeaconModel stateRef={stateRef} />
+          </Suspense>
+        </Canvas>
+        <LoadingOverlay />
+      </ViewerErrorBoundary>
     </div>
   );
 }
