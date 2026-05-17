@@ -130,10 +130,10 @@ export function HomeHeroSection() {
             >
               {/* Helper text adapts to the input modality — see globals.css */}
               <span className="show-on-hover">
-                Move your cursor — the device follows.
+                Hover to follow · drag to rotate · scroll to zoom.
               </span>
               <span className="show-on-touch">
-                Drag to rotate · scroll to read on.
+                Drag to rotate · pinch to zoom.
               </span>
             </motion.p>
           </div>
