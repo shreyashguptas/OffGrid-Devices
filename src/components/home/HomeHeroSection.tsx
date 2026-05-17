@@ -25,7 +25,7 @@ export function HomeHeroSection() {
   const buyLabel = livePrice ? `Carry one — ${livePrice}` : "Carry one";
 
   return (
-    <section className="relative flex min-h-[92vh] flex-col overflow-hidden border-b border-bark bg-pitch">
+    <section className="relative flex min-h-svh flex-col overflow-hidden border-b border-bark bg-pitch">
       {/* Warm landscape gradient — quiet so the 3D device is the loudest
           thing on the surface. */}
       <div
@@ -40,26 +40,27 @@ export function HomeHeroSection() {
       {/* Topo line texture */}
       <div aria-hidden className="absolute inset-0 topo-overlay opacity-35" />
 
-      {/* Single warm sun glow behind the device */}
+      {/* Single warm sun glow behind the device. Repositioned per breakpoint
+          so it always sits behind where the model is on screen. */}
       <div
         aria-hidden
-        className="absolute right-[18%] top-[28%] h-48 w-48 md:h-72 md:w-72 rounded-full"
+        className="absolute left-1/2 top-[55%] h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full md:h-64 md:w-64 lg:left-auto lg:right-[18%] lg:top-[38%] lg:translate-x-0 lg:translate-y-0 lg:h-72 lg:w-72"
         style={{
           background:
-            "radial-gradient(circle, rgba(232,116,60,0.55), rgba(232,116,60,0.18) 55%, transparent 78%)",
+            "radial-gradient(circle, rgba(232,116,60,0.5), rgba(232,116,60,0.16) 55%, transparent 78%)",
           filter: "blur(8px)",
         }}
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 pt-24 pb-16 md:pt-32 md:pb-24">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pt-24 pb-12 sm:px-6 md:px-8 md:pt-28 md:pb-16 lg:px-10 lg:pt-32 lg:pb-24">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="grid items-center gap-10 lg:grid-cols-[1fr_1.5fr] lg:gap-16"
+          className="grid items-center gap-10 md:gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-16"
         >
           {/* Left column — minimal text + one clean buy button */}
-          <div>
+          <div className="max-w-xl">
             <motion.div
               variants={fadeInUp}
               className="inline-flex items-center gap-2.5 border border-sand/25 px-3.5 py-2"
@@ -76,13 +77,14 @@ export function HomeHeroSection() {
 
             <motion.h1
               variants={fadeInUp}
-              className="mt-8 text-bone uppercase"
+              className="mt-7 text-bone uppercase md:mt-8"
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 900,
-                // D1-leaning scale now that the marquee row is gone and we
-                // have full vertical real estate to fill.
-                fontSize: "clamp(52px, 8.5vw, 104px)",
+                // Floor (40px) fits "Stay Connected" on a 360px-wide phone
+                // without mid-word wraps. Ceiling (104px) keeps the headline
+                // confident on ultra-wide displays.
+                fontSize: "clamp(40px, 8.5vw, 104px)",
                 lineHeight: 0.9,
                 letterSpacing: "-0.04em",
               }}
@@ -96,29 +98,29 @@ export function HomeHeroSection() {
 
             <motion.p
               variants={fadeInUp}
-              className="mt-7 max-w-md text-sand"
+              className="mt-6 max-w-md text-sand md:mt-7"
               style={{
                 fontFamily: "var(--font-editorial)",
                 fontStyle: "italic",
-                fontSize: "clamp(18px, 1.5vw, 24px)",
+                fontSize: "clamp(17px, 1.5vw, 24px)",
                 lineHeight: 1.4,
               }}
             >
               MagSafe mesh radio. No towers. No SIMs.
             </motion.p>
 
-            <motion.div variants={fadeInUp} className="mt-10">
+            <motion.div variants={fadeInUp} className="mt-8 md:mt-10">
               <Link2CheckoutButton
                 defaultLabel={buyLabel}
                 loadingLabel={link2Content.summary.loadingLabel}
-                className="inline-flex items-center bg-ember px-8 py-5 font-display text-[14px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex min-h-[56px] items-center justify-center bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:cursor-not-allowed disabled:opacity-60"
                 showArrow={false}
               />
             </motion.div>
 
             <motion.p
               variants={fadeInUp}
-              className="mt-6 text-sand/55"
+              className="mt-5 text-sand/55 md:mt-6"
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: 11,
@@ -126,15 +128,24 @@ export function HomeHeroSection() {
                 textTransform: "uppercase",
               }}
             >
-              Move your cursor — the device follows.
+              {/* Helper text adapts to the input modality — see globals.css */}
+              <span className="show-on-hover">
+                Move your cursor — the device follows.
+              </span>
+              <span className="show-on-touch">
+                Drag to rotate · scroll to read on.
+              </span>
             </motion.p>
           </div>
 
-          {/* Right column — interactive 3D device. Tall enough that the
-              device feels like the centerpiece of the page. */}
+          {/* Right column — interactive 3D device. Square frame on mobile
+              and tablet so the device feels like the centerpiece without
+              eating the whole screen; fixed-height column on desktop. */}
           <motion.div
             variants={fadeInUp}
-            className="relative aspect-square w-full lg:aspect-auto lg:h-[720px] lg:w-full"
+            role="img"
+            aria-label="OffGrid Beacon 2 mesh radio — drag or hover to rotate"
+            className="relative mx-auto aspect-square w-full max-w-[560px] sm:max-w-[640px] lg:mx-0 lg:aspect-auto lg:h-[680px] lg:max-w-none xl:h-[760px]"
           >
             <Beacon3DViewer />
           </motion.div>

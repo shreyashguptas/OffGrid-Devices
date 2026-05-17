@@ -297,6 +297,24 @@ body {
   width: 100%;
 }
 
+/* Input-modality-aware visibility — swaps helper text between the
+   hover-capable (mouse / trackpad) and touch-only branches without any
+   JavaScript, so hydration is stable. */
+.show-on-hover {
+  display: none;
+}
+.show-on-touch {
+  display: inline;
+}
+@media (hover: hover) and (pointer: fine) {
+  .show-on-hover {
+    display: inline;
+  }
+  .show-on-touch {
+    display: none;
+  }
+}
+
 /* Topo line texture — used as overlay on hero / closing sections */
 .topo-overlay {
   background-image: repeating-linear-gradient(

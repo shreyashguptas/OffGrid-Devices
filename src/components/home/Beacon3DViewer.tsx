@@ -9,7 +9,7 @@ import * as THREE from "three";
 const MODEL_PATH = "/beacon-2/models/beacon-2.glb";
 
 // Comfortable rotation envelope. Tight enough to feel premium (no spinning),
-// wide enough to clearly show the device's depth as the cursor moves.
+// wide enough to clearly show the device's depth as the input moves.
 const MAX_Y_ROTATION = 0.45; // ~26°
 const MAX_X_ROTATION = 0.18; // ~10°
 
@@ -21,6 +21,10 @@ const ROTATION_STIFFNESS = 12;
 // breathing room so the device — including the antenna and any extreme
 // rotated pose — never clips the canvas edges.
 const FIT_RATIO = 0.68;
+
+// Drag sensitivity for touch/pen. Radians per pixel of finger movement.
+// Tuned so a half-screen horizontal drag rotates through the full envelope.
+const TOUCH_SENSITIVITY = 0.006;
 
 type RotationTarget = { x: number; y: number };
 
@@ -52,7 +56,7 @@ function BeaconModel({
   }, [gltf.scene]);
 
   // FPS-independent damping: regardless of monitor refresh rate, the response
-  // time to a target is consistent. No idle drift — when the cursor is still,
+  // time to a target is consistent. No idle drift — when the input is still,
   // the device is still.
   useFrame((_, delta) => {
     if (!groupRef.current) return;
@@ -95,14 +99,15 @@ function LoadingOverlay() {
 }
 
 export function Beacon3DViewer({ className }: { className?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<RotationTarget>({ x: 0, y: 0 });
 
+  // MOUSE — hover-tracking across the entire viewport. The device follows
+  // the cursor wherever it travels on the page; cursor leaves the window
+  // and the damping loop glides the device back to neutral.
   useEffect(() => {
-    // Normalize cursor against the *viewport*, not the canvas. The previous
-    // bug used canvas size for clientX, which yielded values past ±1 whenever
-    // the cursor was outside the canvas — producing huge rotation targets
-    // that, combined with idle drift, looked like uncontrolled spinning.
     const handleMove = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
       const nx = (event.clientX / window.innerWidth) * 2 - 1; // -1..1
       const ny = (event.clientY / window.innerHeight) * 2 - 1; // -1..1
       targetRef.current.y = THREE.MathUtils.clamp(nx, -1, 1) * MAX_Y_ROTATION;
@@ -110,8 +115,6 @@ export function Beacon3DViewer({ className }: { className?: string }) {
         -THREE.MathUtils.clamp(ny, -1, 1) * MAX_X_ROTATION;
     };
 
-    // Cursor leaves the window → smoothly return to neutral pose. The damping
-    // loop will glide back to zero; nothing snaps.
     const handleLeave = () => {
       targetRef.current.x = 0;
       targetRef.current.y = 0;
@@ -127,8 +130,85 @@ export function Beacon3DViewer({ className }: { className?: string }) {
     };
   }, []);
 
+  // TOUCH / PEN — drag-to-rotate on the canvas only. `touch-action: pan-y`
+  // on the container lets vertical swipes scroll the page (critical so
+  // mobile users can read past the hero), while horizontal swipes flow to
+  // our pointer handler and rotate the device. Pose holds where the finger
+  // lifts, like a real product viewer.
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let activePointerId: number | null = null;
+    let lastX = 0;
+    let lastY = 0;
+
+    const handleDown = (event: PointerEvent) => {
+      if (event.pointerType === "mouse") return;
+      if (activePointerId !== null) return;
+      activePointerId = event.pointerId;
+      lastX = event.clientX;
+      lastY = event.clientY;
+      try {
+        container.setPointerCapture(event.pointerId);
+      } catch {
+        // Some browsers throw if the pointer can't be captured (e.g. fast
+        // multi-touch). Tracking still works via the document listener fall-
+        // back paths below.
+      }
+    };
+
+    const handleMove = (event: PointerEvent) => {
+      if (event.pointerId !== activePointerId) return;
+      const dx = event.clientX - lastX;
+      const dy = event.clientY - lastY;
+      lastX = event.clientX;
+      lastY = event.clientY;
+      targetRef.current.y = THREE.MathUtils.clamp(
+        targetRef.current.y + dx * TOUCH_SENSITIVITY,
+        -MAX_Y_ROTATION,
+        MAX_Y_ROTATION,
+      );
+      targetRef.current.x = THREE.MathUtils.clamp(
+        targetRef.current.x - dy * TOUCH_SENSITIVITY,
+        -MAX_X_ROTATION,
+        MAX_X_ROTATION,
+      );
+    };
+
+    const handleUp = (event: PointerEvent) => {
+      if (event.pointerId !== activePointerId) return;
+      activePointerId = null;
+      if (container.hasPointerCapture(event.pointerId)) {
+        container.releasePointerCapture(event.pointerId);
+      }
+    };
+
+    container.addEventListener("pointerdown", handleDown);
+    container.addEventListener("pointermove", handleMove);
+    container.addEventListener("pointerup", handleUp);
+    container.addEventListener("pointercancel", handleUp);
+    return () => {
+      container.removeEventListener("pointerdown", handleDown);
+      container.removeEventListener("pointermove", handleMove);
+      container.removeEventListener("pointerup", handleUp);
+      container.removeEventListener("pointercancel", handleUp);
+    };
+  }, []);
+
   return (
-    <div className={`relative h-full w-full ${className ?? ""}`}>
+    <div
+      ref={containerRef}
+      className={`relative h-full w-full select-none ${className ?? ""}`}
+      style={{
+        // Vertical scroll passes through; horizontal drags rotate the device.
+        touchAction: "pan-y",
+        // Prevent the long-press callout / text selection on iOS Safari when
+        // the user drags directly on the canvas.
+        WebkitUserSelect: "none",
+        WebkitTouchCallout: "none",
+      }}
+    >
       <Canvas
         camera={{ position: [0, 0.2, 6], fov: 32 }}
         dpr={[1, 2]}
