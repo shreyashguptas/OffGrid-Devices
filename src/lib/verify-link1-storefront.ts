@@ -3,6 +3,7 @@ import {
   getLink1Product,
   hasShopifyStorefrontConfig,
 } from "./shopify-storefront-core";
+import { MissingShopifyConfigError } from "./shopify-verify-errors";
 
 // Distinguish "Shopify integration is broken" from "product happens to be
 // sold out right now". Callers can warn-only on SoldOutError without
@@ -21,7 +22,7 @@ export class SoldOutError extends Error {
  */
 export async function verifyLink1Storefront(): Promise<void> {
   if (!hasShopifyStorefrontConfig()) {
-    throw new Error(
+    throw new MissingShopifyConfigError(
       "Shopify Storefront API is not configured (missing domain, handle, or token).",
     );
   }

@@ -37,12 +37,13 @@ jobs:
       - name: Dependency audit (supply chain)
         run: pnpm audit --audit-level=high
 
-      - name: Verify Shopify Link 1 (live)
+      - name: Verify Shopify (live)
         env:
           SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
           SHOPIFY_STOREFRONT_PRIVATE_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PRIVATE_TOKEN }}
           SHOPIFY_STOREFRONT_PUBLIC_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PUBLIC_TOKEN }}
           SHOPIFY_LINK_1_HANDLE: ${{ secrets.SHOPIFY_LINK_1_HANDLE }}
+          SHOPIFY_LINK_2_HANDLE: ${{ secrets.SHOPIFY_LINK_2_HANDLE }}
           SHOPIFY_STOREFRONT_API_VERSION: ${{ secrets.SHOPIFY_STOREFRONT_API_VERSION }}
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
@@ -67,5 +68,6 @@ jobs:
           SHOPIFY_STOREFRONT_PRIVATE_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PRIVATE_TOKEN }}
           SHOPIFY_STOREFRONT_PUBLIC_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_PUBLIC_TOKEN }}
           SHOPIFY_LINK_1_HANDLE: ${{ secrets.SHOPIFY_LINK_1_HANDLE }}
+          SHOPIFY_LINK_2_HANDLE: ${{ secrets.SHOPIFY_LINK_2_HANDLE }}
           SHOPIFY_STOREFRONT_API_VERSION: ${{ secrets.SHOPIFY_STOREFRONT_API_VERSION }}
         run: pnpm test:e2e
