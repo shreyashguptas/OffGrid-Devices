@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Link2CheckoutButton } from "@/components/Link2CheckoutButton";
 import { useShopifyProduct } from "@/components/ShopifyCheckoutButton";
@@ -8,7 +8,14 @@ import { formatPrice } from "@/components/ShopifyPriceTag";
 import { fadeInUp, staggerContainer } from "@/components/shared/motion";
 import { link2Content } from "@/content/products";
 
-const FIELD_CARD_ROWS = link2Content.home.fieldCard.rows;
+// three.js + WebGL are client-only; defer the entire viewer to the client
+// so SSR never has to evaluate it.
+const Beacon3DViewer = dynamic(
+  () =>
+    import("@/components/home/Beacon3DViewer").then((m) => m.Beacon3DViewer),
+  { ssr: false },
+);
+
 const STATS = link2Content.home.stats;
 
 export function HomeHeroSection() {
@@ -21,62 +28,46 @@ export function HomeHeroSection() {
 
   return (
     <section className="relative overflow-hidden border-b border-bark bg-pitch">
-      {/* Photographic warm gradient — landscape mood */}
+      {/* Warm landscape gradient — same hero mood, quieter so the 3D device
+          is the loudest thing on the surface. */}
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 120% 80% at 80% 30%, #4a3826 0%, transparent 50%), radial-gradient(ellipse 90% 100% at 20% 110%, #2a1f15 0%, transparent 60%), linear-gradient(180deg, #221c14 0%, #1B1813 100%)",
+            "radial-gradient(ellipse 110% 70% at 70% 35%, #3a2a1c 0%, transparent 55%), radial-gradient(ellipse 90% 100% at 20% 110%, #221912 0%, transparent 60%), linear-gradient(180deg, #1c1611 0%, #1B1813 100%)",
         }}
       />
 
       {/* Topo line texture */}
-      <div aria-hidden className="absolute inset-0 topo-overlay opacity-50" />
+      <div aria-hidden className="absolute inset-0 topo-overlay opacity-35" />
 
-      {/* Mountain silhouettes */}
-      <svg
-        aria-hidden
-        viewBox="0 0 1440 700"
-        className="absolute bottom-0 left-0 block h-[58%] w-full"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,700 L0,420 L160,310 L260,360 L420,200 L580,330 L720,240 L880,380 L1040,260 L1200,340 L1320,280 L1440,360 L1440,700 Z"
-          fill="#0f0c08"
-          opacity="0.85"
-        />
-        <path
-          d="M0,700 L0,520 L100,460 L240,500 L380,400 L520,470 L680,420 L820,490 L980,440 L1180,500 L1320,460 L1440,500 L1440,700 Z"
-          fill="#0a0805"
-        />
-      </svg>
-
-      {/* Sun/glow */}
+      {/* Single warm sun glow behind the device */}
       <div
         aria-hidden
-        className="absolute right-[14%] top-[24%] h-32 w-32 md:h-40 md:w-40 rounded-full"
+        className="absolute right-[18%] top-[28%] h-40 w-40 md:h-56 md:w-56 rounded-full"
         style={{
           background:
-            "radial-gradient(circle, rgba(232,116,60,0.85), rgba(232,116,60,0.25) 60%, transparent 80%)",
-          filter: "blur(2px)",
+            "radial-gradient(circle, rgba(232,116,60,0.55), rgba(232,116,60,0.18) 55%, transparent 78%)",
+          filter: "blur(6px)",
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 pt-24 pb-20 md:pt-32 md:pb-28">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 pt-20 pb-14 md:pt-28 md:pb-20">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="grid items-end gap-14 lg:grid-cols-[1.35fr_1fr]"
+          className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14"
         >
+          {/* Left column — minimal text + one clean buy button */}
           <div>
             <motion.div
               variants={fadeInUp}
               className="inline-flex items-center gap-2.5 border border-sand/25 px-3.5 py-2"
               style={{
                 fontFamily: "var(--font-mono)",
-                fontSize: "11px",
+                fontSize: 11,
                 letterSpacing: "0.18em",
                 color: "var(--app-sand)",
               }}
@@ -87,13 +78,14 @@ export function HomeHeroSection() {
 
             <motion.h1
               variants={fadeInUp}
-              className="mt-6 text-bone uppercase"
+              className="mt-7 text-bone uppercase"
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 900,
-                // Brand handoff D1 = 128 / 0.88. Hard-cap at 128 instead of 144.
-                fontSize: "clamp(56px, 11vw, 128px)",
-                lineHeight: 0.88,
+                // D2 scale (80/0.92) — smaller than the previous D1 so the
+                // 3D device gets the visual real estate.
+                fontSize: "clamp(44px, 7.5vw, 80px)",
+                lineHeight: 0.92,
                 letterSpacing: "-0.04em",
               }}
             >
@@ -106,100 +98,52 @@ export function HomeHeroSection() {
 
             <motion.p
               variants={fadeInUp}
-              className="mt-8 max-w-xl text-sand"
+              className="mt-6 max-w-md text-sand"
               style={{
                 fontFamily: "var(--font-editorial)",
                 fontStyle: "italic",
-                fontSize: "clamp(18px, 1.6vw, 24px)",
+                fontSize: "clamp(17px, 1.4vw, 21px)",
                 lineHeight: 1.4,
               }}
             >
-              {link2Content.home.heroIntro}
+              MagSafe mesh radio. No towers. No SIMs.
             </motion.p>
 
-            <motion.div
-              variants={fadeInUp}
-              className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4"
-            >
+            <motion.div variants={fadeInUp} className="mt-9">
               <Link2CheckoutButton
                 defaultLabel={buyLabel}
                 loadingLabel={link2Content.summary.loadingLabel}
-                className="bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:opacity-60 disabled:cursor-not-allowed"
+                className="inline-flex items-center bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:cursor-not-allowed disabled:opacity-60"
                 showArrow={false}
               />
-              <a
-                href="#features"
-                className="inline-flex items-center gap-2 border-b border-bone pb-1 text-bone hover:text-ember hover:border-ember transition-colors"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: 13,
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                }}
-              >
-                Read field notes →
-              </a>
             </motion.div>
-          </div>
 
-          {/* Field card */}
-          <motion.div
-            variants={fadeInUp}
-            className="relative ml-auto w-full max-w-md self-end border border-sand/25 bg-bark-soft/85 p-7 backdrop-blur-sm"
-            style={{ fontFamily: "var(--font-mono)", color: "var(--app-sand)" }}
-          >
-            <div
-              className="text-ember"
+            <motion.p
+              variants={fadeInUp}
+              className="mt-5 text-sand/60"
               style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 800,
+                fontFamily: "var(--font-mono)",
                 fontSize: 11,
-                letterSpacing: "0.22em",
+                letterSpacing: "0.18em",
                 textTransform: "uppercase",
               }}
             >
-              {link2Content.home.fieldCard.label}
-            </div>
-            <div className="my-3 h-px bg-sand/25" />
-            <div
-              className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-2.5 text-[12px]"
-              style={{ letterSpacing: "0.04em" }}
-            >
-              {FIELD_CARD_ROWS.map(([label, value]) => (
-                <div key={label} className="contents">
-                  <span className="opacity-60">{label}</span>
-                  <span className="text-bone">{value}</span>
-                </div>
-              ))}
-            </div>
-            <div className="my-4 h-px bg-sand/25" />
-            <p
-              className="text-bone/90"
-              style={{
-                fontFamily: "var(--font-editorial)",
-                fontStyle: "italic",
-                fontSize: 15,
-                lineHeight: 1.5,
-              }}
-            >
-              {link2Content.home.fieldCard.quote}
-            </p>
+              Move your cursor — the device follows.
+            </motion.p>
+          </div>
 
-            {/* Subtle product accent */}
-            <Image
-              src={link2Content.summary.heroImage.src}
-              alt={link2Content.summary.heroImage.alt}
-              width={320}
-              height={213}
-              className="mt-6 w-full opacity-95"
-              priority
-            />
+          {/* Right column — interactive 3D device. Reserves layout space so
+              the hero doesn't reflow when the GLB finishes loading. */}
+          <motion.div
+            variants={fadeInUp}
+            className="relative aspect-square w-full lg:aspect-[5/6] lg:h-[560px] lg:w-auto lg:justify-self-end"
+          >
+            <Beacon3DViewer />
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Marquee stats — sits inside hero zone, like the design */}
+      {/* Marquee stats — preserved from previous hero */}
       <div className="relative z-10 border-t border-bark">
         <div className="mx-auto grid max-w-7xl grid-cols-2 md:grid-cols-4">
           {STATS.map((stat, index) => (
@@ -216,8 +160,6 @@ export function HomeHeroSection() {
                 style={{
                   fontFamily: "var(--font-display)",
                   fontWeight: 900,
-                  // Sized so the longest metric ("3000 mAh") fits on a
-                  // single line within a 1280/4 column at all breakpoints.
                   fontSize: "clamp(34px, 4.4vw, 56px)",
                   lineHeight: 1,
                   letterSpacing: "-0.04em",
@@ -247,16 +189,12 @@ export function HomeHeroSection() {
   );
 }
 
-// Keep a value + unit together on one line so "10+ km" and "3000 mAh"
-// never split across a wrap. We replace the *last* space in the metric
-// with a non-breaking space; single-token metrics like "MagSafe" or
-// "USB-C" pass through unchanged.
+// Keep value + unit on one line ("10+ km", "3000 mAh"). Single-token
+// metrics like "MagSafe" pass through unchanged.
 function formatMetric(metric: string): string {
   const lastSpace = metric.lastIndexOf(" ");
-  if (lastSpace === -1) {
-    return metric;
-  }
-  return `${metric.slice(0, lastSpace)} ${metric.slice(lastSpace + 1)}`;
+  if (lastSpace === -1) return metric;
+  return `${metric.slice(0, lastSpace)} ${metric.slice(lastSpace + 1)}`;
 }
 
 function UsFlag() {
@@ -272,7 +210,6 @@ function UsFlag() {
         border: "1px solid rgba(217, 201, 168, 0.3)",
       }}
     >
-      {/* 13 alternating red/white stripes */}
       {Array.from({ length: 13 }, (_, index) => (
         <rect
           key={index}
@@ -283,9 +220,7 @@ function UsFlag() {
           fill={index % 2 === 0 ? "#B22234" : "#FFFFFF"}
         />
       ))}
-      {/* Canton */}
       <rect x="0" y="0" width="13" height={22 * (7 / 13)} fill="#3C3B6E" />
-      {/* Star dots — abstracted at this size */}
       {Array.from({ length: 4 }, (_, row) =>
         Array.from({ length: 5 }, (_, col) => (
           <circle
