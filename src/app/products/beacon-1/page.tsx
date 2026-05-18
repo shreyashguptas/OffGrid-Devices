@@ -128,6 +128,7 @@ export default async function Beacon1Product() {
             description:
               "MagSafe-compatible LoRa mesh radio with Meshtastic-ready firmware. Snap-on off-grid communication that stays with the phone you already carry.",
             sku: "OFFGRID-BEACON-1",
+            mpn: "OGD-BCN-1-US",
             category: "Radios > LoRa Mesh Radios",
             url: "/products/beacon-1",
             images: [

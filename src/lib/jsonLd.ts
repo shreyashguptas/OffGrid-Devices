@@ -13,6 +13,58 @@ function absoluteSiteUrl(pathOrUrl: string): string {
   return absoluteUrl(pathOrUrl);
 }
 
+const MONTH_NAMES = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+] as const;
+
+/**
+ * Convert a human-readable date ("February 2026", "Feb 2026", "2026-02-15")
+ * into ISO 8601 (YYYY-MM-DD) for Schema.org `datePublished` / `dateModified`.
+ *
+ * Google's Rich Results Test accepts human strings but flags them as warnings.
+ * ISO 8601 is the documented preferred format. We keep human dates in content
+ * for display and only normalize at the JSON-LD boundary.
+ */
+export function toIsoDate(date: string): string {
+  if (!date) return date;
+
+  // Already ISO (YYYY-MM-DD or full timestamp) — pass through.
+  if (/^\d{4}-\d{2}-\d{2}/.test(date)) {
+    return date;
+  }
+
+  // Try "Month Year" → first of the month.
+  const match = date.trim().match(/^([A-Za-z]+)\s+(\d{4})$/);
+  if (match) {
+    const monthIndex = MONTH_NAMES.findIndex((m) =>
+      m.startsWith(match[1].toLowerCase()),
+    );
+    if (monthIndex >= 0) {
+      const mm = String(monthIndex + 1).padStart(2, "0");
+      return `${match[2]}-${mm}-01`;
+    }
+  }
+
+  // Last-resort: try native Date parsing.
+  const parsed = new Date(date);
+  if (!Number.isNaN(parsed.getTime())) {
+    return parsed.toISOString().slice(0, 10);
+  }
+
+  return date;
+}
+
 export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
@@ -61,6 +113,10 @@ export type ProductSchemaInput = {
   shortName: string;
   description: string;
   sku: string;
+  /** Manufacturer Part Number — required by Google Merchant Center matching. */
+  mpn?: string;
+  /** GTIN if registered with GS1 (optional, unlocks catalog matching). */
+  gtin?: string;
   category: string;
   url: string;
   images: string[];
@@ -73,6 +129,53 @@ export type ProductSchemaInput = {
     priceValidUntil?: string;
   };
 };
+
+/**
+ * Standard merchant return policy for OffGrid products. Surfaces in Google
+ * Shopping "free returns" filter and is required for free Shopping listings.
+ * Keep in sync with /returns page copy.
+ */
+const OFFGRID_RETURN_POLICY = {
+  "@type": "MerchantReturnPolicy",
+  applicableCountry: "US",
+  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+  merchantReturnDays: 30,
+  returnMethod: "https://schema.org/ReturnByMail",
+  returnFees: "https://schema.org/FreeReturn",
+} as const;
+
+/**
+ * Standard US shipping details for OffGrid products. Surfaces in Google
+ * Shopping "free shipping" filter and is required for free Shopping listings.
+ * Keep in sync with /shipping page copy.
+ */
+const OFFGRID_SHIPPING_DETAILS = {
+  "@type": "OfferShippingDetails",
+  shippingDestination: {
+    "@type": "DefinedRegion",
+    addressCountry: "US",
+  },
+  shippingRate: {
+    "@type": "MonetaryAmount",
+    value: "0",
+    currency: "USD",
+  },
+  deliveryTime: {
+    "@type": "ShippingDeliveryTime",
+    handlingTime: {
+      "@type": "QuantitativeValue",
+      minValue: 1,
+      maxValue: 3,
+      unitCode: "DAY",
+    },
+    transitTime: {
+      "@type": "QuantitativeValue",
+      minValue: 2,
+      maxValue: 7,
+      unitCode: "DAY",
+    },
+  },
+} as const;
 
 export function productJsonLd(input: ProductSchemaInput) {
   const product: Record<string, unknown> = {
@@ -106,7 +209,7 @@ export function productJsonLd(input: ProductSchemaInput) {
     product.review = input.reviews.slice(0, 5).map((review) => ({
       "@type": "Review",
       author: { "@type": "Person", name: review.name },
-      datePublished: review.date,
+      datePublished: toIsoDate(review.date),
       reviewBody: review.review,
       reviewRating: {
         "@type": "Rating",
@@ -115,6 +218,13 @@ export function productJsonLd(input: ProductSchemaInput) {
         worstRating: "1",
       },
     }));
+  }
+
+  if (input.mpn) {
+    product.mpn = input.mpn;
+  }
+  if (input.gtin) {
+    product.gtin = input.gtin;
   }
 
   if (input.offer?.price) {
@@ -127,6 +237,8 @@ export function productJsonLd(input: ProductSchemaInput) {
       priceValidUntil: input.offer.priceValidUntil,
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@type": "Organization", name: ORGANIZATION_NAME },
+      hasMerchantReturnPolicy: OFFGRID_RETURN_POLICY,
+      shippingDetails: OFFGRID_SHIPPING_DETAILS,
     };
   }
 
