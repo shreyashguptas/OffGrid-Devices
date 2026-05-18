@@ -432,9 +432,10 @@ export function Beacon3DViewer({ className }: { className?: string }) {
       ref={containerRef}
       className={cn("relative h-full w-full select-none", className)}
       style={{
-        // Vertical scroll passes through so mobile users can scroll
-        // past the hero; horizontal drags + pinch are handled by us.
-        touchAction: "pan-y",
+        // Inside the model box, the viewer owns every touch so vertical
+        // drag rotates instead of scrolling and pinch zooms cleanly.
+        // Outside this container, page scroll works normally.
+        touchAction: "none",
         WebkitUserSelect: "none",
         WebkitTouchCallout: "none",
         cursor: "grab",
