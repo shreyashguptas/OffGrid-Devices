@@ -35,14 +35,6 @@ export function HomeProductDetailsSection() {
             already carry, with a replaceable SMA antenna and a 3000 mAh cell.
             Built to live in a pocket and shrug off the trip.
           </p>
-
-          <div
-            className="type-mono-label mt-10 flex items-center gap-3 tracking-[0.22em] text-sand/70"
-            aria-hidden
-          >
-            <span className="h-px w-12 bg-sand/30" />
-            <span>Scroll to inspect</span>
-          </div>
         </motion.div>
       </div>
 
