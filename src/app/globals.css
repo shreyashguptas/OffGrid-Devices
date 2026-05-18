@@ -1,37 +1,356 @@
 @import "tailwindcss";
 
 /*
-  Beacon — OffGrid brand language.
+  Beacon — OffGrid brand language (handoff v1.2)
   Rugged, gear-forward, outdoor-premium. Pitch + bark + sand + bone + ember.
   Sharp corners over pillows. Type does the heavy lifting; chrome is quiet.
+
+  Theming
+  -------
+  Dark by default. Light when the user's OS prefers light (auto, no toggle).
+  Resolution order at runtime:
+    1. <html data-theme="light"|"dark"> — explicit override (set by the
+       early-paint script in app/layout.tsx).
+    2. @media (prefers-color-scheme: light) — CSS-only fallback if the
+       script never runs (JS disabled, prerender snapshot, etc.).
+    3. Otherwise dark.
+
+  Two token layers
+  ----------------
+  · RAW palette (`--app-pitch`, `--app-bone`, …) are the brand ingredients
+    and never change between modes. Use them for marketing splashes that
+    must hold a single tone in both modes.
+  · ROLE-bound (`--app-color-pitch`, `--app-color-bone`, …) and SEMANTIC
+    tokens (`--app-bg`, `--app-fg`, `--app-surface`, …) swap by mode. The
+    @theme block exposes the role-bound names as Tailwind utilities so
+    existing `bg-pitch` / `text-bone` / `border-bark` classes behave as
+    semantic surfaces and flip automatically.
 */
+
+:root {
+  /* ─── 1 · Raw brand palette (immutable, both modes) ──────────────── */
+  --app-pitch: #1B1813;   /* primary dark                                 */
+  --app-coal: #100D09;    /* deepest dark                                 */
+  --app-pitch-deep: var(--app-coal);
+  --app-pitch-low: #15110C;
+  --app-bark: #3A2E22;    /* secondary dark                               */
+  --app-bark-soft: #2A2118;
+  --app-sand: #D9C9A8;    /* secondary light                              */
+  --app-bone: #F1ECE0;    /* primary light                                */
+  --app-dim: #9A9082;     /* muted — works in both modes                  */
+  --app-ember: #E8743C;   /* the accent — same fill in both modes         */
+  --app-ember-low: #C95F2B;
+
+  /* v1.2 additions — light-mode neutrals & contrast-safe ember-as-text */
+  --app-linen: #E5DDC9;       /* light-mode card surface                  */
+  --app-paper: #FAF7EF;       /* light-mode lifted plane                  */
+  --app-ember-deep: #B8531F;  /* darker Ember reserved for TEXT on light  */
+}
+
+/* ─── 2 · Default = DARK mode role-bound tokens ───────────────────────
+   Components author against these (directly or via the Tailwind classes
+   wired up in the @theme block below). All values listed here are
+   overridden in the light-mode blocks further down. */
 :root {
   color-scheme: dark;
 
-  /* Beacon palette — names match the brand handoff tokens spec.
-     Coal is the canonical handoff name for the deepest dark; we keep
-     pitch-deep as a backward-compatible alias of the same value. */
-  --app-pitch: #1B1813;
-  --app-coal: #100D09;
-  --app-pitch-deep: var(--app-coal);
-  --app-pitch-low: #15110C;
-  --app-bark: #3A2E22;
-  --app-bark-soft: #2A2118;
-  --app-sand: #D9C9A8;
-  --app-bone: #F1ECE0;
-  --app-dim: #9A9082;
-  --app-ember: #E8743C;
-  --app-ember-low: #C95F2B;
+  /* Role-bound brand colours — drive `bg-pitch`, `text-bone`, etc.      */
+  --app-color-pitch: var(--app-pitch);
+  --app-color-coal: var(--app-coal);
+  --app-color-pitch-deep: var(--app-pitch-deep);
+  --app-color-pitch-low: var(--app-pitch-low);
+  --app-color-bark: var(--app-bark);
+  --app-color-bark-soft: var(--app-bark-soft);
+  --app-color-sand: var(--app-sand);
+  --app-color-bone: var(--app-bone);
+  --app-color-dim: var(--app-dim);
+  --app-color-ember: var(--app-ember);
+  --app-color-ember-text: var(--app-ember);   /* text-ember contrast var */
+  --app-color-ember-low: var(--app-ember-low);
 
+  /* Page-level semantic tokens                                          */
   --app-bg: var(--app-pitch);
   --app-fg: var(--app-bone);
   --app-on-accent: var(--app-pitch);
   --app-accent: var(--app-ember);
+  --app-accent-text: var(--app-ember);
   --app-accent-light: #F08851;
   --app-accent-dark: var(--app-ember-low);
 
   --app-surface: var(--app-pitch);
   --app-surface-elevated: var(--app-pitch-low);
+  --app-surface-sunken: var(--app-coal);
+  --app-surface-glass: rgba(27, 24, 19, 0.78);
+  --app-muted: var(--app-sand);
+  --app-muted-light: rgba(217, 201, 168, 0.72);
+
+  /* Hairlines & borders — Bone @ low alpha on dark                      */
+  --app-border-subtle: rgba(217, 201, 168, 0.10);
+  --app-border-card: rgba(217, 201, 168, 0.18);
+  --app-border-emphasis: rgba(217, 201, 168, 0.32);
+  --app-border-emphasis-hover: rgba(217, 201, 168, 0.55);
+
+  /* Glass / fill / overlay tokens                                       */
+  --app-fill-glass: rgba(27, 24, 19, 0.78);
+  --app-fill-glass-2: rgba(21, 17, 12, 0.82);
+  --app-fill-glass-elevated: rgba(58, 46, 34, 0.55);
+  --app-fill-muted: rgba(217, 201, 168, 0.05);
+  --app-fill-hover: rgba(217, 201, 168, 0.08);
+
+  --app-overlay-badge: rgba(15, 12, 8, 0.65);
+  --app-overlay-card: rgba(15, 12, 8, 0.6);
+  --app-overlay-border: rgba(217, 201, 168, 0.22);
+  --app-overlay-text: rgba(241, 236, 224, 0.98);
+  --app-overlay-text-muted: rgba(217, 201, 168, 0.78);
+  --app-overlay-chip: rgba(217, 201, 168, 0.12);
+
+  --app-nav-scrolled: rgba(15, 12, 8, 0.82);
+  --app-dropdown: rgba(21, 17, 12, 0.94);
+  --app-mark-watermark: rgba(217, 201, 168, 0.06);
+
+  --app-grid-line: rgba(217, 201, 168, 0.08);
+  --app-scrollbar-track: var(--app-pitch-deep);
+  --app-scrollbar-thumb: var(--app-bark);
+  --app-scrollbar-thumb-hover: rgba(217, 201, 168, 0.32);
+  --app-selection-fg: var(--app-pitch);
+
+  --app-glass-border: rgba(217, 201, 168, 0.20);
+  --app-glass-border-strong: rgba(217, 201, 168, 0.32);
+
+  /* Composed surfaces — referenced by .section-stage, .hero-media-frame */
+  --app-stage-from: var(--app-pitch-low);
+  --app-stage-to: var(--app-pitch-deep);
+  --app-card-bg: var(--app-pitch-low);
+  --app-beacon-card-bg: var(--app-bark-soft);
+  --app-topo-line: rgba(58, 46, 34, 0.45);
+
+  /* Gradient text — bone → ember → sand on dark                         */
+  --app-gradient-text-from: var(--app-bone);
+  --app-gradient-text-mid: var(--app-ember);
+  --app-gradient-text-to: var(--app-sand);
+
+  /* Image-overlay scrim — used to darken hero photography in both modes
+     (stays dark deliberately so white scrim text reads against imagery) */
+  --app-scrim-top: rgba(15, 12, 8, 0.05);
+  --app-scrim-mid: rgba(15, 12, 8, 0.32);
+  --app-scrim-bot: rgba(15, 12, 8, 0.86);
+
+  --app-image-hover-shadow: rgba(0, 0, 0, 0.5);
+  --app-card-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --app-media-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    0 8px 24px rgba(0, 0, 0, 0.35);
+  --app-hero-card-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.55),
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(217, 201, 168, 0.12);
+}
+
+/* ─── 3 · LIGHT mode overrides ───────────────────────────────────────
+   Applied when:
+   · OS prefers light AND <html> has no explicit dark override, OR
+   · <html data-theme="light"> is set by the early-paint script.
+   The two selectors share the same body — kept in sync manually. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+
+    --app-color-pitch: var(--app-bone);
+    --app-color-coal: var(--app-sand);
+    --app-color-pitch-deep: var(--app-sand);
+    --app-color-pitch-low: var(--app-paper);
+    --app-color-bark: var(--app-sand);
+    --app-color-bark-soft: var(--app-linen);
+    --app-color-sand: var(--app-bark);
+    --app-color-bone: var(--app-pitch);
+    --app-color-ember: var(--app-ember);
+    --app-color-ember-text: var(--app-ember-deep);
+    --app-color-ember-low: var(--app-ember-deep);
+
+    --app-bg: var(--app-bone);
+    --app-fg: var(--app-pitch);
+    --app-on-accent: var(--app-pitch);
+    --app-accent: var(--app-ember);
+    --app-accent-text: var(--app-ember-deep);
+    --app-accent-light: var(--app-ember);
+    --app-accent-dark: var(--app-ember-deep);
+
+    --app-surface: var(--app-bone);
+    --app-surface-elevated: var(--app-paper);
+    --app-surface-sunken: var(--app-linen);
+    --app-surface-glass: rgba(250, 247, 239, 0.78);
+    --app-muted: var(--app-bark);
+    --app-muted-light: rgba(58, 46, 34, 0.78);
+
+    --app-border-subtle: rgba(27, 24, 19, 0.10);
+    --app-border-card: rgba(27, 24, 19, 0.16);
+    --app-border-emphasis: rgba(27, 24, 19, 0.30);
+    --app-border-emphasis-hover: rgba(27, 24, 19, 0.52);
+
+    --app-fill-glass: rgba(250, 247, 239, 0.78);
+    --app-fill-glass-2: rgba(229, 221, 201, 0.82);
+    --app-fill-glass-elevated: rgba(229, 221, 201, 0.65);
+    --app-fill-muted: rgba(27, 24, 19, 0.05);
+    --app-fill-hover: rgba(27, 24, 19, 0.08);
+
+    --app-overlay-badge: rgba(250, 247, 239, 0.85);
+    --app-overlay-card: rgba(250, 247, 239, 0.85);
+    --app-overlay-border: rgba(27, 24, 19, 0.22);
+    --app-overlay-text: rgba(27, 24, 19, 0.96);
+    --app-overlay-text-muted: rgba(58, 46, 34, 0.82);
+    --app-overlay-chip: rgba(27, 24, 19, 0.10);
+
+    --app-nav-scrolled: rgba(250, 247, 239, 0.92);
+    --app-dropdown: rgba(250, 247, 239, 0.96);
+    --app-mark-watermark: rgba(27, 24, 19, 0.06);
+
+    --app-grid-line: rgba(27, 24, 19, 0.08);
+    --app-scrollbar-track: var(--app-linen);
+    --app-scrollbar-thumb: var(--app-sand);
+    --app-scrollbar-thumb-hover: rgba(58, 46, 34, 0.5);
+    --app-selection-fg: var(--app-bone);
+
+    --app-glass-border: rgba(27, 24, 19, 0.18);
+    --app-glass-border-strong: rgba(27, 24, 19, 0.30);
+
+    --app-stage-from: var(--app-paper);
+    --app-stage-to: var(--app-linen);
+    --app-card-bg: var(--app-paper);
+    --app-beacon-card-bg: var(--app-linen);
+    --app-topo-line: rgba(58, 46, 34, 0.18);
+
+    --app-gradient-text-from: var(--app-pitch);
+    --app-gradient-text-mid: var(--app-ember-deep);
+    --app-gradient-text-to: var(--app-bark);
+
+    --app-image-hover-shadow: rgba(27, 24, 19, 0.20);
+    --app-card-shadow: 0 12px 32px rgba(27, 24, 19, 0.10);
+    --app-media-shadow:
+      0 24px 60px rgba(27, 24, 19, 0.14),
+      0 8px 24px rgba(27, 24, 19, 0.10);
+    --app-hero-card-shadow:
+      0 18px 42px rgba(27, 24, 19, 0.14),
+      0 8px 24px rgba(27, 24, 19, 0.10),
+      0 0 0 1px rgba(27, 24, 19, 0.10);
+  }
+}
+
+/* Explicit overrides — `<html data-theme="…">` always wins regardless
+   of OS preference. The early-paint script sets one of these on every
+   page load so the painted bits match the OS preference immediately. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --app-color-pitch: var(--app-bone);
+  --app-color-coal: var(--app-sand);
+  --app-color-pitch-deep: var(--app-sand);
+  --app-color-pitch-low: var(--app-paper);
+  --app-color-bark: var(--app-sand);
+  --app-color-bark-soft: var(--app-linen);
+  --app-color-sand: var(--app-bark);
+  --app-color-bone: var(--app-pitch);
+  --app-color-ember: var(--app-ember);
+  --app-color-ember-text: var(--app-ember-deep);
+  --app-color-ember-low: var(--app-ember-deep);
+
+  --app-bg: var(--app-bone);
+  --app-fg: var(--app-pitch);
+  --app-on-accent: var(--app-pitch);
+  --app-accent: var(--app-ember);
+  --app-accent-text: var(--app-ember-deep);
+  --app-accent-light: var(--app-ember);
+  --app-accent-dark: var(--app-ember-deep);
+
+  --app-surface: var(--app-bone);
+  --app-surface-elevated: var(--app-paper);
+  --app-surface-sunken: var(--app-linen);
+  --app-surface-glass: rgba(250, 247, 239, 0.78);
+  --app-muted: var(--app-bark);
+  --app-muted-light: rgba(58, 46, 34, 0.78);
+
+  --app-border-subtle: rgba(27, 24, 19, 0.10);
+  --app-border-card: rgba(27, 24, 19, 0.16);
+  --app-border-emphasis: rgba(27, 24, 19, 0.30);
+  --app-border-emphasis-hover: rgba(27, 24, 19, 0.52);
+
+  --app-fill-glass: rgba(250, 247, 239, 0.78);
+  --app-fill-glass-2: rgba(229, 221, 201, 0.82);
+  --app-fill-glass-elevated: rgba(229, 221, 201, 0.65);
+  --app-fill-muted: rgba(27, 24, 19, 0.05);
+  --app-fill-hover: rgba(27, 24, 19, 0.08);
+
+  --app-overlay-badge: rgba(250, 247, 239, 0.85);
+  --app-overlay-card: rgba(250, 247, 239, 0.85);
+  --app-overlay-border: rgba(27, 24, 19, 0.22);
+  --app-overlay-text: rgba(27, 24, 19, 0.96);
+  --app-overlay-text-muted: rgba(58, 46, 34, 0.82);
+  --app-overlay-chip: rgba(27, 24, 19, 0.10);
+
+  --app-nav-scrolled: rgba(250, 247, 239, 0.92);
+  --app-dropdown: rgba(250, 247, 239, 0.96);
+  --app-mark-watermark: rgba(27, 24, 19, 0.06);
+
+  --app-grid-line: rgba(27, 24, 19, 0.08);
+  --app-scrollbar-track: var(--app-linen);
+  --app-scrollbar-thumb: var(--app-sand);
+  --app-scrollbar-thumb-hover: rgba(58, 46, 34, 0.5);
+  --app-selection-fg: var(--app-bone);
+
+  --app-glass-border: rgba(27, 24, 19, 0.18);
+  --app-glass-border-strong: rgba(27, 24, 19, 0.30);
+
+  --app-stage-from: var(--app-paper);
+  --app-stage-to: var(--app-linen);
+  --app-card-bg: var(--app-paper);
+  --app-beacon-card-bg: var(--app-linen);
+  --app-topo-line: rgba(58, 46, 34, 0.18);
+
+  --app-gradient-text-from: var(--app-pitch);
+  --app-gradient-text-mid: var(--app-ember-deep);
+  --app-gradient-text-to: var(--app-bark);
+
+  --app-image-hover-shadow: rgba(27, 24, 19, 0.20);
+  --app-card-shadow: 0 12px 32px rgba(27, 24, 19, 0.10);
+  --app-media-shadow:
+    0 24px 60px rgba(27, 24, 19, 0.14),
+    0 8px 24px rgba(27, 24, 19, 0.10);
+  --app-hero-card-shadow:
+    0 18px 42px rgba(27, 24, 19, 0.14),
+    0 8px 24px rgba(27, 24, 19, 0.10),
+    0 0 0 1px rgba(27, 24, 19, 0.10);
+}
+
+/* If user's OS prefers light but the page (or a child component) opts
+   into dark explicitly, ensure dark values win. The default :root block
+   already sets these, but reasserting under [data-theme="dark"] makes
+   the cascade unambiguous when both `:root[data-theme="light"]` and
+   `:root[data-theme="dark"]` could match in a transition. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --app-color-pitch: var(--app-pitch);
+  --app-color-coal: var(--app-coal);
+  --app-color-pitch-deep: var(--app-pitch-deep);
+  --app-color-pitch-low: var(--app-pitch-low);
+  --app-color-bark: var(--app-bark);
+  --app-color-bark-soft: var(--app-bark-soft);
+  --app-color-sand: var(--app-sand);
+  --app-color-bone: var(--app-bone);
+  --app-color-ember: var(--app-ember);
+  --app-color-ember-text: var(--app-ember);
+  --app-color-ember-low: var(--app-ember-low);
+
+  --app-bg: var(--app-pitch);
+  --app-fg: var(--app-bone);
+  --app-on-accent: var(--app-pitch);
+  --app-accent: var(--app-ember);
+  --app-accent-text: var(--app-ember);
+  --app-accent-light: #F08851;
+  --app-accent-dark: var(--app-ember-low);
+
+  --app-surface: var(--app-pitch);
+  --app-surface-elevated: var(--app-pitch-low);
+  --app-surface-sunken: var(--app-coal);
   --app-surface-glass: rgba(27, 24, 19, 0.78);
   --app-muted: var(--app-sand);
   --app-muted-light: rgba(217, 201, 168, 0.72);
@@ -66,8 +385,17 @@
 
   --app-glass-border: rgba(217, 201, 168, 0.20);
   --app-glass-border-strong: rgba(217, 201, 168, 0.32);
+
+  --app-stage-from: var(--app-pitch-low);
+  --app-stage-to: var(--app-pitch-deep);
+  --app-card-bg: var(--app-pitch-low);
+  --app-beacon-card-bg: var(--app-bark-soft);
+  --app-topo-line: rgba(58, 46, 34, 0.45);
+
   --app-gradient-text-from: var(--app-bone);
+  --app-gradient-text-mid: var(--app-ember);
   --app-gradient-text-to: var(--app-sand);
+
   --app-image-hover-shadow: rgba(0, 0, 0, 0.5);
   --app-card-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   --app-media-shadow:
@@ -79,6 +407,8 @@
     0 0 0 1px rgba(217, 201, 168, 0.12);
 }
 
+/* ─── 4 · Tailwind @theme — utility classes consume role-bound colours
+   so `bg-pitch`, `text-bone`, `border-bark`, etc. auto-swap by mode. */
 @theme {
   --font-display:
     var(--font-archivo), "Archivo", "Inter Tight", system-ui, sans-serif;
@@ -94,24 +424,38 @@
   --color-foreground: var(--app-fg);
   --color-on-accent: var(--app-on-accent);
   --color-accent: var(--app-accent);
+  --color-accent-text: var(--app-accent-text);
   --color-accent-light: var(--app-accent-light);
   --color-accent-dark: var(--app-accent-dark);
   --color-surface: var(--app-surface);
   --color-surface-elevated: var(--app-surface-elevated);
+  --color-surface-sunken: var(--app-surface-sunken);
   --color-surface-glass: var(--app-surface-glass);
   --color-muted: var(--app-muted);
   --color-muted-light: var(--app-muted-light);
 
-  --color-pitch: var(--app-pitch);
-  --color-pitch-deep: var(--app-pitch-deep);
-  --color-pitch-low: var(--app-pitch-low);
-  --color-coal: var(--app-coal);
-  --color-bark: var(--app-bark);
-  --color-bark-soft: var(--app-bark-soft);
-  --color-sand: var(--app-sand);
-  --color-bone: var(--app-bone);
-  --color-dim: var(--app-dim);
-  --color-ember: var(--app-ember);
+  /* Brand-name utilities are role-bound: swap by mode. */
+  --color-pitch: var(--app-color-pitch);
+  --color-pitch-deep: var(--app-color-pitch-deep);
+  --color-pitch-low: var(--app-color-pitch-low);
+  --color-coal: var(--app-color-coal);
+  --color-bark: var(--app-color-bark);
+  --color-bark-soft: var(--app-color-bark-soft);
+  --color-sand: var(--app-color-sand);
+  --color-bone: var(--app-color-bone);
+  --color-dim: var(--app-color-dim);
+  --color-ember: var(--app-color-ember);
+
+  /* Raw brand utilities — opt-in for "must stay one tone" splashes. */
+  --color-raw-pitch: var(--app-pitch);
+  --color-raw-coal: var(--app-coal);
+  --color-raw-bark: var(--app-bark);
+  --color-raw-bone: var(--app-bone);
+  --color-raw-sand: var(--app-sand);
+  --color-raw-linen: var(--app-linen);
+  --color-raw-paper: var(--app-paper);
+  --color-raw-ember: var(--app-ember);
+  --color-raw-ember-deep: var(--app-ember-deep);
 
   --color-border-subtle: var(--app-border-subtle);
   --color-border-card: var(--app-border-card);
@@ -142,6 +486,7 @@
   --color-secondary-foreground: var(--app-fg);
 }
 
+/* ─── 5 · Page chrome ─────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -161,7 +506,7 @@
 
 ::selection {
   background: var(--app-ember);
-  color: var(--app-pitch);
+  color: var(--app-selection-fg);
 }
 
 html {
@@ -199,7 +544,8 @@ body {
   text-transform: uppercase;
 }
 
-/* Beacon surface utilities — sharp, low chrome, no pillow corners */
+/* ─── 6 · Beacon surface utilities ───────────────────────────────────
+   All consume semantic tokens so they flip automatically by mode. */
 .glass {
   background: var(--app-surface-glass);
   backdrop-filter: saturate(140%) blur(14px);
@@ -209,7 +555,7 @@ body {
 }
 
 .glass-strong {
-  background: var(--app-pitch-deep);
+  background: var(--app-fill-glass-2);
   backdrop-filter: saturate(140%) blur(20px);
   -webkit-backdrop-filter: saturate(140%) blur(20px);
   border: 1px solid var(--app-border-card);
@@ -225,46 +571,49 @@ body {
 }
 
 .hero-media-frame {
-  background: linear-gradient(180deg, var(--app-pitch-low) 0%, var(--app-pitch-deep) 100%);
+  background: linear-gradient(180deg, var(--app-stage-from) 0%, var(--app-stage-to) 100%);
   border: 1px solid var(--app-border-subtle);
 }
 
+/* Image scrim is deliberately dark in both modes — it sits over
+   photography so the bottom of the image fades to dark for legible
+   bone/white text overlays. Don't make this theme-aware. */
 .image-overlay-scrim {
   background: linear-gradient(
     180deg,
-    rgba(15, 12, 8, 0.05) 0%,
-    rgba(15, 12, 8, 0.32) 38%,
-    rgba(15, 12, 8, 0.86) 100%
+    var(--app-scrim-top) 0%,
+    var(--app-scrim-mid) 38%,
+    var(--app-scrim-bot) 100%
   );
 }
 
 .section-stage {
-  background: linear-gradient(180deg, var(--app-pitch-low) 0%, var(--app-pitch-deep) 100%);
+  background: linear-gradient(180deg, var(--app-stage-from) 0%, var(--app-stage-to) 100%);
   border: 1px solid var(--app-border-card);
   box-shadow: var(--app-media-shadow);
 }
 
 .section-card {
-  background: var(--app-pitch-low);
+  background: var(--app-card-bg);
   border: 1px solid var(--app-border-subtle);
 }
 
 /* Beacon-specific surfaces */
 .beacon-card {
-  background: var(--app-bark-soft);
-  border: 1px solid rgba(217, 201, 168, 0.12);
+  background: var(--app-beacon-card-bg);
+  border: 1px solid var(--app-border-card);
 }
 
 .beacon-divider {
-  border-color: var(--app-bark);
+  border-color: var(--app-border-card);
 }
 
 .gradient-text {
   background: linear-gradient(
     135deg,
-    var(--app-bone) 0%,
-    var(--app-ember) 50%,
-    var(--app-sand) 100%
+    var(--app-gradient-text-from) 0%,
+    var(--app-gradient-text-mid) 50%,
+    var(--app-gradient-text-to) 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -305,8 +654,8 @@ body {
 .topo-overlay {
   background-image: repeating-linear-gradient(
     38deg,
-    rgba(58, 46, 34, 0.45),
-    rgba(58, 46, 34, 0.45) 1px,
+    var(--app-topo-line),
+    var(--app-topo-line) 1px,
     transparent 1px,
     transparent 12px
   );
@@ -316,7 +665,7 @@ body {
 
 /* Print stylesheet — used by the /start setup page so customers can print
    a physical reference card. Strips chrome, expands accordions, and
-   forces high-contrast typography on the dark Beacon theme. */
+   forces high-contrast typography on white paper regardless of theme. */
 @media print {
   html,
   body {

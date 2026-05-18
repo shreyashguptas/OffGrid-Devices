@@ -31,7 +31,7 @@ export function HomeHeroSection() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 80% 40%, #3a2a1c 0%, transparent 55%), radial-gradient(ellipse 90% 100% at 15% 110%, #221912 0%, transparent 60%), linear-gradient(180deg, #1c1611 0%, #1B1813 100%)",
+            "radial-gradient(ellipse 80% 70% at 80% 40%, var(--app-color-bark) 0%, transparent 55%), radial-gradient(ellipse 90% 100% at 15% 110%, var(--app-color-pitch-low) 0%, transparent 60%), linear-gradient(180deg, var(--app-color-pitch-low) 0%, var(--app-color-pitch) 100%)",
         }}
       />
 
@@ -56,7 +56,7 @@ export function HomeHeroSection() {
               fontFamily: "var(--font-mono)",
               fontSize: "clamp(9px, 2.2vw, 11px)",
               letterSpacing: "0.16em",
-              color: "var(--app-sand)",
+              color: "var(--app-muted)",
             }}
           >
             <span>EST. 2026 · DESIGNED + ASSEMBLED IN THE USA</span>
@@ -179,7 +179,7 @@ function UsFlag() {
       style={{
         display: "block",
         flexShrink: 0,
-        border: "1px solid rgba(217, 201, 168, 0.3)",
+        border: "1px solid var(--app-border-emphasis)",
       }}
     >
       {Array.from({ length: 13 }, (_, index) => (

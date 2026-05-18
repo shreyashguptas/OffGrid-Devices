@@ -117,7 +117,7 @@ export function HomeFeatureShowcaseSection() {
     <section
       id="features"
       className="relative overflow-hidden border-b border-bark py-24 md:py-32"
-      style={{ background: "var(--app-pitch-low)" }}
+      style={{ background: "var(--app-color-pitch-low)" }}
     >
       <div
         aria-hidden
@@ -185,13 +185,13 @@ export function HomeFeatureShowcaseSection() {
               animate={{ rotate: 360 }}
               transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
               className="absolute inset-[-4%] rounded-full border border-dashed"
-              style={{ borderColor: "rgba(217, 201, 168, 0.14)" }}
+              style={{ borderColor: "var(--app-border-card)" }}
             />
             {/* Inner sand hairline ring */}
             <div
               aria-hidden
               className="absolute inset-[6%] rounded-full border"
-              style={{ borderColor: "rgba(217, 201, 168, 0.10)" }}
+              style={{ borderColor: "var(--app-border-subtle)" }}
             />
             {/* Compass tick marks — N/E/S/W on the inner ring */}
             <div aria-hidden className="absolute inset-[6%]">
@@ -243,10 +243,10 @@ export function HomeFeatureShowcaseSection() {
               <div
                 className="flex items-center gap-2 border bg-pitch px-3 py-1.5"
                 style={{
-                  borderColor: "rgba(217, 201, 168, 0.20)",
+                  borderColor: "var(--app-border-emphasis)",
                   fontSize: 11,
                   letterSpacing: "0.20em",
-                  color: "var(--app-sand)",
+                  color: "var(--app-muted)",
                   textTransform: "uppercase",
                 }}
               >
@@ -371,7 +371,7 @@ export function HomeFeatureShowcaseSection() {
                     fontSize: 12,
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
-                    color: isActive ? "var(--app-bone)" : "var(--app-sand)",
+                    color: isActive ? "var(--app-fg)" : "var(--app-muted)",
                     borderRight:
                       idx < MODES.length - 1
                         ? "1px solid var(--app-border-card)"

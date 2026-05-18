@@ -48,8 +48,14 @@ const jetbrainsMono = JetBrains_Mono({
 
 const metadataBase = getMetadataBase();
 
+// Browser chrome / status bar tint matches the user's OS preference.
+// (When JS is disabled, the @media (prefers-color-scheme) block in
+// globals.css still swaps tokens because nothing sets data-theme="dark".)
 export const viewport: Viewport = {
-  themeColor: "#1B1813",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F1ECE0" },
+    { media: "(prefers-color-scheme: dark)", color: "#1B1813" },
+  ],
 };
 
 const BEACON_FAVICON =
@@ -143,8 +149,15 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${archivo.variable} ${interTight.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
+      // The early-paint /theme-init.js script sets data-theme before
+      // React hydrates; suppress the resulting attribute mismatch warning.
+      suppressHydrationWarning
     >
       <head>
+        {/* Synchronous, parser-blocking — sets <html data-theme> from
+            the user's OS preference before first paint so we don't
+            flash dark on light-mode devices. Must precede CSS. */}
+        <script src="/theme-init.js" />
         <link
           rel="preconnect"
           href="https://cdn.shopify.com"
