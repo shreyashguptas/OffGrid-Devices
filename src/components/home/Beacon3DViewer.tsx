@@ -83,6 +83,7 @@ function BeaconModel({
   const groupRef = useRef<THREE.Group>(null);
   const gltf = useGLTF(MODEL_PATH);
   const currentZoom = useRef(1);
+  const lastAspect = useRef(0);
 
   const { scene, offset, baseScale } = useMemo(() => {
     const cloned = gltf.scene.clone(true);
@@ -117,19 +118,22 @@ function BeaconModel({
     // Aspect-aware rest position: on wide layouts (desktop) shift the
     // model right so the headline on the left has clean breathing room;
     // on narrow layouts (mobile) center horizontally and nudge down so
-    // it stacks below the text. Set every frame — cheap, and the demand
-    // loop already runs on resize so this naturally updates.
+    // it stacks below the text. Recompute only when the canvas aspect
+    // changes — otherwise we'd write the same value every demand frame.
     const aspect = state.size.width / state.size.height;
-    g.position.x = THREE.MathUtils.clamp(
-      (aspect - 1) * 1.6,
-      0,
-      REST_OFFSET_X_MAX,
-    );
-    g.position.y = THREE.MathUtils.clamp(
-      (aspect - 1) * 0.8,
-      REST_OFFSET_Y_MIN,
-      0,
-    );
+    if (aspect !== lastAspect.current) {
+      lastAspect.current = aspect;
+      g.position.x = THREE.MathUtils.clamp(
+        (aspect - 1) * 1.6,
+        0,
+        REST_OFFSET_X_MAX,
+      );
+      g.position.y = THREE.MathUtils.clamp(
+        (aspect - 1) * 0.8,
+        REST_OFFSET_Y_MIN,
+        0,
+      );
+    }
 
     // Shortest path on Y so accumulated drag rotation doesn't unwind
     // visibly when the target jumps (e.g. release of a long drag).
