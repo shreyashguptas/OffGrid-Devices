@@ -175,15 +175,7 @@ function LoadingOverlay() {
       aria-hidden
       className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center"
     >
-      <span
-        className="text-sand/60"
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: 11,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-        }}
-      >
+      <span className="type-mono-label text-sand/60">
         Loading device · {Math.round(progress)}%
       </span>
     </div>

@@ -7,13 +7,14 @@
 
   Theming
   -------
-  Dark by default. Light when the user's OS prefers light (auto, no toggle).
-  Resolution order at runtime:
-    1. <html data-theme="light"|"dark"> — explicit override (set by the
-       early-paint script in app/layout.tsx).
-    2. @media (prefers-color-scheme: light) — CSS-only fallback if the
-       script never runs (JS disabled, prerender snapshot, etc.).
-    3. Otherwise dark.
+  Dark by default. Light when the OS prefers light (auto, no toggle).
+  Resolution order:
+    1. Default `:root` — dark semantic tokens.
+    2. `@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) }`
+       — light tokens (covers `data-theme="light"` from theme-init.js and
+       no-JS fallback).
+    3. `data-theme` on `<html>` is set by theme-init.js for hydration only;
+       cascade is driven by the rules above.
 
   Two token layers
   ----------------
@@ -144,13 +145,16 @@
     0 18px 42px rgba(0, 0, 0, 0.55),
     0 8px 24px rgba(0, 0, 0, 0.35),
     0 0 0 1px rgba(217, 201, 168, 0.12);
+
+  /* Ember radial glows — hero + feature showcase */
+  --app-accent-glow-strong: rgba(232, 116, 60, 0.45);
+  --app-accent-glow-mid: rgba(232, 116, 60, 0.12);
+  --app-accent-glow-soft: rgba(232, 116, 60, 0.30);
+  --app-accent-glow-faint: rgba(232, 116, 60, 0.08);
 }
 
 /* ─── 3 · LIGHT mode overrides ───────────────────────────────────────
-   Applied when:
-   · OS prefers light AND <html> has no explicit dark override, OR
-   · <html data-theme="light"> is set by the early-paint script.
-   The two selectors share the same body — kept in sync manually. */
+   OS prefers light and no explicit `data-theme="dark"`. */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     color-scheme: light;
@@ -233,178 +237,6 @@
       0 8px 24px rgba(27, 24, 19, 0.10),
       0 0 0 1px rgba(27, 24, 19, 0.10);
   }
-}
-
-/* Explicit overrides — `<html data-theme="…">` always wins regardless
-   of OS preference. The early-paint script sets one of these on every
-   page load so the painted bits match the OS preference immediately. */
-:root[data-theme="light"] {
-  color-scheme: light;
-
-  --app-color-pitch: var(--app-bone);
-  --app-color-coal: var(--app-sand);
-  --app-color-pitch-deep: var(--app-sand);
-  --app-color-pitch-low: var(--app-paper);
-  --app-color-bark: var(--app-sand);
-  --app-color-bark-soft: var(--app-linen);
-  --app-color-sand: var(--app-bark);
-  --app-color-bone: var(--app-pitch);
-  --app-color-ember: var(--app-ember);
-  --app-color-ember-text: var(--app-ember-deep);
-  --app-color-ember-low: var(--app-ember-deep);
-
-  --app-bg: var(--app-bone);
-  --app-fg: var(--app-pitch);
-  --app-on-accent: var(--app-pitch);
-  --app-accent: var(--app-ember);
-  --app-accent-text: var(--app-ember-deep);
-  --app-accent-light: var(--app-ember);
-  --app-accent-dark: var(--app-ember-deep);
-
-  --app-surface: var(--app-bone);
-  --app-surface-elevated: var(--app-paper);
-  --app-surface-sunken: var(--app-linen);
-  --app-surface-glass: rgba(250, 247, 239, 0.78);
-  --app-muted: var(--app-bark);
-  --app-muted-light: rgba(58, 46, 34, 0.78);
-
-  --app-border-subtle: rgba(27, 24, 19, 0.10);
-  --app-border-card: rgba(27, 24, 19, 0.16);
-  --app-border-emphasis: rgba(27, 24, 19, 0.30);
-  --app-border-emphasis-hover: rgba(27, 24, 19, 0.52);
-
-  --app-fill-glass: rgba(250, 247, 239, 0.78);
-  --app-fill-glass-2: rgba(229, 221, 201, 0.82);
-  --app-fill-glass-elevated: rgba(229, 221, 201, 0.65);
-  --app-fill-muted: rgba(27, 24, 19, 0.05);
-  --app-fill-hover: rgba(27, 24, 19, 0.08);
-
-  --app-overlay-badge: rgba(250, 247, 239, 0.85);
-  --app-overlay-card: rgba(250, 247, 239, 0.85);
-  --app-overlay-border: rgba(27, 24, 19, 0.22);
-  --app-overlay-text: rgba(27, 24, 19, 0.96);
-  --app-overlay-text-muted: rgba(58, 46, 34, 0.82);
-  --app-overlay-chip: rgba(27, 24, 19, 0.10);
-
-  --app-nav-scrolled: rgba(250, 247, 239, 0.92);
-  --app-dropdown: rgba(250, 247, 239, 0.96);
-  --app-mark-watermark: rgba(27, 24, 19, 0.06);
-
-  --app-grid-line: rgba(27, 24, 19, 0.08);
-  --app-scrollbar-track: var(--app-linen);
-  --app-scrollbar-thumb: var(--app-sand);
-  --app-scrollbar-thumb-hover: rgba(58, 46, 34, 0.5);
-  --app-selection-fg: var(--app-bone);
-
-  --app-glass-border: rgba(27, 24, 19, 0.18);
-  --app-glass-border-strong: rgba(27, 24, 19, 0.30);
-
-  --app-stage-from: var(--app-paper);
-  --app-stage-to: var(--app-linen);
-  --app-card-bg: var(--app-paper);
-  --app-beacon-card-bg: var(--app-linen);
-  --app-topo-line: rgba(58, 46, 34, 0.18);
-
-  --app-gradient-text-from: var(--app-pitch);
-  --app-gradient-text-mid: var(--app-ember-deep);
-  --app-gradient-text-to: var(--app-bark);
-
-  --app-image-hover-shadow: rgba(27, 24, 19, 0.20);
-  --app-card-shadow: 0 12px 32px rgba(27, 24, 19, 0.10);
-  --app-media-shadow:
-    0 24px 60px rgba(27, 24, 19, 0.14),
-    0 8px 24px rgba(27, 24, 19, 0.10);
-  --app-hero-card-shadow:
-    0 18px 42px rgba(27, 24, 19, 0.14),
-    0 8px 24px rgba(27, 24, 19, 0.10),
-    0 0 0 1px rgba(27, 24, 19, 0.10);
-}
-
-/* If user's OS prefers light but the page (or a child component) opts
-   into dark explicitly, ensure dark values win. The default :root block
-   already sets these, but reasserting under [data-theme="dark"] makes
-   the cascade unambiguous when both `:root[data-theme="light"]` and
-   `:root[data-theme="dark"]` could match in a transition. */
-:root[data-theme="dark"] {
-  color-scheme: dark;
-
-  --app-color-pitch: var(--app-pitch);
-  --app-color-coal: var(--app-coal);
-  --app-color-pitch-deep: var(--app-pitch-deep);
-  --app-color-pitch-low: var(--app-pitch-low);
-  --app-color-bark: var(--app-bark);
-  --app-color-bark-soft: var(--app-bark-soft);
-  --app-color-sand: var(--app-sand);
-  --app-color-bone: var(--app-bone);
-  --app-color-ember: var(--app-ember);
-  --app-color-ember-text: var(--app-ember);
-  --app-color-ember-low: var(--app-ember-low);
-
-  --app-bg: var(--app-pitch);
-  --app-fg: var(--app-bone);
-  --app-on-accent: var(--app-pitch);
-  --app-accent: var(--app-ember);
-  --app-accent-text: var(--app-ember);
-  --app-accent-light: #F08851;
-  --app-accent-dark: var(--app-ember-low);
-
-  --app-surface: var(--app-pitch);
-  --app-surface-elevated: var(--app-pitch-low);
-  --app-surface-sunken: var(--app-coal);
-  --app-surface-glass: rgba(27, 24, 19, 0.78);
-  --app-muted: var(--app-sand);
-  --app-muted-light: rgba(217, 201, 168, 0.72);
-
-  --app-border-subtle: rgba(217, 201, 168, 0.10);
-  --app-border-card: rgba(217, 201, 168, 0.18);
-  --app-border-emphasis: rgba(217, 201, 168, 0.32);
-  --app-border-emphasis-hover: rgba(217, 201, 168, 0.55);
-
-  --app-fill-glass: rgba(27, 24, 19, 0.78);
-  --app-fill-glass-2: rgba(21, 17, 12, 0.82);
-  --app-fill-glass-elevated: rgba(58, 46, 34, 0.55);
-  --app-fill-muted: rgba(217, 201, 168, 0.05);
-  --app-fill-hover: rgba(217, 201, 168, 0.08);
-
-  --app-overlay-badge: rgba(15, 12, 8, 0.65);
-  --app-overlay-card: rgba(15, 12, 8, 0.6);
-  --app-overlay-border: rgba(217, 201, 168, 0.22);
-  --app-overlay-text: rgba(241, 236, 224, 0.98);
-  --app-overlay-text-muted: rgba(217, 201, 168, 0.78);
-  --app-overlay-chip: rgba(217, 201, 168, 0.12);
-
-  --app-nav-scrolled: rgba(15, 12, 8, 0.82);
-  --app-dropdown: rgba(21, 17, 12, 0.94);
-  --app-mark-watermark: rgba(217, 201, 168, 0.06);
-
-  --app-grid-line: rgba(217, 201, 168, 0.08);
-  --app-scrollbar-track: var(--app-pitch-deep);
-  --app-scrollbar-thumb: var(--app-bark);
-  --app-scrollbar-thumb-hover: rgba(217, 201, 168, 0.32);
-  --app-selection-fg: var(--app-pitch);
-
-  --app-glass-border: rgba(217, 201, 168, 0.20);
-  --app-glass-border-strong: rgba(217, 201, 168, 0.32);
-
-  --app-stage-from: var(--app-pitch-low);
-  --app-stage-to: var(--app-pitch-deep);
-  --app-card-bg: var(--app-pitch-low);
-  --app-beacon-card-bg: var(--app-bark-soft);
-  --app-topo-line: rgba(58, 46, 34, 0.45);
-
-  --app-gradient-text-from: var(--app-bone);
-  --app-gradient-text-mid: var(--app-ember);
-  --app-gradient-text-to: var(--app-sand);
-
-  --app-image-hover-shadow: rgba(0, 0, 0, 0.5);
-  --app-card-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
-  --app-media-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.55),
-    0 8px 24px rgba(0, 0, 0, 0.35);
-  --app-hero-card-shadow:
-    0 18px 42px rgba(0, 0, 0, 0.55),
-    0 8px 24px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(217, 201, 168, 0.12);
 }
 
 /* ─── 4 · Tailwind @theme — utility classes consume role-bound colours
@@ -542,6 +374,84 @@ body {
 .tracking-mono {
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.type-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.type-mono-label {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.type-mono-label-sm {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(9px, 2.2vw, 11px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.type-editorial-lead {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(17px, 2vw, 22px);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.type-display-hero {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(34px, 8vw, 80px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.type-display-section {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.type-display-card {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.ember-radial-glow {
+  background: radial-gradient(
+    circle,
+    var(--app-accent-glow-strong),
+    var(--app-accent-glow-mid) 50%,
+    transparent 78%
+  );
+  filter: blur(12px);
+}
+
+.ember-radial-glow-subtle {
+  background: radial-gradient(
+    circle,
+    var(--app-accent-glow-soft),
+    var(--app-accent-glow-faint) 55%,
+    transparent 80%
+  );
+  filter: blur(10px);
 }
 
 /* ─── 6 · Beacon surface utilities ───────────────────────────────────

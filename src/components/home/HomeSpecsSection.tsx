@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import { cardVariant, staggerContainer } from "@/components/shared/motion";
-import { link2Content } from "@/content/products";
+import { beacon2Content } from "@/content/products";
 
-const SPECS = link2Content.specs;
+const SPECS = beacon2Content.specs;
 
 // The four "hero" metrics surface first — the ones that win the buying
 // decision. The remainder live in a clean spec sheet below.
@@ -36,41 +36,12 @@ export function HomeSpecsSection() {
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
         <div className="max-w-3xl">
-          <div
-            className="text-ember"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: 12,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-            }}
-          >
-            IV · The Numbers
-          </div>
-          <h2
-            className="mt-5 text-bone uppercase"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 900,
-              fontSize: "clamp(40px, 6vw, 80px)",
-              lineHeight: 0.92,
-              letterSpacing: "-0.03em",
-            }}
-          >
+          <div className="type-eyebrow text-ember">IV · The Numbers</div>
+          <h2 className="type-display-section mt-5 text-bone">
             Everything, no asterisks.
           </h2>
-          <p
-            className="mt-6 max-w-2xl text-sand"
-            style={{
-              fontFamily: "var(--font-editorial)",
-              fontStyle: "italic",
-              fontSize: "clamp(18px, 1.8vw, 22px)",
-              lineHeight: 1.4,
-              letterSpacing: "-0.01em",
-            }}
-          >
-            {link2Content.home.specsDescription}
+          <p className="type-editorial-lead mt-6 max-w-2xl text-sand">
+            {beacon2Content.home.specsDescription}
           </p>
         </div>
 
@@ -90,52 +61,20 @@ export function HomeSpecsSection() {
                 variants={cardVariant}
                 className="relative flex flex-col gap-3 border-b border-r border-sand/15 px-6 py-8 md:px-8 md:py-10"
               >
-                <div
-                  className="text-sand/55"
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 10,
-                    letterSpacing: "0.22em",
-                    textTransform: "uppercase",
-                  }}
-                >
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-sand/55">
                   {m.label}
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span
-                    className="text-bone"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 900,
-                      fontSize: "clamp(40px, 5.5vw, 64px)",
-                      lineHeight: 0.92,
-                      letterSpacing: "-0.04em",
-                    }}
-                  >
+                  <span className="font-display text-[clamp(40px,5.5vw,64px)] font-black leading-[0.92] tracking-[-0.04em] text-bone">
                     {m.big}
                   </span>
                   {m.unit && (
-                    <span
-                      className="text-ember"
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: 14,
-                        letterSpacing: "0.10em",
-                        textTransform: "uppercase",
-                      }}
-                    >
+                    <span className="font-mono text-[14px] uppercase tracking-[0.10em] text-ember">
                       {m.unit}
                     </span>
                   )}
                 </div>
-                <div
-                  className="mt-auto text-sand/75"
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: 13,
-                    lineHeight: 1.45,
-                  }}
-                >
+                <div className="mt-auto font-body text-[13px] leading-[1.45] text-sand/75">
                   {m.detail}
                 </div>
               </motion.div>
@@ -158,26 +97,10 @@ export function HomeSpecsSection() {
               variants={cardVariant}
               className="flex items-baseline justify-between gap-6 border-b border-sand/12 py-5"
             >
-              <div
-                className="text-sand/65"
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 11,
-                  letterSpacing: "0.20em",
-                  textTransform: "uppercase",
-                }}
-              >
+              <div className="type-mono-label tracking-[0.20em] text-sand/65">
                 {spec.label}
               </div>
-              <div
-                className="text-right text-bone"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 600,
-                  fontSize: 15,
-                  letterSpacing: "-0.01em",
-                }}
-              >
+              <div className="font-display text-right text-[15px] font-semibold tracking-[-0.01em] text-bone">
                 {spec.value}
               </div>
             </motion.div>

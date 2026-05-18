@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { link2Content } from "@/content/products";
+import { beacon2Content } from "@/content/products";
+import { cn } from "@/lib/utils";
 
 type ModeId = "magnets" | "antenna" | "battery";
 
@@ -18,17 +19,16 @@ type Mode = {
   specs: ReadonlyArray<readonly [string, string]>;
 };
 
-const NOTES = link2Content.home.fieldNotes;
-
-const MODES: ReadonlyArray<Mode> = [
+const MODE_META: ReadonlyArray<{
+  id: ModeId;
+  index: string;
+  kicker: string;
+  specs: ReadonlyArray<readonly [string, string]>;
+}> = [
   {
     id: "magnets",
     index: "01",
     kicker: "Magnets",
-    title: NOTES[0].title,
-    body: NOTES[0].body,
-    image: NOTES[0].image,
-    alt: NOTES[0].alt,
     specs: [
       ["GRADE", "N48H neodymium"],
       ["MOUNT", "MagSafe-compatible"],
@@ -38,10 +38,6 @@ const MODES: ReadonlyArray<Mode> = [
     id: "antenna",
     index: "02",
     kicker: "Antenna",
-    title: NOTES[1].title,
-    body: NOTES[1].body,
-    image: NOTES[1].image,
-    alt: NOTES[1].alt,
     specs: [
       ["CONNECTOR", "SMA · external"],
       ["BAND", "902–928 MHz · US915"],
@@ -51,16 +47,23 @@ const MODES: ReadonlyArray<Mode> = [
     id: "battery",
     index: "03",
     kicker: "Battery",
-    title: NOTES[2].title,
-    body: NOTES[2].body,
-    image: NOTES[2].image,
-    alt: NOTES[2].alt,
     specs: [
       ["CAPACITY", "3000 mAh"],
       ["CHARGE", "USB-C"],
     ],
   },
 ];
+
+const MODES: ReadonlyArray<Mode> = MODE_META.map((meta, i) => {
+  const note = beacon2Content.home.fieldNotes[i];
+  return {
+    ...meta,
+    title: note.title,
+    body: note.body,
+    image: note.image,
+    alt: note.alt,
+  };
+});
 
 const imageVariants = {
   initial: { opacity: 0, scale: 1.08, filter: "blur(12px)" },
@@ -116,8 +119,7 @@ export function HomeFeatureShowcaseSection() {
   return (
     <section
       id="features"
-      className="relative overflow-hidden border-b border-bark py-24 md:py-32"
-      style={{ background: "var(--app-color-pitch-low)" }}
+      className="relative overflow-hidden border-b border-bark bg-pitch-low py-24 md:py-32"
     >
       <div
         aria-hidden
@@ -125,75 +127,35 @@ export function HomeFeatureShowcaseSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        {/* Header */}
         <div className="max-w-3xl">
-          <div
-            className="text-ember"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: 12,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-            }}
-          >
-            II · The Field
-          </div>
-          <h2
-            className="mt-5 text-bone uppercase"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 900,
-              fontSize: "clamp(40px, 6vw, 80px)",
-              lineHeight: 0.92,
-              letterSpacing: "-0.03em",
-            }}
-          >
+          <div className="type-eyebrow text-ember">II · The Field</div>
+          <h2 className="type-display-section mt-5 text-bone">
             One device. Three reasons it stays in your pack.
           </h2>
           <p
-            className="mt-6 max-w-xl text-sand"
-            style={{
-              fontFamily: "var(--font-editorial)",
-              fontStyle: "italic",
-              fontSize: "clamp(18px, 1.8vw, 24px)",
-              lineHeight: 1.4,
-              letterSpacing: "-0.01em",
-            }}
+            className="type-editorial-lead mt-6 max-w-xl text-sand"
+            style={{ fontSize: "clamp(18px, 1.8vw, 24px)" }}
           >
             Tap a mode to see what each part of Beacon 2 was built to do.
           </p>
         </div>
 
-        {/* Stage + Details */}
         <div className="mt-14 grid grid-cols-1 items-center gap-12 md:mt-20 md:grid-cols-2 md:gap-16 lg:gap-24">
-          {/* Stage */}
           <div className="relative mx-auto flex aspect-square w-full max-w-[480px] items-center justify-center">
-            {/* Ember radial glow — single accent */}
             <div
               aria-hidden
-              className="absolute inset-[8%]"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(232,116,60,0.30), rgba(232,116,60,0.08) 55%, transparent 80%)",
-                filter: "blur(10px)",
-              }}
+              className="ember-radial-glow-subtle absolute inset-[8%]"
             />
-            {/* Outer rotating dashed scan ring — instrument chrome */}
             <motion.div
               aria-hidden
               animate={{ rotate: 360 }}
               transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-[-4%] rounded-full border border-dashed"
-              style={{ borderColor: "var(--app-border-card)" }}
+              className="absolute inset-[-4%] rounded-full border border-dashed border-border-card"
             />
-            {/* Inner sand hairline ring */}
             <div
               aria-hidden
-              className="absolute inset-[6%] rounded-full border"
-              style={{ borderColor: "var(--app-border-subtle)" }}
+              className="absolute inset-[6%] rounded-full border border-border-subtle"
             />
-            {/* Compass tick marks — N/E/S/W on the inner ring */}
             <div aria-hidden className="absolute inset-[6%]">
               {[0, 90, 180, 270].map((deg) => (
                 <div
@@ -201,14 +163,11 @@ export function HomeFeatureShowcaseSection() {
                   className="absolute inset-0"
                   style={{ transform: `rotate(${deg}deg)` }}
                 >
-                  <span
-                    className="absolute left-1/2 top-0 h-[6px] w-px -translate-x-1/2 bg-sand/35"
-                  />
+                  <span className="absolute left-1/2 top-0 h-[6px] w-px -translate-x-1/2 bg-sand/35" />
                 </div>
               ))}
             </div>
 
-            {/* Floating motion bob to give the product weight + life */}
             <motion.div
               animate={{ y: [-6, 6, -6] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
@@ -235,21 +194,8 @@ export function HomeFeatureShowcaseSection() {
               </AnimatePresence>
             </motion.div>
 
-            {/* Status pill — mono, sharp corners */}
-            <div
-              className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap"
-              style={{ fontFamily: "var(--font-mono)" }}
-            >
-              <div
-                className="flex items-center gap-2 border bg-pitch px-3 py-1.5"
-                style={{
-                  borderColor: "var(--app-border-emphasis)",
-                  fontSize: 11,
-                  letterSpacing: "0.20em",
-                  color: "var(--app-muted)",
-                  textTransform: "uppercase",
-                }}
-              >
+            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap">
+              <div className="type-mono-label flex items-center gap-2 border border-border-emphasis bg-pitch px-3 py-1.5 text-muted">
                 <motion.span
                   animate={{ opacity: [1, 0.4, 1] }}
                   transition={{ duration: 2.2, repeat: Infinity }}
@@ -260,7 +206,6 @@ export function HomeFeatureShowcaseSection() {
             </div>
           </div>
 
-          {/* Details */}
           <div className="relative min-h-[360px]">
             <AnimatePresence mode="wait">
               <motion.div
@@ -273,13 +218,8 @@ export function HomeFeatureShowcaseSection() {
               >
                 <motion.div
                   variants={detailItem}
-                  className="flex items-center gap-4 text-sand"
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 11,
-                    letterSpacing: "0.20em",
-                    textTransform: "uppercase",
-                  }}
+                  className="type-mono-label flex items-center gap-4 text-sand"
+                  style={{ letterSpacing: "0.20em" }}
                 >
                   <span className="text-ember">{active.index}</span>
                   <span aria-hidden className="h-px w-12 bg-sand/30" />
@@ -288,22 +228,14 @@ export function HomeFeatureShowcaseSection() {
 
                 <motion.h3
                   variants={detailItem}
-                  className="mt-6 text-bone"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 800,
-                    fontSize: "clamp(28px, 4vw, 44px)",
-                    lineHeight: 1.05,
-                    letterSpacing: "-0.02em",
-                  }}
+                  className="type-display-card mt-6 text-bone"
                 >
                   {active.title}
                 </motion.h3>
 
                 <motion.p
                   variants={detailItem}
-                  className="mt-5 max-w-md text-[17px] leading-relaxed text-sand"
-                  style={{ fontFamily: "var(--font-body)" }}
+                  className="mt-5 max-w-md font-body text-[17px] leading-relaxed text-sand"
                 >
                   {active.body}
                 </motion.p>
@@ -314,26 +246,10 @@ export function HomeFeatureShowcaseSection() {
                 >
                   {active.specs.map(([label, value]) => (
                     <div key={label}>
-                      <div
-                        className="text-sand/65"
-                        style={{
-                          fontFamily: "var(--font-mono)",
-                          fontSize: 11,
-                          letterSpacing: "0.18em",
-                          textTransform: "uppercase",
-                        }}
-                      >
+                      <div className="type-mono-label text-sand/65">
                         {label}
                       </div>
-                      <div
-                        className="mt-2 text-bone"
-                        style={{
-                          fontFamily: "var(--font-display)",
-                          fontWeight: 700,
-                          fontSize: 16,
-                          letterSpacing: "-0.01em",
-                        }}
-                      >
+                      <div className="mt-2 font-display text-base font-bold tracking-tight text-bone">
                         {value}
                       </div>
                     </div>
@@ -344,16 +260,11 @@ export function HomeFeatureShowcaseSection() {
           </div>
         </div>
 
-        {/* Switcher — sharp horizontal tabs with ember underline */}
         <div className="mt-16 flex justify-center md:mt-24">
           <div
             role="tablist"
             aria-label="Beacon features"
-            className="flex"
-            style={{
-              borderTop: "1px solid var(--app-border-card)",
-              borderBottom: "1px solid var(--app-border-card)",
-            }}
+            className="flex border-y border-border-card"
           >
             {MODES.map((mode, idx) => {
               const isActive = mode.id === activeId;
@@ -364,19 +275,11 @@ export function HomeFeatureShowcaseSection() {
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => setActiveId(mode.id)}
-                  className="relative min-w-[112px] px-5 py-4 transition-colors hover:text-bone sm:min-w-[160px] sm:px-8 sm:py-5"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: 12,
-                    letterSpacing: "0.22em",
-                    textTransform: "uppercase",
-                    color: isActive ? "var(--app-fg)" : "var(--app-muted)",
-                    borderRight:
-                      idx < MODES.length - 1
-                        ? "1px solid var(--app-border-card)"
-                        : "none",
-                  }}
+                  className={cn(
+                    "type-eyebrow relative min-w-[112px] px-5 py-4 transition-colors hover:text-bone sm:min-w-[160px] sm:px-8 sm:py-5",
+                    isActive ? "text-foreground" : "text-muted",
+                    idx < MODES.length - 1 && "border-r border-border-card",
+                  )}
                 >
                   {isActive && (
                     <motion.span
@@ -392,12 +295,7 @@ export function HomeFeatureShowcaseSection() {
                   )}
                   <span className="relative z-10 flex items-center justify-center gap-3">
                     <span
-                      className="text-ember/70"
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: 10,
-                        letterSpacing: "0.18em",
-                      }}
+                      className="font-mono text-[10px] tracking-[0.18em] text-ember/70"
                     >
                       {mode.index}
                     </span>

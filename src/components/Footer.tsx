@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { BadgeEmberOutline } from "@/components/shared/BadgeEmberOutline";
 import { BeaconWordmark } from "@/components/shared/WaypointMark";
 import { siteProducts } from "@/content/products";
 
@@ -72,15 +73,7 @@ export function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
           <div>
             <BeaconWordmark size={20} />
-            <p
-              className="mt-5 max-w-xs text-sand/75"
-              style={{
-                fontFamily: "var(--font-editorial)",
-                fontStyle: "italic",
-                fontSize: 15,
-                lineHeight: 1.55,
-              }}
-            >
+            <p className="font-editorial mt-5 max-w-xs text-[15px] leading-[1.55] text-sand/75">
               OffGrid builds rugged mesh hardware for the field — designed to
               stay with the phone you already carry.
             </p>
@@ -88,16 +81,7 @@ export function Footer() {
 
           {columns.map((column) => (
             <div key={column.heading}>
-              <h3
-                className="text-bone"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: 11,
-                  letterSpacing: "0.22em",
-                  textTransform: "uppercase",
-                }}
-              >
+              <h3 className="type-eyebrow text-bone">
                 {column.heading}
               </h3>
               <ul className="mt-5 space-y-3">
@@ -106,9 +90,9 @@ export function Footer() {
                     <span className="inline-flex items-center gap-2">
                       <span>{link.label}</span>
                       {link.badge ? (
-                        <span className="border border-ember/40 bg-ember/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-ember">
+                        <BadgeEmberOutline className="px-1.5 py-0.5 font-bold tracking-[0.16em]">
                           {link.badge}
-                        </span>
+                        </BadgeEmberOutline>
                       ) : null}
                     </span>
                   );
@@ -144,15 +128,7 @@ export function Footer() {
           ))}
         </div>
 
-        <div
-          className="mt-14 flex flex-col gap-3 border-t border-bark pt-6 text-sand/65 md:flex-row md:items-center md:justify-between"
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-          }}
-        >
+        <div className="type-mono-label mt-14 flex flex-col gap-3 border-t border-bark pt-6 tracking-[0.14em] text-sand/65 md:flex-row md:items-center md:justify-between">
           <span>&copy; {new Date().getFullYear()} OFFGRID · MADE IN SF</span>
           <span>Built to be carried</span>
           <span>NO TOWERS · NO SIMS · NO SUBSCRIPTIONS</span>

@@ -12,6 +12,11 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { getMetadataBase } from "@/lib/siteUrl";
 import {
+  BEACON_MARK_BONE,
+  BEACON_MARK_PITCH,
+  beaconFaviconDataUrl,
+} from "@/lib/beaconMarkSvg";
+import {
   jsonLdScriptProps,
   organizationJsonLd,
   websiteJsonLd,
@@ -53,19 +58,46 @@ const metadataBase = getMetadataBase();
 // globals.css still swaps tokens because nothing sets data-theme="dark".)
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F1ECE0" },
-    { media: "(prefers-color-scheme: dark)", color: "#1B1813" },
+    { media: "(prefers-color-scheme: light)", color: BEACON_MARK_BONE },
+    { media: "(prefers-color-scheme: dark)", color: BEACON_MARK_PITCH },
   ],
 };
 
-const BEACON_FAVICON =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='24 20 152 152'%3E%3Crect x='24' y='20' width='152' height='152' fill='%231B1813'/%3E%3Cg stroke='%23E8743C' fill='none' stroke-linecap='round'%3E%3Ccircle cx='100' cy='64' r='22' stroke-width='4' opacity='0.18'/%3E%3Ccircle cx='100' cy='64' r='34' stroke-width='4' opacity='0.10'/%3E%3C/g%3E%3Cg stroke='%23E8743C' stroke-width='5' stroke-linecap='round' opacity='0.85'%3E%3Cline x1='100' y1='64' x2='146' y2='110'/%3E%3Cline x1='146' y1='110' x2='100' y2='156'/%3E%3Cline x1='100' y1='156' x2='54' y2='110'/%3E%3Cline x1='54' y1='110' x2='100' y2='64'/%3E%3Cline x1='100' y1='64' x2='100' y2='156' opacity='0.55'/%3E%3Cline x1='54' y1='110' x2='146' y2='110' opacity='0.55'/%3E%3C/g%3E%3Ccircle cx='100' cy='64' r='13' fill='%23E8743C'/%3E%3Ccircle cx='146' cy='110' r='9' fill='%23E8743C'/%3E%3Ccircle cx='100' cy='156' r='9' fill='%23E8743C'/%3E%3Ccircle cx='54' cy='110' r='9' fill='%23E8743C'/%3E%3C/svg%3E";
+const BEACON_FAVICON = beaconFaviconDataUrl();
 
 const SITE_NAME = "OffGrid Devices";
 const DEFAULT_TITLE =
-  "OffGrid Beacon 2 | MagSafe LoRa Mesh Radio for Off-Grid Communication";
+  "OffGrid Beacon 2 — MagSafe Meshtastic Mesh Radio";
 const DEFAULT_DESCRIPTION =
   "OffGrid Devices makes Beacon 2 — the MagSafe-compatible LoRa mesh radio with Meshtastic pre-flashed, a 3000 mAh battery, and a replaceable SMA antenna. Off-grid communication that stays with the phone you already carry.";
+const THEME_INIT_SCRIPT = `/* OffGrid early-paint theme switcher. */
+(function () {
+  try {
+    var doc = document.documentElement;
+    var mql =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-color-scheme: light)");
+
+    function apply(prefersLight) {
+      doc.setAttribute("data-theme", prefersLight ? "light" : "dark");
+    }
+
+    apply(!!(mql && mql.matches));
+
+    if (mql) {
+      var onChange = function (e) {
+        apply(!!e.matches);
+      };
+      if (typeof mql.addEventListener === "function") {
+        mql.addEventListener("change", onChange);
+      } else if (typeof mql.addListener === "function") {
+        mql.addListener(onChange);
+      }
+    }
+  } catch (err) {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+})();`;
 
 export const metadata: Metadata = {
   metadataBase,
@@ -97,7 +129,11 @@ export const metadata: Metadata = {
   category: "technology",
   alternates: {
     canonical: "/",
+    types: {
+      "application/atom+xml": "/blog/feed.xml",
+    },
   },
+  manifest: "/manifest.webmanifest",
   robots: {
     index: true,
     follow: true,
@@ -114,7 +150,7 @@ export const metadata: Metadata = {
       { url: BEACON_FAVICON, type: "image/svg+xml" },
       { url: "/logo.svg", type: "image/svg+xml" },
     ],
-    apple: { url: "/logo.svg", type: "image/svg+xml" },
+    apple: { url: "/apple-icon.png", type: "image/png" },
   },
   openGraph: {
     title: DEFAULT_TITLE,
@@ -149,15 +185,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${archivo.variable} ${interTight.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
-      // The early-paint /theme-init.js script sets data-theme before
+      // The early-paint theme script sets data-theme before
       // React hydrates; suppress the resulting attribute mismatch warning.
       suppressHydrationWarning
     >
       <head>
-        {/* Synchronous, parser-blocking — sets <html data-theme> from
-            the user's OS preference before first paint so we don't
-            flash dark on light-mode devices. Must precede CSS. */}
-        <script src="/theme-init.js" />
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <link
           rel="preconnect"
           href="https://cdn.shopify.com"

@@ -24,55 +24,20 @@ export function HomeProductDetailsSection() {
           viewport={{ once: true, amount: 0.2 }}
           variants={fadeInLeft}
         >
-          <div
-            className="text-ember"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: 12,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-            }}
-          >
-            I · The Object
-          </div>
+          <div className="type-eyebrow text-ember">I · The Object</div>
 
-          <h2
-            className="mt-5 max-w-3xl text-bone uppercase"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 900,
-              fontSize: "clamp(40px, 6vw, 80px)",
-              lineHeight: 0.92,
-              letterSpacing: "-0.03em",
-            }}
-          >
+          <h2 className="type-display-section mt-5 max-w-3xl text-bone">
             Built like a hand tool.
           </h2>
 
-          <p
-            className="mt-7 max-w-xl text-sand"
-            style={{
-              fontFamily: "var(--font-editorial)",
-              fontStyle: "italic",
-              fontSize: 21,
-              lineHeight: 1.5,
-            }}
-          >
+          <p className="font-editorial mt-7 max-w-xl text-[21px] leading-[1.5] text-sand">
             3D-printed in sun-tolerant filament, magnet-mounted to the phone you
             already carry, with a replaceable SMA antenna and a 3000 mAh cell.
             Built to live in a pocket and shrug off the trip.
           </p>
 
           <div
-            className="mt-10 flex items-center gap-3 text-sand/70"
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontWeight: 500,
-              fontSize: 11,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-            }}
+            className="type-mono-label mt-10 flex items-center gap-3 tracking-[0.22em] text-sand/70"
             aria-hidden
           >
             <span className="h-px w-12 bg-sand/30" />

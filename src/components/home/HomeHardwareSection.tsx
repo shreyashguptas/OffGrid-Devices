@@ -3,10 +3,10 @@
 import { motion } from "framer-motion";
 import { WaypointMark } from "@/components/shared/WaypointMark";
 import { fadeInUp, staggerContainer } from "@/components/shared/motion";
-import { link2Content } from "@/content/products";
+import { beacon2Content } from "@/content/products";
 
-const QUOTE = link2Content.home.hardwareQuote;
-const ATTRIBUTION = link2Content.home.hardwareAttribution;
+const QUOTE = beacon2Content.home.hardwareQuote;
+const ATTRIBUTION = beacon2Content.home.hardwareAttribution;
 
 export function HomeHardwareSection() {
   return (
@@ -28,28 +28,10 @@ export function HomeHardwareSection() {
         </motion.div>
 
         <motion.div variants={fadeInUp}>
-          <p
-            className="text-bone"
-            style={{
-              fontFamily: "var(--font-editorial)",
-              fontStyle: "italic",
-              fontSize: "clamp(28px, 3.5vw, 44px)",
-              lineHeight: 1.18,
-              letterSpacing: "-0.01em",
-            }}
-          >
+          <p className="font-editorial text-[clamp(28px,3.5vw,44px)] leading-[1.18] tracking-[-0.01em] text-bone">
             “{QUOTE}”
           </p>
-          <div
-            className="mt-9 text-sand"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: 13,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-            }}
-          >
+          <div className="type-eyebrow mt-9 text-[13px] text-sand">
             {ATTRIBUTION}
           </div>
         </motion.div>
