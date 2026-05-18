@@ -61,6 +61,13 @@ const WHEEL_SENS = 0.0014;
 // gaps fall below this, we stop invalidating and the renderer idles.
 const SETTLE_EPSILON = 1e-4;
 
+// Rest-pose offset bounds (in world units). The canvas spans the full
+// hero on desktop; without an offset the model would land in the middle
+// of the headline text. We shift it right on wide aspects, and slightly
+// down on narrow (mobile) aspects so text stacks cleanly above it.
+const REST_OFFSET_X_MAX = 1.4;
+const REST_OFFSET_Y_MIN = -0.8;
+
 type ViewerState = {
   targetX: number;
   targetY: number;
@@ -106,6 +113,23 @@ function BeaconModel({
     const g = groupRef.current;
     const s = stateRef.current;
     const alpha = 1 - Math.exp(-ROTATION_STIFFNESS * delta);
+
+    // Aspect-aware rest position: on wide layouts (desktop) shift the
+    // model right so the headline on the left has clean breathing room;
+    // on narrow layouts (mobile) center horizontally and nudge down so
+    // it stacks below the text. Set every frame — cheap, and the demand
+    // loop already runs on resize so this naturally updates.
+    const aspect = state.size.width / state.size.height;
+    g.position.x = THREE.MathUtils.clamp(
+      (aspect - 1) * 1.6,
+      0,
+      REST_OFFSET_X_MAX,
+    );
+    g.position.y = THREE.MathUtils.clamp(
+      (aspect - 1) * 0.8,
+      REST_OFFSET_Y_MIN,
+      0,
+    );
 
     // Shortest path on Y so accumulated drag rotation doesn't unwind
     // visibly when the target jumps (e.g. release of a long drag).

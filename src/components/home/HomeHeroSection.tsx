@@ -35,10 +35,12 @@ export function HomeHeroSection() {
 
       <div aria-hidden className="absolute inset-0 topo-overlay opacity-35" />
 
-      {/* Sun glow repositioned per breakpoint so it always sits behind the model. */}
+      {/* Sun glow follows the device's on-screen position: lower-center
+          on mobile (device sits in the bottom half), upper-right on
+          desktop (device sits on the right). */}
       <div
         aria-hidden
-        className="absolute left-1/2 top-[55%] h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full md:h-64 md:w-64 lg:left-auto lg:right-[18%] lg:top-[38%] lg:translate-x-0 lg:translate-y-0 lg:h-72 lg:w-72"
+        className="absolute left-1/2 top-[72%] h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full md:h-64 md:w-64 lg:left-auto lg:right-[18%] lg:top-[38%] lg:translate-x-0 lg:translate-y-0 lg:h-72 lg:w-72"
         style={{
           background:
             "radial-gradient(circle, rgba(232,116,60,0.5), rgba(232,116,60,0.16) 55%, transparent 78%)",
@@ -46,101 +48,105 @@ export function HomeHeroSection() {
         }}
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pt-24 pb-12 sm:px-6 md:px-8 md:pt-28 md:pb-16 lg:px-10 lg:pt-32 lg:pb-24">
+      {/* Text — flows naturally above the viewer on mobile, becomes an
+          overlay layer on desktop. pointer-events kept off the wrapper
+          so drags on text pass through to the canvas; CTA opts back in. */}
+      <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-col px-5 pt-24 pb-6 sm:px-6 md:px-8 md:pt-28 md:pb-8 lg:flex-1 lg:justify-center lg:px-10 lg:pt-32 lg:pb-24">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="grid items-center gap-10 md:gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-16"
+          className="max-w-xl"
         >
-          <div className="max-w-xl">
-            <motion.div
-              variants={fadeInUp}
-              className="inline-flex items-center gap-2.5 border border-sand/25 px-3.5 py-2"
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                letterSpacing: "0.18em",
-                color: "var(--app-sand)",
-              }}
-            >
-              <span>EST. 2026 · MADE IN THE USA</span>
-              <UsFlag />
-            </motion.div>
-
-            <motion.h1
-              variants={fadeInUp}
-              className="mt-7 text-bone uppercase md:mt-8"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 900,
-                // Floor (40px) fits "Stay Connected" on a 360px-wide phone
-                // without mid-word wraps. Ceiling (104px) keeps the headline
-                // confident on ultra-wide displays.
-                fontSize: "clamp(40px, 8.5vw, 104px)",
-                lineHeight: 0.9,
-                letterSpacing: "-0.04em",
-              }}
-            >
-              {link2Content.home.heroTitle.replace(/\.$/, "")}
-              <br />
-              <span className="text-ember">
-                {link2Content.home.heroSubtitle.replace(/\.$/, "")}.
-              </span>
-            </motion.h1>
-
-            <motion.p
-              variants={fadeInUp}
-              className="mt-6 max-w-md text-sand md:mt-7"
-              style={{
-                fontFamily: "var(--font-editorial)",
-                fontStyle: "italic",
-                fontSize: "clamp(17px, 1.5vw, 24px)",
-                lineHeight: 1.4,
-              }}
-            >
-              MagSafe mesh radio. No towers. No SIMs.
-            </motion.p>
-
-            <motion.div variants={fadeInUp} className="mt-8 md:mt-10">
-              <Link2CheckoutButton
-                defaultLabel={buyLabel}
-                loadingLabel={link2Content.summary.loadingLabel}
-                className="inline-flex min-h-[56px] items-center justify-center bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:cursor-not-allowed disabled:opacity-60"
-                showArrow={false}
-              />
-            </motion.div>
-
-            <motion.p
-              variants={fadeInUp}
-              className="mt-5 text-sand/55 md:mt-6"
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-              }}
-            >
-              {/* Helper text adapts to the input modality — see globals.css */}
-              <span className="show-on-hover">
-                Hover to follow · drag to rotate · ⌘/Ctrl + scroll to zoom.
-              </span>
-              <span className="show-on-touch">
-                Drag to rotate · pinch to zoom.
-              </span>
-            </motion.p>
-          </div>
-
-          {/* Square frame on mobile/tablet, fixed-height column on desktop. */}
           <motion.div
             variants={fadeInUp}
-            role="img"
-            aria-label="OffGrid Beacon 2 mesh radio — drag or hover to rotate"
-            className="relative mx-auto aspect-square w-full max-w-[560px] sm:max-w-[640px] lg:mx-0 lg:aspect-auto lg:h-[680px] lg:max-w-none xl:h-[760px]"
+            className="inline-flex items-center gap-2 border border-sand/25 px-3 py-1.5 sm:gap-2.5 sm:px-3.5 sm:py-2"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "clamp(9px, 2.5vw, 11px)",
+              letterSpacing: "0.18em",
+              color: "var(--app-sand)",
+            }}
           >
-            <Beacon3DViewer />
+            <span>EST. 2026 · DESIGNED AND ASSEMBLED IN THE USA</span>
+            <UsFlag />
           </motion.div>
+
+          <motion.h1
+            variants={fadeInUp}
+            className="mt-6 text-bone uppercase break-words md:mt-8"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 900,
+              // Floor (36px) keeps "STAY CONNECTED" on one line at 360px;
+              // ceiling (104px) stays confident on ultra-wide displays.
+              fontSize: "clamp(36px, 8.5vw, 104px)",
+              lineHeight: 0.9,
+              letterSpacing: "-0.04em",
+            }}
+          >
+            {link2Content.home.heroTitle.replace(/\.$/, "")}
+            <br />
+            <span className="text-ember">
+              {link2Content.home.heroSubtitle.replace(/\.$/, "")}.
+            </span>
+          </motion.h1>
+
+          <motion.p
+            variants={fadeInUp}
+            className="mt-5 max-w-md text-sand md:mt-7"
+            style={{
+              fontFamily: "var(--font-editorial)",
+              fontStyle: "italic",
+              fontSize: "clamp(16px, 1.5vw, 24px)",
+              lineHeight: 1.4,
+            }}
+          >
+            MagSafe mesh radio. No towers. No SIMs.
+          </motion.p>
+
+          <motion.div variants={fadeInUp} className="pointer-events-auto mt-7 md:mt-10">
+            <Link2CheckoutButton
+              defaultLabel={buyLabel}
+              loadingLabel={link2Content.summary.loadingLabel}
+              className="inline-flex min-h-[56px] w-full items-center justify-center bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              showArrow={false}
+            />
+          </motion.div>
+
+          <motion.p
+            variants={fadeInUp}
+            className="mt-4 text-sand/55 md:mt-6"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "clamp(9px, 2.5vw, 11px)",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+            }}
+          >
+            {/* Helper text adapts to the input modality — see globals.css */}
+            <span className="show-on-hover">
+              Hover to follow · drag to rotate · ⌘/Ctrl + scroll to zoom.
+            </span>
+            <span className="show-on-touch">
+              Drag the device below to rotate · pinch to zoom.
+            </span>
+          </motion.p>
         </motion.div>
+      </div>
+
+      {/* 3D viewer.
+          Mobile: lives in the bottom region of the section as a flex
+          child — text sits above, viewer sits below, both clearly
+          visible above the fold on a typical phone.
+          Desktop: becomes an absolute overlay so the device can grow
+          past the right-column boundary when the user zooms in. */}
+      <div
+        className="relative z-[5] flex-1 min-h-[52svh] lg:absolute lg:inset-0 lg:min-h-0 lg:flex-none"
+        role="img"
+        aria-label="OffGrid Beacon 2 mesh radio — drag or hover to rotate"
+      >
+        <Beacon3DViewer />
       </div>
     </section>
   );
