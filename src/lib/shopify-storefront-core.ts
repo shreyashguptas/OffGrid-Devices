@@ -318,20 +318,6 @@ export async function getBeacon2ProductWithCache() {
   return getBeacon2ProductCached();
 }
 
-export async function createBeacon1CheckoutUrl() {
-  const product = await getBeacon1Product();
-
-  if (!product) {
-    throw new Error("Beacon 1 product could not be found in Shopify.");
-  }
-
-  if (!product.variant || !product.variant.availableForSale) {
-    throw new Error("Beacon 1 is not currently available for sale.");
-  }
-
-  return createCheckoutUrlForVariant(product.variant.id, "Beacon 1");
-}
-
 export async function createBeacon2CheckoutUrl() {
   const product = await getBeacon2Product();
 
