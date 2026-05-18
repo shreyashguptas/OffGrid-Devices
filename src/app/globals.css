@@ -167,6 +167,10 @@
 html {
   scroll-behavior: smooth;
   background-color: var(--app-bg);
+  /* framer-motion's useScroll measures targets relative to
+     document.scrollingElement (html). Without a non-static position
+     here it warns about scroll-offset calculation. */
+  position: relative;
 }
 
 body {
