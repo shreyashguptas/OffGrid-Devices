@@ -1,59 +1,105 @@
 "use client";
 
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useScroll, useTransform, motion, type MotionValue } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
-interface Image {
+interface ParallaxImage {
   src: string;
   alt?: string;
 }
 
+type Layout = {
+  scale: number;
+  top?: string;
+  left?: string;
+  height: string;
+  width: string;
+};
+
+const DEFAULT_HEIGHT = "25vh";
+const DEFAULT_WIDTH = "25vw";
+
+// Per-slot rest-frame position/size and end-of-scroll scale. Slot 0 is the
+// centered hero frame; the rest are arranged around it. ZoomParallax silently
+// caps its `images` prop at LAYOUTS.length, so callers can pass fewer but
+// extra entries are dropped.
+const LAYOUTS: readonly Layout[] = [
+  { scale: 4, height: DEFAULT_HEIGHT, width: DEFAULT_WIDTH },
+  { scale: 5, top: "-30vh", left: "5vw", height: "30vh", width: "35vw" },
+  { scale: 6, top: "-10vh", left: "-25vw", height: "45vh", width: "20vw" },
+  { scale: 5, left: "27.5vw", height: "25vh", width: "25vw" },
+  { scale: 6, top: "27.5vh", left: "5vw", height: "25vh", width: "20vw" },
+  { scale: 8, top: "27.5vh", left: "-22.5vw", height: "25vh", width: "30vw" },
+  { scale: 9, top: "22.5vh", left: "25vw", height: "15vh", width: "15vw" },
+];
+
 interface ZoomParallaxProps {
-  /** Array of images to be displayed in the parallax effect — max 7 images */
-  images: Image[];
+  images: ParallaxImage[];
 }
 
 export function ZoomParallax({ images }: ZoomParallaxProps) {
-  const container = useRef(null);
+  const container = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start start", "end end"],
   });
 
-  const scale4 = useTransform(scrollYProgress, [0, 1], [1, 4]);
-  const scale5 = useTransform(scrollYProgress, [0, 1], [1, 5]);
-  const scale6 = useTransform(scrollYProgress, [0, 1], [1, 6]);
-  const scale8 = useTransform(scrollYProgress, [0, 1], [1, 8]);
-  const scale9 = useTransform(scrollYProgress, [0, 1], [1, 9]);
-
-  const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
+  const slots = images.slice(0, LAYOUTS.length);
 
   return (
     <div ref={container} className="relative h-[300vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
-        {images.map(({ src, alt }, index) => {
-          const scale = scales[index % scales.length];
-
-          return (
-            <motion.div
-              key={index}
-              style={{ scale }}
-              className={`absolute top-0 flex h-full w-full items-center justify-center ${index === 1 ? "[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]" : ""} ${index === 2 ? "[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]" : ""} ${index === 3 ? "[&>div]:!left-[27.5vw] [&>div]:!h-[25vh] [&>div]:!w-[25vw]" : ""} ${index === 4 ? "[&>div]:!top-[27.5vh] [&>div]:!left-[5vw] [&>div]:!h-[25vh] [&>div]:!w-[20vw]" : ""} ${index === 5 ? "[&>div]:!top-[27.5vh] [&>div]:!-left-[22.5vw] [&>div]:!h-[25vh] [&>div]:!w-[30vw]" : ""} ${index === 6 ? "[&>div]:!top-[22.5vh] [&>div]:!left-[25vw] [&>div]:!h-[15vh] [&>div]:!w-[15vw]" : ""} `}
-            >
-              <div className="relative h-[25vh] w-[25vw]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src}
-                  alt={alt ?? `Parallax image ${index + 1}`}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            </motion.div>
-          );
-        })}
+        {slots.map((image, i) => (
+          <ZoomLayer
+            key={i}
+            image={image}
+            layout={LAYOUTS[i]}
+            scrollYProgress={scrollYProgress}
+            index={i}
+          />
+        ))}
       </div>
     </div>
+  );
+}
+
+function ZoomLayer({
+  image,
+  layout,
+  scrollYProgress,
+  index,
+}: {
+  image: ParallaxImage;
+  layout: Layout;
+  scrollYProgress: MotionValue<number>;
+  index: number;
+}) {
+  const scale = useTransform(scrollYProgress, [0, 1], [1, layout.scale]);
+
+  return (
+    <motion.div
+      style={{ scale }}
+      className="absolute inset-0 flex items-center justify-center"
+    >
+      <div
+        className="relative"
+        style={{
+          top: layout.top,
+          left: layout.left,
+          height: layout.height,
+          width: layout.width,
+        }}
+      >
+        <Image
+          src={image.src}
+          alt={image.alt ?? `Parallax image ${index + 1}`}
+          fill
+          sizes="(min-width: 1024px) 25vw, 50vw"
+          className="object-cover"
+          priority={index === 0}
+        />
+      </div>
+    </motion.div>
   );
 }
