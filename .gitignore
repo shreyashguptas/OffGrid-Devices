@@ -46,3 +46,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# audit tooling — local-only, not part of the product
+screenshots/
+scripts/capture_audit.py
