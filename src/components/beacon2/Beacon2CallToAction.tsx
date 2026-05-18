@@ -35,6 +35,7 @@ export function Beacon2CallToAction({
         <Beacon2CheckoutButton
           defaultLabel={beacon2Content.summary.buyLabel}
           loadingLabel={beacon2Content.summary.loadingLabel}
+          surface="product-page"
           showArrow
           className="inline-flex min-h-[56px] items-center justify-center gap-3 bg-ember px-6 py-4 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:cursor-not-allowed disabled:opacity-60 sm:px-10 sm:py-5"
         />

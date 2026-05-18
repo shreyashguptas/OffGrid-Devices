@@ -1,3 +1,0 @@
-{
-  "buildCommand": "pnpm run verify:shopify && pnpm run build"
-}

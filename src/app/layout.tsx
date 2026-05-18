@@ -6,6 +6,7 @@ import {
   Newsreader,
 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { BfCacheShell } from "@/components/BfCacheShell";
 import { Navbar } from "@/components/Navbar";
@@ -207,6 +208,7 @@ export default function RootLayout({
           <Footer />
         </BfCacheShell>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

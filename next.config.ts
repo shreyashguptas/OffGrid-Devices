@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withBotId } from "botid/next/config";
 
 const contentSecurityPolicy = [
   "base-uri 'self'",
@@ -59,4 +60,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// BotID auto-injects its client SDK and gates routes that call checkBotId()
+// server-side. The two Shopify checkout POST handlers do the gating.
+export default withBotId(nextConfig);

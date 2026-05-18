@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Faq } from "@/components/Faq";
+import { TrackBlogView } from "@/components/analytics/TrackBlogView";
 import { Beacon2CallToAction } from "@/components/beacon2/Beacon2CallToAction";
 import {
   getSectionId,
@@ -192,6 +193,7 @@ export default async function BlogPostPage({
 
   return (
     <>
+      <TrackBlogView slug={post.slug} />
       <script {...jsonLdScriptProps(articleJsonLd(post))} />
       <script
         {...jsonLdScriptProps(

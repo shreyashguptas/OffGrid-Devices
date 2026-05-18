@@ -71,6 +71,7 @@ describe("Beacon1CheckoutButton", () => {
     render(
       <Beacon1CheckoutButton
         defaultLabel="Buy Beacon 1"
+        surface="product-page"
         className="rounded-full"
       />,
     );
@@ -93,6 +94,7 @@ describe("Beacon1CheckoutButton", () => {
     render(
       <Beacon1CheckoutButton
         defaultLabel="Buy Beacon 1"
+        surface="product-page"
         className="rounded-full"
       />,
     );
@@ -108,6 +110,7 @@ describe("Beacon1CheckoutButton", () => {
     render(
       <Beacon1CheckoutButton
         defaultLabel="Buy Beacon 1"
+        surface="product-page"
         className="rounded-full"
       />,
     );
@@ -146,6 +149,7 @@ describe("Beacon1CheckoutButton", () => {
       <Beacon1CheckoutButton
         defaultLabel="Buy Beacon 1"
         loadingLabel="Opening Checkout..."
+        surface="product-page"
         className="rounded-full"
       />,
     );
@@ -195,6 +199,7 @@ describe("Beacon1CheckoutButton", () => {
     render(
       <Beacon1CheckoutButton
         defaultLabel="Buy Beacon 1"
+        surface="product-page"
         className="rounded-full"
       />,
     );
@@ -224,6 +229,7 @@ describe("Beacon1CheckoutButton", () => {
     render(
       <Beacon1CheckoutButton
         defaultLabel="Buy Beacon 1"
+        surface="product-page"
         className="rounded-full"
       />,
     );

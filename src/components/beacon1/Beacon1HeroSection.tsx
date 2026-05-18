@@ -30,6 +30,7 @@ export function Beacon1HeroSection() {
               <Beacon1CheckoutButton
                 defaultLabel={beacon1Content.summary.buyLabel}
                 loadingLabel={beacon1Content.summary.loadingLabel}
+                surface="hero"
                 className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-accent px-7 py-3.5 font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20 sm:px-8 sm:py-4"
               />
               <Link

@@ -248,6 +248,7 @@ function NavbarContent() {
           <Beacon2CheckoutButton
             defaultLabel={beacon2Content.summary.buyLabel}
             loadingLabel={beacon2Content.summary.loadingLabel}
+            surface="nav-desktop"
             className="bg-bone px-5 py-3 font-display text-[12px] font-bold tracking-[0.14em] uppercase text-pitch transition-all duration-300 hover:bg-ember hover:text-pitch disabled:opacity-60 disabled:cursor-not-allowed"
           />
         </div>
@@ -370,6 +371,7 @@ function NavbarContent() {
               <Beacon2CheckoutButton
                 defaultLabel={beacon2Content.summary.buyLabel}
                 loadingLabel={beacon2Content.summary.loadingLabel}
+                surface="nav-mobile"
                 className="mt-2 px-5 py-4 bg-bone text-pitch font-display text-[12px] font-bold tracking-[0.14em] uppercase text-center hover:bg-ember transition-all duration-300"
               />
             </div>

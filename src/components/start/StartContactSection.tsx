@@ -1,3 +1,6 @@
+"use client";
+
+import { trackContactTap } from "@/lib/analytics";
 import { startContent } from "@/content/start";
 import { StartSection } from "./StartSection";
 
@@ -18,6 +21,7 @@ export function StartContactSection() {
           </p>
           <a
             href={`mailto:${contact.supportEmail}`}
+            onClick={() => trackContactTap("email")}
             className="mt-3 block break-all font-display text-2xl font-semibold tracking-tight text-foreground transition-colors hover:text-accent-dark md:text-3xl"
           >
             {contact.supportEmail}
@@ -40,6 +44,7 @@ export function StartContactSection() {
               <li key={link.href}>
                 <a
                   href={link.href}
+                  onClick={() => trackContactTap("community")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 text-base text-foreground/85 transition-colors hover:text-accent-dark"
