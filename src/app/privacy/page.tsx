@@ -1,0 +1,167 @@
+import type { Metadata } from "next";
+import { LegalPageShell } from "@/components/legal/LegalPageShell";
+import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
+
+const TITLE = "Privacy Policy — OffGrid Devices";
+const DESCRIPTION =
+  "How OffGrid Devices collects, uses, and protects your information. Templated US e-commerce policy — Shopify handles checkout and payments; we collect minimal data.";
+
+export const metadata: Metadata = {
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/privacy" },
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    url: "/privacy",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  twitter: { card: "summary", title: TITLE, description: DESCRIPTION },
+};
+
+export default function PrivacyPage() {
+  return (
+    <>
+      <script
+        {...jsonLdScriptProps(
+          breadcrumbJsonLd([
+            { name: "Home", url: "/" },
+            { name: "Privacy", url: "/privacy" },
+          ]),
+        )}
+      />
+      <LegalPageShell
+        eyebrow="LEGAL · PRIVACY"
+        title="Privacy Policy"
+        lastUpdated="2026-05-18"
+      >
+        <p>
+          OffGrid Devices (&ldquo;OffGrid&rdquo;, &ldquo;we&rdquo;,
+          &ldquo;us&rdquo;) respects your privacy. This policy explains what
+          information we collect when you visit offgridevices.com or purchase
+          an OffGrid product, how we use that information, and the rights you
+          have over it. This is a templated policy intended as a starting
+          point — it is not legal advice. If you need a binding privacy
+          document for a specific jurisdiction, consult a qualified attorney.
+        </p>
+
+        <h2>What we collect</h2>
+        <h3>Information you give us</h3>
+        <ul>
+          <li>
+            <strong>Order data</strong> — name, shipping address, billing
+            address, email, phone (optional), and the items you ordered.
+            Collected by our checkout provider, Shopify, on the
+            shop.offgridevices.com checkout page.
+          </li>
+          <li>
+            <strong>Support email</strong> — when you email
+            support@offgridevices.com, we receive the address you sent from
+            and the contents of your message.
+          </li>
+        </ul>
+
+        <h3>Information collected automatically</h3>
+        <ul>
+          <li>
+            <strong>Vercel Analytics</strong> — page views, referrer, and a
+            non-identifying device fingerprint (Vercel does not set cookies
+            for analytics and does not collect IP addresses in identifiable
+            form). See Vercel&rsquo;s data policy at vercel.com/legal.
+          </li>
+          <li>
+            <strong>Shopify checkout</strong> — Shopify collects standard
+            e-commerce data (IP, browser, items viewed, cart state) during
+            checkout to process payment, prevent fraud, and ship your order.
+            See shopify.com/legal/privacy.
+          </li>
+          <li>
+            <strong>Server logs</strong> — Vercel records request metadata
+            (timestamp, path, status code, response time) for operational
+            purposes; retained briefly.
+          </li>
+        </ul>
+
+        <h2>How we use information</h2>
+        <ul>
+          <li>To fulfill, ship, and provide support for your order.</li>
+          <li>
+            To send order confirmation and shipping update emails (via
+            Shopify).
+          </li>
+          <li>
+            To respond when you contact support@offgridevices.com.
+          </li>
+          <li>
+            To understand site traffic in aggregate so we can improve the
+            product and the site.
+          </li>
+        </ul>
+
+        <h2>What we do not do</h2>
+        <ul>
+          <li>We do not sell your information to third parties.</li>
+          <li>
+            We do not run third-party advertising trackers (no Meta pixel,
+            no Google Ads tag, no TikTok pixel).
+          </li>
+          <li>
+            We do not email marketing newsletters unless you opt in
+            separately.
+          </li>
+        </ul>
+
+        <h2>Third parties we rely on</h2>
+        <ul>
+          <li>
+            <strong>Shopify</strong> — checkout, payment processing, order
+            fulfillment data. shopify.com/legal/privacy
+          </li>
+          <li>
+            <strong>Vercel</strong> — hosting, analytics, deployment.
+            vercel.com/legal
+          </li>
+          <li>
+            <strong>USPS / UPS</strong> — shipping. Shipping data is shared
+            with the carrier you choose at checkout.
+          </li>
+        </ul>
+
+        <h2>Your rights</h2>
+        <p>
+          If you are a California resident (CCPA / CPRA), an EU/UK resident
+          (GDPR), or otherwise covered by a comprehensive privacy law, you
+          have the right to request a copy of the information we hold about
+          you, to request correction or deletion, and to withdraw consent
+          for processing. Email{" "}
+          <a href="mailto:support@offgridevices.com">
+            support@offgridevices.com
+          </a>{" "}
+          with your request. We respond within 30 days.
+        </p>
+
+        <h2>Children</h2>
+        <p>
+          OffGrid products are not directed to children under 13. We do not
+          knowingly collect personal information from children under 13.
+        </p>
+
+        <h2>Changes to this policy</h2>
+        <p>
+          We may update this policy. Material changes will be noted with a
+          new &ldquo;Last updated&rdquo; date at the top of this page.
+          Continued use of the site after a change constitutes acceptance.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          OffGrid LLC · San Francisco, CA ·{" "}
+          <a href="mailto:support@offgridevices.com">
+            support@offgridevices.com
+          </a>
+        </p>
+      </LegalPageShell>
+    </>
+  );
+}

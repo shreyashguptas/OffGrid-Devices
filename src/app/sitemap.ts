@@ -9,6 +9,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     beacon1: "2026-05-17",
     blog: "2026-05-18",
     beacon2Start: "2026-05-10",
+    about: "2026-05-18",
+    shipping: "2026-05-18",
+    returns: "2026-05-18",
+    privacy: "2026-05-18",
+    terms: "2026-05-18",
   } as const;
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -41,6 +46,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: ROUTE_LAST_MODIFIED.beacon2Start,
       changeFrequency: "monthly",
       priority: 0.6,
+    },
+    {
+      url: absoluteUrl("/about"),
+      lastModified: ROUTE_LAST_MODIFIED.about,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: absoluteUrl("/shipping"),
+      lastModified: ROUTE_LAST_MODIFIED.shipping,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: absoluteUrl("/returns"),
+      lastModified: ROUTE_LAST_MODIFIED.returns,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: absoluteUrl("/privacy"),
+      lastModified: ROUTE_LAST_MODIFIED.privacy,
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: absoluteUrl("/terms"),
+      lastModified: ROUTE_LAST_MODIFIED.terms,
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
   ];
 

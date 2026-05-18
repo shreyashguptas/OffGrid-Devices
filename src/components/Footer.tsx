@@ -40,11 +40,26 @@ export function Footer() {
       heading: "Trail",
       links: [
         { label: "Field notes", href: "/blog" },
+        { label: "About", href: "/about" },
+      ],
+    },
+    {
+      heading: "Trust",
+      links: [
+        { label: "Shipping", href: "/shipping" },
+        { label: "Returns & warranty", href: "/returns" },
+        { label: "Privacy", href: "/privacy" },
+        { label: "Terms", href: "/terms" },
       ],
     },
     {
       heading: "Crew",
       links: [
+        {
+          label: "support@offgridevices.com",
+          href: "mailto:support@offgridevices.com",
+          external: true,
+        },
         {
           label: "X / Twitter",
           href: "https://x.com/ShreyashGuptas",
@@ -68,7 +83,7 @@ export function Footer() {
         transition={{ duration: 0.5 }}
         className="mx-auto max-w-7xl px-6 py-16 md:py-20"
       >
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr_1.4fr]">
           <div>
             <BeaconWordmark size={20} />
             <p className="font-editorial mt-5 max-w-xs text-[15px] leading-[1.55] text-sand/75">

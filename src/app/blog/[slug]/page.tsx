@@ -296,6 +296,60 @@ export default async function BlogPostPage({
               ))}
             </article>
           </div>
+
+          {/* Author bio — visible byline + bio block strengthens E-E-A-T
+              beyond what the BlogPosting JSON-LD alone signals. Links to
+              /about (founder page) so quality raters and AI Overviews can
+              corroborate authorship. */}
+          <aside className="mt-12 border-t border-border-subtle pt-10">
+            <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center bg-accent/15 font-display text-lg font-bold uppercase tracking-tight text-accent">
+                {post.author.name
+                  .split(" ")
+                  .map((p) => p[0])
+                  .join("")
+                  .slice(0, 2)}
+              </div>
+              <div className="flex-1">
+                <p className="text-xs uppercase tracking-[0.24em] text-muted">
+                  Written by
+                </p>
+                <h3 className="mt-1 font-display text-xl font-semibold text-foreground">
+                  {post.author.name}
+                </h3>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-light md:text-base">
+                  Founder of OffGrid Devices and the builder behind OffGrid
+                  Beacon — a MagSafe-compatible LoRa mesh radio that ships
+                  with Meshtastic pre-flashed. Based in San Francisco.
+                </p>
+                <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs uppercase tracking-[0.18em] text-muted">
+                  <Link href="/about" className="hover:text-accent">
+                    About OffGrid →
+                  </Link>
+                  {post.author.sameAs?.map((href) => {
+                    const label = href.includes("x.com")
+                      ? "X / Twitter →"
+                      : href.includes("github.com")
+                        ? "GitHub →"
+                        : href.includes("youtube.com")
+                          ? "YouTube →"
+                          : "Profile →";
+                    return (
+                      <a
+                        key={href}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-accent"
+                      >
+                        {label}
+                      </a>
+                    );
+                  })}
+                </p>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
