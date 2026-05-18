@@ -1,10 +1,18 @@
 export type BlogSection =
-  | { type: "paragraph" | "heading"; content: string }
-  | { type: "list" | "orderedList"; items: string[] };
+  | { type: "paragraph"; content: string }
+  | { type: "heading"; content: string; id?: string }
+  | { type: "subheading"; content: string; id?: string }
+  | { type: "list"; items: string[] }
+  | { type: "orderedList"; items: string[] }
+  | { type: "image"; src: string; alt: string; caption?: string }
+  | { type: "quote"; content: string; cite?: string }
+  | { type: "callout"; tone: "info" | "warn" | "tip"; content: string }
+  | { type: "code"; code: string; language?: string };
 
-type BlogAuthor = {
+export type BlogAuthor = {
   name: string;
   url?: string;
+  sameAs?: string[];
 };
 
 type BlogFaqItem = {
@@ -20,6 +28,7 @@ export type BlogPost = {
   readTime: string;
   category: string;
   image: string;
+  heroImageAlt?: string;
   sections: BlogSection[];
   // SEO + schema fields
   seoTitle?: string;
@@ -33,7 +42,10 @@ export type BlogPost = {
   relatedSlugs?: string[];
 };
 
-const DEFAULT_AUTHOR: BlogAuthor = { name: "Shreyash Gupta" };
+const DEFAULT_AUTHOR: BlogAuthor = {
+  name: "Shreyash Gupta",
+  sameAs: ["https://x.com/ShreyashGuptas", "https://github.com/shreyashguptas"],
+};
 
 export const blogPosts = [
   {
@@ -61,6 +73,7 @@ export const blogPosts = [
     category: "Story",
     author: DEFAULT_AUTHOR,
     image: "/beacon-2/hero-front.png",
+    heroImageAlt: "OffGrid Beacon 2 MagSafe LoRa mesh radio with antenna",
     sections: [
       {
         type: "paragraph",

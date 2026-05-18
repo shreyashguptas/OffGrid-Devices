@@ -4,8 +4,8 @@ Marketing site and storefront shell for OffGrid devices, built with Next.js App 
 
 Current product coverage:
 
-- `Link 1` product storytelling, reviews, and Shopify checkout
-- `Link 2` placeholder page with `Coming soon` status
+- `Beacon 1` product storytelling, reviews, and Shopify checkout
+- `Beacon 2` homepage product experience and Shopify checkout
 - blog content for setup and onboarding
 
 ## Requirements
@@ -28,13 +28,14 @@ Open `http://localhost:3000`.
 ## Main app structure
 
 - `src/app/page.tsx` - homepage composition
-- `src/app/products/link-1/page.tsx` - Link 1 product page
-- `src/app/products/link-2/page.tsx` - Link 2 placeholder page
+- `src/app/products/beacon-1/page.tsx` - Beacon 1 product page
+- `src/app/products/beacon-2/page.tsx` - Beacon 2 redirect to homepage
 - `src/app/blog/page.tsx` - blog listing
 - `src/app/blog/[slug]/page.tsx` - blog detail page
 - `src/content/` - shared product and blog content
 - `src/components/home/` - homepage sections
-- `src/components/link1/` - Link 1 product sections and CTA
+- `src/components/beacon1/` - Beacon 1 product sections and CTA
+- `src/components/beacon2/` - Beacon 2 CTA components
 
 ## Commands
 
@@ -73,8 +74,8 @@ Product handles are **not environment variables** — they live in code, in
 
 ```ts
 export const SHOPIFY_PRODUCT_HANDLES = {
-  "link-1": "link-1",
-  "link-2": "beacon-2-by-offgrid-magsafe-compatible-mesh-communicator",
+  "beacon-1": "link-1",
+  "beacon-2": "beacon-2-by-offgrid-magsafe-compatible-mesh-communicator",
 } as const;
 ```
 
@@ -99,17 +100,17 @@ to confirm.
 ### Adding a product
 
 1. Add a new entry to `SHOPIFY_PRODUCT_HANDLES` in
-   `src/lib/shopify-products.ts` (use the slot key `"link-N"` for the next N).
-2. Add the matching `getLinkNProduct` / `getLinkNProductWithCache` /
-   `createLinkNCheckoutUrl` exports in `src/lib/shopify-storefront-core.ts`,
-   following the link-1 / link-2 pattern (slot key passed to
+   `src/lib/shopify-products.ts` (use the slot key `"beacon-N"` for the next N).
+2. Add the matching `getBeaconNProduct` / `getBeaconNProductWithCache` /
+   `createBeaconNCheckoutUrl` exports in `src/lib/shopify-storefront-core.ts`,
+   following the beacon-1 / beacon-2 pattern (slot key passed to
    `getShopifyHandle`).
 3. Re-export from `src/lib/shopify.ts`.
-4. Scaffold the routes: `src/app/api/shopify/link-N/route.ts` and
-   `…/checkout/route.ts` (copy from link-1).
-5. Scaffold the page and components under `src/app/products/link-N/` and
-   `src/components/linkN/`.
-6. Optional: add `src/lib/verify-linkN-storefront.ts` for the
+4. Scaffold the routes: `src/app/api/shopify/beacon-N/route.ts` and
+   `…/checkout/route.ts` (copy from beacon-1).
+5. Scaffold the page and components under `src/app/products/beacon-N/` and
+   `src/components/beaconN/`.
+6. Optional: add `src/lib/verify-beaconN-storefront.ts` for the
    `pnpm verify:shopify` gate.
 
 No `.env.local`, `.env.example`, or Vercel env changes are needed.

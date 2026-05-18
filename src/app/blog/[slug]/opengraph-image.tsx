@@ -7,6 +7,7 @@ import {
   BLOG_OG_MUTED,
   blogOgShellStyle,
 } from "@/lib/blogOgLayout";
+import { loadArchivoFont } from "@/lib/ogFont";
 
 export const alt = "OffGrid blog post";
 export const size = { width: 1200, height: 630 };
@@ -26,6 +27,7 @@ export default async function PostOgImage({
   const title = post?.title ?? "OffGrid Blog";
   const category = post?.category ?? "OffGrid";
   const readTime = post?.readTime;
+  const archivoData = await loadArchivoFont();
 
   return new ImageResponse(
     (
@@ -88,6 +90,16 @@ export default async function PostOgImage({
         </div>
       </div>
     ),
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Archivo",
+          data: archivoData,
+          weight: 900,
+          style: "normal",
+        },
+      ],
+    },
   );
 }

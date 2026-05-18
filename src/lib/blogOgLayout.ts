@@ -17,5 +17,5 @@ export const blogOgShellStyle = {
   padding: "80px",
   background: BLOG_OG_GRADIENT,
   color: BLOG_OG_FG,
-  fontFamily: "sans-serif",
+  fontFamily: "Archivo",
 } as const;

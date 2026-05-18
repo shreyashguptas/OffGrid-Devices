@@ -276,50 +276,50 @@ async function createCheckoutUrlForVariant(
   return url.toString();
 }
 
-export async function getLink1Product(): Promise<ShopifyStorefrontProduct | null> {
+export async function getBeacon1Product(): Promise<ShopifyStorefrontProduct | null> {
   if (!getShopifyEnv().isConfigured) {
     return null;
   }
 
-  return getProductByHandle(getShopifyHandle("link-1"));
+  return getProductByHandle(getShopifyHandle("beacon-1"));
 }
 
-export async function getLink2Product(): Promise<ShopifyStorefrontProduct | null> {
+export async function getBeacon2Product(): Promise<ShopifyStorefrontProduct | null> {
   if (!getShopifyEnv().isConfigured) {
     return null;
   }
 
-  return getProductByHandle(getShopifyHandle("link-2"));
+  return getProductByHandle(getShopifyHandle("beacon-2"));
 }
 
-const getLink1ProductCached = unstable_cache(
-  async () => getLink1Product(),
-  ["shopify-link-1-product"],
+const getBeacon1ProductCached = unstable_cache(
+  async () => getBeacon1Product(),
+  ["shopify-beacon-1-product"],
   {
     revalidate: 30,
-    tags: ["shopify-link-1-product"],
+    tags: ["shopify-beacon-1-product"],
   },
 );
 
-const getLink2ProductCached = unstable_cache(
-  async () => getLink2Product(),
-  ["shopify-link-2-product"],
+const getBeacon2ProductCached = unstable_cache(
+  async () => getBeacon2Product(),
+  ["shopify-beacon-2-product"],
   {
     revalidate: 30,
-    tags: ["shopify-link-2-product"],
+    tags: ["shopify-beacon-2-product"],
   },
 );
 
-export async function getLink1ProductWithCache() {
-  return getLink1ProductCached();
+export async function getBeacon1ProductWithCache() {
+  return getBeacon1ProductCached();
 }
 
-export async function getLink2ProductWithCache() {
-  return getLink2ProductCached();
+export async function getBeacon2ProductWithCache() {
+  return getBeacon2ProductCached();
 }
 
-export async function createLink1CheckoutUrl() {
-  const product = await getLink1Product();
+export async function createBeacon1CheckoutUrl() {
+  const product = await getBeacon1Product();
 
   if (!product) {
     throw new Error("Beacon 1 product could not be found in Shopify.");
@@ -332,8 +332,8 @@ export async function createLink1CheckoutUrl() {
   return createCheckoutUrlForVariant(product.variant.id, "Beacon 1");
 }
 
-export async function createLink2CheckoutUrl() {
-  const product = await getLink2Product();
+export async function createBeacon2CheckoutUrl() {
+  const product = await getBeacon2Product();
 
   if (!product) {
     throw new Error("Beacon 2 product could not be found in Shopify.");

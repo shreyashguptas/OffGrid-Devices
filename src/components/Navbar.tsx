@@ -188,7 +188,7 @@ function NavbarContent() {
                           {product.image ? (
                             <Image
                               src={product.image}
-                              alt={product.name}
+                              alt={`OffGrid ${product.name} MagSafe LoRa mesh radio`}
                               width={48}
                               height={48}
                               className="w-full h-full object-cover"
@@ -334,7 +334,7 @@ function NavbarContent() {
                             {product.image ? (
                               <Image
                                 src={product.image}
-                                alt={product.name}
+                                alt={`OffGrid ${product.name} MagSafe LoRa mesh radio`}
                                 width={32}
                                 height={32}
                                 className="w-full h-full object-cover"

@@ -1,11 +1,17 @@
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
-import { link1Content } from "@/content/link1";
-import type { BlogPost } from "@/content/blog";
+import type { BlogPost, BlogSection } from "@/content/blog";
 
 const ORGANIZATION_NAME = "OffGrid Devices";
 const ORGANIZATION_LEGAL = "OffGrid Devices";
 const DEFAULT_AUTHOR_NAME = "Shreyash Gupta";
 const LOGO_PATH = "/logo.svg";
+
+function absoluteSiteUrl(pathOrUrl: string): string {
+  if (/^https?:\/\//i.test(pathOrUrl)) {
+    return pathOrUrl;
+  }
+  return absoluteUrl(pathOrUrl);
+}
 
 export function organizationJsonLd() {
   return {
@@ -23,6 +29,16 @@ export function organizationJsonLd() {
       "@type": "Person",
       name: DEFAULT_AUTHOR_NAME,
     },
+    sameAs: [
+      "https://x.com/ShreyashGuptas",
+      "https://www.youtube.com/channel/UCe0X6IPIEuNpCvuQtOlKNrA",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "support@offgridevices.com",
+      contactType: "customer support",
+      availableLanguage: ["en"],
+    },
     slogan: "Stay connected. Go anywhere.",
   } as const;
 }
@@ -39,59 +55,82 @@ export function websiteJsonLd() {
   } as const;
 }
 
-export function productJsonLd() {
-  const images = [
-    absoluteUrl(link1Content.summary.heroImage.src),
-    link1Content.summary.productImage.src,
-  ];
-  const ratingValue = 5.0;
-  const reviewCount = link1Content.testimonials.length; // 6 written reviews on page
-  const customerCount = 28; // displayed "Loved by 28+ customers"
+export type ProductSchemaInput = {
+  slot: "beacon-1" | "beacon-2";
+  brandedName: string;
+  shortName: string;
+  description: string;
+  sku: string;
+  category: string;
+  url: string;
+  images: string[];
+  aggregateRating?: { ratingValue: string; reviewCount: number };
+  reviews?: Array<{ name: string; date: string; review: string }>;
+  offer?: {
+    price?: string;
+    priceCurrency: string;
+    availability: "InStock" | "OutOfStock" | "Discontinued";
+    priceValidUntil?: string;
+  };
+};
 
-  return {
+export function productJsonLd(input: ProductSchemaInput) {
+  const product: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "@id": `${absoluteUrl("/products/link-1")}#product`,
-    name: link1Content.summary.brandedName,
-    alternateName: link1Content.summary.name,
-    description:
-      "MagSafe-compatible LoRa mesh radio with Meshtastic-ready firmware. Snap-on off-grid communication that stays with the phone you already carry.",
-    sku: "OFFGRID-LINK-1",
+    "@id": `${absoluteUrl(input.url)}#product`,
+    name: input.brandedName,
+    alternateName: input.shortName,
+    description: input.description,
+    sku: input.sku,
     brand: {
       "@type": "Brand",
       name: ORGANIZATION_NAME,
     },
-    image: images,
-    category: "Radios > LoRa Mesh Radios",
-    url: absoluteUrl("/products/link-1"),
-    aggregateRating: {
+    image: input.images.map(absoluteSiteUrl),
+    category: input.category,
+    url: absoluteUrl(input.url),
+  };
+
+  if (input.aggregateRating) {
+    product.aggregateRating = {
       "@type": "AggregateRating",
-      ratingValue: ratingValue.toFixed(1),
-      reviewCount: Math.max(reviewCount, customerCount),
+      ratingValue: input.aggregateRating.ratingValue,
+      reviewCount: input.aggregateRating.reviewCount,
       bestRating: "5",
       worstRating: "1",
-    },
-    review: link1Content.testimonials.slice(0, 5).map((t) => ({
+    };
+  }
+
+  if (input.reviews?.length) {
+    product.review = input.reviews.slice(0, 5).map((review) => ({
       "@type": "Review",
-      author: { "@type": "Person", name: t.name },
-      datePublished: t.date,
-      reviewBody: t.review,
+      author: { "@type": "Person", name: review.name },
+      datePublished: review.date,
+      reviewBody: review.review,
       reviewRating: {
         "@type": "Rating",
         ratingValue: "5",
         bestRating: "5",
         worstRating: "1",
       },
-    })),
-    offers: {
+    }));
+  }
+
+  if (input.offer?.price) {
+    product.offers = {
       "@type": "Offer",
-      url: absoluteUrl("/products/link-1"),
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
+      url: absoluteUrl(input.url),
+      price: input.offer.price,
+      priceCurrency: input.offer.priceCurrency,
+      availability: `https://schema.org/${input.offer.availability}`,
+      priceValidUntil: input.offer.priceValidUntil,
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@type": "Organization", name: ORGANIZATION_NAME },
-    },
-  } as const;
+    };
+  }
+
+  return product;
 }
 
 export type BreadcrumbItem = { name: string; url: string };
@@ -107,6 +146,40 @@ export function breadcrumbJsonLd(items: BreadcrumbItem[]) {
       item: absoluteUrl(item.url),
     })),
   } as const;
+}
+
+function textForSection(section: BlogSection): string {
+  switch (section.type) {
+    case "paragraph":
+    case "heading":
+    case "subheading":
+    case "quote":
+    case "callout":
+      return section.content;
+    case "list":
+    case "orderedList":
+      return section.items.join(" ");
+    case "image":
+      return [section.alt, section.caption].filter(Boolean).join(" ");
+    case "code":
+      return section.code;
+  }
+}
+
+function countWords(post: BlogPost): number {
+  const text = post.sections.map(textForSection).join(" ").trim();
+  if (!text) {
+    return 0;
+  }
+  return text.split(/\s+/).length;
+}
+
+function readTimeToDuration(readTime: string): string | undefined {
+  const match = readTime.match(/(\d+)\s*min/i);
+  if (!match) {
+    return undefined;
+  }
+  return `PT${match[1]}M`;
 }
 
 export function articleJsonLd(post: BlogPost) {
@@ -132,10 +205,13 @@ export function articleJsonLd(post: BlogPost) {
       "@type": "Person",
       name: post.author?.name ?? DEFAULT_AUTHOR_NAME,
       url: post.author?.url,
+      sameAs: post.author?.sameAs,
     },
     publisher: { "@id": `${getSiteUrl()}#organization` },
     keywords: post.keywords?.join(", "),
     articleSection: post.category,
+    wordCount: countWords(post),
+    timeRequired: readTimeToDuration(post.readTime),
     inLanguage: "en-US",
   } as const;
 }

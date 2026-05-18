@@ -1,9 +1,9 @@
 import "server-only";
 
 export {
-  createLink1CheckoutUrl,
-  createLink2CheckoutUrl,
-  getLink1ProductWithCache,
-  getLink2ProductWithCache,
+  createBeacon1CheckoutUrl,
+  createBeacon2CheckoutUrl,
+  getBeacon1ProductWithCache,
+  getBeacon2ProductWithCache,
   hasShopifyStorefrontConfig,
 } from "./shopify-storefront-core";

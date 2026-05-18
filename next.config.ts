@@ -17,6 +17,25 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/products/link-1",
+        destination: "/products/beacon-1",
+        statusCode: 301,
+      },
+      {
+        source: "/products/link-2",
+        destination: "/",
+        statusCode: 301,
+      },
+      {
+        source: "/start",
+        destination: "/beacon-2/start",
+        statusCode: 301,
+      },
+    ];
+  },
   async headers() {
     return [
       {

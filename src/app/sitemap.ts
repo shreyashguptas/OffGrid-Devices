@@ -3,28 +3,39 @@ import { allBlogPosts } from "@/content/blog";
 import { absoluteUrl } from "@/lib/siteUrl";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const ROUTE_LAST_MODIFIED = {
+    home: "2026-05-18",
+    beacon1: "2026-05-17",
+    blog: "2026-05-18",
+    beacon2Start: "2026-05-10",
+  } as const;
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: absoluteUrl("/"),
-      lastModified: now,
+      lastModified: ROUTE_LAST_MODIFIED.home,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: absoluteUrl("/products/link-1"),
-      lastModified: now,
+      url: absoluteUrl("/products/beacon-1"),
+      lastModified: ROUTE_LAST_MODIFIED.beacon1,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: absoluteUrl("/blog"),
-      lastModified: now,
+      lastModified: ROUTE_LAST_MODIFIED.blog,
       changeFrequency: "weekly",
       priority: 0.8,
     },
-    // /products/link-2 deliberately excluded — placeholder is noindex.
+    {
+      url: absoluteUrl("/beacon-2/start"),
+      lastModified: ROUTE_LAST_MODIFIED.beacon2Start,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    // /products/beacon-2 deliberately excluded — it redirects to home.
   ];
 
   const blogRoutes: MetadataRoute.Sitemap = allBlogPosts.map((post) => ({

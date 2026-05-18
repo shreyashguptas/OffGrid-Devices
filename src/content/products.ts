@@ -1,4 +1,4 @@
-import { link1Content } from "./link1";
+import { beacon1Content } from "./beacon1";
 
 const SOLD_OUT_LABEL = "Sold out";
 
@@ -19,17 +19,17 @@ export const siteProducts = [
     badge: null,
   },
   {
-    name: link1Content.summary.name,
-    subtitle: `OffGrid · ${link1Content.summary.subtitle}`,
-    href: link1Content.summary.href,
-    image: link1Content.summary.productImage.src,
+    name: beacon1Content.summary.name,
+    subtitle: `OffGrid · ${beacon1Content.summary.subtitle}`,
+    href: beacon1Content.summary.href,
+    image: beacon1Content.summary.productImage.src,
     badge: SOLD_OUT_LABEL,
   },
 ] satisfies SiteProduct[];
 
-export type Link2Spec = { label: string; value: string };
-export type Link2FieldRow = readonly [string, string];
-export type Link2FieldNote = {
+export type Beacon2Spec = { label: string; value: string };
+export type Beacon2FieldRow = readonly [string, string];
+export type Beacon2FieldNote = {
   tag: string;
   title: string;
   body: string;
@@ -37,12 +37,12 @@ export type Link2FieldNote = {
   image: string;
   alt: string;
 };
-export type Link2Stat = {
+export type Beacon2Stat = {
   metric: string;
   label: string;
 };
 
-export const link2Content = {
+export const beacon2Content = {
   name: "Beacon 2",
   brandedName: "OffGrid Beacon 2",
   summary: {
@@ -78,7 +78,7 @@ export const link2Content = {
         ["FIRMWARE", "Meshtastic · pre-flashed"],
         ["INCLUDED", "Belt clip · whistle"],
         ["BUILD", "Sun-tolerant filament"],
-      ] satisfies ReadonlyArray<Link2FieldRow>,
+      ] satisfies ReadonlyArray<Beacon2FieldRow>,
       quote:
         "“Snap it on, swap the antenna, stay on the mesh for weeks.”",
     },
@@ -87,7 +87,7 @@ export const link2Content = {
       { metric: "3000 mAh", label: "weeks of standby" },
       { metric: "MagSafe", label: "snaps to your phone" },
       { metric: "USB-C", label: "fast-charge ready" },
-    ] satisfies Link2Stat[],
+    ] satisfies Beacon2Stat[],
     fieldNotes: [
       {
         tag: "DAILY · MAGSAFE",
@@ -113,7 +113,7 @@ export const link2Content = {
         image: "/beacon-2/feature-battery.png",
         alt: "Beacon 2 lying flat in the belt-clip cradle",
       },
-    ] satisfies Link2FieldNote[],
+    ] satisfies Beacon2FieldNote[],
     hardwareRows: [
       ["SHELL", "Heat-resistant 3D-printed filament"],
       ["CORE", "RAK4630 · nRF52840 · SX1262"],
@@ -121,7 +121,7 @@ export const link2Content = {
       ["MOUNT", "MagSafe · N48H magnet ring"],
       ["ANTENNA", "Replaceable SMA · external"],
       ["BATTERY", "3000 mAh · USB-C"],
-    ] satisfies ReadonlyArray<Link2FieldRow>,
+    ] satisfies ReadonlyArray<Beacon2FieldRow>,
     hardwareQuote:
       "It feels less like a gadget and more like a piece of expedition gear. The kind of thing you stop noticing in your pocket — until the moment you need it.",
     hardwareAttribution: "Notes from the field · OffGrid · 2026",
@@ -218,5 +218,5 @@ export const link2Content = {
     { label: "Antenna", value: "Replaceable SMA · external" },
     { label: "Firmware", value: "Meshtastic · pre-flashed" },
     { label: "Carry", value: "Magnet mount or belt clip" },
-  ] satisfies Link2Spec[],
+  ] satisfies Beacon2Spec[],
 };

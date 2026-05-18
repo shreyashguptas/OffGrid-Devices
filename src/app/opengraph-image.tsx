@@ -1,13 +1,15 @@
 import { ImageResponse } from "next/og";
 import { BEACON_MARK_BONE, BEACON_MARK_EMBER } from "@/lib/beaconMarkSvg";
+import { loadArchivoFont } from "@/lib/ogFont";
 
-export const runtime = "edge";
 export const alt =
   "OffGrid Devices — MagSafe LoRa mesh radio for off-grid communication";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OgImage() {
+export default async function OgImage() {
+  const archivoData = await loadArchivoFont();
+
   return new ImageResponse(
     (
       <div
@@ -21,7 +23,7 @@ export default function OgImage() {
           background:
             "radial-gradient(ellipse 120% 80% at 80% 30%, #4a3826 0%, transparent 50%), radial-gradient(ellipse 90% 100% at 20% 110%, #2a1f15 0%, transparent 60%), linear-gradient(180deg, #221c14 0%, #1B1813 100%)",
           color: BEACON_MARK_BONE,
-          fontFamily: "sans-serif",
+          fontFamily: "Archivo",
         }}
       >
         {/* Top — wordmark */}
@@ -70,6 +72,8 @@ export default function OgImage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div
             style={{
+              display: "flex",
+              flexDirection: "column",
               fontSize: 96,
               fontWeight: 900,
               lineHeight: 0.92,
@@ -78,8 +82,7 @@ export default function OgImage() {
               maxWidth: 1040,
             }}
           >
-            Stay connected.
-            <br />
+            <span>Stay connected.</span>
             <span style={{ color: BEACON_MARK_EMBER }}>Go anywhere.</span>
           </div>
           <div
@@ -120,6 +123,16 @@ export default function OgImage() {
         </div>
       </div>
     ),
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Archivo",
+          data: archivoData,
+          weight: 900,
+          style: "normal",
+        },
+      ],
+    },
   );
 }

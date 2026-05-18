@@ -1,6 +1,6 @@
 # CI, tests, and deploy gates
 
-This repo runs **lint**, **unit tests**, **dependency audit**, a **live Shopify Link 1 check**, **production build**, and **Playwright** on pushes and PRs to `main` / `master` (see [.github/workflows/ci.yml](../.github/workflows/ci.yml)).
+This repo runs **lint**, **unit tests**, **dependency audit**, a **live Shopify Beacon 2 check**, **production build**, and **Playwright** on pushes and PRs to `main` / `master` (see [.github/workflows/ci.yml](../.github/workflows/ci.yml)).
 
 If the Vercel dashboard has a **custom Build Command**, it overrides [vercel.json](../vercel.json). Clear it (or set it to `pnpm run verify:shopify && pnpm run build`) so the Shopify gate always runs on deploy.
 
@@ -21,7 +21,6 @@ To copy a local `.env.local` into Vercel after `vercel login` and `vercel link`:
 | Variable                                                                | Purpose                                        |
 | ----------------------------------------------------------------------- | ---------------------------------------------- |
 | `SHOPIFY_STORE_DOMAIN`                                                  | Store domain (e.g. `your-store.myshopify.com`) |
-| `SHOPIFY_LINK_1_HANDLE`                                                 | Product handle for Link 1                      |
 | `SHOPIFY_STOREFRONT_PRIVATE_TOKEN` or `SHOPIFY_STOREFRONT_PUBLIC_TOKEN` | Storefront API access                          |
 
 
@@ -33,7 +32,7 @@ In GitHub: **Settings → Branches → Branch protection** for `main`:
 
 - Require the workflow job **quality** (shown as **CI / quality** on pull requests) to pass before merge.
 
-That way broken code does not land on `main`; combined with Vercel’s build command, **broken Shopify Link 1 cannot deploy** when env is set.
+That way broken code does not land on `main`; combined with Vercel’s build command, **broken Shopify Beacon 2 cannot deploy** when env is set.
 
 ## Fork pull requests
 

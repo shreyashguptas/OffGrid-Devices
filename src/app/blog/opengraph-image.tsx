@@ -4,13 +4,15 @@ import {
   BLOG_OG_MUTED,
   blogOgShellStyle,
 } from "@/lib/blogOgLayout";
+import { loadArchivoFont } from "@/lib/ogFont";
 
-export const runtime = "edge";
 export const alt = "OffGrid Blog — Meshtastic, LoRa & off-grid communication";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function BlogIndexOgImage() {
+export default async function BlogIndexOgImage() {
+  const archivoData = await loadArchivoFont();
+
   return new ImageResponse(
     (
       <div style={blogOgShellStyle}>
@@ -45,7 +47,8 @@ export default function BlogIndexOgImage() {
               lineHeight: 1.3,
             }}
           >
-            Practical guides, comparisons, and notes from the team behind Beacon 1.
+            Practical guides, comparisons, and notes from the team behind Beacon
+            2.
           </div>
         </div>
 
@@ -54,6 +57,16 @@ export default function BlogIndexOgImage() {
         </div>
       </div>
     ),
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Archivo",
+          data: archivoData,
+          weight: 900,
+          style: "normal",
+        },
+      ],
+    },
   );
 }

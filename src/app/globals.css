@@ -11,9 +11,9 @@
   Resolution order:
     1. Default `:root` — dark semantic tokens.
     2. `@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) }`
-       — light tokens (covers `data-theme="light"` from theme-init.js and
+       — light tokens (covers `data-theme="light"` from the inline theme script and
        no-JS fallback).
-    3. `data-theme` on `<html>` is set by theme-init.js for hydration only;
+    3. `data-theme` on `<html>` is set by the inline theme script for hydration only;
        cascade is driven by the rules above.
 
   Two token layers
