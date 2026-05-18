@@ -22,14 +22,6 @@ const environmentLabel =
     ? `github-actions:${process.env.GITHUB_EVENT_NAME ?? "unknown"}`
     : "local");
 
-type Step = {
-  label: string;
-  run: () => Promise<void>;
-  // Beacon 1 is the legacy product; treat any failure as warn-only.
-  // Beacon 2 is the live product; integration breakage is a hard fail.
-  warnOnly: boolean;
-};
-
 async function main() {
   if (process.env.SKIP_SHOPIFY_VERIFY === "1") {
     console.warn(
@@ -38,54 +30,33 @@ async function main() {
     return;
   }
 
-  const { verifyBeacon1Storefront } = await import(
-    "../src/lib/verify-beacon1-storefront"
-  );
   const { verifyBeacon2Storefront } = await import(
     "../src/lib/verify-beacon2-storefront"
   );
 
-  const steps: Step[] = [
-    { label: "Beacon 2", run: verifyBeacon2Storefront, warnOnly: false },
-    { label: "Beacon 1 (legacy)", run: verifyBeacon1Storefront, warnOnly: true },
-  ];
+  try {
+    await verifyBeacon2Storefront();
+    console.log("Shopify Beacon 2 verification OK.");
+    return;
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Shopify verification failed.";
+    const isSoldOut =
+      error instanceof Error &&
+      (error.name === "SoldOutError" || error.name === "Beacon2SoldOutError");
+    const isMissingConfig =
+      error instanceof Error && error.name === "MissingShopifyConfigError";
 
-  let hadHardFailure = false;
-
-  for (const step of steps) {
-    try {
-      await step.run();
-      console.log(`Shopify ${step.label} verification OK.`);
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Shopify verification failed.";
-      const isSoldOut =
-        error instanceof Error &&
-        (error.name === "SoldOutError" || error.name === "Beacon2SoldOutError");
-      const isMissingConfig =
-        error instanceof Error && error.name === "MissingShopifyConfigError";
-
-      if (isMissingConfig && !step.warnOnly) {
-        console.error(
-          `Shopify ${step.label} verify failed on env=${environmentLabel}: ${message}`,
-        );
-        hadHardFailure = true;
-        continue;
-      }
-
-      if (step.warnOnly || isSoldOut || !isProductionDeploy) {
-        console.warn(
-          `⚠️  Shopify ${step.label} verify failed on env=${environmentLabel} — continuing. Reason: ${message}`,
-        );
-        continue;
-      }
-
-      console.error(`Shopify ${step.label} verify failed: ${message}`);
-      hadHardFailure = true;
+    if (!isMissingConfig && (isSoldOut || !isProductionDeploy)) {
+      console.warn(
+        `⚠️  Shopify Beacon 2 verify failed on env=${environmentLabel} — continuing. Reason: ${message}`,
+      );
+      return;
     }
-  }
 
-  if (hadHardFailure) {
+    console.error(
+      `Shopify Beacon 2 verify failed on env=${environmentLabel}: ${message}`,
+    );
     process.exit(1);
   }
 }
