@@ -23,63 +23,54 @@ export function HomeHeroSection() {
   const buyLabel = livePrice ? `Carry one — ${livePrice}` : "Carry one";
 
   return (
-    <section className="relative flex min-h-svh flex-col overflow-hidden border-b border-bark bg-pitch">
+    <section className="relative overflow-hidden border-b border-bark bg-pitch">
+      {/* Background gradient — warm tone behind the model column,
+          neutral on the left where text lives. */}
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 110% 70% at 70% 35%, #3a2a1c 0%, transparent 55%), radial-gradient(ellipse 90% 100% at 20% 110%, #221912 0%, transparent 60%), linear-gradient(180deg, #1c1611 0%, #1B1813 100%)",
+            "radial-gradient(ellipse 80% 70% at 80% 40%, #3a2a1c 0%, transparent 55%), radial-gradient(ellipse 90% 100% at 15% 110%, #221912 0%, transparent 60%), linear-gradient(180deg, #1c1611 0%, #1B1813 100%)",
         }}
       />
 
-      <div aria-hidden className="absolute inset-0 topo-overlay opacity-35" />
+      <div aria-hidden className="absolute inset-0 topo-overlay opacity-30" />
 
-      {/* Sun glow follows the device's on-screen position: lower-center
-          on mobile (device sits in the bottom half), upper-right on
-          desktop (device sits on the right). */}
-      <div
-        aria-hidden
-        className="absolute left-1/2 top-[72%] h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full md:h-64 md:w-64 lg:left-auto lg:right-[18%] lg:top-[38%] lg:translate-x-0 lg:translate-y-0 lg:h-72 lg:w-72"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(232,116,60,0.5), rgba(232,116,60,0.16) 55%, transparent 78%)",
-          filter: "blur(8px)",
-        }}
-      />
-
-      {/* Text — flows naturally above the viewer on mobile, becomes an
-          overlay layer on desktop. pointer-events kept off the wrapper
-          so drags on text pass through to the canvas; CTA opts back in. */}
-      <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-col px-5 pt-24 pb-6 sm:px-6 md:px-8 md:pt-28 md:pb-8 lg:flex-1 lg:justify-center lg:px-10 lg:pt-32 lg:pb-24">
+      {/* Content grid.
+          Mobile/tablet: vertical stack — text on top, model square below.
+          Desktop (lg+): true 2-column grid, both columns vertically centered,
+          hero takes full viewport height. No absolute positioning, no overlap. */}
+      <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-5 pb-16 pt-24 sm:px-6 md:gap-14 md:px-8 md:pb-20 md:pt-28 lg:min-h-svh lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16 lg:px-10 lg:pb-28 lg:pt-32">
+        {/* Text column */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="max-w-xl"
+          className="flex min-w-0 max-w-xl flex-col"
         >
           <motion.div
             variants={fadeInUp}
-            className="inline-flex items-center gap-2 border border-sand/25 px-3 py-1.5 sm:gap-2.5 sm:px-3.5 sm:py-2"
+            className="inline-flex w-fit max-w-full flex-wrap items-center gap-x-2.5 gap-y-1 border border-sand/25 px-3 py-2 sm:px-3.5"
             style={{
               fontFamily: "var(--font-mono)",
-              fontSize: "clamp(9px, 2.5vw, 11px)",
-              letterSpacing: "0.18em",
+              fontSize: "clamp(9px, 2.2vw, 11px)",
+              letterSpacing: "0.16em",
               color: "var(--app-sand)",
             }}
           >
-            <span>EST. 2026 · DESIGNED AND ASSEMBLED IN THE USA</span>
+            <span>EST. 2026 · DESIGNED + ASSEMBLED IN THE USA</span>
             <UsFlag />
           </motion.div>
 
           <motion.h1
             variants={fadeInUp}
-            className="mt-6 text-bone uppercase md:mt-8"
+            className="mt-7 text-bone uppercase md:mt-9"
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 900,
-              fontSize: "clamp(36px, 7vw, 72px)",
-              lineHeight: 0.9,
+              fontSize: "clamp(34px, 8vw, 80px)",
+              lineHeight: 0.92,
               letterSpacing: "-0.04em",
             }}
           >
@@ -96,14 +87,15 @@ export function HomeHeroSection() {
             style={{
               fontFamily: "var(--font-editorial)",
               fontStyle: "italic",
-              fontSize: "clamp(16px, 1.5vw, 24px)",
+              fontSize: "clamp(17px, 2vw, 22px)",
               lineHeight: 1.4,
+              letterSpacing: "-0.01em",
             }}
           >
             MagSafe mesh radio. No towers. No SIMs.
           </motion.p>
 
-          <motion.div variants={fadeInUp} className="pointer-events-auto mt-7 md:mt-10">
+          <motion.div variants={fadeInUp} className="mt-7 md:mt-10">
             <Link2CheckoutButton
               defaultLabel={buyLabel}
               loadingLabel={link2Content.summary.loadingLabel}
@@ -128,29 +120,34 @@ export function HomeHeroSection() {
             <span>Meshtastic</span>
           </motion.div>
         </motion.div>
-      </div>
 
-      {/* 3D viewer.
-          Mobile: lives in the bottom region of the section as a flex
-          child — text sits above, viewer sits below, both clearly
-          visible above the fold on a typical phone.
-          Desktop: becomes an absolute overlay so the device can grow
-          past the right-column boundary when the user zooms in. */}
-      <div
-        className="relative z-[5] flex-1 min-h-[52svh] lg:absolute lg:inset-0 lg:min-h-0 lg:flex-none"
-        role="img"
-        aria-label="OffGrid Beacon 2 mesh radio — drag or hover to rotate"
-      >
-        <Beacon3DViewer />
+        {/* 3D model column — constrained to a square so the canvas knows its
+            bounds and the model centers itself (the viewer's aspect-aware
+            rest offset zeroes out at 1:1). */}
+        <div
+          className="relative mx-auto aspect-square w-full min-w-0 sm:max-w-[480px] md:max-w-[560px] lg:mx-0 lg:ml-auto lg:max-w-none"
+          role="img"
+          aria-label="OffGrid Beacon 2 mesh radio — drag or hover to rotate"
+        >
+          {/* Ember sun-glow lives inside the model column so it follows
+              the model wherever the layout puts it. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-[10%]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(232,116,60,0.45), rgba(232,116,60,0.12) 50%, transparent 78%)",
+              filter: "blur(12px)",
+            }}
+          />
+          <Beacon3DViewer />
+        </div>
       </div>
     </section>
   );
 }
 
 function MeshtasticMark() {
-  // Official Meshtastic mark (from meshtastic/design — Mesh_Logo_Black.svg).
-  // Rendered in currentColor so it inherits the surrounding mono text color
-  // (Sand) — keeps Ember as the single accent on this surface.
   return (
     <svg
       viewBox="0 0 100 55"

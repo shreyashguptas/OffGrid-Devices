@@ -95,7 +95,13 @@ function ZoomLayer({
           src={image.src}
           alt={image.alt ?? `Parallax image ${index + 1}`}
           fill
-          sizes="(min-width: 1024px) 25vw, 50vw"
+          // Each slot zooms 4–9× during scroll, so its peak displayed width
+          // is ~viewport-wide regardless of the small `width` rest size.
+          // Telling Next.js `100vw` makes it serve the high-res variant
+          // (e.g. the 1920 build on a 1440 monitor) so the image stays
+          // sharp through the zoom instead of looking like a blurry crop.
+          sizes="100vw"
+          quality={85}
           className="object-cover"
           priority={index === 0}
         />
