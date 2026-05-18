@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { HomeFeatureStorySection } from "@/components/home/HomeFeatureStorySection";
+import { HomeFeatureShowcaseSection } from "@/components/home/HomeFeatureShowcaseSection";
 import { HomeHardwareSection } from "@/components/home/HomeHardwareSection";
 import { HomeHeroSection } from "@/components/home/HomeHeroSection";
 import { HomeProductDetailsSection } from "@/components/home/HomeProductDetailsSection";
@@ -31,10 +31,10 @@ export default function Home() {
     <>
       <HomeHeroSection />
       <HomeProductDetailsSection />
-      <HomeFeatureStorySection />
+      <HomeFeatureShowcaseSection />
       <HomeHardwareSection />
-      <HomeSpecsSection />
       <HomeTestimonialsSection />
+      <HomeSpecsSection />
       <Link2CallToAction
         eyebrow={link2Content.home.cta.eyebrow}
         title={link2Content.home.cta.title}

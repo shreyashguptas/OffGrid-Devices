@@ -36,7 +36,7 @@ export function HomeTestimonialsSection() {
                 textTransform: "uppercase",
               }}
             >
-              IV · {link2Content.home.testimonials.eyebrow}
+              III · {link2Content.home.testimonials.eyebrow}
             </div>
             <h2
               className="mt-5 text-bone uppercase"
