@@ -101,7 +101,7 @@ export function BfCacheShell({ children }: BfCacheShellProps) {
     };
 
     const warmShopifyCache = () => {
-      void fetch("/api/shopify/beacon-1", { method: "GET" }).catch(() => undefined);
+      void fetch("/api/shopify/beacon-2", { method: "GET" }).catch(() => undefined);
     };
 
     if (typeof browserWindow.requestIdleCallback === "function") {
