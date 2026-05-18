@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { checkBotId } from "botid/server";
 import { createBeacon2CheckoutUrl, hasShopifyStorefrontConfig } from "@/lib/shopify";
+import { safeCheckBotId } from "@/lib/bot-protection";
 import {
   checkRateLimit,
   getRateLimitKey,
@@ -13,9 +13,7 @@ const CHECKOUT_RATE_LIMIT = {
 };
 
 export async function POST(request?: Request) {
-  const verdict = await checkBotId({
-    developmentOptions: { bypass: "HUMAN" },
-  });
+  const verdict = await safeCheckBotId();
   if (verdict.isBot) {
     return NextResponse.json({ error: "Forbidden." }, { status: 403 });
   }
