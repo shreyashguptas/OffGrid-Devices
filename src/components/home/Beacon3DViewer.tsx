@@ -15,6 +15,27 @@ import { useReducedMotion } from "framer-motion";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
 
+// three r0.184 deprecated THREE.Clock in favor of THREE.Timer, but
+// @react-three/fiber@9 still calls `new THREE.Clock()` internally on
+// Canvas mount, producing a noisy one-shot console.warn we can't reach.
+// Silence just that exact message; everything else passes through.
+if (typeof window !== "undefined") {
+  const w = window as unknown as { __beaconClockWarnPatched?: boolean };
+  if (!w.__beaconClockWarnPatched) {
+    w.__beaconClockWarnPatched = true;
+    const origWarn = console.warn;
+    console.warn = (...args: unknown[]) => {
+      if (
+        typeof args[0] === "string" &&
+        args[0].includes("THREE.Clock: This module has been deprecated")
+      ) {
+        return;
+      }
+      origWarn(...args);
+    };
+  }
+}
+
 const MODEL_PATH = "/beacon-2/models/beacon-2.glb";
 
 const HOVER_MAX_Y = 0.45; // ~26°
