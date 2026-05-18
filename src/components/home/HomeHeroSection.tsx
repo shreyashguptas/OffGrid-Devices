@@ -74,13 +74,11 @@ export function HomeHeroSection() {
 
           <motion.h1
             variants={fadeInUp}
-            className="mt-6 text-bone uppercase break-words md:mt-8"
+            className="mt-6 text-bone uppercase md:mt-8"
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 900,
-              // Floor (36px) keeps "STAY CONNECTED" on one line at 360px;
-              // ceiling (104px) stays confident on ultra-wide displays.
-              fontSize: "clamp(36px, 8.5vw, 104px)",
+              fontSize: "clamp(36px, 7vw, 72px)",
               lineHeight: 0.9,
               letterSpacing: "-0.04em",
             }}
@@ -114,24 +112,21 @@ export function HomeHeroSection() {
             />
           </motion.div>
 
-          <motion.p
+          <motion.div
             variants={fadeInUp}
-            className="mt-4 text-sand/55 md:mt-6"
+            className="mt-4 inline-flex items-center gap-2 text-sand md:mt-5"
             style={{
               fontFamily: "var(--font-mono)",
-              fontSize: "clamp(9px, 2.5vw, 11px)",
+              fontSize: "clamp(10px, 2.4vw, 12px)",
+              fontWeight: 500,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
             }}
           >
-            {/* Helper text adapts to the input modality — see globals.css */}
-            <span className="show-on-hover">
-              Hover to follow · drag to rotate · ⌘/Ctrl + scroll to zoom.
-            </span>
-            <span className="show-on-touch">
-              Drag the device below to rotate · pinch to zoom.
-            </span>
-          </motion.p>
+            <span>Comes pre-installed with</span>
+            <MeshtasticMark />
+            <span>Meshtastic</span>
+          </motion.div>
         </motion.div>
       </div>
 
@@ -149,6 +144,31 @@ export function HomeHeroSection() {
         <Beacon3DViewer />
       </div>
     </section>
+  );
+}
+
+function MeshtasticMark() {
+  // Official Meshtastic mark (from meshtastic/design — Mesh_Logo_Black.svg).
+  // Rendered in currentColor so it inherits the surrounding mono text color
+  // (Sand) — keeps Ember as the single accent on this surface.
+  return (
+    <svg
+      viewBox="0 0 100 55"
+      width={26}
+      height={14}
+      aria-hidden
+      fill="currentColor"
+      style={{ display: "block", flexShrink: 0 }}
+    >
+      <g transform="matrix(0.802386,0,0,0.460028,-421.748,-122.127)">
+        <g transform="matrix(0.579082,0,0,1.01004,460.975,-39.6867)">
+          <path d="M250.908,330.267L193.126,415.005L180.938,406.694L244.802,313.037C246.174,311.024 248.453,309.819 250.889,309.816C253.326,309.814 255.606,311.015 256.982,313.026L320.994,406.536L308.821,414.869L250.908,330.267Z" />
+        </g>
+        <g transform="matrix(0.582378,0,0,1.01579,485.019,-211.182)">
+          <path d="M87.642,581.398L154.757,482.977L142.638,474.713L75.523,573.134L87.642,581.398Z" />
+        </g>
+      </g>
+    </svg>
   );
 }
 
