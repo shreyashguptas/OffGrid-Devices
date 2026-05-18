@@ -17,24 +17,13 @@ const Beacon3DViewer = dynamic(
 export function HomeHeroSectionClient({ buyLabel }: { buyLabel: string }) {
   return (
     <section className="relative overflow-hidden border-b border-bark bg-pitch">
-      {/* Background gradient — warm tone behind the model column,
-          neutral on the left where text lives. */}
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 70% at 80% 40%, var(--app-color-bark) 0%, transparent 55%), radial-gradient(ellipse 90% 100% at 15% 110%, var(--app-color-pitch-low) 0%, transparent 60%), linear-gradient(180deg, var(--app-color-pitch-low) 0%, var(--app-color-pitch) 100%)",
-        }}
-      />
-
       <div aria-hidden className="absolute inset-0 topo-overlay opacity-30" />
 
       {/* Content grid.
           Mobile/tablet: vertical stack — text on top, model square below.
           Desktop (lg+): true 2-column grid, both columns vertically centered,
           hero takes full viewport height. No absolute positioning, no overlap. */}
-      <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-5 pb-16 pt-24 sm:px-6 md:gap-14 md:px-8 md:pb-20 md:pt-28 lg:min-h-svh lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16 lg:px-10 lg:pb-28 lg:pt-32">
+      <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-5 pb-16 pt-24 sm:px-6 md:gap-14 md:px-8 md:pb-20 md:pt-28 lg:min-h-svh lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.7fr)] lg:items-center lg:gap-16 lg:px-10 lg:pb-28 lg:pt-32">
         {/* Text column */}
         <motion.div
           initial="hidden"
@@ -61,14 +50,6 @@ export function HomeHeroSectionClient({ buyLabel }: { buyLabel: string }) {
             </span>
           </motion.h1>
 
-          <motion.h2
-            variants={fadeInUp}
-            className="type-mono-label mt-5 max-w-md text-ember md:mt-6"
-            style={{ fontSize: "clamp(10px, 2.4vw, 12px)" }}
-          >
-            MagSafe LoRa mesh radio · Meshtastic pre-flashed
-          </motion.h2>
-
           <motion.p
             variants={fadeInUp}
             className="type-editorial-lead mt-5 max-w-md text-sand md:mt-7"
@@ -80,7 +61,7 @@ export function HomeHeroSectionClient({ buyLabel }: { buyLabel: string }) {
             <Beacon2CheckoutButton
               defaultLabel={buyLabel}
               loadingLabel={beacon2Content.summary.loadingLabel}
-              className="inline-flex min-h-[56px] w-full items-center justify-center bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="inline-flex min-h-[56px] w-full cursor-pointer items-center justify-center bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
               showArrow={false}
             />
           </motion.div>
@@ -100,7 +81,7 @@ export function HomeHeroSectionClient({ buyLabel }: { buyLabel: string }) {
             bounds and the model centers itself (the viewer's aspect-aware
             rest offset zeroes out at 1:1). */}
         <div
-          className="relative mx-auto aspect-square w-full min-w-0 sm:max-w-[480px] md:max-w-[560px] lg:mx-0 lg:ml-auto lg:max-w-none"
+          className="relative mx-auto aspect-square w-full min-w-0 sm:max-w-[720px] md:max-w-[840px] lg:mx-0 lg:ml-auto lg:max-w-none"
           aria-label="OffGrid Beacon 2 mesh radio — drag or hover to rotate"
         >
           <div
