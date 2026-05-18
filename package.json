@@ -22,14 +22,20 @@
     "test:e2e:install": "playwright install chromium"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/edge-config": "^1.4.3",
+    "@vercel/speed-insights": "^2.0.0",
+    "botid": "^1.5.11",
     "clsx": "^2.1.1",
     "framer-motion": "^12.29.0",
     "next": "^16.2.6",
     "react": "19.2.5",
     "react-dom": "19.2.5",
     "server-only": "^0.0.1",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.6.0",
+    "three": "^0.184.0"
   },
   "pnpm": {
     "overrides": {
@@ -47,6 +53,8 @@
     "@types/node": "^25.7.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.184.1",
+    "@vercel/config": "^0.5.0",
     "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",

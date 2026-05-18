@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { RatingStars } from "@/components/shared/RatingStars";
 import { cardVariant, staggerContainer } from "@/components/shared/motion";
-import { link1Content } from "@/content/link1";
-import { link2Content } from "@/content/products";
+import { beacon1Content } from "@/content/beacon1";
+import { beacon2Content } from "@/content/products";
 
 export function HomeTestimonialsSection() {
-  const items = link1Content.testimonials.map((testimonial) => {
-    const reviewer = link1Content.reviewSummary.reviewerAvatars.find(
+  const items = beacon1Content.testimonials.map((testimonial) => {
+    const reviewer = beacon1Content.reviewSummary.reviewerAvatars.find(
       (avatar) => avatar.name.toLowerCase() === testimonial.name.toLowerCase(),
     );
 
@@ -26,77 +27,23 @@ export function HomeTestimonialsSection() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <div
-              className="text-ember"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 700,
-                fontSize: 12,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-              }}
-            >
-              IV · {link2Content.home.testimonials.eyebrow}
+            <div className="type-eyebrow text-ember">
+              III · {beacon2Content.home.testimonials.eyebrow}
             </div>
-            <h2
-              className="mt-5 text-bone uppercase"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 900,
-                fontSize: "clamp(40px, 6vw, 80px)",
-                lineHeight: 0.92,
-                letterSpacing: "-0.03em",
-              }}
-            >
-              {link2Content.home.testimonials.title}
+            <h2 className="type-display-section mt-5 text-bone">
+              {beacon2Content.home.testimonials.title}
             </h2>
-            <p
-              className="mt-6 max-w-2xl text-sand"
-              style={{
-                fontFamily: "var(--font-editorial)",
-                fontStyle: "italic",
-                fontSize: 22,
-                lineHeight: 1.4,
-              }}
-            >
-              {link2Content.home.testimonials.subtitle}
+            <p className="font-editorial mt-6 max-w-2xl text-[22px] leading-[1.4] text-sand">
+              {beacon2Content.home.testimonials.subtitle}
             </p>
-            <p
-              className="mt-4 max-w-2xl text-sand/70"
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 12,
-                letterSpacing: "0.08em",
-              }}
-            >
-              {link2Content.home.testimonials.footnote}
+            <p className="font-mono mt-4 max-w-2xl text-[12px] tracking-[0.08em] text-sand/70">
+              {beacon2Content.home.testimonials.footnote}
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 text-ember">
-              {Array.from({ length: 5 }, (_, index) => (
-                <svg
-                  key={index}
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-              ))}
-            </div>
-            <span
-              className="text-sand"
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 12,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-              }}
-            >
-              {link1Content.reviewSummary.ratingLabel}
+            <RatingStars className="inline-flex items-center gap-1 text-ember" size={18} />
+            <span className="type-mono-label text-[12px] tracking-[0.14em] text-sand">
+              {beacon1Content.reviewSummary.ratingLabel}
             </span>
           </div>
         </div>
@@ -114,14 +61,7 @@ export function HomeTestimonialsSection() {
               variants={cardVariant}
               className="flex h-full flex-col border border-sand/15 bg-bark-soft p-7"
             >
-              <blockquote
-                className="text-bone"
-                style={{
-                  fontFamily: "var(--font-editorial)",
-                  fontSize: 19,
-                  lineHeight: 1.45,
-                }}
-              >
+              <blockquote className="font-editorial text-[19px] leading-[1.45] text-bone">
                 “{item.text}”
               </blockquote>
               <figcaption className="mt-7 flex items-center gap-3 border-t border-sand/15 pt-5">
@@ -135,41 +75,16 @@ export function HomeTestimonialsSection() {
                       className="object-cover"
                     />
                   ) : (
-                    <span
-                      className="flex h-full w-full items-center justify-center text-ember"
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        fontWeight: 800,
-                        fontSize: 14,
-                        letterSpacing: "0.02em",
-                      }}
-                    >
+                    <span className="flex h-full w-full items-center justify-center font-display text-sm font-extrabold tracking-[0.02em] text-ember">
                       {item.initials}
                     </span>
                   )}
                 </div>
                 <div>
-                  <div
-                    className="text-bone"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 700,
-                      fontSize: 13,
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                    }}
-                  >
+                  <div className="tracking-mono font-display text-[13px] font-bold uppercase text-bone">
                     {item.name}
                   </div>
-                  <div
-                    className="text-sand/65"
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 11,
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                    }}
-                  >
+                  <div className="tracking-mono font-mono text-[11px] uppercase text-sand/65">
                     {item.date} · Verified
                   </div>
                 </div>

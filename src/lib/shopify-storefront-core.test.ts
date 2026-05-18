@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { createLink1CheckoutUrl } from "./shopify-storefront-core";
+import { createBeacon1CheckoutUrl } from "./shopify-storefront-core";
 
 function shopifyResponse(data: unknown) {
   return new Response(JSON.stringify({ data }), {
@@ -32,7 +32,7 @@ function cartData(checkoutUrl: string) {
   };
 }
 
-describe("createLink1CheckoutUrl", () => {
+describe("createBeacon1CheckoutUrl", () => {
   const fetchMock = vi.fn();
 
   beforeEach(() => {
@@ -40,7 +40,6 @@ describe("createLink1CheckoutUrl", () => {
     vi.stubGlobal("fetch", fetchMock);
     vi.stubEnv("SHOPIFY_STORE_DOMAIN", "example.myshopify.com");
     vi.stubEnv("SHOPIFY_STOREFRONT_PRIVATE_TOKEN", "test-token");
-    vi.stubEnv("SHOPIFY_LINK_1_HANDLE", "link-1");
   });
 
   afterEach(() => {
@@ -55,11 +54,15 @@ describe("createLink1CheckoutUrl", () => {
         shopifyResponse(cartData("https://example.myshopify.com/checkouts/cn/abc")),
       );
 
-    const checkoutUrl = await createLink1CheckoutUrl();
+    const checkoutUrl = await createBeacon1CheckoutUrl();
+    const productRequest = JSON.parse(
+      fetchMock.mock.calls[0]?.[1]?.body as string,
+    ) as { variables?: { handle?: string } };
 
     expect(checkoutUrl).toBe(
       "https://example.myshopify.com/checkouts/cn/abc?channel=headless-storefronts",
     );
+    expect(productRequest.variables?.handle).toBe("link-1");
   });
 
   it("rejects unexpected checkout URL hosts", async () => {
@@ -69,7 +72,7 @@ describe("createLink1CheckoutUrl", () => {
         shopifyResponse(cartData("https://evil.example/checkouts/cn/abc")),
       );
 
-    await expect(createLink1CheckoutUrl()).rejects.toThrow(
+    await expect(createBeacon1CheckoutUrl()).rejects.toThrow(
       /unexpected checkout url/i,
     );
   });

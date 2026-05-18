@@ -5,9 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link2CheckoutButton } from "@/components/Link2CheckoutButton";
+import { Beacon2CheckoutButton } from "@/components/Beacon2CheckoutButton";
+import { BadgeEmberOutline } from "@/components/shared/BadgeEmberOutline";
 import { BeaconWordmark, WaypointMark } from "@/components/shared/WaypointMark";
-import { link2Content, siteProducts } from "@/content/products";
+import { beacon2Content, siteProducts } from "@/content/products";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -137,8 +138,8 @@ function NavbarContent() {
             onMouseLeave={handleMouseLeave}
           >
             <button
-              className="flex items-center gap-1.5 text-[12px] font-semibold tracking-[0.18em] uppercase text-sand hover:text-bone transition-colors duration-300"
-              style={{ fontFamily: "var(--font-display)" }}
+              type="button"
+              className="flex items-center gap-1.5 font-display text-[12px] font-semibold tracking-[0.18em] uppercase text-sand hover:text-bone transition-colors duration-300"
               onClick={() => setIsProductsOpen(!isProductsOpen)}
             >
               Products
@@ -187,7 +188,7 @@ function NavbarContent() {
                           {product.image ? (
                             <Image
                               src={product.image}
-                              alt={product.name}
+                              alt={`OffGrid ${product.name} MagSafe LoRa mesh radio`}
                               width={48}
                               height={48}
                               className="w-full h-full object-cover"
@@ -202,25 +203,16 @@ function NavbarContent() {
                         {/* Product info */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span
-                              className="font-display text-[13px] font-bold uppercase tracking-[0.04em] text-bone"
-                              style={{ fontFamily: "var(--font-display)" }}
-                            >
+                            <span className="font-display text-[13px] font-bold uppercase tracking-[0.04em] text-bone">
                               {product.name}
                             </span>
                             {product.badge && (
-                              <span className="border border-ember/40 bg-ember/15 px-2 py-0.5 text-[10px] font-bold tracking-[0.16em] uppercase text-ember">
+                              <BadgeEmberOutline className="px-2 py-0.5 font-bold tracking-[0.16em]">
                                 {product.badge}
-                              </span>
+                              </BadgeEmberOutline>
                             )}
                           </div>
-                          <p
-                            className="mt-0.5 truncate text-[11px] text-sand/70"
-                            style={{
-                              fontFamily: "var(--font-mono)",
-                              letterSpacing: "0.06em",
-                            }}
-                          >
+                          <p className="mt-0.5 truncate font-mono text-[11px] tracking-[0.06em] text-sand/70">
                             {product.subtitle}
                           </p>
                         </div>
@@ -249,14 +241,14 @@ function NavbarContent() {
 
           <Link
             href="/blog"
-            className="text-[12px] font-semibold tracking-[0.18em] uppercase text-sand hover:text-bone transition-colors duration-300"
-            style={{ fontFamily: "var(--font-display)" }}
+            className="font-display text-[12px] font-semibold tracking-[0.18em] uppercase text-sand transition-colors duration-300 hover:text-bone"
           >
             Blog
           </Link>
-          <Link2CheckoutButton
-            defaultLabel={link2Content.summary.buyLabel}
-            loadingLabel={link2Content.summary.loadingLabel}
+          <Beacon2CheckoutButton
+            defaultLabel={beacon2Content.summary.buyLabel}
+            loadingLabel={beacon2Content.summary.loadingLabel}
+            surface="nav-desktop"
             className="bg-bone px-5 py-3 font-display text-[12px] font-bold tracking-[0.14em] uppercase text-pitch transition-all duration-300 hover:bg-ember hover:text-pitch disabled:opacity-60 disabled:cursor-not-allowed"
           />
         </div>
@@ -264,7 +256,7 @@ function NavbarContent() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden w-10 h-10 flex items-center justify-center"
+          className="md:hidden h-11 w-11 flex items-center justify-center -mr-2"
           aria-label="Toggle menu"
         >
           <div className="relative w-6 h-5">
@@ -300,9 +292,9 @@ function NavbarContent() {
             <div className="p-6 flex flex-col gap-4">
               {/* Products Expandable */}
               <button
+                type="button"
                 onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
-                className="flex items-center justify-between text-[14px] font-bold tracking-[0.18em] uppercase text-sand hover:text-bone transition-colors w-full text-left"
-                style={{ fontFamily: "var(--font-display)" }}
+                className="flex w-full items-center justify-between text-left font-display text-[14px] font-bold tracking-[0.18em] uppercase text-sand transition-colors hover:text-bone"
               >
                 Products
                 <svg
@@ -343,7 +335,7 @@ function NavbarContent() {
                             {product.image ? (
                               <Image
                                 src={product.image}
-                                alt={product.name}
+                                alt={`OffGrid ${product.name} MagSafe LoRa mesh radio`}
                                 width={32}
                                 height={32}
                                 className="w-full h-full object-cover"
@@ -354,16 +346,13 @@ function NavbarContent() {
                               </div>
                             )}
                           </div>
-                          <span
-                            className="text-[13px] font-bold uppercase tracking-[0.06em]"
-                            style={{ fontFamily: "var(--font-display)" }}
-                          >
+                          <span className="font-display text-[13px] font-bold uppercase tracking-[0.06em]">
                             {product.name}
                           </span>
                           {product.badge && (
-                            <span className="text-[10px] font-bold uppercase tracking-[0.16em] px-1.5 py-0.5 bg-ember/15 text-ember border border-ember/40">
+                            <BadgeEmberOutline className="px-1.5 py-0.5 font-bold tracking-[0.16em]">
                               {product.badge}
-                            </span>
+                            </BadgeEmberOutline>
                           )}
                         </Link>
                       ))}
@@ -375,14 +364,14 @@ function NavbarContent() {
               <Link
                 href="/blog"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-[14px] font-bold tracking-[0.18em] uppercase text-sand hover:text-bone transition-colors"
-                style={{ fontFamily: "var(--font-display)" }}
+                className="font-display text-[14px] font-bold tracking-[0.18em] uppercase text-sand transition-colors hover:text-bone"
               >
                 Blog
               </Link>
-              <Link2CheckoutButton
-                defaultLabel={link2Content.summary.buyLabel}
-                loadingLabel={link2Content.summary.loadingLabel}
+              <Beacon2CheckoutButton
+                defaultLabel={beacon2Content.summary.buyLabel}
+                loadingLabel={beacon2Content.summary.loadingLabel}
+                surface="nav-mobile"
                 className="mt-2 px-5 py-4 bg-bone text-pitch font-display text-[12px] font-bold tracking-[0.14em] uppercase text-center hover:bg-ember transition-all duration-300"
               />
             </div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { BadgeEmberOutline } from "@/components/shared/BadgeEmberOutline";
 import { BeaconWordmark } from "@/components/shared/WaypointMark";
 import { siteProducts } from "@/content/products";
 
@@ -16,19 +17,17 @@ type FooterColumn = {
 };
 
 export function Footer() {
-  const [primaryProduct, secondaryProduct] = siteProducts;
-
+  // siteProducts is intentionally data-driven (currently 1 entry — Beacon 2);
+  // map over it rather than destructuring so retired products dropping out of
+  // the registry don't crash the Footer.
   const columns: FooterColumn[] = [
     {
       heading: "Carry",
-      links: [
-        { label: primaryProduct.name, href: primaryProduct.href },
-        {
-          label: secondaryProduct.name,
-          href: secondaryProduct.href,
-          badge: secondaryProduct.badge,
-        },
-      ],
+      links: siteProducts.map((product) => ({
+        label: product.name,
+        href: product.href,
+        badge: product.badge,
+      })),
     },
     {
       heading: "Mesh",
@@ -41,11 +40,26 @@ export function Footer() {
       heading: "Trail",
       links: [
         { label: "Field notes", href: "/blog" },
+        { label: "About", href: "/about" },
+      ],
+    },
+    {
+      heading: "Trust",
+      links: [
+        { label: "Shipping", href: "/shipping" },
+        { label: "Returns & warranty", href: "/returns" },
+        { label: "Privacy", href: "/privacy" },
+        { label: "Terms", href: "/terms" },
       ],
     },
     {
       heading: "Crew",
       links: [
+        {
+          label: "support@offgridevices.com",
+          href: "mailto:support@offgridevices.com",
+          external: true,
+        },
         {
           label: "X / Twitter",
           href: "https://x.com/ShreyashGuptas",
@@ -69,18 +83,10 @@ export function Footer() {
         transition={{ duration: 0.5 }}
         className="mx-auto max-w-7xl px-6 py-16 md:py-20"
       >
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr_1.4fr]">
           <div>
             <BeaconWordmark size={20} />
-            <p
-              className="mt-5 max-w-xs text-sand/75"
-              style={{
-                fontFamily: "var(--font-editorial)",
-                fontStyle: "italic",
-                fontSize: 15,
-                lineHeight: 1.55,
-              }}
-            >
+            <p className="font-editorial mt-5 max-w-xs text-[15px] leading-[1.55] text-sand/75">
               OffGrid builds rugged mesh hardware for the field — designed to
               stay with the phone you already carry.
             </p>
@@ -88,16 +94,7 @@ export function Footer() {
 
           {columns.map((column) => (
             <div key={column.heading}>
-              <h3
-                className="text-bone"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: 11,
-                  letterSpacing: "0.22em",
-                  textTransform: "uppercase",
-                }}
-              >
+              <h3 className="type-eyebrow text-bone">
                 {column.heading}
               </h3>
               <ul className="mt-5 space-y-3">
@@ -106,9 +103,9 @@ export function Footer() {
                     <span className="inline-flex items-center gap-2">
                       <span>{link.label}</span>
                       {link.badge ? (
-                        <span className="border border-ember/40 bg-ember/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-ember">
+                        <BadgeEmberOutline className="px-1.5 py-0.5 font-bold tracking-[0.16em]">
                           {link.badge}
-                        </span>
+                        </BadgeEmberOutline>
                       ) : null}
                     </span>
                   );
@@ -144,16 +141,8 @@ export function Footer() {
           ))}
         </div>
 
-        <div
-          className="mt-14 flex flex-col gap-3 border-t border-bark pt-6 text-sand/65 md:flex-row md:items-center md:justify-between"
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-          }}
-        >
-          <span>&copy; {new Date().getFullYear()} OFFGRID · MADE IN SF</span>
+        <div className="type-mono-label mt-14 flex flex-col gap-3 border-t border-bark pt-6 tracking-[0.14em] text-sand/65 md:flex-row md:items-center md:justify-between">
+          <span>&copy; {new Date().getFullYear()} OFFGRID LLC</span>
           <span>Built to be carried</span>
           <span>NO TOWERS · NO SIMS · NO SUBSCRIPTIONS</span>
         </div>

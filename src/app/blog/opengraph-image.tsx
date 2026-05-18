@@ -1,33 +1,27 @@
 import { ImageResponse } from "next/og";
+import {
+  BLOG_OG_FOOTER,
+  BLOG_OG_MUTED,
+  blogOgShellStyle,
+} from "@/lib/blogOgLayout";
+import { loadArchivoFont } from "@/lib/ogFont";
 
-export const runtime = "edge";
 export const alt = "OffGrid Blog — Meshtastic, LoRa & off-grid communication";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function BlogIndexOgImage() {
+export default async function BlogIndexOgImage() {
+  const archivoData = await loadArchivoFont();
+
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "80px",
-          background:
-            "linear-gradient(135deg, #0b1f1c 0%, #0f2a27 50%, #133731 100%)",
-          color: "#f3f7f2",
-          fontFamily: "sans-serif",
-        }}
-      >
+      <div style={blogOgShellStyle}>
         <div
           style={{
             fontSize: 26,
             letterSpacing: 4,
             textTransform: "uppercase",
-            color: "#a8c1b9",
+            color: BLOG_OG_MUTED,
           }}
         >
           OffGrid Blog
@@ -48,18 +42,31 @@ export default function BlogIndexOgImage() {
           <div
             style={{
               fontSize: 34,
-              color: "#a8c1b9",
+              color: BLOG_OG_MUTED,
               maxWidth: 960,
               lineHeight: 1.3,
             }}
           >
-            Practical guides, comparisons, and notes from the team behind Beacon 1.
+            Practical guides, comparisons, and notes from the team behind Beacon
+            2.
           </div>
         </div>
 
-        <div style={{ fontSize: 26, color: "#8fb0a6" }}>offgridevices.com/blog</div>
+        <div style={{ fontSize: 26, color: BLOG_OG_FOOTER }}>
+          offgridevices.com/blog
+        </div>
       </div>
     ),
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Archivo",
+          data: archivoData,
+          weight: 900,
+          style: "normal",
+        },
+      ],
+    },
   );
 }

@@ -38,16 +38,16 @@ async function main() {
     return;
   }
 
-  const { verifyLink1Storefront } = await import(
-    "../src/lib/verify-link1-storefront"
+  const { verifyBeacon1Storefront } = await import(
+    "../src/lib/verify-beacon1-storefront"
   );
-  const { verifyLink2Storefront } = await import(
-    "../src/lib/verify-link2-storefront"
+  const { verifyBeacon2Storefront } = await import(
+    "../src/lib/verify-beacon2-storefront"
   );
 
   const steps: Step[] = [
-    { label: "Beacon 2", run: verifyLink2Storefront, warnOnly: false },
-    { label: "Beacon 1 (legacy)", run: verifyLink1Storefront, warnOnly: true },
+    { label: "Beacon 2", run: verifyBeacon2Storefront, warnOnly: false },
+    { label: "Beacon 1 (legacy)", run: verifyBeacon1Storefront, warnOnly: true },
   ];
 
   let hadHardFailure = false;
@@ -61,7 +61,7 @@ async function main() {
         error instanceof Error ? error.message : "Shopify verification failed.";
       const isSoldOut =
         error instanceof Error &&
-        (error.name === "SoldOutError" || error.name === "Link2SoldOutError");
+        (error.name === "SoldOutError" || error.name === "Beacon2SoldOutError");
       const isMissingConfig =
         error instanceof Error && error.name === "MissingShopifyConfigError";
 

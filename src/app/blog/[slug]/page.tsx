@@ -3,17 +3,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Faq } from "@/components/Faq";
-import { Link1CallToAction } from "@/components/link1/Link1CallToAction";
+import { TrackBlogView } from "@/components/analytics/TrackBlogView";
+import { Beacon2CallToAction } from "@/components/beacon2/Beacon2CallToAction";
+import {
+  getSectionId,
+  TableOfContents,
+} from "@/components/blog/TableOfContents";
 import {
   blogPosts,
   getBlogPost,
   getRelatedPosts,
   type BlogSection,
 } from "@/content/blog";
-import { link1Content } from "@/content/link1";
+import { beacon2Content } from "@/content/products";
 import {
   articleJsonLd,
   breadcrumbJsonLd,
+  faqJsonLd,
   jsonLdScriptProps,
 } from "@/lib/jsonLd";
 
@@ -21,9 +27,21 @@ function ContentSection({ section }: { section: BlogSection }) {
   switch (section.type) {
     case "heading":
       return (
-        <h2 className="mt-12 font-display text-3xl font-semibold tracking-tight text-foreground first:mt-0">
+        <h2
+          id={getSectionId(section)}
+          className="scroll-mt-28 mt-12 font-display text-3xl font-semibold tracking-tight text-foreground first:mt-0"
+        >
           {section.content}
         </h2>
+      );
+    case "subheading":
+      return (
+        <h3
+          id={getSectionId(section)}
+          className="scroll-mt-28 mt-8 font-display text-2xl font-semibold tracking-tight text-foreground"
+        >
+          {section.content}
+        </h3>
       );
     case "paragraph":
       return (
@@ -46,6 +64,56 @@ function ContentSection({ section }: { section: BlogSection }) {
             <li key={item}>{item}</li>
           ))}
         </ol>
+      );
+    case "image":
+      return (
+        <figure className="mt-8">
+          <div className="overflow-hidden rounded-[1.5rem] bg-background">
+            <Image
+              src={section.src}
+              alt={section.alt}
+              width={1200}
+              height={800}
+              sizes="(min-width: 1024px) 800px, 100vw"
+              className="w-full object-cover"
+            />
+          </div>
+          {section.caption ? (
+            <figcaption className="mt-3 text-sm text-muted">
+              {section.caption}
+            </figcaption>
+          ) : null}
+        </figure>
+      );
+    case "quote":
+      return (
+        <blockquote className="mt-8 border-l-2 border-accent pl-5 text-xl leading-relaxed text-foreground">
+          <p>{section.content}</p>
+          {section.cite ? (
+            <cite className="mt-3 block text-sm not-italic text-muted">
+              {section.cite}
+            </cite>
+          ) : null}
+        </blockquote>
+      );
+    case "callout": {
+      const toneClass =
+        section.tone === "warn"
+          ? "border-ember/50 bg-ember/10"
+          : section.tone === "tip"
+            ? "border-accent/50 bg-accent/10"
+            : "border-border-card bg-background";
+      return (
+        <aside className={`mt-8 border p-5 text-base leading-relaxed ${toneClass}`}>
+          {section.content}
+        </aside>
+      );
+    }
+    case "code":
+      return (
+        <pre className="mt-8 overflow-x-auto rounded-[1rem] bg-pitch p-5 text-sm leading-relaxed text-bone">
+          <code>{section.code}</code>
+        </pre>
       );
   }
 }
@@ -120,9 +188,12 @@ export default async function BlogPostPage({
   }
 
   const related = getRelatedPosts(post);
+  const hasToc =
+    post.sections.filter((section) => section.type === "heading").length >= 3;
 
   return (
     <>
+      <TrackBlogView slug={post.slug} />
       <script {...jsonLdScriptProps(articleJsonLd(post))} />
       <script
         {...jsonLdScriptProps(
@@ -133,6 +204,9 @@ export default async function BlogPostPage({
           ]),
         )}
       />
+      {post.faq && post.faq.length > 0 ? (
+        <script {...jsonLdScriptProps(faqJsonLd(post.faq))} />
+      ) : null}
 
       <section className="border-b border-border-subtle bg-background pt-28 pb-14 md:pt-32 md:pb-16">
         <div className="mx-auto max-w-5xl px-6">
@@ -195,7 +269,7 @@ export default async function BlogPostPage({
             <div className="overflow-hidden rounded-[1.75rem] bg-background">
               <Image
                 src={post.image}
-                alt={`${post.title} — OffGrid Devices`}
+                alt={post.heroImageAlt ?? `${post.title} — OffGrid Devices`}
                 width={1400}
                 height={800}
                 priority
@@ -205,11 +279,77 @@ export default async function BlogPostPage({
             </div>
           </div>
 
-          <article className="section-card mt-8 rounded-[2rem] px-6 py-10 md:px-10 md:py-12">
-            {post.sections.map((section, index) => (
-              <ContentSection key={`${post.slug}-${index}`} section={section} />
-            ))}
-          </article>
+          <div
+            className={
+              hasToc
+                ? "mt-8 grid gap-8 lg:grid-cols-[240px_minmax(0,1fr)] lg:items-start"
+                : "mt-8"
+            }
+          >
+            {hasToc ? <TableOfContents sections={post.sections} /> : null}
+            <article className="section-card rounded-[2rem] px-6 py-10 md:px-10 md:py-12">
+              {post.sections.map((section, index) => (
+                <ContentSection
+                  key={`${post.slug}-${index}`}
+                  section={section}
+                />
+              ))}
+            </article>
+          </div>
+
+          {/* Author bio — visible byline + bio block strengthens E-E-A-T
+              beyond what the BlogPosting JSON-LD alone signals. Links to
+              /about (founder page) so quality raters and AI Overviews can
+              corroborate authorship. */}
+          <aside className="mt-12 border-t border-border-subtle pt-10">
+            <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center bg-accent/15 font-display text-lg font-bold uppercase tracking-tight text-accent">
+                {post.author.name
+                  .split(" ")
+                  .map((p) => p[0])
+                  .join("")
+                  .slice(0, 2)}
+              </div>
+              <div className="flex-1">
+                <p className="text-xs uppercase tracking-[0.24em] text-muted">
+                  Written by
+                </p>
+                <h3 className="mt-1 font-display text-xl font-semibold text-foreground">
+                  {post.author.name}
+                </h3>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-light md:text-base">
+                  Founder of OffGrid Devices and the builder behind OffGrid
+                  Beacon — a MagSafe-compatible LoRa mesh radio that ships
+                  with Meshtastic pre-flashed. Based in San Francisco.
+                </p>
+                <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs uppercase tracking-[0.18em] text-muted">
+                  <Link href="/about" className="hover:text-accent">
+                    About OffGrid →
+                  </Link>
+                  {post.author.sameAs?.map((href) => {
+                    const label = href.includes("x.com")
+                      ? "X / Twitter →"
+                      : href.includes("github.com")
+                        ? "GitHub →"
+                        : href.includes("youtube.com")
+                          ? "YouTube →"
+                          : "Profile →";
+                    return (
+                      <a
+                        key={href}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-accent"
+                      >
+                        {label}
+                      </a>
+                    );
+                  })}
+                </p>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -255,15 +395,14 @@ export default async function BlogPostPage({
         </section>
       ) : null}
 
-      <Link1CallToAction
-        eyebrow={link1Content.blog.cta.eyebrow}
-        title={link1Content.blog.cta.title}
-        description={link1Content.blog.cta.description}
-        secondaryHref={link1Content.blog.cta.secondaryHref}
-        secondaryLabel={link1Content.blog.cta.secondaryLabel}
+      <Beacon2CallToAction
+        eyebrow={beacon2Content.home.cta.eyebrow}
+        title={beacon2Content.home.cta.title}
+        description={beacon2Content.home.cta.description}
+        secondaryHref={beacon2Content.home.cta.secondaryHref}
+        secondaryLabel={beacon2Content.home.cta.secondaryLabel}
         backgroundClassName="bg-surface-elevated"
       />
     </>
   );
 }
-

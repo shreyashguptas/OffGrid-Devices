@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
 export const metadata: Metadata = {
   title: "OffGrid Blog — Meshtastic, LoRa & Off-Grid Communication",
   description:
-    "Guides, comparisons, and practical notes on Meshtastic, LoRa mesh networking, and off-grid communication — from the team behind OffGrid Beacon 1.",
+    "Guides, comparisons, and practical notes on Meshtastic, LoRa mesh networking, and off-grid communication — from the team behind OffGrid Beacon 2.",
   keywords: [
     "Meshtastic blog",
     "LoRa mesh guides",
@@ -49,7 +49,7 @@ export default function BlogPage() {
             Journal
           </p>
           <h1 className="mt-4 font-display text-5xl font-bold tracking-tight md:text-7xl">
-            The OffGrid Blog
+            OffGrid Blog — Meshtastic & Off-Grid Communication Guides
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-light md:text-xl">
             Tutorials, setup guides, and practical notes on off-grid
@@ -61,8 +61,24 @@ export default function BlogPage() {
 
       <section className="border-b border-border-subtle bg-surface-elevated py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-10 border border-border-card bg-background p-6 md:flex md:items-center md:justify-between md:gap-8 md:p-8">
+            <div>
+              <p className="text-sm uppercase tracking-[0.22em] text-muted">
+                New
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight">
+                Beacon 2 — the MagSafe mesh radio
+              </h2>
+            </div>
+            <Link
+              href="/"
+              className="mt-6 inline-flex text-sm font-semibold uppercase tracking-[0.16em] text-accent transition-colors hover:text-foreground md:mt-0"
+            >
+              See Beacon 2 →
+            </Link>
+          </div>
           <div className="grid gap-6 lg:grid-cols-2">
-            {blogPosts.map((post) => (
+            {blogPosts.map((post, index) => (
               <article
                 key={post.slug}
                 className="group section-card overflow-hidden rounded-[2rem]"
@@ -75,6 +91,8 @@ export default function BlogPage() {
                         alt={post.title}
                         width={1000}
                         height={700}
+                        priority={index === 0}
+                        sizes="(min-width: 1024px) 50vw, 100vw"
                         className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
                       />
                     </div>
@@ -85,7 +103,7 @@ export default function BlogPage() {
                       <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">
                         {post.category}
                       </span>
-                      <span>{post.date}</span>
+                      <time dateTime={post.publishedAt}>{post.date}</time>
                       <span className="h-1 w-1 rounded-full bg-muted" />
                       <span>{post.readTime}</span>
                     </div>

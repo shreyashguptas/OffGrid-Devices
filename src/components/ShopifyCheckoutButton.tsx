@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { trackBuyClick, type BuySurface, type Product } from "@/lib/analytics";
 
-export type ShopifyProductState = {
+type ProductState = {
   availableForSale: boolean;
   variant: {
     availableForSale: boolean;
@@ -13,15 +14,14 @@ export type ShopifyProductState = {
   } | null;
 } | null;
 
-// Backwards-compat local alias.
-type ProductState = ShopifyProductState;
-
 export type ShopifyCheckoutButtonProps = {
   className: string;
   defaultLabel: string;
   productEndpoint: string;
   checkoutEndpoint: string;
   cacheKey: string;
+  product: Product;
+  surface: BuySurface;
   soldOutLabel?: string;
   loadingLabel?: string;
   unavailableLabel?: string;
@@ -148,6 +148,8 @@ export function ShopifyCheckoutButton({
   productEndpoint,
   checkoutEndpoint,
   cacheKey,
+  product: productId,
+  surface,
   soldOutLabel = "Sold Out",
   loadingLabel = "Opening Checkout...",
   unavailableLabel = "Releasing Soon",
@@ -178,6 +180,8 @@ export function ShopifyCheckoutButton({
     if (isDisabled) {
       return;
     }
+
+    trackBuyClick(productId, surface);
 
     // Open the tab synchronously inside the click handler so popup blockers
     // (especially Safari) don't reject the window.open() that would otherwise

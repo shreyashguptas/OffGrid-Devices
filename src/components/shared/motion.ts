@@ -36,18 +36,6 @@ export const fadeInRight = {
   },
 };
 
-export const scaleIn = {
-  hidden: { opacity: 0, scale: 0.97 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.1, 0.25, 1] as const,
-    },
-  },
-};
-
 export const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {

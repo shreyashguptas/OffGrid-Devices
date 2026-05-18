@@ -1,8 +1,14 @@
 import { ImageResponse } from "next/og";
 import { blogPosts, getBlogPost } from "@/content/blog";
+import {
+  BLOG_OG_BADGE_BORDER,
+  BLOG_OG_BADGE_FG,
+  BLOG_OG_FOOTER,
+  BLOG_OG_MUTED,
+  blogOgShellStyle,
+} from "@/lib/blogOgLayout";
+import { loadArchivoFont } from "@/lib/ogFont";
 
-// Using the Node runtime (default) so we can combine generateStaticParams
-// with ImageResponse — edge runtime is incompatible with that combination.
 export const alt = "OffGrid blog post";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -21,23 +27,11 @@ export default async function PostOgImage({
   const title = post?.title ?? "OffGrid Blog";
   const category = post?.category ?? "OffGrid";
   const readTime = post?.readTime;
+  const archivoData = await loadArchivoFont();
 
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "80px",
-          background:
-            "linear-gradient(135deg, #0b1f1c 0%, #0f2a27 50%, #133731 100%)",
-          color: "#f3f7f2",
-          fontFamily: "sans-serif",
-        }}
-      >
+      <div style={blogOgShellStyle}>
         <div
           style={{
             display: "flex",
@@ -50,7 +44,7 @@ export default async function PostOgImage({
               fontSize: 22,
               letterSpacing: 4,
               textTransform: "uppercase",
-              color: "#a8c1b9",
+              color: BLOG_OG_MUTED,
             }}
           >
             OffGrid Devices · Blog
@@ -60,8 +54,8 @@ export default async function PostOgImage({
               fontSize: 22,
               padding: "10px 18px",
               borderRadius: 999,
-              border: "1px solid #2f5b52",
-              color: "#c7d8d2",
+              border: `1px solid ${BLOG_OG_BADGE_BORDER}`,
+              color: BLOG_OG_BADGE_FG,
               textTransform: "uppercase",
               letterSpacing: 2,
             }}
@@ -87,7 +81,7 @@ export default async function PostOgImage({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            color: "#8fb0a6",
+            color: BLOG_OG_FOOTER,
             fontSize: 26,
           }}
         >
@@ -96,6 +90,16 @@ export default async function PostOgImage({
         </div>
       </div>
     ),
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Archivo",
+          data: archivoData,
+          weight: 900,
+          style: "normal",
+        },
+      ],
+    },
   );
 }

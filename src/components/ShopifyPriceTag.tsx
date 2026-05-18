@@ -2,6 +2,9 @@
 
 import type { CSSProperties } from "react";
 import { useShopifyProduct } from "./ShopifyCheckoutButton";
+import { formatPrice } from "@/lib/price";
+
+export { formatPrice } from "@/lib/price";
 
 export type ShopifyPriceTagProps = {
   productEndpoint: string;
@@ -44,31 +47,4 @@ export function ShopifyPriceTag({
       {suffix}
     </span>
   );
-}
-
-export function formatPrice(
-  price: { amount: string; currencyCode: string } | null,
-): string | null {
-  if (!price) {
-    return null;
-  }
-  const amount = Number.parseFloat(price.amount);
-  if (!Number.isFinite(amount)) {
-    return null;
-  }
-
-  // Intl formatting handles currency symbol + locale for any code Shopify
-  // returns, and trailing-zero stripping for whole-dollar amounts.
-  try {
-    const fractionDigits = Number.isInteger(amount) ? 0 : 2;
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: price.currencyCode,
-      minimumFractionDigits: fractionDigits,
-      maximumFractionDigits: fractionDigits,
-    }).format(amount);
-  } catch {
-    // Unknown currency code — fall back to a bare number.
-    return `${amount}`;
-  }
 }

@@ -18,7 +18,7 @@ type WaypointMarkProps = {
 export function WaypointMark({
   size = 40,
   accent = "var(--app-ember)",
-  bone = "var(--app-bone)",
+  bone = "var(--app-fg)",
   className,
   style,
   withFrame = "bare",
@@ -80,7 +80,7 @@ export function BeaconWordmark({
   className,
   withMark = true,
   accent = "var(--app-ember)",
-  bone = "var(--app-bone)",
+  bone = "var(--app-fg)",
 }: WordmarkProps) {
   return (
     <span
