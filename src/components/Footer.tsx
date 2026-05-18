@@ -17,19 +17,17 @@ type FooterColumn = {
 };
 
 export function Footer() {
-  const [primaryProduct, secondaryProduct] = siteProducts;
-
+  // siteProducts is intentionally data-driven (currently 1 entry — Beacon 2);
+  // map over it rather than destructuring so retired products dropping out of
+  // the registry don't crash the Footer.
   const columns: FooterColumn[] = [
     {
       heading: "Carry",
-      links: [
-        { label: primaryProduct.name, href: primaryProduct.href },
-        {
-          label: secondaryProduct.name,
-          href: secondaryProduct.href,
-          badge: secondaryProduct.badge,
-        },
-      ],
+      links: siteProducts.map((product) => ({
+        label: product.name,
+        href: product.href,
+        badge: product.badge,
+      })),
     },
     {
       heading: "Mesh",
@@ -129,7 +127,7 @@ export function Footer() {
         </div>
 
         <div className="type-mono-label mt-14 flex flex-col gap-3 border-t border-bark pt-6 tracking-[0.14em] text-sand/65 md:flex-row md:items-center md:justify-between">
-          <span>&copy; {new Date().getFullYear()} OFFGRID · MADE IN SF</span>
+          <span>&copy; {new Date().getFullYear()} OFFGRID LLC</span>
           <span>Built to be carried</span>
           <span>NO TOWERS · NO SIMS · NO SUBSCRIPTIONS</span>
         </div>

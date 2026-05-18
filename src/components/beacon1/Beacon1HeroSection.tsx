@@ -1,17 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Beacon1CheckoutButton } from "@/components/Beacon1CheckoutButton";
 import { beacon1Content } from "@/content/beacon1";
 
+/**
+ * Beacon 1 hero — retirement-aware variant.
+ *
+ * Beacon 1 is permanently sold out, replaced by Beacon 2. The PDP stays
+ * indexable to preserve the URL's link equity and reviewer-rating history,
+ * but the hero CTA cross-sells to /products/beacon-2 instead of offering
+ * a (dead) checkout button. A "replaced by Beacon 2" notice sits above the
+ * H1 so retired-product visitors immediately understand the current state.
+ */
 export function Beacon1HeroSection() {
   return (
     <section className="border-b border-border-subtle bg-background pt-28 pb-20 md:pt-32 md:pb-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-3 rounded-full border border-border-card bg-surface px-4 py-2 text-sm text-muted-light">
+            <div className="inline-flex items-center gap-3 border border-border-emphasis bg-surface-elevated px-4 py-2 text-xs uppercase tracking-[0.2em] text-muted-light">
               <span className="h-2 w-2 rounded-full bg-accent" />
-              {beacon1Content.productPage.eyebrow}
+              Retired · Replaced by Beacon 2
             </div>
 
             <h1 className="mt-6 break-words font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:mt-8 md:text-6xl lg:text-7xl">
@@ -26,18 +34,24 @@ export function Beacon1HeroSection() {
               {beacon1Content.productPage.description}
             </p>
 
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-light md:text-lg lg:max-w-2xl">
+              Beacon 1 is permanently sold out. OffGrid Beacon 2 carries the
+              same MagSafe LoRa idea forward with a 3000 mAh battery,
+              replaceable antenna, and N48H magnets that grip and hold.
+            </p>
+
             <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10 lg:justify-start">
-              <Beacon1CheckoutButton
-                defaultLabel={beacon1Content.summary.buyLabel}
-                loadingLabel={beacon1Content.summary.loadingLabel}
-                surface="hero"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-accent px-7 py-3.5 font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20 sm:px-8 sm:py-4"
-              />
+              <Link
+                href="/products/beacon-2"
+                className="inline-flex min-h-[52px] items-center justify-center bg-accent px-7 py-3.5 font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20 sm:px-8 sm:py-4"
+              >
+                Shop OffGrid Beacon 2 →
+              </Link>
               <Link
                 href="#features"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-border-emphasis bg-surface px-7 py-3.5 font-semibold text-foreground transition-colors duration-300 hover:border-border-emphasis-hover hover:bg-surface-elevated sm:px-8 sm:py-4"
+                className="inline-flex min-h-[52px] items-center justify-center border border-border-emphasis bg-surface px-7 py-3.5 font-semibold text-foreground transition-colors duration-300 hover:border-border-emphasis-hover hover:bg-surface-elevated sm:px-8 sm:py-4"
               >
-                Explore features
+                Explore Beacon 1
               </Link>
             </div>
 

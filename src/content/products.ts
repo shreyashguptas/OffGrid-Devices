@@ -1,7 +1,3 @@
-import { beacon1Content } from "./beacon1";
-
-const SOLD_OUT_LABEL = "Sold out";
-
 export type SiteProduct = {
   name: string;
   subtitle: string;
@@ -10,6 +6,16 @@ export type SiteProduct = {
   badge: string | null;
 };
 
+/**
+ * Products surfaced in Navbar dropdowns and the Footer "Carry" column.
+ *
+ * Beacon 1 is permanently sold out and intentionally NOT listed here — the
+ * PDP at `/products/beacon-1` remains live and indexable (preserving inbound
+ * links and the Product schema with `availability: OutOfStock`), but it is
+ * not promoted from primary navigation. The Beacon 1 PDP itself surfaces a
+ * "Beacon 2 is the current model" cross-sell to direct retired-product
+ * visitors to the in-stock flagship.
+ */
 export const siteProducts = [
   {
     name: "Beacon 2",
@@ -17,13 +23,6 @@ export const siteProducts = [
     href: "/products/beacon-2",
     image: "/beacon-2/hero-front.png",
     badge: null,
-  },
-  {
-    name: beacon1Content.summary.name,
-    subtitle: `OffGrid · ${beacon1Content.summary.subtitle}`,
-    href: beacon1Content.summary.href,
-    image: beacon1Content.summary.productImage.src,
-    badge: SOLD_OUT_LABEL,
   },
 ] satisfies SiteProduct[];
 
