@@ -264,7 +264,7 @@ function NavbarContent() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden w-10 h-10 flex items-center justify-center"
+          className="md:hidden h-11 w-11 flex items-center justify-center -mr-2"
           aria-label="Toggle menu"
         >
           <div className="relative w-6 h-5">

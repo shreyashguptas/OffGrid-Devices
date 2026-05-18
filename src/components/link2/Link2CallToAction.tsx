@@ -26,7 +26,7 @@ export function Link2CallToAction({
   return (
     <section
       className={cn(
-        "relative overflow-hidden border-b border-bark py-32 md:py-44",
+        "relative overflow-hidden border-b border-bark py-20 md:py-44",
         backgroundClassName,
         className,
       )}
@@ -64,7 +64,7 @@ export function Link2CallToAction({
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 900,
-            fontSize: "clamp(48px, 9vw, 120px)",
+            fontSize: "clamp(36px, 9vw, 120px)",
             lineHeight: 0.88,
             letterSpacing: "-0.04em",
           }}
@@ -84,16 +84,16 @@ export function Link2CallToAction({
           {description || title}
         </p>
 
-        <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <div className="mt-10 flex w-full flex-col items-stretch justify-center gap-3 sm:mt-12 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
           <Link2CheckoutButton
             defaultLabel={link2Content.summary.buyLabel}
             loadingLabel={link2Content.summary.loadingLabel}
             showArrow
-            className="inline-flex items-center justify-center gap-3 bg-ember px-10 py-5 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:opacity-60 disabled:cursor-not-allowed"
+            className="inline-flex min-h-[56px] items-center justify-center gap-3 bg-ember px-6 py-4 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:opacity-60 disabled:cursor-not-allowed sm:px-10 sm:py-5"
           />
           <Link
             href={secondaryHref}
-            className="inline-flex items-center justify-center border border-bone px-10 py-5 text-bone transition-colors duration-300 hover:border-ember hover:text-ember"
+            className="inline-flex min-h-[56px] items-center justify-center border border-bone px-6 py-4 text-bone transition-colors duration-300 hover:border-ember hover:text-ember sm:px-10 sm:py-5"
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 700,

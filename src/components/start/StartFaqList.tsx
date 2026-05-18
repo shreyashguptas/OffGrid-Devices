@@ -13,7 +13,7 @@ export function StartFaqList({ items }: StartFaqListProps) {
           id={item.id}
           className="group section-card scroll-mt-24 rounded-[1.5rem] px-5 py-4 transition-colors open:bg-surface-elevated md:px-7 md:py-5"
         >
-          <summary className="flex cursor-pointer list-none items-start justify-between gap-6">
+          <summary className="flex cursor-pointer list-none items-start justify-between gap-3 sm:gap-6">
             <dt className="font-display text-base font-semibold leading-snug text-foreground md:text-lg">
               {item.question}
             </dt>

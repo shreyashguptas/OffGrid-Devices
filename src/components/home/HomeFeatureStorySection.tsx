@@ -97,7 +97,7 @@ export function HomeFeatureStorySection() {
                   style={{
                     fontFamily: "var(--font-display)",
                     fontWeight: 800,
-                    fontSize: 26,
+                    fontSize: "clamp(20px, 5vw, 26px)",
                     lineHeight: 1.1,
                     letterSpacing: "-0.02em",
                   }}

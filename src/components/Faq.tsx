@@ -29,7 +29,7 @@ export function Faq({
               {eyebrow}
             </p>
           ) : null}
-          <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-5xl">
+          <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
             {title}
           </h2>
           {description ? (

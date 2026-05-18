@@ -14,27 +14,27 @@ export function Link1HeroSection() {
               {link1Content.productPage.eyebrow}
             </div>
 
-            <h1 className="mt-8 font-display text-5xl font-bold leading-[1.02] tracking-tight md:text-7xl">
+            <h1 className="mt-6 break-words font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:mt-8 md:text-6xl lg:text-7xl">
               {link1Content.summary.brandedName}
             </h1>
 
-            <p className="mt-4 text-xl text-muted-light md:text-2xl">
+            <p className="mt-3 text-lg text-muted-light sm:text-xl md:mt-4 md:text-2xl">
               {link1Content.summary.subtitle}
             </p>
 
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-light lg:max-w-2xl">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-light md:mt-6 md:text-lg lg:max-w-2xl">
               {link1Content.productPage.description}
             </p>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
+            <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10 lg:justify-start">
               <Link1CheckoutButton
                 defaultLabel={link1Content.summary.buyLabel}
                 loadingLabel={link1Content.summary.loadingLabel}
-                className="inline-flex items-center justify-center rounded-full bg-accent px-8 py-4 font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-accent px-7 py-3.5 font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20 sm:px-8 sm:py-4"
               />
               <Link
                 href="#features"
-                className="inline-flex items-center justify-center rounded-full border border-border-emphasis bg-surface px-8 py-4 font-semibold text-foreground transition-colors duration-300 hover:border-border-emphasis-hover hover:bg-surface-elevated"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-border-emphasis bg-surface px-7 py-3.5 font-semibold text-foreground transition-colors duration-300 hover:border-border-emphasis-hover hover:bg-surface-elevated sm:px-8 sm:py-4"
               >
                 Explore features
               </Link>

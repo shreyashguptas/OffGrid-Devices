@@ -54,7 +54,7 @@ export function HomeSpecsSection() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
           variants={staggerContainer}
-          className="mt-14 grid grid-cols-2 gap-y-10 gap-x-8 md:grid-cols-3 lg:grid-cols-4"
+          className="mt-14 grid grid-cols-2 gap-y-10 gap-x-4 sm:gap-x-6 md:grid-cols-3 md:gap-x-8 lg:grid-cols-4"
         >
           {SPECS.map((spec) => (
             <motion.div key={spec.label} variants={cardVariant}>
