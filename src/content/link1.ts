@@ -167,8 +167,8 @@ export const link1Content = {
       title: "Ready for Beacon 1?",
       description:
         "Get OffGrid Beacon 1 and keep the radio with the device you already carry.",
-      secondaryHref: "/blog/getting-started-with-meshtastic",
-      secondaryLabel: "Read setup guide",
+      secondaryHref: "/blog/why-offgrid",
+      secondaryLabel: "Read the OffGrid story",
     },
   },
   blog: {
