@@ -23,14 +23,14 @@ class SoldOutError extends Error {
 export async function verifyLink1Storefront(): Promise<void> {
   if (!hasShopifyStorefrontConfig()) {
     throw new MissingShopifyConfigError(
-      "Shopify Storefront API is not configured (missing domain, handle, or token).",
+      "Shopify Storefront API is not configured (missing domain or token).",
     );
   }
 
   const product = await getLink1Product();
   if (!product) {
     throw new Error(
-      "Beacon 1 product was not found in Shopify (check SHOPIFY_LINK_1_HANDLE).",
+      "Beacon 1 product was not found in Shopify (check the link-1 handle in src/lib/shopify-products.ts).",
     );
   }
 

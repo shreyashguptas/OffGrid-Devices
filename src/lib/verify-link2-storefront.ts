@@ -1,7 +1,7 @@
 import {
   createLink2CheckoutUrl,
   getLink2Product,
-  hasLink2StorefrontConfig,
+  hasShopifyStorefrontConfig,
 } from "./shopify-storefront-core";
 import { MissingShopifyConfigError } from "./shopify-verify-errors";
 
@@ -21,16 +21,16 @@ class Link2SoldOutError extends Error {
  * gates — keep in sync with Beacon 2 API behavior.
  */
 export async function verifyLink2Storefront(): Promise<void> {
-  if (!hasLink2StorefrontConfig()) {
+  if (!hasShopifyStorefrontConfig()) {
     throw new MissingShopifyConfigError(
-      "Shopify Storefront API is not configured for Beacon 2 (missing domain, handle, or token).",
+      "Shopify Storefront API is not configured for Beacon 2 (missing domain or token).",
     );
   }
 
   const product = await getLink2Product();
   if (!product) {
     throw new Error(
-      "Beacon 2 product was not found in Shopify (check SHOPIFY_LINK_2_HANDLE).",
+      "Beacon 2 product was not found in Shopify (check the link-2 handle in src/lib/shopify-products.ts).",
     );
   }
 

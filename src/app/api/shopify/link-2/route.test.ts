@@ -2,7 +2,7 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 import { GET } from "./route";
 
 vi.mock("@/lib/shopify", () => ({
-  hasLink2StorefrontConfig: vi.fn(),
+  hasShopifyStorefrontConfig: vi.fn(),
   getLink2ProductWithCache: vi.fn(),
 }));
 
@@ -10,12 +10,12 @@ import * as shopify from "@/lib/shopify";
 
 describe("GET /api/shopify/link-2", () => {
   beforeEach(() => {
-    vi.mocked(shopify.hasLink2StorefrontConfig).mockReset();
+    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReset();
     vi.mocked(shopify.getLink2ProductWithCache).mockReset();
   });
 
   it("returns 500 when storefront is not configured", async () => {
-    vi.mocked(shopify.hasLink2StorefrontConfig).mockReturnValue(false);
+    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(false);
 
     const res = await GET();
     const body = await res.json();
@@ -25,7 +25,7 @@ describe("GET /api/shopify/link-2", () => {
   });
 
   it("returns 404 when product is missing", async () => {
-    vi.mocked(shopify.hasLink2StorefrontConfig).mockReturnValue(true);
+    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(true);
     vi.mocked(shopify.getLink2ProductWithCache).mockResolvedValue(null);
 
     const res = await GET();
@@ -36,7 +36,7 @@ describe("GET /api/shopify/link-2", () => {
   });
 
   it("returns 200 with product when found", async () => {
-    vi.mocked(shopify.hasLink2StorefrontConfig).mockReturnValue(true);
+    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(true);
     vi.mocked(shopify.getLink2ProductWithCache).mockResolvedValue({
       title: "Beacon 2",
       handle: "beacon-2",

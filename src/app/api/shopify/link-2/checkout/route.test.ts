@@ -2,7 +2,7 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 import { POST } from "./route";
 
 vi.mock("@/lib/shopify", () => ({
-  hasLink2StorefrontConfig: vi.fn(),
+  hasShopifyStorefrontConfig: vi.fn(),
   createLink2CheckoutUrl: vi.fn(),
 }));
 
@@ -10,12 +10,12 @@ import * as shopify from "@/lib/shopify";
 
 describe("POST /api/shopify/link-2/checkout", () => {
   beforeEach(() => {
-    vi.mocked(shopify.hasLink2StorefrontConfig).mockReset();
+    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReset();
     vi.mocked(shopify.createLink2CheckoutUrl).mockReset();
   });
 
   it("returns 500 when storefront is not configured", async () => {
-    vi.mocked(shopify.hasLink2StorefrontConfig).mockReturnValue(false);
+    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(false);
 
     const res = await POST();
     const body = await res.json();
@@ -25,7 +25,7 @@ describe("POST /api/shopify/link-2/checkout", () => {
   });
 
   it("returns 200 with checkout URL when creation succeeds", async () => {
-    vi.mocked(shopify.hasLink2StorefrontConfig).mockReturnValue(true);
+    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(true);
     vi.mocked(shopify.createLink2CheckoutUrl).mockResolvedValue(
       "https://example.myshopify.com/checkouts/cn/abc",
     );
@@ -39,7 +39,7 @@ describe("POST /api/shopify/link-2/checkout", () => {
   });
 
   it("returns 500 when checkout creation throws", async () => {
-    vi.mocked(shopify.hasLink2StorefrontConfig).mockReturnValue(true);
+    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(true);
     vi.mocked(shopify.createLink2CheckoutUrl).mockRejectedValue(
       new Error("sold out"),
     );
@@ -52,7 +52,7 @@ describe("POST /api/shopify/link-2/checkout", () => {
   });
 
   it("rate limits repeated checkout creation attempts", async () => {
-    vi.mocked(shopify.hasLink2StorefrontConfig).mockReturnValue(true);
+    vi.mocked(shopify.hasShopifyStorefrontConfig).mockReturnValue(true);
     vi.mocked(shopify.createLink2CheckoutUrl).mockResolvedValue(
       "https://example.myshopify.com/checkouts/cn/abc",
     );

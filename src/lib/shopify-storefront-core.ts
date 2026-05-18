@@ -1,4 +1,5 @@
 import { unstable_cache } from "next/cache";
+import { getShopifyHandle } from "./shopify-products";
 
 type ShopifyGraphQLError = {
   message: string;
@@ -90,19 +91,13 @@ function getShopifyEnv() {
   const publicToken = process.env.SHOPIFY_STOREFRONT_PUBLIC_TOKEN?.trim();
   const apiVersion =
     process.env.SHOPIFY_STOREFRONT_API_VERSION?.trim() || "2026-04";
-  const link1Handle = process.env.SHOPIFY_LINK_1_HANDLE?.trim();
-  const link2Handle = process.env.SHOPIFY_LINK_2_HANDLE?.trim();
 
   return {
     domain,
     privateToken,
     publicToken,
     apiVersion,
-    link1Handle,
-    link2Handle,
     isConfigured: Boolean(domain),
-    hasLink1: Boolean(domain && link1Handle),
-    hasLink2: Boolean(domain && link2Handle),
   };
 }
 
@@ -112,11 +107,7 @@ function hasToken() {
 }
 
 export function hasShopifyStorefrontConfig() {
-  return getShopifyEnv().hasLink1 && hasToken();
-}
-
-export function hasLink2StorefrontConfig() {
-  return getShopifyEnv().hasLink2 && hasToken();
+  return getShopifyEnv().isConfigured && hasToken();
 }
 
 async function shopifyFetch<T>(
@@ -280,23 +271,19 @@ async function createCheckoutUrlForVariant(
 }
 
 export async function getLink1Product(): Promise<ShopifyStorefrontProduct | null> {
-  const { link1Handle, hasLink1 } = getShopifyEnv();
-
-  if (!hasLink1 || !link1Handle) {
+  if (!getShopifyEnv().isConfigured) {
     return null;
   }
 
-  return getProductByHandle(link1Handle);
+  return getProductByHandle(getShopifyHandle("link-1"));
 }
 
 export async function getLink2Product(): Promise<ShopifyStorefrontProduct | null> {
-  const { link2Handle, hasLink2 } = getShopifyEnv();
-
-  if (!hasLink2 || !link2Handle) {
+  if (!getShopifyEnv().isConfigured) {
     return null;
   }
 
-  return getProductByHandle(link2Handle);
+  return getProductByHandle(getShopifyHandle("link-2"));
 }
 
 const getLink1ProductCached = unstable_cache(

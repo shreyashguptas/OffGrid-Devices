@@ -40,7 +40,6 @@ describe("createLink1CheckoutUrl", () => {
     vi.stubGlobal("fetch", fetchMock);
     vi.stubEnv("SHOPIFY_STORE_DOMAIN", "example.myshopify.com");
     vi.stubEnv("SHOPIFY_STOREFRONT_PRIVATE_TOKEN", "test-token");
-    vi.stubEnv("SHOPIFY_LINK_1_HANDLE", "link-1");
   });
 
   afterEach(() => {

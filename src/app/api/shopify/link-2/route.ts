@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   getLink2ProductWithCache,
-  hasLink2StorefrontConfig,
+  hasShopifyStorefrontConfig,
 } from "@/lib/shopify";
 import {
   checkRateLimit,
@@ -35,7 +35,7 @@ export async function GET(request?: Request) {
     );
   }
 
-  if (!hasLink2StorefrontConfig()) {
+  if (!hasShopifyStorefrontConfig()) {
     return NextResponse.json(
       { error: "Shopify Storefront API is not configured." },
       { status: 500 },
