@@ -5,6 +5,7 @@ import { absoluteUrl } from "@/lib/siteUrl";
 export default function sitemap(): MetadataRoute.Sitemap {
   const ROUTE_LAST_MODIFIED = {
     home: "2026-05-18",
+    beacon2: "2026-05-18",
     beacon1: "2026-05-17",
     blog: "2026-05-18",
     beacon2Start: "2026-05-10",
@@ -18,10 +19,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: absoluteUrl("/products/beacon-2"),
+      lastModified: ROUTE_LAST_MODIFIED.beacon2,
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
       url: absoluteUrl("/products/beacon-1"),
       lastModified: ROUTE_LAST_MODIFIED.beacon1,
       changeFrequency: "weekly",
-      priority: 0.9,
+      priority: 0.7,
     },
     {
       url: absoluteUrl("/blog"),
@@ -35,7 +42,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.6,
     },
-    // /products/beacon-2 deliberately excluded — it redirects to home.
   ];
 
   const blogRoutes: MetadataRoute.Sitemap = allBlogPosts.map((post) => ({

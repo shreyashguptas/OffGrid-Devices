@@ -14,7 +14,7 @@ export const siteProducts = [
   {
     name: "Beacon 2",
     subtitle: "OffGrid · LoRa mesh radio",
-    href: "/",
+    href: "/products/beacon-2",
     image: "/beacon-2/hero-front.png",
     badge: null,
   },
@@ -49,7 +49,7 @@ export const beacon2Content = {
     name: "Beacon 2",
     brandedName: "OffGrid Beacon 2",
     subtitle: "MagSafe LoRa mesh radio",
-    href: "/",
+    href: "/products/beacon-2",
     shortBuyLabel: "Buy",
     buyLabel: "Buy Beacon 2",
     loadingLabel: "Opening Checkout...",
