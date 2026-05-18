@@ -106,6 +106,12 @@ function hasToken() {
   return Boolean(privateToken || publicToken);
 }
 
+/**
+ * True when the storefront *transport* is configured (store domain + at least
+ * one access token). Does NOT validate that a product handle exists in the
+ * registry — that lives in `src/lib/shopify-products.ts` and is asserted at
+ * call sites via `getShopifyHandle(slot)`.
+ */
 export function hasShopifyStorefrontConfig() {
   return getShopifyEnv().isConfigured && hasToken();
 }
