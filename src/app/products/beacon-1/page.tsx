@@ -13,6 +13,7 @@ import {
   jsonLdScriptProps,
   productJsonLd,
 } from "@/lib/jsonLd";
+import { loadProductForPage } from "@/lib/loadProductForPage";
 import { getBeacon1ProductWithCache } from "@/lib/shopify";
 
 export const metadata: Metadata = {
@@ -99,17 +100,11 @@ const PRODUCT_FAQS = [
   },
 ];
 
-async function loadBeacon1Product() {
-  try {
-    return await getBeacon1ProductWithCache();
-  } catch (error) {
-    console.error("Failed to fetch Beacon 1 product for product page.", error);
-    return null;
-  }
-}
-
 export default async function Beacon1Product() {
-  const beacon1Product = await loadBeacon1Product();
+  const beacon1Product = await loadProductForPage(
+    "Beacon 1 product for product page",
+    getBeacon1ProductWithCache,
+  );
   const price = beacon1Product?.variant?.price?.amount;
   const priceCurrency = beacon1Product?.variant?.price?.currencyCode ?? "USD";
   const availability =

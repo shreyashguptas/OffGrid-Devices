@@ -9,6 +9,8 @@ import {
   jsonLdScriptProps,
   productJsonLd,
 } from "@/lib/jsonLd";
+import { loadProductForPage } from "@/lib/loadProductForPage";
+import { formatPrice } from "@/lib/price";
 import { getBeacon2ProductWithCache } from "@/lib/shopify";
 
 /**
@@ -123,40 +125,20 @@ const PRODUCT_FAQS = [
   },
 ];
 
-async function loadBeacon2Product() {
-  try {
-    return await getBeacon2ProductWithCache();
-  } catch (error) {
-    console.error("Failed to fetch Beacon 2 product for product page.", error);
-    return null;
-  }
-}
-
-function formatPriceLabel(amount: string, currencyCode: string): string {
-  const num = Number(amount);
-  if (!Number.isFinite(num)) {
-    return `${amount} ${currencyCode}`;
-  }
-  try {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currencyCode,
-      maximumFractionDigits: 0,
-    }).format(num);
-  } catch {
-    return `$${num.toFixed(0)} ${currencyCode}`;
-  }
-}
-
 export default async function Beacon2Product() {
-  const product = await loadBeacon2Product();
+  const product = await loadProductForPage(
+    "Beacon 2 product for product page",
+    getBeacon2ProductWithCache,
+  );
   const price = product?.variant?.price?.amount;
   const priceCurrency = product?.variant?.price?.currencyCode ?? "USD";
   const availability =
     product?.availableForSale && product.variant?.availableForSale
       ? "InStock"
       : "OutOfStock";
-  const priceLabel = price ? formatPriceLabel(price, priceCurrency) : null;
+  const priceLabel = price
+    ? formatPrice({ amount: price, currencyCode: priceCurrency })
+    : null;
 
   return (
     <>
