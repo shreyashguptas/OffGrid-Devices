@@ -9,12 +9,11 @@ export type SiteProduct = {
 /**
  * Products surfaced in Navbar dropdowns and the Footer "Carry" column.
  *
- * Beacon 1 is permanently sold out and intentionally NOT listed here — the
- * PDP at `/products/beacon-1` remains live and indexable (preserving inbound
- * links and the Product schema with `availability: OutOfStock`), but it is
- * not promoted from primary navigation. The Beacon 1 PDP itself surfaces a
- * "Beacon 2 is the current model" cross-sell to direct retired-product
- * visitors to the in-stock flagship.
+ * Beacon 1 is permanently sold out but stays in this list with a "Sold out"
+ * badge so the lineup still shows the lineage: the retired model and its
+ * in-stock successor. Its PDP at `/products/beacon-1` remains live and
+ * indexable (preserving inbound links and the Product schema with
+ * `availability: OutOfStock`) and cross-sells Beacon 2 throughout.
  */
 export const siteProducts = [
   {
@@ -23,6 +22,13 @@ export const siteProducts = [
     href: "/products/beacon-2",
     image: "/beacon-2/hero-front.png",
     badge: null,
+  },
+  {
+    name: "Beacon 1",
+    subtitle: "OffGrid · LoRa mesh radio",
+    href: "/products/beacon-1",
+    image: "/products/beacon1-hero-v1.png",
+    badge: "Sold out",
   },
 ] satisfies SiteProduct[];
 
