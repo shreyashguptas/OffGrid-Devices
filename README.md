@@ -4,8 +4,8 @@ Marketing site and storefront shell for OffGrid devices, built with Next.js App 
 
 Current product coverage:
 
-- `Beacon 1` product storytelling, reviews, and Shopify checkout
-- `Beacon 2` homepage product experience and Shopify checkout
+- `Beacon 1` sold-out SEO product page at `/products/beacon-1` (storytelling, reviews, no checkout)
+- `Beacon 2` homepage product experience plus standalone PDP at `/products/beacon-2` with Shopify checkout
 - blog content for setup and onboarding
 
 ## Requirements
@@ -29,7 +29,7 @@ Open `http://localhost:3000`.
 
 - `src/app/page.tsx` - homepage composition
 - `src/app/products/beacon-1/page.tsx` - Beacon 1 product page
-- `src/app/products/beacon-2/page.tsx` - Beacon 2 redirect to homepage
+- `src/app/products/beacon-2/page.tsx` - Beacon 2 standalone product page (buy + SEO)
 - `src/app/blog/page.tsx` - blog listing
 - `src/app/blog/[slug]/page.tsx` - blog detail page
 - `src/content/` - shared product and blog content

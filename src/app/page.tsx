@@ -10,6 +10,7 @@ import { HomeTestimonialsSection } from "@/components/home/HomeTestimonialsSecti
 import { allBlogPosts } from "@/content/blog";
 import { beacon2Content } from "@/content/products";
 import { jsonLdScriptProps, productJsonLd } from "@/lib/jsonLd";
+import { loadProductForPage } from "@/lib/loadProductForPage";
 import { getBeacon2ProductWithCache } from "@/lib/shopify";
 
 export const metadata: Metadata = {
@@ -28,17 +29,11 @@ export const metadata: Metadata = {
   },
 };
 
-async function loadBeacon2Product() {
-  try {
-    return await getBeacon2ProductWithCache();
-  } catch (error) {
-    console.error("Failed to fetch Beacon 2 product for homepage.", error);
-    return null;
-  }
-}
-
 export default async function Home() {
-  const beacon2Product = await loadBeacon2Product();
+  const beacon2Product = await loadProductForPage(
+    "Beacon 2 product for homepage",
+    getBeacon2ProductWithCache,
+  );
   const price = beacon2Product?.variant?.price?.amount;
   const priceCurrency = beacon2Product?.variant?.price?.currencyCode ?? "USD";
   const availability =

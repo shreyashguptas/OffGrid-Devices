@@ -4,8 +4,6 @@ import type { CSSProperties } from "react";
 import { useShopifyProduct } from "./ShopifyCheckoutButton";
 import { formatPrice } from "@/lib/price";
 
-export { formatPrice } from "@/lib/price";
-
 export type ShopifyPriceTagProps = {
   productEndpoint: string;
   cacheKey: string;
