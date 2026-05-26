@@ -85,7 +85,7 @@ function BeaconModel({
   const currentZoom = useRef(1);
   const lastAspect = useRef(0);
 
-  const { scene, offset, baseScale } = useMemo(() => {
+  const { scene, offset, baseScale, ownedMaterials } = useMemo(() => {
     const cloned = gltf.scene.clone(true);
     const box = new THREE.Box3().setFromObject(cloned);
     const center = new THREE.Vector3();
@@ -95,19 +95,64 @@ function BeaconModel({
     const maxDim = Math.max(sizeVec.x, sizeVec.y, sizeVec.z) || 1;
     // 3.2 units = the visible height at z=0 with our camera (fov 32, z=6).
     const fit = (3.2 * FIT_RATIO) / maxDim;
-    return { scene: cloned, offset: center.multiplyScalar(-1), baseScale: fit };
+
+    // The GLB's PBR bake declares KHR_materials_specular / sheen /
+    // clearcoat / transmission, and most surfaces sit at roughness 0.5.
+    // Under the warehouse HDR that combines into a polished-metal look
+    // that doesn't match the matte print reference. We keep every source
+    // material's color and metalness — so buttons, screen, antenna, etc.
+    // still read with their CAD-assigned tones — but clamp roughness up,
+    // drop env-map contribution, and zero out the gloss extensions so
+    // nothing picks up a mirror-style reflection. Source materials are
+    // cloned first so the cached gltf root keeps its originals intact.
+    const seen = new Map<THREE.Material, THREE.Material>();
+    const owned: THREE.Material[] = [];
+    const tame = (src: THREE.Material): THREE.Material => {
+      const cached = seen.get(src);
+      if (cached) return cached;
+      const next = src.clone();
+      const std = next as THREE.MeshStandardMaterial;
+      if ("roughness" in std) {
+        std.roughness = Math.max(std.roughness ?? 0.5, 0.8);
+        std.envMapIntensity = 0.3;
+      }
+      const phys = next as THREE.MeshPhysicalMaterial;
+      if ("clearcoat" in phys) phys.clearcoat = 0;
+      if ("sheen" in phys) phys.sheen = 0;
+      if ("transmission" in phys) phys.transmission = 0;
+      if ("specularIntensity" in phys) phys.specularIntensity = 0;
+      seen.set(src, next);
+      owned.push(next);
+      return next;
+    };
+    cloned.traverse((obj) => {
+      const mesh = obj as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      mesh.material = Array.isArray(mesh.material)
+        ? mesh.material.map(tame)
+        : tame(mesh.material);
+    });
+
+    return {
+      scene: cloned,
+      offset: center.multiplyScalar(-1),
+      baseScale: fit,
+      ownedMaterials: owned,
+    };
   }, [gltf.scene]);
 
-  // Materials and textures are shared with the cached gltf root (drei
-  // reuses it), so we only drop what clone(true) actually duplicated.
+  // Geometry is duplicated by clone(true) and we cloned each material
+  // above, so both are ours to dispose. The cached gltf root still
+  // references the originals — we don't touch those.
   useEffect(() => {
     return () => {
       scene.traverse((obj) => {
         const mesh = obj as THREE.Mesh;
         if (mesh.isMesh && mesh.geometry) mesh.geometry.dispose();
       });
+      ownedMaterials.forEach((m) => m.dispose());
     };
-  }, [scene]);
+  }, [scene, ownedMaterials]);
 
   useFrame((state, delta) => {
     if (!groupRef.current) return;
@@ -459,7 +504,14 @@ export function Beacon3DViewer({ className }: { className?: string }) {
           {/* Bone rim — separates the dark silhouette from the dark background */}
           <directionalLight position={[0, 3, -5]} intensity={0.8} color="#F1ECE0" />
           <Suspense fallback={null}>
-            <Environment preset="warehouse" environmentIntensity={0.25} />
+            {/* Self-hosted so the request stays same-origin under our CSP
+                connect-src. drei's `preset` fetches from raw.githack.com,
+                which the tightened CSP blocks — and the failed load takes
+                the whole canvas down via the error boundary above. */}
+            <Environment
+              files="/hdri/empty_warehouse_01_1k.hdr"
+              environmentIntensity={0.25}
+            />
             <BeaconModel stateRef={stateRef} />
           </Suspense>
         </Canvas>
