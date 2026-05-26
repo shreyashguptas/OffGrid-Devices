@@ -27,7 +27,7 @@ export function Beacon1FeaturesSection() {
               key={feature.title}
               className="section-card rounded-[2rem] p-8"
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/20 bg-accent/10 text-2xl">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/20 bg-accent/10 font-display text-xs font-bold uppercase tracking-[0.14em] text-accent">
                 {feature.icon}
               </div>
               <h3 className="mt-6 font-display text-2xl font-semibold">

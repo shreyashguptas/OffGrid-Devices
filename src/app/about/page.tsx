@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
+import {
+  breadcrumbJsonLd,
+  jsonLdScriptProps,
+  personJsonLd,
+} from "@/lib/jsonLd";
+import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
-const TITLE = "About OffGrid Devices — Founder, Mission, Story";
+const TITLE = "About OffGrid Devices — Founder & Mission";
 const DESCRIPTION =
-  "OffGrid Devices is a San Francisco-based hardware company founded by Shreyash Gupta. We make MagSafe-compatible LoRa mesh radios that run Meshtastic — off-grid communication for the trail, the boat, the pass, and the tower.";
+  "OffGrid Devices is a San Francisco-based hardware company making MagSafe-compatible LoRa mesh radios that run Meshtastic. Founded by Shreyash Gupta.";
 
 export const metadata: Metadata = {
-  title: TITLE,
+  // `title.absolute` skips the global ` | OffGrid Devices` template so the
+  // rendered <title> stays under 60 chars for SERP display.
+  title: { absolute: TITLE },
   description: DESCRIPTION,
   alternates: { canonical: "/about" },
   openGraph: {
@@ -17,7 +24,9 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
   },
   twitter: {
-    card: "summary",
+    // `summary_large_image` so the auto-resolved root OG image renders as a
+    // full card in tweets, not a thumbnail.
+    card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
   },
@@ -32,6 +41,24 @@ export default function AboutPage() {
             { name: "Home", url: "/" },
             { name: "About", url: "/about" },
           ]),
+        )}
+      />
+      <script
+        {...jsonLdScriptProps(
+          personJsonLd({
+            name: "Shreyash Gupta",
+            url: absoluteUrl("/about"),
+            jobTitle: "Founder",
+            worksFor: {
+              name: "OffGrid Devices",
+              url: getSiteUrl(),
+            },
+            sameAs: [
+              "https://x.com/ShreyashGuptas",
+              "https://github.com/shreyashguptas",
+              "https://www.youtube.com/channel/UCe0X6IPIEuNpCvuQtOlKNrA",
+            ],
+          }),
         )}
       />
 

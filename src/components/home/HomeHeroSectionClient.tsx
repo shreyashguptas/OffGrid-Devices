@@ -133,12 +133,12 @@ export function HomeHeroSectionClient({ buyLabel }: { buyLabel: string }) {
             variants={cornerUp(0.4)}
             className="flex max-w-md flex-col gap-3"
           >
-            <p
+            <h1
               className="font-editorial italic leading-[1.15] tracking-[-0.01em] text-sand"
               style={{ fontSize: "clamp(20px, 2.4vw, 28px)" }}
             >
               {tagline}
-            </p>
+            </h1>
             <div
               className="type-mono-label inline-flex flex-wrap items-center gap-x-2 gap-y-1 text-sand/55"
               style={{ fontSize: "clamp(10px, 1vw, 11px)" }}

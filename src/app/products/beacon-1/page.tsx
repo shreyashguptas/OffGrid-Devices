@@ -9,17 +9,22 @@ import { Beacon1TestimonialsGridSection } from "@/components/beacon1/Beacon1Test
 import { beacon1Content } from "@/content/beacon1";
 import {
   breadcrumbJsonLd,
-  faqJsonLd,
   jsonLdScriptProps,
   productJsonLd,
 } from "@/lib/jsonLd";
 import { loadProductForPage } from "@/lib/loadProductForPage";
+import { priceValidUntilEndOfYear } from "@/lib/seoPriceValidUntil";
 import { getBeacon1ProductWithCache } from "@/lib/shopify";
 
+const TITLE = "OffGrid Beacon 1 — MagSafe Meshtastic Radio (Retired)";
+const DESCRIPTION =
+  "OffGrid Beacon 1: the original MagSafe-compatible LoRa mesh radio with Meshtastic pre-installed and 10+ km LoS range. Now retired — see Beacon 2.";
+
 export const metadata: Metadata = {
-  title: "OffGrid Beacon 1 — MagSafe Meshtastic LoRa Mesh Radio",
-  description:
-    "OffGrid Beacon 1: the MagSafe-compatible LoRa mesh radio. Meshtastic pre-installed, up to 10+ km line-of-sight range, USB-C charging, and a transparent shell. Ships ready for the mesh.",
+  // `title.absolute` skips the global `%s | OffGrid Devices` template so the
+  // rendered <title> stays under 60 chars for SERP display.
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
   keywords: [
     "OffGrid Beacon 1",
     "MagSafe Meshtastic",
@@ -36,9 +41,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/products/beacon-1",
-    title: "OffGrid Beacon 1 — MagSafe Meshtastic LoRa Mesh Radio",
-    description:
-      "MagSafe-compatible LoRa mesh radio, Meshtastic pre-installed. Built for off-grid communication wherever towers aren't.",
+    title: TITLE,
+    description: DESCRIPTION,
     images: [
       {
         url: beacon1Content.summary.heroImage.src,
@@ -50,9 +54,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OffGrid Beacon 1 — MagSafe Meshtastic LoRa Mesh Radio",
-    description:
-      "MagSafe LoRa mesh radio with Meshtastic pre-installed. Off-grid communication that stays on your phone.",
+    title: TITLE,
+    description: DESCRIPTION,
     images: [beacon1Content.summary.heroImage.src],
   },
 };
@@ -107,10 +110,6 @@ export default async function Beacon1Product() {
   );
   const price = beacon1Product?.variant?.price?.amount;
   const priceCurrency = beacon1Product?.variant?.price?.currencyCode ?? "USD";
-  const availability =
-    beacon1Product?.availableForSale && beacon1Product.variant?.availableForSale
-      ? "InStock"
-      : "OutOfStock";
 
   return (
     <>
@@ -139,11 +138,14 @@ export default async function Beacon1Product() {
               date: testimonial.date,
               review: testimonial.review,
             })),
+            // Beacon 1 is permanently retired. `Discontinued` (vs. transient
+            // `OutOfStock`) tells Google not to keep crawling for restock.
             offer: price
               ? {
                   price,
                   priceCurrency,
-                  availability,
+                  availability: "Discontinued",
+                  priceValidUntil: priceValidUntilEndOfYear(),
                 }
               : undefined,
           }),
@@ -151,14 +153,14 @@ export default async function Beacon1Product() {
       />
       <script
         {...jsonLdScriptProps(
+          // Collapsed to 2 items — no /products collection page.
           breadcrumbJsonLd([
             { name: "Home", url: "/" },
-            { name: "Products", url: "/products/beacon-1" },
             { name: "OffGrid Beacon 1", url: "/products/beacon-1" },
           ]),
         )}
       />
-      <script {...jsonLdScriptProps(faqJsonLd(PRODUCT_FAQS))} />
+      {/* FAQPage JSON-LD is emitted by the <Faq> component itself. */}
       <Beacon1HeroSection />
       <Beacon1FeaturesSection />
       <Beacon1GallerySection />

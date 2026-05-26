@@ -183,7 +183,7 @@ export const beacon1Content = {
   },
   featureHighlights: [
     {
-      icon: "🧲",
+      icon: "MAG",
       kicker: "Daily carry",
       title: "Snap it on and go",
       tab: "MagSafe carry",
@@ -196,7 +196,7 @@ export const beacon1Content = {
       alt: "OffGrid Beacon 1 MagSafe-mounted to a phone",
     },
     {
-      icon: "📡",
+      icon: "RF",
       kicker: "Off-grid reach",
       title: "Keep talking past the dead zone",
       tab: "LoRa range",
@@ -209,7 +209,7 @@ export const beacon1Content = {
       alt: "OffGrid Beacon 1 used outdoors",
     },
     {
-      icon: "🔋",
+      icon: "BAT",
       kicker: "Trip-ready power",
       title: "Charge once, stay out longer",
       tab: "Battery",
@@ -222,7 +222,7 @@ export const beacon1Content = {
       alt: "OffGrid Beacon 1 internal hardware and battery",
     },
     {
-      icon: "👁️",
+      icon: "VIS",
       kicker: "Built to be seen",
       title: "Let the hardware do the talking",
       tab: "Transparent shell",
@@ -235,7 +235,7 @@ export const beacon1Content = {
       alt: "Transparent OffGrid Beacon 1 close-up",
     },
     {
-      icon: "⚙️",
+      icon: "FW",
       kicker: "Flexible setup",
       title: "Run the firmware you already prefer",
       tab: "Dual firmware",
@@ -248,7 +248,7 @@ export const beacon1Content = {
       alt: "OffGrid Beacon 1 product view",
     },
     {
-      icon: "🌐",
+      icon: "NET",
       kicker: "Network effect",
       title: "Every extra node makes the system stronger",
       tab: "Mesh network",
@@ -263,37 +263,37 @@ export const beacon1Content = {
   ] satisfies Beacon1FeatureHighlight[],
   featureCards: [
     {
-      icon: "🧲",
+      icon: "MAG",
       title: "MagSafe compatible",
       description:
         "Attaches securely to MagSafe-compatible phones and cases so Beacon 1 stays with the device you already carry.",
     },
     {
-      icon: "📡",
+      icon: "RF",
       title: "Long-range LoRa",
       description:
         "Communicate miles away without cell service using LoRa mesh networking built for low-power, off-grid use.",
     },
     {
-      icon: "🔋",
+      icon: "BAT",
       title: "All-day battery",
       description:
         "A rechargeable internal battery and USB-C charging make Beacon 1 simple to top off before the next trip.",
     },
     {
-      icon: "👁️",
+      icon: "VIS",
       title: "Transparent shell",
       description:
         "The enclosure shows the board, battery, and antenna instead of hiding the hardware behind unnecessary styling.",
     },
     {
-      icon: "⚙️",
+      icon: "FW",
       title: "Dual firmware support",
       description:
         "Run Meshtastic or MeshCore depending on the workflow you already use and the network you want to join.",
     },
     {
-      icon: "🌐",
+      icon: "NET",
       title: "Mesh networking",
       description:
         "Messages hop between devices, extending range and building a more resilient communication network as more nodes join.",

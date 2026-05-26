@@ -83,6 +83,7 @@ export function organizationJsonLd() {
     },
     sameAs: [
       "https://x.com/ShreyashGuptas",
+      "https://github.com/shreyashguptas",
       "https://www.youtube.com/channel/UCe0X6IPIEuNpCvuQtOlKNrA",
     ],
     contactPoint: {
@@ -206,7 +207,7 @@ export function productJsonLd(input: ProductSchemaInput) {
   }
 
   if (input.reviews?.length) {
-    product.review = input.reviews.slice(0, 5).map((review) => ({
+    product.review = input.reviews.map((review) => ({
       "@type": "Review",
       author: { "@type": "Person", name: review.name },
       datePublished: toIsoDate(review.date),
@@ -275,6 +276,14 @@ function textForSection(section: BlogSection): string {
       return [section.alt, section.caption].filter(Boolean).join(" ");
     case "code":
       return section.code;
+    case "table":
+      return [
+        section.caption ?? "",
+        ...section.headers,
+        ...section.rows.flat(),
+      ]
+        .filter(Boolean)
+        .join(" ");
   }
 }
 
@@ -325,6 +334,35 @@ export function articleJsonLd(post: BlogPost) {
     wordCount: countWords(post),
     timeRequired: readTimeToDuration(post.readTime),
     inLanguage: "en-US",
+  } as const;
+}
+
+export type PersonSchemaInput = {
+  name: string;
+  url?: string;
+  image?: string;
+  jobTitle?: string;
+  worksFor?: { name: string; url: string };
+  sameAs?: string[];
+};
+
+export function personJsonLd(input: PersonSchemaInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": input.url ? `${input.url}#person` : undefined,
+    name: input.name,
+    url: input.url,
+    image: input.image ? absoluteSiteUrl(input.image) : undefined,
+    jobTitle: input.jobTitle,
+    worksFor: input.worksFor
+      ? {
+          "@type": "Organization",
+          name: input.worksFor.name,
+          url: input.worksFor.url,
+        }
+      : undefined,
+    sameAs: input.sameAs,
   } as const;
 }
 

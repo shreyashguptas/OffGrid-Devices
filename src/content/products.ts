@@ -129,7 +129,9 @@ export const beacon2Content = {
     ] satisfies ReadonlyArray<Beacon2FieldRow>,
     hardwareQuote:
       "It feels less like a gadget and more like a piece of expedition gear. The kind of thing you stop noticing in your pocket — until the moment you need it.",
-    hardwareAttribution: "Notes from the field · OffGrid · 2026",
+    // Editorial voice, not a customer testimonial — reads as the brand's
+    // own field notebook, never claims a real reviewer.
+    hardwareAttribution: "OffGrid · Editorial · 2026",
     specsDescription:
       "Every component in Beacon 2 is chosen for range, reliability, and everyday carry. The experience stays simple; the hardware does not.",
     testimonials: {
