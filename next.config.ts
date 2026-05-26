@@ -35,7 +35,33 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+    // The parallax slots zoom 4–9× during scroll, so they request higher
+    // fidelity than the default. Next 16 errors out unless every quality
+    // we pass into <Image quality={…}/> is on this allowlist.
+    qualities: [75, 85],
   },
+  // PostHog ingest + asset bundle proxied behind /ingest so the browser only
+  // talks to our own origin. Keeps cookies first-party, dodges ad-blocker
+  // hostname rules, and lets the CSP stay 'self' everywhere.
+  // skipTrailingSlashRedirect is required — PostHog returns 308s for trailing
+  // slashes that would otherwise drop the POST body.
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ingest/array/:path*",
+        destination: "https://us-assets.i.posthog.com/array/:path*",
+      },
+      {
+        source: "/ingest/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
+    ];
+  },
+  skipTrailingSlashRedirect: true,
   async redirects() {
     return [
       // Legacy "Link" product slugs from the pre-rebrand site.

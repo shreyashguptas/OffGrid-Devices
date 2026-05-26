@@ -26,6 +26,17 @@ To copy a local `.env.local` into Vercel after `vercel login` and `vercel link`:
 
 Optional: `SHOPIFY_STOREFRONT_API_VERSION` (defaults in app code if unset).
 
+## PostHog (GitHub + Vercel)
+
+Configure these in Vercel (Production + Preview) and locally in `.env.local`. They are not required for CI to pass — missing them just skips analytics capture.
+
+| Variable                              | Purpose                                                           |
+| ------------------------------------- | ----------------------------------------------------------------- |
+| `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN`   | PostHog project API key (`phc_*`). Public-by-design.              |
+| `NEXT_PUBLIC_POSTHOG_HOST`            | Always `/ingest` — the proxy path defined in `next.config.ts`.    |
+| `NEXT_PUBLIC_POSTHOG_UI_HOST`         | `https://us.posthog.com` so toolbar/recording links resolve.      |
+| `POSTHOG_PROJECT_HOST`                | `https://us.i.posthog.com` for server-side `posthog-node`.        |
+
 ## Branch protection (recommended)
 
 In GitHub: **Settings → Branches → Branch protection** for `main`:

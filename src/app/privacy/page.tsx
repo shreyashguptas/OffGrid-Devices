@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPageShell } from "@/components/legal/LegalPageShell";
+import { PostHogOptOut } from "@/components/analytics/PostHogOptOut";
 import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
 
 const TITLE = "Privacy Policy — OffGrid Devices";
@@ -34,7 +35,7 @@ export default function PrivacyPage() {
       <LegalPageShell
         eyebrow="LEGAL · PRIVACY"
         title="Privacy Policy"
-        lastUpdated="2026-05-18"
+        lastUpdated="2026-05-26"
       >
         <p>
           OffGrid Devices (&ldquo;OffGrid&rdquo;, &ldquo;we&rdquo;,
@@ -71,6 +72,17 @@ export default function PrivacyPage() {
             form). See Vercel&rsquo;s data policy at vercel.com/legal.
           </li>
           <li>
+            <strong>PostHog</strong> — pageviews, click events, scroll
+            depth, device/browser/OS, country/region (geo-IP, never the
+            raw address), and anonymous session recordings used to debug
+            UX issues. All traffic is proxied through{" "}
+            <code>offgridevices.com/ingest</code> so PostHog never sees
+            your IP address directly. We honor browser <em>Do Not Track</em>
+            , and the &ldquo;opt out&rdquo; button at the bottom of this
+            page disables PostHog entirely for your browser. See
+            posthog.com/privacy.
+          </li>
+          <li>
             <strong>Shopify checkout</strong> — Shopify collects standard
             e-commerce data (IP, browser, items viewed, cart state) during
             checkout to process payment, prevent fraud, and ship your order.
@@ -103,8 +115,10 @@ export default function PrivacyPage() {
         <ul>
           <li>We do not sell your information to third parties.</li>
           <li>
-            We do not run third-party advertising trackers (no Meta pixel,
-            no Google Ads tag, no TikTok pixel).
+            We do not run third-party <em>advertising</em> trackers (no
+            Meta pixel, no Google Ads tag, no TikTok pixel). The product
+            analytics we do run — Vercel Analytics and PostHog — are
+            described above.
           </li>
           <li>
             We do not email marketing newsletters unless you opt in
@@ -121,6 +135,10 @@ export default function PrivacyPage() {
           <li>
             <strong>Vercel</strong> — hosting, analytics, deployment.
             vercel.com/legal
+          </li>
+          <li>
+            <strong>PostHog</strong> — product analytics, session replay,
+            and error tracking. posthog.com/privacy
           </li>
           <li>
             <strong>USPS / UPS</strong> — shipping. Shipping data is shared
@@ -161,6 +179,15 @@ export default function PrivacyPage() {
             support@offgridevices.com
           </a>
         </p>
+
+        <h2>Opt out of analytics</h2>
+        <p>
+          Click below to disable PostHog product analytics for this
+          browser. The setting persists across visits. (Vercel Analytics
+          is cookieless and cannot be selectively disabled — block it at
+          the browser if you need to.)
+        </p>
+        <PostHogOptOut />
       </LegalPageShell>
     </>
   );
