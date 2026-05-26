@@ -43,6 +43,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# git worktrees (Claude experimental branches)
+/.worktrees/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
