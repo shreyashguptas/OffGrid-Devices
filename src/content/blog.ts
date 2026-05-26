@@ -609,7 +609,7 @@ export const blogPosts = [
       {
         question: "Where do I buy?",
         answer:
-          "Beacon 2 ships direct from offgriddevices.com. Pair it over Bluetooth with the official Meshtastic app on iOS or Android and you're on the mesh.",
+          "Beacon 2 ships direct from offgridevices.com. Pair it over Bluetooth with the official Meshtastic app on iOS or Android and you're on the mesh.",
       },
     ],
   },
