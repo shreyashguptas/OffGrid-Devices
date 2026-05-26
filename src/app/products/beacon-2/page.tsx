@@ -3,16 +3,15 @@ import Image from "next/image";
 import { Beacon2CheckoutButton } from "@/components/Beacon2CheckoutButton";
 import { Beacon2TestimonialsSection } from "@/components/beacon2/Beacon2TestimonialsSection";
 import { Faq } from "@/components/Faq";
-import { beacon1Content } from "@/content/beacon1";
 import { beacon2Content } from "@/content/products";
 import {
   breadcrumbJsonLd,
-  faqJsonLd,
   jsonLdScriptProps,
   productJsonLd,
 } from "@/lib/jsonLd";
 import { loadProductForPage } from "@/lib/loadProductForPage";
 import { formatPrice } from "@/lib/price";
+import { priceValidUntilEndOfYear } from "@/lib/seoPriceValidUntil";
 import { getBeacon2ProductWithCache } from "@/lib/shopify";
 
 /**
@@ -44,10 +43,14 @@ import { getBeacon2ProductWithCache } from "@/lib/shopify";
 
 const TITLE = "Buy OffGrid Beacon 2 — MagSafe LoRa Mesh Radio";
 const DESCRIPTION =
-  "Buy OffGrid Beacon 2: pre-flashed Meshtastic mesh radio with a 3000 mAh battery, replaceable SMA antenna, and N48H MagSafe magnets. Ships from the United States.";
+  "Buy OffGrid Beacon 2: pre-flashed Meshtastic mesh radio with a 3000 mAh battery, replaceable SMA antenna, and N48H MagSafe magnets. Ships free from the US.";
 
 export const metadata: Metadata = {
-  title: TITLE,
+  // `title.absolute` skips the global ` | OffGrid Devices` template so the
+  // rendered <title> (47 chars) stays under the ~60-char SERP truncation
+  // limit. The PDP owns the commercial "MagSafe LoRa Mesh Radio" phrase
+  // cleanly now that the homepage has been moved to a brand-statement title.
+  title: { absolute: TITLE },
   description: DESCRIPTION,
   keywords: [
     "OffGrid Beacon 2",
@@ -155,24 +158,21 @@ export default async function Beacon2Product() {
             mpn: "OGD-BCN-2-US",
             category: "Radios > LoRa Mesh Radios",
             url: "/products/beacon-2",
+            // Three distinct images for Google Shopping image carousels —
+            // the previous array listed `hero-front.png` twice.
             images: [
               beacon2Content.heroImage.src,
-              beacon2Content.summary.heroImage.src,
+              "/beacon-2/feature-antenna.png",
+              "/beacon-2/whats-in-the-box.png",
             ],
-            aggregateRating: {
-              ratingValue: "5.0",
-              reviewCount: beacon1Content.testimonials.length,
-            },
-            reviews: beacon1Content.testimonials.map((testimonial) => ({
-              name: testimonial.name,
-              date: testimonial.date,
-              review: testimonial.review,
-            })),
+            // aggregateRating + reviews removed until Beacon-2-specific
+            // testimonials exist. See homepage Product schema for rationale.
             offer: price
               ? {
                   price,
                   priceCurrency,
                   availability,
+                  priceValidUntil: priceValidUntilEndOfYear(),
                 }
               : undefined,
           }),
@@ -180,14 +180,17 @@ export default async function Beacon2Product() {
       />
       <script
         {...jsonLdScriptProps(
+          // Collapsed to 2 items because no /products collection page exists
+          // — positions 2 ("Products") and 3 ("OffGrid Beacon 2") would
+          // resolve to the same URL otherwise.
           breadcrumbJsonLd([
             { name: "Home", url: "/" },
-            { name: "Products", url: "/products/beacon-2" },
             { name: "OffGrid Beacon 2", url: "/products/beacon-2" },
           ]),
         )}
       />
-      <script {...jsonLdScriptProps(faqJsonLd(PRODUCT_FAQS))} />
+      {/* FAQPage JSON-LD is emitted by the <Faq> component itself, not
+          duplicated here. */}
 
       {/* Hero — focused buy surface */}
       <section className="border-b border-bark/30 bg-pitch py-20 md:py-28">
@@ -252,6 +255,28 @@ export default async function Beacon2Product() {
               />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Definitional passage — gives LLM search (Google AI Overviews,
+          Perplexity, ChatGPT) a 60-word answerable block for queries like
+          "what is OffGrid Beacon 2?". H2 + short paragraph is the format
+          AI extractors favor. */}
+      <section className="border-b border-bark/30 bg-pitch py-16 md:py-20">
+        <div className="mx-auto max-w-3xl px-6">
+          <p className="type-mono-label text-ember">WHAT IS BEACON 2?</p>
+          <h2 className="type-display-section mt-4 text-bone">
+            What is OffGrid Beacon 2?
+          </h2>
+          <p className="font-editorial mt-6 text-lg leading-[1.65] text-sand/85 md:text-xl">
+            OffGrid Beacon 2 is a MagSafe-compatible LoRa mesh radio that
+            runs Meshtastic firmware out of the box. It snaps to the back
+            of an iPhone via N48H neodymium magnets, runs for weeks on a
+            3000 mAh battery, and ships with a replaceable SMA antenna.
+            Use it for off-grid communication where cell towers, SIM cards,
+            and subscriptions don&rsquo;t reach &mdash; hiking, events,
+            backcountry, emergency backup.
+          </p>
         </div>
       </section>
 

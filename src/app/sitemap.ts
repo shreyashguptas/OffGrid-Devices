@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { allBlogPosts } from "@/content/blog";
-import { absoluteUrl } from "@/lib/siteUrl";
+import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const ROUTE_LAST_MODIFIED = {
@@ -18,7 +18,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: absoluteUrl("/"),
+      // Use bare origin (no trailing slash) so the sitemap matches the
+      // homepage's self-canonical (`/`). `absoluteUrl("/")` would render
+      // `https://offgridevices.com/` which contradicts the canonical tag.
+      url: getSiteUrl(),
       lastModified: ROUTE_LAST_MODIFIED.home,
       changeFrequency: "weekly",
       priority: 1,
@@ -32,8 +35,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: absoluteUrl("/products/beacon-1"),
       lastModified: ROUTE_LAST_MODIFIED.beacon1,
-      changeFrequency: "weekly",
-      priority: 0.7,
+      // Beacon 1 is retired — no expected content updates.
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     {
       url: absoluteUrl("/blog"),
@@ -81,7 +85,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const blogRoutes: MetadataRoute.Sitemap = allBlogPosts.map((post) => ({
     url: absoluteUrl(`/blog/${post.slug}`),
-    lastModified: new Date(post.updatedAt ?? post.publishedAt),
+    // Pass the raw ISO date string (not a Date) so Next.js serializes as
+    // `YYYY-MM-DD`, matching the format used by static routes above.
+    lastModified: (post.updatedAt ?? post.publishedAt).slice(0, 10),
     changeFrequency: "monthly",
     priority: 0.7,
   }));

@@ -1,11 +1,29 @@
 import type { NextConfig } from "next";
 import { withBotId } from "botid/next/config";
 
+// Tightened CSP. `unsafe-inline` is required for:
+//   - the early-paint theme script in layout.tsx (sets data-theme before
+//     React hydrates; using a nonce would defeat the "early" goal)
+//   - JSON-LD <script type="application/ld+json"> blocks
+//   - Tailwind's runtime style injection
+// Vercel-side observability + BotID need the matching script/connect hosts.
+// Shopify CDN serves product imagery; Vercel analytics/insights ride their
+// own subdomains. Tighten further once we have a CSP report endpoint.
 const contentSecurityPolicy = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://*.vercel-insights.com https://*.botid.dev",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://cdn.shopify.com",
+  "font-src 'self' data:",
+  "connect-src 'self' https://*.vercel-insights.com https://va.vercel-scripts.com https://*.botid.dev https://*.myshopify.com https://cdn.shopify.com",
+  "media-src 'self'",
+  "worker-src 'self' blob:",
+  "manifest-src 'self'",
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
   "object-src 'none'",
+  "upgrade-insecure-requests",
 ].join("; ");
 
 const nextConfig: NextConfig = {
@@ -71,6 +89,9 @@ const nextConfig: NextConfig = {
         source: "/:path*",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
+          // Modern browsers honor CSP `frame-ancestors 'none'`; X-Frame-Options
+          // is the legacy-scanner / corporate-proxy fallback.
+          { key: "X-Frame-Options", value: "DENY" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Content-Security-Policy", value: contentSecurityPolicy },
           {

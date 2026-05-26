@@ -19,7 +19,6 @@ import { beacon2Content } from "@/content/products";
 import {
   articleJsonLd,
   breadcrumbJsonLd,
-  faqJsonLd,
   jsonLdScriptProps,
 } from "@/lib/jsonLd";
 
@@ -115,6 +114,45 @@ function ContentSection({ section }: { section: BlogSection }) {
           <code>{section.code}</code>
         </pre>
       );
+    case "table":
+      return (
+        <div className="mt-8 overflow-x-auto">
+          <table className="w-full border-collapse border border-border-card text-sm">
+            {section.caption ? (
+              <caption className="caption-bottom pt-3 text-left text-xs text-muted">
+                {section.caption}
+              </caption>
+            ) : null}
+            <thead>
+              <tr>
+                {section.headers.map((heading) => (
+                  <th
+                    key={heading}
+                    scope="col"
+                    className="border border-border-card bg-surface-elevated px-3 py-2 text-left font-display text-[11px] font-bold uppercase tracking-[0.14em] text-foreground"
+                  >
+                    {heading}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {section.rows.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  {row.map((cell, cellIndex) => (
+                    <td
+                      key={cellIndex}
+                      className="border border-border-card px-3 py-2 align-top text-muted-light"
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
   }
 }
 
@@ -142,7 +180,9 @@ export async function generateMetadata({
   const ogImage = post.ogImage ?? `/blog/${post.slug}/opengraph-image`;
 
   return {
-    title: post.seoTitle ?? post.title,
+    // `title.absolute` skips the global ` | OffGrid Devices` template so
+    // long SEO titles don't exceed the SERP truncation threshold.
+    title: { absolute: post.seoTitle ?? post.title },
     description: post.metaDescription,
     keywords: post.keywords,
     authors: [{ name: post.author.name, url: post.author.url }],
@@ -204,9 +244,8 @@ export default async function BlogPostPage({
           ]),
         )}
       />
-      {post.faq && post.faq.length > 0 ? (
-        <script {...jsonLdScriptProps(faqJsonLd(post.faq))} />
-      ) : null}
+      {/* FAQPage JSON-LD is emitted by the <Faq> component itself, below,
+          when the post defines a FAQ. Avoids duplicate-schema warnings. */}
 
       <section className="border-b border-border-subtle bg-background pt-28 pb-14 md:pt-32 md:pb-16">
         <div className="mx-auto max-w-5xl px-6">

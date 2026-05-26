@@ -7,24 +7,29 @@ import { HomeHeroSection } from "@/components/home/HomeHeroSection";
 import { HomeProductDetailsSection } from "@/components/home/HomeProductDetailsSection";
 import { HomeSpecsSection } from "@/components/home/HomeSpecsSection";
 import { HomeTestimonialsSection } from "@/components/home/HomeTestimonialsSection";
-import { beacon1Content } from "@/content/beacon1";
 import { allBlogPosts } from "@/content/blog";
 import { beacon2Content } from "@/content/products";
 import { jsonLdScriptProps, productJsonLd } from "@/lib/jsonLd";
 import { loadProductForPage } from "@/lib/loadProductForPage";
+import { priceValidUntilEndOfYear } from "@/lib/seoPriceValidUntil";
 import { getBeacon2ProductWithCache } from "@/lib/shopify";
 
+// Homepage takes a brand-level title to avoid keyword cannibalization with
+// /products/beacon-2, which owns the commercial "MagSafe LoRa Mesh Radio"
+// phrase. Both pages competing for that phrase pushed the buy-capable PDP
+// out of the top slot.
+const HOMEPAGE_TITLE =
+  "OffGrid Devices — Mesh Radios When Towers Aren't There";
+const HOMEPAGE_DESCRIPTION =
+  "OffGrid builds MagSafe-compatible LoRa mesh radios that run Meshtastic — off-grid communication for hikers, preppers, and crews. No towers, no SIMs.";
+
 export const metadata: Metadata = {
-  title: {
-    absolute: "MagSafe LoRa Mesh Radio · OffGrid Beacon 2",
-  },
-  description:
-    "OffGrid Beacon 2 is the MagSafe LoRa mesh radio with Meshtastic pre-flashed — 3000 mAh battery, replaceable antenna, N48H magnets. Stay connected off-grid for hiking, events, and emergencies — no cell tower required.",
+  title: { absolute: HOMEPAGE_TITLE },
+  description: HOMEPAGE_DESCRIPTION,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "MagSafe LoRa Mesh Radio · OffGrid Beacon 2",
-    description:
-      "OffGrid Beacon 2: MagSafe-compatible LoRa mesh radio with Meshtastic pre-flashed, 3000 mAh, and a replaceable SMA antenna. Off-grid communication that stays on your phone.",
+    title: HOMEPAGE_TITLE,
+    description: HOMEPAGE_DESCRIPTION,
     url: "/",
     type: "website",
   },
@@ -54,26 +59,24 @@ export default async function Home() {
             description: beacon2Content.description,
             sku: "OFFGRID-BEACON-2",
             category: "Radios > LoRa Mesh Radios",
-            url: "/",
+            // Point at the canonical PDP so Google's graph has a single
+            // Product entity (not a second one anchored at /#product).
+            url: "/products/beacon-2",
             images: [
               beacon2Content.summary.heroImage.src,
               "/beacon-2/feature-antenna.png",
               "/beacon-2/whats-in-the-box.png",
             ],
-            aggregateRating: {
-              ratingValue: "5.0",
-              reviewCount: beacon1Content.testimonials.length,
-            },
-            reviews: beacon1Content.testimonials.map((testimonial) => ({
-              name: testimonial.name,
-              date: testimonial.date,
-              review: testimonial.review,
-            })),
+            // aggregateRating + reviews removed from Beacon 2 schema until
+            // we have Beacon-2-specific testimonials. The legacy reviews
+            // describe Beacon 1 (one explicitly mentions "2000 mAh"); using
+            // them under Beacon 2 is a Google fabrication signal.
             offer: price
               ? {
                   price,
                   priceCurrency,
                   availability,
+                  priceValidUntil: priceValidUntilEndOfYear(),
                 }
               : undefined,
           }),

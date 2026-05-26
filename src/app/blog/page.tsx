@@ -4,10 +4,15 @@ import Link from "next/link";
 import { blogPosts } from "@/content/blog";
 import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
 
+const TITLE = "OffGrid Blog — Meshtastic & LoRa Mesh Notes";
+const DESCRIPTION =
+  "Guides, comparisons, and practical notes on Meshtastic, LoRa mesh networking, and off-grid communication — from the team behind OffGrid Beacon 2.";
+
 export const metadata: Metadata = {
-  title: "OffGrid Blog — Meshtastic, LoRa & Off-Grid Communication",
-  description:
-    "Guides, comparisons, and practical notes on Meshtastic, LoRa mesh networking, and off-grid communication — from the team behind OffGrid Beacon 2.",
+  // `title.absolute` keeps the rendered <title> short by skipping the global
+  // ` | OffGrid Devices` template.
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
   keywords: [
     "Meshtastic blog",
     "LoRa mesh guides",
@@ -20,15 +25,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/blog",
-    title: "OffGrid Blog — Meshtastic, LoRa & Off-Grid Communication",
-    description:
-      "Guides, comparisons, and practical notes on Meshtastic, LoRa, and off-grid communication.",
+    title: TITLE,
+    description: DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "OffGrid Blog — Meshtastic, LoRa & Off-Grid Communication",
-    description:
-      "Guides, comparisons, and practical notes on Meshtastic, LoRa, and off-grid communication.",
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 
@@ -52,9 +55,19 @@ export default function BlogPage() {
             OffGrid Blog — Meshtastic & Off-Grid Communication Guides
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-light md:text-xl">
-            Tutorials, setup guides, and practical notes on off-grid
-            communication, mesh networking, and the hardware that keeps it
-            usable.
+            Practical writing on Meshtastic, LoRa mesh networking, and the
+            hardware that keeps it usable in the field. Written by Shreyash
+            Gupta &mdash; founder of OffGrid Devices and the builder behind
+            OffGrid Beacon &mdash; for hikers, preppers, event organizers,
+            and the wider Meshtastic community.
+          </p>
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-muted-light">
+            What you&rsquo;ll find here: device comparisons grounded in
+            specs and field use, protocol explainers that resolve the
+            recurring LoRa-vs-LoRaWAN-vs-Meshtastic confusion, and the
+            running story of how Beacon hardware evolves from one revision
+            to the next. No filler, no affiliate stack &mdash; just notes
+            from people who carry the radios they ship.
           </p>
         </div>
       </section>

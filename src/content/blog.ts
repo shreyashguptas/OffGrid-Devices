@@ -7,7 +7,13 @@ export type BlogSection =
   | { type: "image"; src: string; alt: string; caption?: string }
   | { type: "quote"; content: string; cite?: string }
   | { type: "callout"; tone: "info" | "warn" | "tip"; content: string }
-  | { type: "code"; code: string; language?: string };
+  | { type: "code"; code: string; language?: string }
+  | {
+      type: "table";
+      caption?: string;
+      headers: string[];
+      rows: string[][];
+    };
 
 export type BlogAuthor = {
   name: string;
@@ -51,7 +57,7 @@ export const blogPosts = [
   {
     slug: "best-meshtastic-devices-2026",
     title: "Best Meshtastic Devices 2026: An Honest Comparison Guide",
-    seoTitle: "Best Meshtastic Devices 2026: Honest Comparison Guide",
+    seoTitle: "Best Meshtastic Devices 2026 — Comparison Guide",
     metaDescription:
       "Comparing the top Meshtastic hardware in 2026: Heltec V3, T-Beam, T-Echo, RAK WisBlock, T-Deck, and OffGrid Beacon 2. Real trade-offs, no hype.",
     keywords: [
@@ -81,6 +87,12 @@ export const blogPosts = [
     relatedSlugs: ["meshtastic-vs-lorawan", "why-offgrid"],
     sections: [
       {
+        type: "callout",
+        tone: "info",
+        content:
+          "TL;DR — For most buyers in 2026: OffGrid Beacon 2 ($189) for MagSafe iPhone carry with Meshtastic pre-flashed. Heltec V3 ($25) for the cheapest way onto the mesh if you'll flash firmware yourself. RAK WisBlock Starter Kit ($60) for a finished node on the same platform Beacon is built on. LILYGO T-Beam ($45) if you need onboard GPS. Seeed T-Echo ($70) for the lowest-power relay with an ePaper display. LILYGO T-Deck ($70–$90) if you want a keyboard and screen to message without a phone.",
+      },
+      {
         type: "paragraph",
         content:
           "If you've searched \"best Meshtastic device\" in 2026, you've already seen the wall: forum threads that turn into chipset debates, YouTube videos filmed in garages that reach completely different conclusions, and listicles that recommend whatever the author got sent for review. The honest answer is that the best device depends almost entirely on what you're going to do with it and how much friction you can tolerate. This guide gives you a straight read on six real options, including their weaknesses, so you can make a call and move on.",
@@ -109,14 +121,22 @@ export const blogPosts = [
           "The table below is a rough orientation. Each device gets a full breakdown in the sections that follow.",
       },
       {
-        type: "orderedList",
-        items: [
-          "Heltec V3 — bare dev board — ~$25 — tinker projects, first flash",
-          "LILYGO T-Beam — board with case options, GPS — ~$45 — GPS-required deployments",
-          "Seeed T-Echo — ePaper display, compact — ~$70 — low-power nodes, display-only UI",
-          "RAK WisBlock 4631 Starter Kit — modular platform, enclosure — ~$60 — mesh nodes, DIY builds",
-          "LILYGO T-Deck — keyboard + screen, standalone — ~$70–$90 — phone-free messaging",
-          "OffGrid Beacon 2 — MagSafe, pre-flashed, 3000 mAh — ~$79 — iPhone carry, minimum-friction daily use",
+        type: "table",
+        caption:
+          "Meshtastic devices compared at a glance — price reflects typical retail in mid-2026.",
+        headers: ["Device", "Price", "Key spec", "Best for"],
+        rows: [
+          ["Heltec V3", "~$25", "Bare ESP32-S3 dev board", "Tinker projects, first flash"],
+          ["LILYGO T-Beam", "~$45", "ESP32 + onboard GPS", "GPS-required deployments"],
+          ["Seeed T-Echo", "~$70", "nRF52 + ePaper display", "Low-power relay nodes"],
+          ["RAK WisBlock Starter Kit", "~$60", "nRF52 + enclosure + battery", "Finished node, DIY builds"],
+          ["LILYGO T-Deck", "~$70–$90", "QWERTY keyboard + screen", "Phone-free messaging"],
+          [
+            "OffGrid Beacon 2",
+            "$189",
+            "MagSafe, 3000 mAh, pre-flashed",
+            "iPhone carry, minimum-friction daily use",
+          ],
         ],
       },
       { type: "heading", content: "Heltec V3 (and Wireless Stick Lite v3)" },
@@ -266,7 +286,7 @@ export const blogPosts = [
     slug: "meshtastic-vs-lorawan",
     title:
       "Meshtastic vs LoRaWAN: What They Actually Do (and Why You'd Pick One Over the Other)",
-    seoTitle: "Meshtastic vs LoRaWAN: The Actual Difference Explained",
+    seoTitle: "Meshtastic vs LoRaWAN — The Actual Difference",
     metaDescription:
       "LoRa, LoRaWAN, Meshtastic — three terms, two protocols, one radio chip. Here's what each one does and how to pick the right one for your project.",
     keywords: [
@@ -490,10 +510,9 @@ export const blogPosts = [
   {
     slug: "why-offgrid",
     title: "Why OffGrid: the gear, the people, and what's coming next",
-    seoTitle:
-      "Why OffGrid: Mesh Radios for When the Towers Aren't There",
+    seoTitle: "Why OffGrid — Mesh Radios When Towers Aren't There",
     metaDescription:
-      "OffGrid builds pre-flashed Meshtastic LoRa mesh radios for hikers, preppers, and anyone who wants a backup when cell service goes sideways. Here's how we started, what Beacon 2 ships with today, and where we're headed.",
+      "OffGrid builds pre-flashed Meshtastic LoRa mesh radios for hikers, preppers, and crews. Where the brand started, what Beacon 2 ships with, what's next.",
     keywords: [
       "OffGrid Devices",
       "OffGrid Beacon",
@@ -508,7 +527,11 @@ export const blogPosts = [
       "OffGrid builds mesh radios for the moments when the towers aren't there. Here's how we started, what we ship today, and where we're going.",
     date: "May 2026",
     publishedAt: "2026-05-18",
-    readTime: "7 min read",
+    // Corrected from "7 min read": the post is ~1,100 words. At a normal
+    // 220 wpm pace this reads in ~5 minutes; the previous PT7M was
+    // implausible (~157 wpm) and Google's article reader-time heuristics
+    // flag implausible values.
+    readTime: "5 min read",
     category: "Story",
     author: DEFAULT_AUTHOR,
     image: "/beacon-2/hero-front.png",

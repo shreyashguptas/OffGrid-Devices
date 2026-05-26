@@ -4,19 +4,26 @@ import { beacon1Content } from "@/content/beacon1";
 import { beacon2Content } from "@/content/products";
 
 export function Beacon2TestimonialsSection() {
-  const items = beacon1Content.testimonials.map((testimonial) => {
-    const reviewer = beacon1Content.reviewSummary.reviewerAvatars.find(
-      (avatar) => avatar.name.toLowerCase() === testimonial.name.toLowerCase(),
-    );
+  // Filter out any Beacon 1 testimonial that references a Beacon 1-specific
+  // spec (e.g. "2000 mAh battery"). Beacon 2 ships with 3000 mAh — leaving
+  // that contradiction visible on the PDP confuses readers and undermines
+  // the on-page disclosure that these reviews are from the prior model.
+  const items = beacon1Content.testimonials
+    .filter((testimonial) => !/2000\s*mAh/i.test(testimonial.review))
+    .map((testimonial) => {
+      const reviewer = beacon1Content.reviewSummary.reviewerAvatars.find(
+        (avatar) =>
+          avatar.name.toLowerCase() === testimonial.name.toLowerCase(),
+      );
 
-    return {
-      text: testimonial.review,
-      name: testimonial.name,
-      date: testimonial.date,
-      avatarSrc: reviewer?.image ?? testimonial.image ?? null,
-      initials: reviewer?.initials ?? testimonial.name.charAt(0),
-    };
-  });
+      return {
+        text: testimonial.review,
+        name: testimonial.name,
+        date: testimonial.date,
+        avatarSrc: reviewer?.image ?? testimonial.image ?? null,
+        initials: reviewer?.initials ?? testimonial.name.charAt(0),
+      };
+    });
 
   return (
     <section className="relative border-b border-bark bg-pitch-low py-20 md:py-24">
