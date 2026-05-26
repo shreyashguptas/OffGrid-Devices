@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Beacon2CheckoutButton } from "@/components/Beacon2CheckoutButton";
+import { Beacon2TestimonialsSection } from "@/components/beacon2/Beacon2TestimonialsSection";
 import { Faq } from "@/components/Faq";
+import { beacon1Content } from "@/content/beacon1";
 import { beacon2Content } from "@/content/products";
 import {
   breadcrumbJsonLd,
@@ -157,6 +159,15 @@ export default async function Beacon2Product() {
               beacon2Content.heroImage.src,
               beacon2Content.summary.heroImage.src,
             ],
+            aggregateRating: {
+              ratingValue: "5.0",
+              reviewCount: beacon1Content.testimonials.length,
+            },
+            reviews: beacon1Content.testimonials.map((testimonial) => ({
+              name: testimonial.name,
+              date: testimonial.date,
+              review: testimonial.review,
+            })),
             offer: price
               ? {
                   price,
@@ -271,6 +282,8 @@ export default async function Beacon2Product() {
           </dl>
         </div>
       </section>
+
+      <Beacon2TestimonialsSection />
 
       {/* FAQ — Beacon-2-specific */}
       <Faq

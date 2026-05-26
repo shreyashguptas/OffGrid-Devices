@@ -7,6 +7,7 @@ import { HomeHeroSection } from "@/components/home/HomeHeroSection";
 import { HomeProductDetailsSection } from "@/components/home/HomeProductDetailsSection";
 import { HomeSpecsSection } from "@/components/home/HomeSpecsSection";
 import { HomeTestimonialsSection } from "@/components/home/HomeTestimonialsSection";
+import { beacon1Content } from "@/content/beacon1";
 import { allBlogPosts } from "@/content/blog";
 import { beacon2Content } from "@/content/products";
 import { jsonLdScriptProps, productJsonLd } from "@/lib/jsonLd";
@@ -59,6 +60,15 @@ export default async function Home() {
               "/beacon-2/feature-antenna.png",
               "/beacon-2/whats-in-the-box.png",
             ],
+            aggregateRating: {
+              ratingValue: "5.0",
+              reviewCount: beacon1Content.testimonials.length,
+            },
+            reviews: beacon1Content.testimonials.map((testimonial) => ({
+              name: testimonial.name,
+              date: testimonial.date,
+              review: testimonial.review,
+            })),
             offer: price
               ? {
                   price,
