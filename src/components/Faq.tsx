@@ -1,4 +1,5 @@
 import { AccordionDetails } from "@/components/shared/AccordionDetails";
+import { FaqAnalytics } from "@/components/analytics/FaqAnalytics";
 import { faqJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
 
 export type FaqProps = {
@@ -40,25 +41,27 @@ export function Faq({
           ) : null}
         </div>
 
-        <dl className="mt-12 space-y-4">
-          {items.map((item) => (
-            <AccordionDetails
-              key={item.question}
-              className="rounded-[1.5rem] px-6 py-5 md:px-7 md:py-6"
-              summaryClassName="gap-6"
-              contentClassName="contents"
-              summary={
-                <dt className="font-display text-lg font-semibold leading-snug text-foreground md:text-xl">
-                  {item.question}
-                </dt>
-              }
-            >
-              <dd className="mt-4 text-base leading-relaxed text-muted-light md:text-[1.05rem]">
-                {item.answer}
-              </dd>
-            </AccordionDetails>
-          ))}
-        </dl>
+        <FaqAnalytics>
+          <dl className="mt-12 space-y-4">
+            {items.map((item) => (
+              <AccordionDetails
+                key={item.question}
+                className="rounded-[1.5rem] px-6 py-5 md:px-7 md:py-6"
+                summaryClassName="gap-6"
+                contentClassName="contents"
+                summary={
+                  <dt className="font-display text-lg font-semibold leading-snug text-foreground md:text-xl">
+                    {item.question}
+                  </dt>
+                }
+              >
+                <dd className="mt-4 text-base leading-relaxed text-muted-light md:text-[1.05rem]">
+                  {item.answer}
+                </dd>
+              </AccordionDetails>
+            ))}
+          </dl>
+        </FaqAnalytics>
       </div>
     </section>
   );

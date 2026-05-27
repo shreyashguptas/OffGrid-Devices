@@ -11,11 +11,21 @@ import { withBotId } from "botid/next/config";
 // own subdomains. Tighten further once we have a CSP report endpoint.
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://*.vercel-insights.com https://*.botid.dev",
+  // 'wasm-unsafe-eval' is needed because @react-three/drei sets up the
+  // Draco / Meshopt / KTX2 decoders eagerly when useGLTF.preload runs,
+  // and WebAssembly.instantiate counts as eval under script-src. Modern
+  // browsers (Chrome 97+, Firefox 102+, Safari 16+) treat this token as
+  // strictly narrower than 'unsafe-eval' — only WASM compiles are
+  // allowed, not arbitrary string-eval'd JS.
+  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://va.vercel-scripts.com https://*.vercel-insights.com https://*.botid.dev",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.shopify.com",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.vercel-insights.com https://va.vercel-scripts.com https://*.botid.dev https://*.myshopify.com https://cdn.shopify.com",
+  // blob: is needed because three.js/drei reads GLB-embedded textures as
+  // Blob → URL.createObjectURL → fetch(blob:...). Without it the 15
+  // textures in beacon-2.glb fail to load and the Beacon renders without
+  // its CAD-assigned surface detail.
+  "connect-src 'self' blob: https://*.vercel-insights.com https://va.vercel-scripts.com https://*.botid.dev https://*.myshopify.com https://cdn.shopify.com",
   "media-src 'self'",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
@@ -36,6 +46,28 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // PostHog ingest + asset bundle proxied behind /ingest so the browser only
+  // talks to our own origin. Keeps cookies first-party, dodges ad-blocker
+  // hostname rules, and lets the CSP stay 'self' everywhere.
+  // skipTrailingSlashRedirect is required — PostHog returns 308s for trailing
+  // slashes that would otherwise drop the POST body.
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ingest/array/:path*",
+        destination: "https://us-assets.i.posthog.com/array/:path*",
+      },
+      {
+        source: "/ingest/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
+    ];
+  },
+  skipTrailingSlashRedirect: true,
   async redirects() {
     return [
       // Legacy "Link" product slugs from the pre-rebrand site.
@@ -84,32 +116,38 @@ const nextConfig: NextConfig = {
     ];
   },
   async headers() {
-    return [
+    // CSP is production-only. React's dev build relies on runtime code
+    // evaluation for richer error overlays and stack reconstruction, and
+    // emitting the policy in `next dev` produces a stream of console
+    // noise without catching real issues — `pnpm build` still exercises
+    // the policy against every static + dynamic route before deploy.
+    const securityHeaders = [
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      // Modern browsers honor CSP `frame-ancestors 'none'`; X-Frame-Options
+      // is the legacy-scanner / corporate-proxy fallback.
+      { key: "X-Frame-Options", value: "DENY" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
       {
-        source: "/:path*",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          // Modern browsers honor CSP `frame-ancestors 'none'`; X-Frame-Options
-          // is the legacy-scanner / corporate-proxy fallback.
-          { key: "X-Frame-Options", value: "DENY" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "Content-Security-Policy", value: contentSecurityPolicy },
-          {
-            // `preload` enables submission to hstspreload.org (Chrome's
-            // built-in HSTS list, also honored by Firefox/Safari) so that
-            // first-visit users on a fresh network never make a plaintext
-            // HTTP request before the 308 fires.
-            key: "Strict-Transport-Security",
-            value: "max-age=63072000; includeSubDomains; preload",
-          },
-          {
-            key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
-          },
-          { key: "X-DNS-Prefetch-Control", value: "on" },
-        ],
+        // `preload` enables submission to hstspreload.org (Chrome's
+        // built-in HSTS list, also honored by Firefox/Safari) so that
+        // first-visit users on a fresh network never make a plaintext
+        // HTTP request before the 308 fires.
+        key: "Strict-Transport-Security",
+        value: "max-age=63072000; includeSubDomains; preload",
       },
+      {
+        key: "Permissions-Policy",
+        value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+      },
+      { key: "X-DNS-Prefetch-Control", value: "on" },
     ];
+    if (process.env.NODE_ENV === "production") {
+      securityHeaders.push({
+        key: "Content-Security-Policy",
+        value: contentSecurityPolicy,
+      });
+    }
+    return [{ source: "/:path*", headers: securityHeaders }];
   },
 };
 

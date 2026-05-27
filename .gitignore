@@ -23,6 +23,10 @@ yarn.lock
 /.next/
 /out/
 
+# cloudflare (opennext build output + wrangler local state)
+/.open-next/
+/.wrangler/
+
 # production
 /build
 
@@ -42,6 +46,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# git worktrees (Claude experimental branches)
+/.worktrees/
 
 # typescript
 *.tsbuildinfo

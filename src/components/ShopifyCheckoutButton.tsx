@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { trackBuyClick, type BuySurface, type Product } from "@/lib/analytics";
+import {
+  getPostHogDistinctId,
+  trackBuyClick,
+  trackShopifyCheckout,
+  type BuySurface,
+  type Product,
+} from "@/lib/analytics";
 
 type ProductState = {
   availableForSale: boolean;
@@ -189,13 +195,24 @@ export function ShopifyCheckoutButton({
     const checkoutWindow = window.open("about:blank", "_blank");
     if (checkoutWindow) {
       checkoutWindow.opener = null;
+      trackShopifyCheckout("opened", { product: productId, surface });
+    } else {
+      // The browser blocked our popup. We'll still fall back to a same-tab
+      // navigation after the fetch resolves, but we want a distinct event
+      // so dashboards can attribute drop-offs to popup blockers.
+      trackShopifyCheckout("blocked", { product: productId, surface });
     }
 
     setIsLoading(true);
+    const startedAt = performance.now();
 
     try {
+      const distinctId = getPostHogDistinctId();
       const response = await fetch(checkoutEndpoint, {
         method: "POST",
+        headers: distinctId
+          ? { "X-PostHog-Distinct-Id": distinctId }
+          : undefined,
       });
 
       if (!response.ok) {
@@ -210,6 +227,13 @@ export function ShopifyCheckoutButton({
         throw new Error("Shopify did not return a checkout URL.");
       }
 
+      const latency_ms = Math.round(performance.now() - startedAt);
+      trackShopifyCheckout("redirected", {
+        product: productId,
+        surface,
+        latency_ms,
+      });
+
       if (checkoutWindow && !checkoutWindow.closed) {
         checkoutWindow.location.href = data.checkoutUrl;
       } else {
@@ -218,10 +242,15 @@ export function ShopifyCheckoutButton({
         window.location.assign(data.checkoutUrl);
       }
       setIsLoading(false);
-    } catch {
+    } catch (error) {
       if (checkoutWindow && !checkoutWindow.closed) {
         checkoutWindow.close();
       }
+      trackShopifyCheckout("failed", {
+        product: productId,
+        surface,
+        reason: error instanceof Error ? error.message : "unknown",
+      });
       setHasCheckoutError(true);
       setIsLoading(false);
     }
