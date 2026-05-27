@@ -111,11 +111,12 @@ function BeaconModel({
       const cached = seen.get(src);
       if (cached) return cached;
       const next = src.clone();
-      const std = next as THREE.MeshStandardMaterial;
-      if ("roughness" in std) {
-        std.roughness = Math.max(std.roughness ?? 0.5, 0.8);
-        std.envMapIntensity = 0.3;
-      }
+      // Only the gloss extensions get suppressed — those were what made
+      // the device read as polished chrome. Source roughness, metalness,
+      // base color, and envMapIntensity are all kept as the CAD exporter
+      // set them, which is what gives the studio reflection (the
+      // warehouse HDR's overhead lights showing up as a soft bulb-style
+      // highlight on the device front).
       const phys = next as THREE.MeshPhysicalMaterial;
       if ("clearcoat" in phys) phys.clearcoat = 0;
       if ("sheen" in phys) phys.sheen = 0;
