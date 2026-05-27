@@ -23,6 +23,10 @@ yarn.lock
 /.next/
 /out/
 
+# cloudflare (opennext build output + wrangler local state)
+/.open-next/
+/.wrangler/
+
 # production
 /build
 
