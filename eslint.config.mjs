@@ -10,6 +10,9 @@ export default defineConfig([
     "out/**",
     "build/**",
     ".claude/**",
+    // Sibling worktrees check out other branches under this path; their
+    // build artifacts should never be linted from here.
+    ".worktrees/**",
     "next-env.d.ts",
   ]),
 ]);
