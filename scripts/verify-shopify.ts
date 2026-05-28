@@ -15,12 +15,13 @@ config({ path: resolve(process.cwd(), ".env") });
 // on it in every environment (including previews). That way the next time
 // an env var is forgotten, the PR's preview deploy catches it instead of
 // silently passing and breaking the next production build.
-const isProductionDeploy = process.env.VERCEL_ENV === "production";
+const isProductionDeploy =
+  process.env.GITHUB_REF === "refs/heads/main" ||
+  process.env.GITHUB_REF === "refs/heads/master";
 const environmentLabel =
-  process.env.VERCEL_ENV ??
-  (process.env.GITHUB_ACTIONS === "true"
+  process.env.GITHUB_ACTIONS === "true"
     ? `github-actions:${process.env.GITHUB_EVENT_NAME ?? "unknown"}`
-    : "local");
+    : "local";
 
 async function main() {
   if (process.env.SKIP_SHOPIFY_VERIFY === "1") {

@@ -1,14 +1,12 @@
 import type { NextConfig } from "next";
-import { withBotId } from "botid/next/config";
 
 // Tightened CSP. `unsafe-inline` is required for:
 //   - the early-paint theme script in layout.tsx (sets data-theme before
 //     React hydrates; using a nonce would defeat the "early" goal)
 //   - JSON-LD <script type="application/ld+json"> blocks
 //   - Tailwind's runtime style injection
-// Vercel-side observability + BotID need the matching script/connect hosts.
-// Shopify CDN serves product imagery; Vercel analytics/insights ride their
-// own subdomains. Tighten further once we have a CSP report endpoint.
+// Shopify CDN serves product imagery. Tighten further once we have a CSP
+// report endpoint.
 const contentSecurityPolicy = [
   "default-src 'self'",
   // 'wasm-unsafe-eval' is needed because @react-three/drei sets up the
@@ -17,7 +15,7 @@ const contentSecurityPolicy = [
   // browsers (Chrome 97+, Firefox 102+, Safari 16+) treat this token as
   // strictly narrower than 'unsafe-eval' — only WASM compiles are
   // allowed, not arbitrary string-eval'd JS.
-  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://va.vercel-scripts.com https://*.vercel-insights.com https://*.botid.dev",
+  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.shopify.com",
   "font-src 'self' data:",
@@ -25,7 +23,7 @@ const contentSecurityPolicy = [
   // Blob → URL.createObjectURL → fetch(blob:...). Without it the 15
   // textures in beacon-2.glb fail to load and the Beacon renders without
   // its CAD-assigned surface detail.
-  "connect-src 'self' blob: https://*.vercel-insights.com https://va.vercel-scripts.com https://*.botid.dev https://*.myshopify.com https://cdn.shopify.com",
+  "connect-src 'self' blob: https://*.myshopify.com https://cdn.shopify.com",
   "media-src 'self'",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
@@ -151,6 +149,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-// BotID auto-injects its client SDK and gates routes that call checkBotId()
-// server-side. The two Shopify checkout POST handlers do the gating.
-export default withBotId(nextConfig);
+export default nextConfig;
