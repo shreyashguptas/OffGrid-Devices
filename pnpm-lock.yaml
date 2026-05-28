@@ -39,8 +39,8 @@ importers:
         specifier: ^1.376.2
         version: 1.376.2
       posthog-node:
-        specifier: ^5.35.4
-        version: 5.35.4
+        specifier: ^5.35.5
+        version: 5.35.5
       react:
         specifier: 19.2.5
         version: 19.2.5
@@ -1479,8 +1479,14 @@ packages:
   '@posthog/core@1.29.11':
     resolution: {integrity: sha512-/4EF7oxAFSWJgaXxppT8bdYp7MGAnWFnKz994+MetTz/T6CKbYpjqIXHCofQXtcOXjEclTYj91igA+IkVFKiSg==}
 
+  '@posthog/core@1.29.12':
+    resolution: {integrity: sha512-r/2RUa4zbN0XdBp6d+Yk8Jw1rPWXHxyXIgSm/wJf9yDLIouZbH0Pdkgbc1RIuhwL6BIHCFrOqK5jy8TFKTI6iw==}
+
   '@posthog/types@1.376.2':
     resolution: {integrity: sha512-Y3ROpAxNqgcy2G0w6JoG5Gt+P6WNY2lkHTPMPzWqexRwemYbFegDi5AifDyD9/tstKTlOYKTTExtaJ5EBcghyQ==}
+
+  '@posthog/types@1.376.3':
+    resolution: {integrity: sha512-w21lBoz3/ZGw7BZT7t2lJq1mpJwMvWpZijW7vEwBFNAQlq0KfKf2mj5KKUYZMXM1GdIQ0jHnn931uXPB1Ae60w==}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -3474,8 +3480,8 @@ packages:
     resolution: {integrity: sha512-NxVFwLAnrd9i7KUBxC4DrUhmgjzOs+1Qm50D3oF1/oL+r1NpZ4gA7xvG0/zJ8evR7zIKn4vLf7qTNduWFtCrRw==}
     engines: {node: 20 || >=22}
 
-  lru-cache@11.5.0:
-    resolution: {integrity: sha512-5YgH9UJd7wVb9hIouI2adWpgqrrICkt070Dnj8EUY1+B4B2P9eRLPAkAAo6NICA7CEhOIeBHl46u9zSNpNu7zA==}
+  lru-cache@11.5.1:
+    resolution: {integrity: sha512-RPimw/7aMdv2oqRrxKwvZXcPfwBrn/JZ2xYcY9Hus/6LaS3VOAKVWKWgNLCFSiOm1ESXinjsDlidVU7JlnCN2A==}
     engines: {node: 20 || >=22}
 
   lru-cache@5.1.1:
@@ -3798,8 +3804,8 @@ packages:
   posthog-js@1.376.2:
     resolution: {integrity: sha512-Anz2pCp7dcNbammTExiZpcKC08dxfrHYaJgaXH6rq5x3Zcfj/4FkcMJF2cGCrdQXel5Y4vftiVSseZda0HAQTQ==}
 
-  posthog-node@5.35.4:
-    resolution: {integrity: sha512-X4OCh3Lr4tfyUc/67ssDhe5cD3fwFVq4QBdNpQwpjtuOCGWZ4wDONc6zSkE1i6FVUkTc884GvwphorKC6To/BQ==}
+  posthog-node@5.35.5:
+    resolution: {integrity: sha512-zPLpjK0uAxVTVmV2TH/hNAq0JN0vUjZdJ8KOBErQS58lIJRHTkMMofNmpolkGq9pijpFITcpLsMYMsFMWvjBmg==}
     engines: {node: ^20.20.0 || >=22.22.0}
     peerDependencies:
       rxjs: ^7.0.0
@@ -6089,7 +6095,13 @@ snapshots:
     dependencies:
       '@posthog/types': 1.376.2
 
+  '@posthog/core@1.29.12':
+    dependencies:
+      '@posthog/types': 1.376.3
+
   '@posthog/types@1.376.2': {}
+
+  '@posthog/types@1.376.3': {}
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -8121,7 +8133,7 @@ snapshots:
       decimal.js: 10.6.0
       html-encoding-sniffer: 6.0.0(@noble/hashes@1.8.0)
       is-potential-custom-element-name: 1.0.1
-      lru-cache: 11.5.0
+      lru-cache: 11.5.1
       parse5: 8.0.1
       saxes: 6.0.0
       symbol-tree: 3.2.4
@@ -8243,7 +8255,7 @@ snapshots:
 
   lru-cache@11.3.5: {}
 
-  lru-cache@11.5.0:
+  lru-cache@11.5.1:
     optional: true
 
   lru-cache@5.1.1:
@@ -8552,9 +8564,9 @@ snapshots:
       query-selector-shadow-dom: 1.0.1
       web-vitals: 5.2.0
 
-  posthog-node@5.35.4:
+  posthog-node@5.35.5:
     dependencies:
-      '@posthog/core': 1.29.11
+      '@posthog/core': 1.29.12
 
   potpack@1.0.2: {}
 
