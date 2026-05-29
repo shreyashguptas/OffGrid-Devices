@@ -1,4 +1,3 @@
-import { track as vercelTrack } from "@vercel/analytics";
 import posthog from "posthog-js";
 
 export type Product = "beacon-2";
@@ -12,12 +11,9 @@ export type ContactChannel = "email" | "community";
 
 type Properties = Record<string, string | number | boolean | null>;
 
-// Fans each event out to both Vercel Analytics (keeps the existing dashboard
-// live) and PostHog (richer product analytics, session replay correlation).
 // PostHog autocaptures every click anyway, so these manual events are the
 // ones we want to query by name.
 function fanout(event: string, properties: Properties = {}) {
-  vercelTrack(event, properties);
   if (typeof window !== "undefined") {
     try {
       posthog.capture(event, properties);

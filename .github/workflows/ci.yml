@@ -45,11 +45,11 @@ jobs:
           SHOPIFY_STOREFRONT_API_VERSION: ${{ secrets.SHOPIFY_STOREFRONT_API_VERSION }}
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
-            echo "::notice::Fork PR — skipping live Shopify verify in GitHub Actions. Production deploys are still blocked by Vercel build (verify:shopify) when env is configured there."
+            echo "::notice::Fork PR — skipping live Shopify verify in GitHub Actions (secrets are not exposed to fork PRs)."
             exit 0
           fi
           if [ -z "${SHOPIFY_STORE_DOMAIN:-}" ] || [ -z "${SHOPIFY_STOREFRONT_PRIVATE_TOKEN:-}" ]; then
-            echo "::notice::Shopify secrets not set in repo Actions — skipping live verify. Add SHOPIFY_STORE_DOMAIN and SHOPIFY_STOREFRONT_PRIVATE_TOKEN to run this in CI. Vercel/production can still run verify:shopify when env is configured there."
+            echo "::notice::Shopify secrets not set in repo Actions — skipping live verify. Add SHOPIFY_STORE_DOMAIN and SHOPIFY_STOREFRONT_PRIVATE_TOKEN to run this in CI."
             exit 0
           fi
           pnpm verify:shopify
