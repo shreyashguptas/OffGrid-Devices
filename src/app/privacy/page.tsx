@@ -35,7 +35,7 @@ export default function PrivacyPage() {
       <LegalPageShell
         eyebrow="LEGAL · PRIVACY"
         title="Privacy Policy"
-        lastUpdated="2026-05-26"
+        lastUpdated="2026-05-28"
       >
         <p>
           OffGrid Devices (&ldquo;OffGrid&rdquo;, &ldquo;we&rdquo;,
@@ -66,12 +66,6 @@ export default function PrivacyPage() {
         <h3>Information collected automatically</h3>
         <ul>
           <li>
-            <strong>Vercel Analytics</strong> — page views, referrer, and a
-            non-identifying device fingerprint (Vercel does not set cookies
-            for analytics and does not collect IP addresses in identifiable
-            form). See Vercel&rsquo;s data policy at vercel.com/legal.
-          </li>
-          <li>
             <strong>PostHog</strong> — pageviews, click events, scroll
             depth, device/browser/OS, country/region (geo-IP, never the
             raw address), and anonymous session recordings used to debug
@@ -89,7 +83,7 @@ export default function PrivacyPage() {
             See shopify.com/legal/privacy.
           </li>
           <li>
-            <strong>Server logs</strong> — Vercel records request metadata
+            <strong>Server logs</strong> — Cloudflare records request metadata
             (timestamp, path, status code, response time) for operational
             purposes; retained briefly.
           </li>
@@ -117,8 +111,7 @@ export default function PrivacyPage() {
           <li>
             We do not run third-party <em>advertising</em> trackers (no
             Meta pixel, no Google Ads tag, no TikTok pixel). The product
-            analytics we do run — Vercel Analytics and PostHog — are
-            described above.
+            analytics we do run — PostHog — are described above.
           </li>
           <li>
             We do not email marketing newsletters unless you opt in
@@ -133,8 +126,8 @@ export default function PrivacyPage() {
             fulfillment data. shopify.com/legal/privacy
           </li>
           <li>
-            <strong>Vercel</strong> — hosting, analytics, deployment.
-            vercel.com/legal
+            <strong>Cloudflare</strong> — hosting, edge network, server
+            logs. cloudflare.com/privacypolicy
           </li>
           <li>
             <strong>PostHog</strong> — product analytics, session replay,
@@ -183,9 +176,7 @@ export default function PrivacyPage() {
         <h2>Opt out of analytics</h2>
         <p>
           Click below to disable PostHog product analytics for this
-          browser. The setting persists across visits. (Vercel Analytics
-          is cookieless and cannot be selectively disabled — block it at
-          the browser if you need to.)
+          browser. The setting persists across visits.
         </p>
         <PostHogOptOut />
       </LegalPageShell>

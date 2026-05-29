@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { createBeacon2CheckoutUrl, hasShopifyStorefrontConfig } from "@/lib/shopify";
-import { safeCheckBotId } from "@/lib/bot-protection";
 import { getPostHogClient } from "@/lib/posthog-server";
 import {
   checkRateLimit,
@@ -21,11 +20,6 @@ const POSTHOG_HEADER = "x-posthog-distinct-id";
 const ANONYMOUS_DISTINCT_ID = "anonymous-server-checkout";
 
 export async function POST(request?: Request) {
-  const verdict = await safeCheckBotId();
-  if (verdict.isBot) {
-    return NextResponse.json({ error: "Forbidden." }, { status: 403 });
-  }
-
   const rateLimit = checkRateLimit({
     key: getRateLimitKey(request, "shopify-beacon-2-checkout"),
     ...CHECKOUT_RATE_LIMIT,
