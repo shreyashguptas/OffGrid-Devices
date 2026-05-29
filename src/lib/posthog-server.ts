@@ -1,9 +1,9 @@
 import "server-only";
 import { PostHog } from "posthog-node";
 
-// Vercel Functions are short-lived, so we flush every capture immediately
-// rather than relying on the SDK's batch timer. The singleton is reused
-// across invocations within a warm Fluid Compute instance.
+// Cloudflare Workers invocations are short-lived, so we flush every capture
+// immediately rather than relying on the SDK's batch timer. The singleton is
+// reused across invocations within a warm isolate.
 let cached: PostHog | undefined;
 
 export function getPostHogClient(): PostHog | undefined {

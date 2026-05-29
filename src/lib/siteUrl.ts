@@ -29,11 +29,8 @@ function normalizeUrl(raw: string) {
  */
 export function getSiteUrl(): string {
   const raw =
-    getFirstNonEmptyString(
-      process.env.NEXT_PUBLIC_SITE_URL,
-      process.env.VERCEL_PROJECT_PRODUCTION_URL,
-      process.env.VERCEL_URL,
-    ) ?? DEFAULT_SITE_URL;
+    getFirstNonEmptyString(process.env.NEXT_PUBLIC_SITE_URL) ??
+    DEFAULT_SITE_URL;
   return normalizeUrl(raw);
 }
 

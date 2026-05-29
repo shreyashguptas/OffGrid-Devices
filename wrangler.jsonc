@@ -29,8 +29,7 @@
   },
   // Custom domains attached separately via Cloudflare dashboard
   // (Workers & Pages → offgrid → Settings → Domains & Routes →
-  //  "Add Custom Domain" → offgridevices.com). The dashboard offers
-  // one-click replacement of existing Vercel-pointing A records.
+  //  "Add Custom Domain" → offgridevices.com).
   "observability": {
     "enabled": false,
     "head_sampling_rate": 1,

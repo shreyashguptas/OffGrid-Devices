@@ -113,7 +113,9 @@ to confirm.
 6. Optional: add `src/lib/verify-beaconN-storefront.ts` for the
    `pnpm verify:shopify` gate.
 
-No `.env.local`, `.env.example`, or Vercel env changes are needed.
+No `.env.local` or `.env.example` changes are needed. Runtime env for the
+Cloudflare worker lives in `wrangler.jsonc` (`vars`) and `wrangler secret
+put` for tokens.
 
 ### Removing a product
 
@@ -142,4 +144,3 @@ The E2E server runs on port `3123` by default so it does not clash with `pnpm de
 ## Deployment and CI
 
 - CI and deploy gate details live in [docs/ci.md](docs/ci.md)
-- Vercel env sync helper: `pnpm vercel:env-push`
