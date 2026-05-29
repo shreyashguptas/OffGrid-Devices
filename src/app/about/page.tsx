@@ -9,7 +9,7 @@ import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
 const TITLE = "About OffGrid Devices — Founder & Mission";
 const DESCRIPTION =
-  "OffGrid Devices is a San Francisco-based hardware company making MagSafe-compatible LoRa mesh radios that run Meshtastic. Founded by Shreyash Gupta.";
+  "OffGrid Devices is a Maryland-based hardware company making MagSafe-compatible LoRa mesh radios that run Meshtastic. Founded by Shreyash Gupta.";
 
 export const metadata: Metadata = {
   // `title.absolute` skips the global ` | OffGrid Devices` template so the
@@ -70,8 +70,8 @@ export default function AboutPage() {
             What OffGrid Beacon is — and why it exists.
           </h1>
           <p className="font-editorial mt-8 max-w-3xl text-xl leading-[1.55] text-sand/85">
-            OffGrid Devices is a one-person hardware company based in San
-            Francisco. We make MagSafe-compatible LoRa mesh radios that run
+            OffGrid Devices is a one-person hardware company based in
+            Maryland. We make MagSafe-compatible LoRa mesh radios that run
             Meshtastic firmware — small, rugged radios that snap to your phone
             and stay on the mesh for the places where towers, SIM cards, and
             subscriptions stop working.
@@ -132,7 +132,7 @@ export default function AboutPage() {
 
           <div className="type-mono-label mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sand/85">
             <a
-              href="mailto:support@offgridevices.com"
+              href="mailto:hello@offgridevices.com"
               className="hover:text-ember"
             >
               SUPPORT@OFFGRIDEVICES.COM

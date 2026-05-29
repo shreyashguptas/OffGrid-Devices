@@ -359,7 +359,7 @@ export default async function BlogPostPage({
                 <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-light md:text-base">
                   Founder of OffGrid Devices and the builder behind OffGrid
                   Beacon — a MagSafe-compatible LoRa mesh radio that ships
-                  with Meshtastic pre-flashed. Based in San Francisco.
+                  with Meshtastic pre-flashed. Based in Maryland.
                 </p>
                 <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs uppercase tracking-[0.18em] text-muted">
                   <Link href="/about" className="hover:text-accent">

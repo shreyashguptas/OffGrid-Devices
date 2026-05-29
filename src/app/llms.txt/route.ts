@@ -17,10 +17,14 @@ const LLMS_TXT_BODY = (siteUrl: string) => `# OffGrid Devices — llms.txt
 # ${siteUrl}/llms.txt
 
 ## Company
-OffGrid Devices is a San Francisco-based hardware company founded by
-Shreyash Gupta. It makes MagSafe-compatible LoRa mesh radios that run
-Meshtastic firmware, designed for off-grid communication without cell
-towers, SIM cards, or subscriptions.
+OffGrid LLC (brand: OffGrid Devices) is a Maryland-based hardware company
+founded by Shreyash Gupta, running two business lines:
+1. US-based 3D design and small-batch manufacturing — FDM 3D printing, CAD,
+   rapid prototyping, low-volume production runs, and electronics integration
+   & assembly. See ${siteUrl}/capabilities.
+2. OffGrid Beacon — MagSafe-compatible LoRa mesh radios that run Meshtastic
+   firmware, designed for off-grid communication without cell towers, SIM
+   cards, or subscriptions.
 
 ## Products
 
@@ -41,6 +45,8 @@ towers, SIM cards, or subscriptions.
 ## Key pages
 - Home: ${siteUrl}
 - About: ${siteUrl}/about
+- Manufacturing (capabilities statement): ${siteUrl}/capabilities
+- Contact: ${siteUrl}/contact
 - Blog (Meshtastic guides): ${siteUrl}/blog
 - Beacon 2 setup and reference: ${siteUrl}/beacon-2/start
 - Shipping: ${siteUrl}/shipping
@@ -57,7 +63,7 @@ towers, SIM cards, or subscriptions.
   ship with Meshtastic firmware and are Meshtastic-compatible.
 
 ## Founder
-Shreyash Gupta — support@offgridevices.com
+Shreyash Gupta — hello@offgridevices.com
 - X / Twitter: https://x.com/ShreyashGuptas
 - YouTube: https://www.youtube.com/channel/UCe0X6IPIEuNpCvuQtOlKNrA
 

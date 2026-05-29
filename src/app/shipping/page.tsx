@@ -42,8 +42,8 @@ export default function ShippingPage() {
           US states and DC. We do not currently offer international shipping
           or shipping to APO/FPO addresses. If international availability is
           important to you, email{" "}
-          <a href="mailto:support@offgridevices.com">
-            support@offgridevices.com
+          <a href="mailto:hello@offgridevices.com">
+            hello@offgridevices.com
           </a>{" "}
           and we&rsquo;ll let you know when it changes.
         </p>
@@ -69,7 +69,7 @@ export default function ShippingPage() {
           <li>
             <strong>2&ndash;7 business days</strong> transit time via USPS
             or UPS ground service, depending on your distance from
-            California
+            Maryland
           </li>
         </ul>
         <p>
@@ -103,8 +103,8 @@ export default function ShippingPage() {
         <p>
           If a package arrives damaged, photograph the box and the contents
           and email{" "}
-          <a href="mailto:support@offgridevices.com">
-            support@offgridevices.com
+          <a href="mailto:hello@offgridevices.com">
+            hello@offgridevices.com
           </a>{" "}
           within 7 days of delivery. We&rsquo;ll send a replacement at no
           cost.
@@ -113,8 +113,8 @@ export default function ShippingPage() {
         <h2>Contact</h2>
         <p>
           Shipping questions:{" "}
-          <a href="mailto:support@offgridevices.com">
-            support@offgridevices.com
+          <a href="mailto:hello@offgridevices.com">
+            hello@offgridevices.com
           </a>
         </p>
       </LegalPageShell>
