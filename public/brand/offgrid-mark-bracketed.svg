@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <title>OffGrid · Bracketed Beacon Ring (motion / instrument variant)</title>
+  <rect width="240" height="240" fill="#1B1813"></rect>
+  <g stroke="#F1ECE0" stroke-width="6" fill="none" stroke-linecap="square">
+    <path d="M 24 50 L 24 24 L 50 24"></path>
+    <path d="M 190 24 L 216 24 L 216 50"></path>
+    <path d="M 216 190 L 216 216 L 190 216"></path>
+    <path d="M 50 216 L 24 216 L 24 190"></path>
+  </g>
+  <path d="M145.4 73.6 A60 60 0 1 1 94.6 73.6" fill="none" stroke="#FF6A00" stroke-width="22" stroke-linecap="round"></path>
+  <circle cx="120" cy="56" r="18" fill="#FF6A00"></circle>
+</svg>

@@ -31,30 +31,17 @@ export default async function OgImage() {
           <svg
             width="64"
             height="64"
-            viewBox="24 20 152 152"
+            viewBox="0 0 200 200"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g stroke={BEACON_MARK_EMBER} fill="none" strokeLinecap="round">
-              <circle cx="100" cy="64" r="22" strokeWidth="4" opacity="0.18" />
-              <circle cx="100" cy="64" r="34" strokeWidth="4" opacity="0.10" />
-            </g>
-            <g
+            <path
+              d="M124.5 55.4 A58 58 0 1 1 75.5 55.4"
+              fill="none"
               stroke={BEACON_MARK_EMBER}
-              strokeWidth="5"
+              strokeWidth="22"
               strokeLinecap="round"
-              opacity="0.85"
-            >
-              <line x1="100" y1="64" x2="146" y2="110" />
-              <line x1="146" y1="110" x2="100" y2="156" />
-              <line x1="100" y1="156" x2="54" y2="110" />
-              <line x1="54" y1="110" x2="100" y2="64" />
-              <line x1="100" y1="64" x2="100" y2="156" opacity="0.55" />
-              <line x1="54" y1="110" x2="146" y2="110" opacity="0.55" />
-            </g>
-            <circle cx="100" cy="64" r="13" fill={BEACON_MARK_EMBER} />
-            <circle cx="146" cy="110" r="9" fill={BEACON_MARK_EMBER} />
-            <circle cx="100" cy="156" r="9" fill={BEACON_MARK_EMBER} />
-            <circle cx="54" cy="110" r="9" fill={BEACON_MARK_EMBER} />
+            />
+            <circle cx="100" cy="40" r="17" fill={BEACON_MARK_EMBER} />
           </svg>
           <div
             style={{
