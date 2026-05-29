@@ -61,8 +61,8 @@ export default function ReturnsPage() {
         <h3>How to start a return</h3>
         <p>
           Email{" "}
-          <a href="mailto:support@offgridevices.com">
-            support@offgridevices.com
+          <a href="mailto:hello@offgridevices.com">
+            hello@offgridevices.com
           </a>{" "}
           with your order number and a one-line note (no questionnaire). We
           reply within one business day with a prepaid return label and
@@ -118,8 +118,8 @@ export default function ReturnsPage() {
         <h3>How to file a warranty claim</h3>
         <p>
           Email{" "}
-          <a href="mailto:support@offgridevices.com">
-            support@offgridevices.com
+          <a href="mailto:hello@offgridevices.com">
+            hello@offgridevices.com
           </a>{" "}
           with: (1) your order number, (2) a photo or short video of the
           issue, and (3) a one-line description. We reply within one
@@ -139,8 +139,8 @@ export default function ReturnsPage() {
         <h2>Contact</h2>
         <p>
           Returns and warranty:{" "}
-          <a href="mailto:support@offgridevices.com">
-            support@offgridevices.com
+          <a href="mailto:hello@offgridevices.com">
+            hello@offgridevices.com
           </a>
         </p>
       </LegalPageShell>

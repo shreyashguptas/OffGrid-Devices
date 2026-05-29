@@ -30,6 +30,9 @@ export const trackBuyClick = (product: Product, surface: BuySurface) =>
 export const trackContactTap = (channel: ContactChannel) =>
   fanout("contact_tap", { channel });
 
+export const trackContactSubmit = (inquiryType: string) =>
+  fanout("contact_submitted", { inquiry_type: inquiryType });
+
 export const trackBlogRead = (slug: string) => fanout("blog_view", { slug });
 
 export const trackBlogScrollDepth = (

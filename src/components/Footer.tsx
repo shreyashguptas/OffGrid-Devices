@@ -41,6 +41,7 @@ export function Footer() {
       links: [
         { label: "Field notes", href: "/blog" },
         { label: "About", href: "/about" },
+        { label: "Manufacturing", href: "/capabilities" },
       ],
     },
     {
@@ -55,9 +56,10 @@ export function Footer() {
     {
       heading: "Crew",
       links: [
+        { label: "Contact", href: "/contact" },
         {
-          label: "support@offgridevices.com",
-          href: "mailto:support@offgridevices.com",
+          label: "hello@offgridevices.com",
+          href: "mailto:hello@offgridevices.com",
           external: true,
         },
         {

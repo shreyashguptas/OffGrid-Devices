@@ -4,6 +4,9 @@
  *
  * Secrets (set via `wrangler secret put NAME`):
  *   - SHOPIFY_STOREFRONT_PRIVATE_TOKEN
+ *   - RESEND_API_KEY        (contact form email; optional if using the
+ *                            Cloudflare Email Sending binding — see below)
+ *   - TURNSTILE_SECRET_KEY  (contact form bot check; optional until set)
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
@@ -25,8 +28,25 @@
     "NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN": "phc_AXfaoqJ8czPwrecHrKPuQ65gobFzm3EwxfrEgWYpn4rD",
     "NEXT_PUBLIC_POSTHOG_HOST": "/ingest",
     "NEXT_PUBLIC_POSTHOG_UI_HOST": "https://us.posthog.com",
-    "POSTHOG_PROJECT_HOST": "https://us.i.posthog.com"
+    "POSTHOG_PROJECT_HOST": "https://us.i.posthog.com",
+    "CONTACT_TO_EMAIL": "hello@offgridevices.com",
+    "CONTACT_FROM_EMAIL": "website@offgridevices.com"
+    // NEXT_PUBLIC_TURNSTILE_SITE_KEY (public) is read at build time — set it in
+    // the build env / .env.local once the Turnstile widget exists.
   },
+  "d1_databases": [
+    {
+      "binding": "CONTACT_DB",
+      "database_name": "offgrid-contact",
+      "database_id": "d11cf03a-362d-48fe-bbba-cc47b32a6f51",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // Contact notifications try the Cloudflare Email Sending binding first, then
+  // fall back to Resend. To send via Cloudflare instead of Resend, onboard the
+  // domain to Email Service (adds SPF on a cf-bounce subdomain + DKIM — does NOT
+  // change the root MX, so the iCloud-hosted inbox is unaffected) and add:
+  //   "send_email": [{ "name": "CONTACT_EMAIL" }]
   // Custom domains attached separately via Cloudflare dashboard
   // (Workers & Pages → offgrid → Settings → Domains & Routes →
   //  "Add Custom Domain" → offgridevices.com).

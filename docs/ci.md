@@ -34,6 +34,54 @@ Configure these in `wrangler.jsonc` `vars` (already wired) and locally in `.env.
 | `NEXT_PUBLIC_POSTHOG_UI_HOST`         | `https://us.posthog.com` so toolbar/recording links resolve.      |
 | `POSTHOG_PROJECT_HOST`                | `https://us.i.posthog.com` for server-side `posthog-node`.        |
 
+## Contact form (`/api/contact`)
+
+The contact form writes every submission to **Cloudflare D1** (binding `CONTACT_DB`,
+database `offgrid-contact`) and emails a notification to `hello@`. Email tries the
+Cloudflare Email Sending binding first, then falls back to Resend. None of these are
+required for CI or `next build` — missing config degrades gracefully (the form still
+renders; the route returns a clean 500 only when *no* email transport is configured at
+request time, and a D1 outage never fails the request).
+
+Set tokens via `wrangler secret put <NAME>` (or the Cloudflare dashboard → Workers →
+Settings → Variables); public values go in `wrangler.jsonc` `vars` / `.env.local`.
+
+| Variable                          | Purpose                                                                                              |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `RESEND_API_KEY`                  | Resend API key — sends the notification email (fallback when the Cloudflare Email binding is absent). Secret. |
+| `CONTACT_TO_EMAIL`                | Notification inbox. Defaults to `hello@offgridevices.com`.                                           |
+| `CONTACT_FROM_EMAIL`              | Verified sender on `offgridevices.com` (e.g. `website@offgridevices.com`).                           |
+| `CONTACT_AUTOREPLY`               | Set to `"1"` to also send the submitter a confirmation email (needs Resend).                         |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY`  | Cloudflare Turnstile **site** key (public, client widget). Read at build time.                       |
+| `TURNSTILE_SECRET_KEY`            | Cloudflare Turnstile **secret** (server verify). Secret. If unset, Turnstile is skipped; honeypot + rate limit still apply. |
+| `CLOUDFLARE_ACCOUNT_ID`           | D1 HTTP-API fallback only (used when the `CONTACT_DB` binding is unavailable).                       |
+| `CLOUDFLARE_D1_DATABASE_ID`       | D1 HTTP-API fallback only — `d11cf03a-362d-48fe-bbba-cc47b32a6f51`.                                   |
+| `CLOUDFLARE_API_TOKEN`            | D1 HTTP-API fallback only (scope: D1 edit). Secret.                                                  |
+
+### Cloudflare D1 (already provisioned)
+
+Database `offgrid-contact` (id `d11cf03a-362d-48fe-bbba-cc47b32a6f51`) is created and bound
+as `CONTACT_DB` in `wrangler.jsonc`. Schema lives in `migrations/0001_contact_submissions.sql`.
+Apply migrations to a fresh database with:
+
+```bash
+wrangler d1 migrations apply offgrid-contact --remote
+```
+
+### Cloudflare Turnstile (manual, ~2 min)
+
+The connected Cloudflare MCP doesn't manage Turnstile, so create the widget once in the
+dashboard: **Turnstile → Add widget** → add `offgridevices.com` (and `localhost` for dev)
+→ copy the **site key** into `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and the **secret** into
+`TURNSTILE_SECRET_KEY`. Until then the form works without the challenge.
+
+### Cloudflare Email Sending (optional — to avoid Resend)
+
+To send notifications via Cloudflare instead of Resend, onboard the domain to **Email
+Service → Email Sending** (adds SPF on a `cf-bounce` subdomain + DKIM; does **not** touch
+the root MX, so the iCloud-hosted inbox keeps working), then add the binding in
+`wrangler.jsonc`: `"send_email": [{ "name": "CONTACT_EMAIL" }]`. Requires the Workers Paid plan.
+
 ## Branch protection (recommended)
 
 In GitHub: **Settings → Branches → Branch protection** for `main`:

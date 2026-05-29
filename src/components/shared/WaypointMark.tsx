@@ -10,10 +10,11 @@ type WaypointMarkProps = {
 };
 
 /**
- * OffGrid Beacon mark — Option A (Bare) by default, Option B (Brackets) for
- * animated states. Four orange nodes (top broadcaster + L/R/bottom relays),
- * diamond mesh edges with crossbars, and two concentric broadcast rings above
- * the top node. All orange ember, no bone/white dots.
+ * OffGrid Beacon Ring mark (handoff v1.2). The canonical mark is an open "O"
+ * ring with a single lit apex node sitting in the gap at the top. The bare
+ * version is used everywhere; the bracketed version adds survey-corner
+ * brackets and is reserved for motion / instrument moments (boot, acquire,
+ * transmit). Monochrome accent (Ember); `bone` only colours the brackets.
  */
 export function WaypointMark({
   size = 40,
@@ -25,7 +26,7 @@ export function WaypointMark({
 }: WaypointMarkProps) {
   return (
     <svg
-      viewBox="24 20 152 152"
+      viewBox="0 0 200 200"
       width={size}
       height={size}
       className={className}
@@ -40,29 +41,23 @@ export function WaypointMark({
           strokeLinecap="square"
           opacity="0.85"
         >
-          <path d="M 30 76 L 30 52 L 54 52" />
-          <path d="M 146 52 L 170 52 L 170 76" />
-          <path d="M 170 168 L 170 192 L 146 192" />
-          <path d="M 54 192 L 30 192 L 30 168" />
+          <path d="M 20 44 L 20 20 L 44 20" />
+          <path d="M 156 20 L 180 20 L 180 44" />
+          <path d="M 180 156 L 180 180 L 156 180" />
+          <path d="M 44 180 L 20 180 L 20 156" />
         </g>
       ) : null}
 
-      <g stroke={accent} fill="none" strokeLinecap="round">
-        <circle cx="100" cy="64" r="22" strokeWidth="4" opacity="0.18" />
-        <circle cx="100" cy="64" r="34" strokeWidth="4" opacity="0.10" />
-      </g>
-      <g stroke={accent} strokeWidth="5" strokeLinecap="round" opacity="0.85">
-        <line x1="100" y1="64" x2="146" y2="110" />
-        <line x1="146" y1="110" x2="100" y2="156" />
-        <line x1="100" y1="156" x2="54" y2="110" />
-        <line x1="54" y1="110" x2="100" y2="64" />
-        <line x1="100" y1="64" x2="100" y2="156" opacity="0.55" />
-        <line x1="54" y1="110" x2="146" y2="110" opacity="0.55" />
-      </g>
-      <circle cx="100" cy="64" r="13" fill={accent} />
-      <circle cx="146" cy="110" r="9" fill={accent} />
-      <circle cx="100" cy="156" r="9" fill={accent} />
-      <circle cx="54" cy="110" r="9" fill={accent} />
+      {/* Open beacon ring */}
+      <path
+        d="M124.5 55.4 A58 58 0 1 1 75.5 55.4"
+        fill="none"
+        stroke={accent}
+        strokeWidth="22"
+        strokeLinecap="round"
+      />
+      {/* Lit apex node */}
+      <circle cx="100" cy="40" r="17" fill={accent} />
     </svg>
   );
 }
@@ -88,18 +83,18 @@ export function BeaconWordmark({
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: size * 0.45,
+        gap: size * 0.5,
         color: bone,
         fontFamily: "var(--font-display)",
-        fontWeight: 800,
+        fontWeight: 900,
         fontSize: size,
-        letterSpacing: "0.02em",
+        letterSpacing: "-0.03em",
         lineHeight: 1,
         textTransform: "uppercase",
       }}
     >
       {withMark ? (
-        <WaypointMark size={size * 1.6} accent={accent} bone={bone} />
+        <WaypointMark size={size * 1.5} accent={accent} bone={bone} />
       ) : null}
       <span>OffGrid</span>
     </span>

@@ -32,6 +32,8 @@ Open `http://localhost:3000`.
 - `src/app/products/beacon-2/page.tsx` - Beacon 2 standalone product page (buy + SEO)
 - `src/app/blog/page.tsx` - blog listing
 - `src/app/blog/[slug]/page.tsx` - blog detail page
+- `src/app/capabilities/page.tsx` - manufacturing / capabilities-statement landing page
+- `src/app/contact/page.tsx` - contact form (+ `src/app/api/contact/route.ts`)
 - `src/content/` - shared product and blog content
 - `src/components/home/` - homepage sections
 - `src/components/beacon1/` - Beacon 1 product sections and CTA
@@ -66,6 +68,22 @@ Without these values:
 - API route unit tests still run
 - live Shopify verification fails
 - live Playwright Shopify checks skip
+
+## Contact form environment variables
+
+The contact form (`/contact` → `POST /api/contact`) saves submissions to Cloudflare D1
+(`CONTACT_DB` binding, database `offgrid-contact`) and emails `hello@`. Email tries the
+Cloudflare Email Sending binding first, then Resend. All optional for local dev — the form
+renders and degrades gracefully without them (a D1 outage never fails the request; a clean
+500 is returned only when no email transport is configured). Full table + setup steps in
+[docs/ci.md](docs/ci.md#contact-form-apicontact).
+
+- `RESEND_API_KEY` — Resend key for the notification email (secret)
+- `CONTACT_TO_EMAIL` — notification inbox (default `hello@offgridevices.com`)
+- `CONTACT_FROM_EMAIL` — verified sender on `offgridevices.com`
+- `CONTACT_AUTOREPLY` — `"1"` to send the submitter a confirmation email
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET_KEY` — Cloudflare Turnstile (skipped if unset)
+- `CLOUDFLARE_ACCOUNT_ID` / `CLOUDFLARE_D1_DATABASE_ID` / `CLOUDFLARE_API_TOKEN` — D1 HTTP-API fallback only
 
 ## Shopify product handles
 

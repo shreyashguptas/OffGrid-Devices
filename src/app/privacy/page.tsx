@@ -58,7 +58,7 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>Support email</strong> — when you email
-            support@offgridevices.com, we receive the address you sent from
+            hello@offgridevices.com, we receive the address you sent from
             and the contents of your message.
           </li>
         </ul>
@@ -97,7 +97,7 @@ export default function PrivacyPage() {
             Shopify).
           </li>
           <li>
-            To respond when you contact support@offgridevices.com.
+            To respond when you contact hello@offgridevices.com.
           </li>
           <li>
             To understand site traffic in aggregate so we can improve the
@@ -146,8 +146,8 @@ export default function PrivacyPage() {
           have the right to request a copy of the information we hold about
           you, to request correction or deletion, and to withdraw consent
           for processing. Email{" "}
-          <a href="mailto:support@offgridevices.com">
-            support@offgridevices.com
+          <a href="mailto:hello@offgridevices.com">
+            hello@offgridevices.com
           </a>{" "}
           with your request. We respond within 30 days.
         </p>
@@ -167,9 +167,9 @@ export default function PrivacyPage() {
 
         <h2>Contact</h2>
         <p>
-          OffGrid LLC · San Francisco, CA ·{" "}
-          <a href="mailto:support@offgridevices.com">
-            support@offgridevices.com
+          OffGrid LLC · Rockville, MD ·{" "}
+          <a href="mailto:hello@offgridevices.com">
+            hello@offgridevices.com
           </a>
         </p>
 

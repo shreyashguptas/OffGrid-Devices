@@ -9,6 +9,7 @@ import { Beacon2CheckoutButton } from "@/components/Beacon2CheckoutButton";
 import { BadgeEmberOutline } from "@/components/shared/BadgeEmberOutline";
 import { BeaconWordmark, WaypointMark } from "@/components/shared/WaypointMark";
 import { beacon2Content, siteProducts } from "@/content/products";
+import { primaryNavLinks, productsMenuLabel } from "@/content/navigation";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -177,6 +178,9 @@ function NavbarContent() {
                       WebkitBackdropFilter: "blur(40px)",
                     }}
                   >
+                    <p className="type-mono-label px-3 pt-2 pb-1.5 text-sand/55">
+                      {productsMenuLabel}
+                    </p>
                     {siteProducts.map((product) => (
                       <Link
                         key={product.name}
@@ -239,12 +243,15 @@ function NavbarContent() {
             </AnimatePresence>
           </div>
 
-          <Link
-            href="/blog"
-            className="font-display text-[12px] font-semibold tracking-[0.18em] uppercase text-sand transition-colors duration-300 hover:text-bone"
-          >
-            Blog
-          </Link>
+          {primaryNavLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="font-display text-[12px] font-semibold tracking-[0.18em] uppercase text-sand transition-colors duration-300 hover:text-bone"
+            >
+              {link.label}
+            </Link>
+          ))}
           <Beacon2CheckoutButton
             defaultLabel={beacon2Content.summary.buyLabel}
             loadingLabel={beacon2Content.summary.loadingLabel}
@@ -324,6 +331,9 @@ function NavbarContent() {
                     className="overflow-hidden"
                   >
                     <div className="pl-4 flex flex-col gap-3 pb-2">
+                      <p className="type-mono-label text-sand/55">
+                        {productsMenuLabel}
+                      </p>
                       {siteProducts.map((product) => (
                         <Link
                           key={product.name}
@@ -361,13 +371,16 @@ function NavbarContent() {
                 )}
               </AnimatePresence>
 
-              <Link
-                href="/blog"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="font-display text-[14px] font-bold tracking-[0.18em] uppercase text-sand transition-colors hover:text-bone"
-              >
-                Blog
-              </Link>
+              {primaryNavLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="font-display text-[14px] font-bold tracking-[0.18em] uppercase text-sand transition-colors hover:text-bone"
+                >
+                  {link.label}
+                </Link>
+              ))}
               <Beacon2CheckoutButton
                 defaultLabel={beacon2Content.summary.buyLabel}
                 loadingLabel={beacon2Content.summary.loadingLabel}

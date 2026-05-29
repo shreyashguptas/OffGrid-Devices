@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" width="400" height="480">
+  <title>OffGrid · Stacked wordmark lockup · Beacon Ring + Bone on Pitch</title>
+  <rect width="400" height="480" fill="#1B1813"></rect>
+  <g transform="translate(100 70)">
+    <path d="M124.5 55.4 A58 58 0 1 1 75.5 55.4" fill="none" stroke="#FF6A00" stroke-width="22" stroke-linecap="round"></path>
+    <circle cx="100" cy="40" r="17" fill="#FF6A00"></circle>
+  </g>
+  <text x="200" y="370" font-family="Archivo, &#39;Archivo Black&#39;, system-ui, sans-serif" font-weight="900" font-size="68" letter-spacing="-2" text-anchor="middle" fill="#F1ECE0" style="text-transform:uppercase">OFFGRID</text>
+  <text x="200" y="416" font-family="&#39;JetBrains Mono&#39;, ui-monospace, monospace" font-weight="500" font-size="13" letter-spacing="3" text-anchor="middle" fill="#D9C9A8">WHERE THE BARS RUN OUT</text>
+</svg>

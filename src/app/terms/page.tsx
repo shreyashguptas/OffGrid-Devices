@@ -47,9 +47,9 @@ export default function TermsPage() {
         <h2>Who we are</h2>
         <p>
           OffGrid LLC (&ldquo;OffGrid&rdquo;, &ldquo;we&rdquo;,
-          &ldquo;us&rdquo;) is a hardware company based in San Francisco,
-          California. We sell MagSafe-compatible LoRa mesh radios designed
-          to run Meshtastic firmware.
+          &ldquo;us&rdquo;) is a hardware company based in Maryland, USA. We
+          sell MagSafe-compatible LoRa mesh radios designed to run Meshtastic
+          firmware.
         </p>
 
         <h2>Site use</h2>
@@ -79,8 +79,8 @@ export default function TermsPage() {
           cover damage from drops, water ingress beyond intended IP rating,
           modification, or use outside the LoRa region the product was
           configured for. Warranty claims: email{" "}
-          <a href="mailto:support@offgridevices.com">
-            support@offgridevices.com
+          <a href="mailto:hello@offgridevices.com">
+            hello@offgridevices.com
           </a>{" "}
           with your order number and a description of the issue. See the{" "}
           <a href="/returns">returns and warranty page</a> for details.
@@ -123,9 +123,9 @@ export default function TermsPage() {
 
         <h2>Governing law</h2>
         <p>
-          These terms are governed by the laws of the State of California,
+          These terms are governed by the laws of the State of Maryland,
           USA. Any dispute will be resolved in the state or federal courts
-          located in San Francisco County, California.
+          located in the State of Maryland, USA.
         </p>
 
         <h2>Changes</h2>
@@ -137,9 +137,9 @@ export default function TermsPage() {
 
         <h2>Contact</h2>
         <p>
-          OffGrid LLC · San Francisco, CA ·{" "}
-          <a href="mailto:support@offgridevices.com">
-            support@offgridevices.com
+          OffGrid LLC · Rockville, MD ·{" "}
+          <a href="mailto:hello@offgridevices.com">
+            hello@offgridevices.com
           </a>
         </p>
       </LegalPageShell>

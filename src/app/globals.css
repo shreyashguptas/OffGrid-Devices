@@ -39,13 +39,13 @@
   --app-sand: #D9C9A8;    /* secondary light                              */
   --app-bone: #F1ECE0;    /* primary light                                */
   --app-dim: #9A9082;     /* muted — works in both modes                  */
-  --app-ember: #E8743C;   /* the accent — same fill in both modes         */
-  --app-ember-low: #C95F2B;
+  --app-ember: #FF6A00;   /* the accent — same fill in both modes (v1.2)   */
+  --app-ember-low: #D95A00;
 
   /* v1.2 additions — light-mode neutrals & contrast-safe ember-as-text */
   --app-linen: #E5DDC9;       /* light-mode card surface                  */
   --app-paper: #FAF7EF;       /* light-mode lifted plane                  */
-  --app-ember-deep: #B8531F;  /* darker Ember reserved for TEXT on light  */
+  --app-ember-deep: #A84A00;  /* darker Ember reserved for TEXT on light  */
 }
 
 /* ─── 2 · Default = DARK mode role-bound tokens ───────────────────────
@@ -75,7 +75,7 @@
   --app-on-accent: var(--app-pitch);
   --app-accent: var(--app-ember);
   --app-accent-text: var(--app-ember);
-  --app-accent-light: #F08851;
+  --app-accent-light: #FF8A3D;
   --app-accent-dark: var(--app-ember-low);
 
   --app-surface: var(--app-pitch);
@@ -147,10 +147,10 @@
     0 0 0 1px rgba(217, 201, 168, 0.12);
 
   /* Ember radial glows — hero + feature showcase */
-  --app-accent-glow-strong: rgba(232, 116, 60, 0.45);
-  --app-accent-glow-mid: rgba(232, 116, 60, 0.12);
-  --app-accent-glow-soft: rgba(232, 116, 60, 0.30);
-  --app-accent-glow-faint: rgba(232, 116, 60, 0.08);
+  --app-accent-glow-strong: rgba(255, 106, 0, 0.45);
+  --app-accent-glow-mid: rgba(255, 106, 0, 0.12);
+  --app-accent-glow-soft: rgba(255, 106, 0, 0.30);
+  --app-accent-glow-faint: rgba(255, 106, 0, 0.08);
 }
 
 /* ─── 3 · LIGHT mode overrides ───────────────────────────────────────

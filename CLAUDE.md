@@ -9,7 +9,7 @@ The OffGrid Beacon brand has a **canonical handoff bundle** maintained by the us
 **Bundle URL** (re-fetch each session — the contents are not checked in):
 
 ```
-https://api.anthropic.com/v1/design/h/o9wchEhwDf2syW4GtJagkg?open_file=Brand+Handoff.html
+https://api.anthropic.com/v1/design/h/LP4kX6eGU0pKu4FQcWS7sQ?open_file=Brand+Handoff.html
 ```
 
 The URL serves a gzipped tarball. Use WebFetch, then `gunzip` + `tar -xf` into `$CLAUDE_JOB_DIR/design-handoff/`. The bundle unpacks to:
@@ -20,13 +20,13 @@ The URL serves a gzipped tarball. Use WebFetch, then `gunzip` + `tar -xf` into `
 - `offgrid/project/handoff/copy/copy-deck.md` — voice + headline bank
 - `offgrid/project/handoff/logo/{svg,png}/` — official mark + wordmark assets
 - `offgrid/project/*.jsx` — section prototypes; `homepage-backcountry.jsx` is the canonical hero pattern
-- `offgrid/chats/chat{1..4}.md` — design conversation transcripts
+- `offgrid/chats/chat{1..5}.md` — design conversation transcripts
 
 In-repo token mappings live in `src/app/globals.css` (`--app-pitch`, `--app-bark`, etc.). When the handoff and the in-repo tokens disagree, the **handoff wins** — update `globals.css`.
 
 ### Quick reference
 
-- Palette: Pitch `#1B1813` · Bark `#3A2E22` · Coal `#100D09` · Bone `#F1ECE0` · Sand `#D9C9A8` · Ember `#E8743C` · Dim `#9A9082`
+- Palette: Pitch `#1B1813` · Bark `#3A2E22` · Coal `#100D09` · Bone `#F1ECE0` · Sand `#D9C9A8` · Ember `#FF6A00` (Ember-Deep `#A84A00` for Ember-as-text on light bg) · Dim `#9A9082`
 - Type families: Archivo (display, 900, `-0.04em`, uppercase) · Inter Tight (body, 400/500) · Newsreader (editorial, 400 italic, `-0.01em`) · JetBrains Mono (mono, 500, `0.06em`, uppercase)
 - Display scale: D1 128/0.88 · D2 80/0.92 · D3 56/1.0 · D4 40/1.05
 - Body scale: B1 21/1.5 · B2 16/1.55 · B3 13/1.55
@@ -34,5 +34,6 @@ In-repo token mappings live in `src/app/globals.css` (`--app-pitch`, `--app-bark
 - Mono scale: M1 13/1.4 · M2 11/1.4
 - Geometry: `border-radius: 0` everywhere · `1px` hairlines (canonical color Bone @ 10% = `#F1ECE01A`) · `120px` section vertical padding · `56px` page gutter · `1280px` max width
 - Primary button: `font: 700 13px/1 Archivo; letter-spacing: 0.14em; padding: 18px 28px; bg: Ember; fg: Pitch`
+- Logo: **Beacon Ring** mark — an open "O" ring (`stroke-width 22` in a `0 0 200 200` viewBox) with a lit apex node at top; wordmark "OFFGRID" in Archivo 900. Bracketed variant (survey-corner brackets) is for motion/instrument moments only. In-repo: `src/components/shared/WaypointMark.tsx`, `src/lib/beaconMarkSvg.ts` (favicon/OG), `public/logo.svg`, `public/brand/*.svg`.
 - **One accent**: Ember appears once per surface. Never two.
 - No drop shadows on surfaces. Type does the heavy lifting; chrome stays quiet.
