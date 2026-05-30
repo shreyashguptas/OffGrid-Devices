@@ -1,16 +1,7 @@
 import { NextResponse } from "next/server";
 import { createBeacon2CheckoutUrl, hasShopifyStorefrontConfig } from "@/lib/shopify";
 import { getPostHogClient } from "@/lib/posthog-server";
-import {
-  checkRateLimit,
-  getRateLimitKey,
-  rateLimitHeaders,
-} from "@/lib/rate-limit";
-
-const CHECKOUT_RATE_LIMIT = {
-  limit: 10,
-  windowMs: 60_000,
-};
+import { enforceRateLimit, rateLimitHeaders } from "@/lib/rate-limit";
 
 // The client forwards posthog.get_distinct_id() in this header so the
 // server-side event stitches to the same person profile as the browser
@@ -20,10 +11,10 @@ const POSTHOG_HEADER = "x-posthog-distinct-id";
 const ANONYMOUS_DISTINCT_ID = "anonymous-server-checkout";
 
 export async function POST(request?: Request) {
-  const rateLimit = checkRateLimit({
-    key: getRateLimitKey(request, "shopify-beacon-2-checkout"),
-    ...CHECKOUT_RATE_LIMIT,
-  });
+  const rateLimit = await enforceRateLimit(
+    request,
+    "shopify-beacon-2-checkout",
+  );
 
   if (!rateLimit.allowed) {
     return NextResponse.json(

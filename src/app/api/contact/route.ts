@@ -6,17 +6,8 @@ import {
   sendContactAutoreply,
 } from "@/lib/contact-email";
 import { getPostHogClient } from "@/lib/posthog-server";
-import {
-  checkRateLimit,
-  getRateLimitKey,
-  rateLimitHeaders,
-} from "@/lib/rate-limit";
+import { clientIp, enforceRateLimit, rateLimitHeaders } from "@/lib/rate-limit";
 import { INQUIRY_TYPES, CONTACT_LIMITS, HONEYPOT_FIELD } from "@/content/contact";
-
-const CONTACT_RATE_LIMIT = {
-  limit: 5,
-  windowMs: 60_000,
-};
 
 const POSTHOG_HEADER = "x-posthog-distinct-id";
 const ANONYMOUS_DISTINCT_ID = "anonymous-contact";
@@ -79,25 +70,30 @@ function validate(body: Record<string, unknown>): {
   };
 }
 
-function clientIp(request: Request): string | undefined {
-  const forwardedFor = request.headers
-    .get("x-forwarded-for")
-    ?.split(",")[0]
-    ?.trim();
-  return (
-    request.headers.get("cf-connecting-ip")?.trim() ||
-    forwardedFor ||
-    request.headers.get("x-real-ip")?.trim() ||
-    undefined
-  );
-}
-
+/**
+ * HMAC-SHA-256 the submitter IP so the stored value can't be reversed without
+ * the secret key. Fails closed: when `CONTACT_IP_SALT` is unset we omit the
+ * hash entirely rather than fall back to a public/guessable salt — a plain
+ * salted SHA-256 over the 2^32 IPv4 space with a known salt is trivially
+ * brute-forced. `ip_hash` is nullable, so omitting it is safe.
+ */
 async function hashIp(ip: string | undefined): Promise<string | undefined> {
   if (!ip) return undefined;
+  const salt = process.env.CONTACT_IP_SALT;
+  if (!salt) return undefined;
   try {
-    const salt = process.env.CONTACT_IP_SALT ?? "offgrid";
-    const data = new TextEncoder().encode(`${salt}:${ip}`);
-    const digest = await crypto.subtle.digest("SHA-256", data);
+    const key = await crypto.subtle.importKey(
+      "raw",
+      new TextEncoder().encode(salt),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"],
+    );
+    const digest = await crypto.subtle.sign(
+      "HMAC",
+      key,
+      new TextEncoder().encode(ip),
+    );
     return Array.from(new Uint8Array(digest))
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("")
@@ -109,10 +105,7 @@ async function hashIp(ip: string | undefined): Promise<string | undefined> {
 
 export async function POST(request: Request) {
   // 1. Rate limit — cheapest guard, runs first to protect everything below.
-  const rateLimit = checkRateLimit({
-    key: getRateLimitKey(request, "contact"),
-    ...CONTACT_RATE_LIMIT,
-  });
+  const rateLimit = await enforceRateLimit(request, "contact");
   if (!rateLimit.allowed) {
     return NextResponse.json(
       { error: "Too many requests. Please wait a moment and try again." },
