@@ -184,6 +184,10 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${archivo.variable} ${interTight.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
+      // Opt the `scroll-behavior: smooth` in globals.css into Next's
+      // route-transition handling (silences the dev hint and keeps instant
+      // scroll restoration on navigation while preserving smooth in-page jumps).
+      data-scroll-behavior="smooth"
       // The early-paint theme script sets data-theme before
       // React hydrates; suppress the resulting attribute mismatch warning.
       suppressHydrationWarning

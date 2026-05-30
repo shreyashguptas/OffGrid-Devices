@@ -10,6 +10,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Least privilege: this workflow only checks out, installs, lints, tests, and
+# builds — it never writes to the repo. Capping GITHUB_TOKEN to read-only limits
+# blast radius if a build-time dependency is compromised.
+permissions:
+  contents: read
+
 jobs:
   quality:
     runs-on: ubuntu-latest

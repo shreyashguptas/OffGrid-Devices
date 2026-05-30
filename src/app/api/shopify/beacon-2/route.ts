@@ -3,22 +3,10 @@ import {
   getBeacon2ProductWithCache,
   hasShopifyStorefrontConfig,
 } from "@/lib/shopify";
-import {
-  checkRateLimit,
-  getRateLimitKey,
-  rateLimitHeaders,
-} from "@/lib/rate-limit";
-
-const PRODUCT_RATE_LIMIT = {
-  limit: 120,
-  windowMs: 60_000,
-};
+import { enforceRateLimit, rateLimitHeaders } from "@/lib/rate-limit";
 
 export async function GET(request?: Request) {
-  const rateLimit = checkRateLimit({
-    key: getRateLimitKey(request, "shopify-beacon-2-product"),
-    ...PRODUCT_RATE_LIMIT,
-  });
+  const rateLimit = await enforceRateLimit(request, "shopify-beacon-2-product");
 
   if (!rateLimit.allowed) {
     return NextResponse.json(

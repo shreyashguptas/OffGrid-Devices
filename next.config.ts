@@ -1,4 +1,11 @@
 import type { NextConfig } from "next";
+import { fileURLToPath } from "node:url";
+import { dirname } from "node:path";
+
+// Absolute path to this project dir. Used to pin Turbopack's workspace root so
+// it doesn't walk up and latch onto a parent repo's lockfile (this checkout can
+// live inside a git worktree nested under the main repo).
+const projectRoot = dirname(fileURLToPath(import.meta.url));
 
 // Tightened CSP. `unsafe-inline` is required for:
 //   - the early-paint theme script in layout.tsx (sets data-theme before
@@ -15,7 +22,12 @@ const contentSecurityPolicy = [
   // browsers (Chrome 97+, Firefox 102+, Safari 16+) treat this token as
   // strictly narrower than 'unsafe-eval' — only WASM compiles are
   // allowed, not arbitrary string-eval'd JS.
-  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
+  // challenges.cloudflare.com is required for the Cloudflare Turnstile widget
+  // (loaded on /contact). Per Cloudflare's CSP reference the loader script and
+  // the challenge iframe both come from this origin; connect-src is included
+  // for the widget's verification calls. Without these the form's submit
+  // button stays permanently disabled once a Turnstile site key is set.
+  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.shopify.com",
   "font-src 'self' data:",
@@ -23,7 +35,8 @@ const contentSecurityPolicy = [
   // Blob → URL.createObjectURL → fetch(blob:...). Without it the 15
   // textures in beacon-2.glb fail to load and the Beacon renders without
   // its CAD-assigned surface detail.
-  "connect-src 'self' blob: https://*.myshopify.com https://cdn.shopify.com",
+  "connect-src 'self' blob: https://*.myshopify.com https://cdn.shopify.com https://challenges.cloudflare.com",
+  "frame-src 'self' https://challenges.cloudflare.com",
   "media-src 'self'",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
@@ -35,6 +48,12 @@ const contentSecurityPolicy = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
+  // Pin the workspace root to this project so Turbopack stops inferring the
+  // wrong one (and emitting the "multiple lockfiles" warning) when the repo is
+  // checked out as a nested git worktree.
+  turbopack: {
+    root: projectRoot,
+  },
   images: {
     remotePatterns: [
       {

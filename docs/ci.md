@@ -53,7 +53,8 @@ Settings → Variables); public values go in `wrangler.jsonc` `vars` / `.env.loc
 | `CONTACT_FROM_EMAIL`              | Verified sender on `offgridevices.com` (e.g. `website@offgridevices.com`).                           |
 | `CONTACT_AUTOREPLY`               | Set to `"1"` to also send the submitter a confirmation email (needs Resend).                         |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`  | Cloudflare Turnstile **site** key (public, client widget). Read at build time.                       |
-| `TURNSTILE_SECRET_KEY`            | Cloudflare Turnstile **secret** (server verify). Secret. If unset, Turnstile is skipped; honeypot + rate limit still apply. |
+| `TURNSTILE_SECRET_KEY`            | Cloudflare Turnstile **secret** (server verify). Secret. If unset, Turnstile is skipped; honeypot + rate limit still apply. Once set, the contact endpoint fails closed (requires a valid token). |
+| `CONTACT_IP_SALT`                 | HMAC key for hashing submitter IPs before storing them in D1. Secret, recommended. **If unset, `ip_hash` is omitted entirely** — never stored with a guessable fallback salt. Use a long random value. |
 | `CLOUDFLARE_ACCOUNT_ID`           | D1 HTTP-API fallback only (used when the `CONTACT_DB` binding is unavailable).                       |
 | `CLOUDFLARE_D1_DATABASE_ID`       | D1 HTTP-API fallback only — `d11cf03a-362d-48fe-bbba-cc47b32a6f51`.                                   |
 | `CLOUDFLARE_API_TOKEN`            | D1 HTTP-API fallback only (scope: D1 edit). Secret.                                                  |
@@ -73,7 +74,19 @@ wrangler d1 migrations apply offgrid-contact --remote
 The connected Cloudflare MCP doesn't manage Turnstile, so create the widget once in the
 dashboard: **Turnstile → Add widget** → add `offgridevices.com` (and `localhost` for dev)
 → copy the **site key** into `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and the **secret** into
-`TURNSTILE_SECRET_KEY`. Until then the form works without the challenge.
+`TURNSTILE_SECRET_KEY`. Until then the form works without the challenge. The production
+CSP already allowlists `challenges.cloudflare.com` (script-src / frame-src / connect-src),
+so enabling the keys is all that's needed — the widget will load and the endpoint will
+fail closed automatically.
+
+### Rate limiting (already provisioned via `ratelimits` in `wrangler.jsonc`)
+
+The public endpoints (`/api/contact`, `/api/shopify/beacon-2`, `.../checkout`) are rate
+limited per client IP using Cloudflare's Rate Limiting binding — counters are shared
+across Worker isolates within a Cloudflare location. The key is derived from
+`cf-connecting-ip` (a forged `x-forwarded-for` cannot bypass it). No setup needed; the
+`RL_CONTACT` / `RL_CHECKOUT` / `RL_PRODUCT` namespaces provision on deploy. Local `next
+dev` (no binding) falls back to an in-memory counter.
 
 ### Cloudflare Email Sending (optional — to avoid Resend)
 

@@ -41,8 +41,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files — local/secret env stays ignored. `.env` is the ONE exception:
+# it holds committed PUBLIC build-time defaults only (never secrets).
 .env*
+!.env
 
 # git worktrees (Claude experimental branches)
 /.worktrees/

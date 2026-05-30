@@ -6,7 +6,12 @@
  *   - SHOPIFY_STOREFRONT_PRIVATE_TOKEN
  *   - RESEND_API_KEY        (contact form email; optional if using the
  *                            Cloudflare Email Sending binding — see below)
- *   - TURNSTILE_SECRET_KEY  (contact form bot check; optional until set)
+ *   - TURNSTILE_SECRET_KEY  (contact form bot check; optional until set. Once
+ *                            set, the contact endpoint requires a valid token.)
+ *   - CONTACT_IP_SALT       (HMAC key for hashing submitter IPs before storing
+ *                            them in D1. RECOMMENDED: without it the ip_hash is
+ *                            omitted entirely — never stored with a guessable
+ *                            fallback. Use a long random value.)
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
@@ -40,6 +45,27 @@
       "database_name": "offgrid-contact",
       "database_id": "d11cf03a-362d-48fe-bbba-cc47b32a6f51",
       "migrations_dir": "migrations"
+    }
+  ],
+  // Shared rate-limit counters for the public endpoints. These are consistent
+  // across Worker isolates within a Cloudflare location (eventually consistent,
+  // permissive — not an exact global counter). Keyed by cf-connecting-ip in
+  // src/lib/rate-limit.ts. period must be 10 or 60 (seconds).
+  "ratelimits": [
+    {
+      "name": "RL_CONTACT",
+      "namespace_id": "1001",
+      "simple": { "limit": 5, "period": 60 }
+    },
+    {
+      "name": "RL_CHECKOUT",
+      "namespace_id": "1002",
+      "simple": { "limit": 10, "period": 60 }
+    },
+    {
+      "name": "RL_PRODUCT",
+      "namespace_id": "1003",
+      "simple": { "limit": 120, "period": 60 }
     }
   ],
   // Contact notifications try the Cloudflare Email Sending binding first, then
