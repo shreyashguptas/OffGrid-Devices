@@ -55,6 +55,21 @@ const nextConfig: NextConfig = {
     root: projectRoot,
   },
   images: {
+    // OpenNext-Cloudflare does NOT optimize next/image — the /_next/image
+    // endpoint is a passthrough that fetches the original asset *through the
+    // Worker* and returns it byte-for-byte (no resize, no AVIF/WebP), and
+    // those responses are not edge-cached. That had two costs:
+    //   1. Every image request ran the Worker and buffered a multi-MB file,
+    //      which is what pushed the 128 MB isolate over its limit and produced
+    //      the `exceededResources` invocation errors.
+    //   2. Images missed the edge cache (cf-cache-status absent) and were
+    //      re-fetched from the Worker on every view.
+    // With `unoptimized`, next/image emits the direct asset URL, which Workers
+    // serves straight from the cached ASSETS binding (cf-cache-status: HIT) and
+    // never touches the SSR Worker. Source images are pre-sized JPEGs, so there
+    // is no optimization left to do. remotePatterns is kept for documentation;
+    // Shopify CDN images are already optimized and served from their own CDN.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

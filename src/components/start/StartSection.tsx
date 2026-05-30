@@ -34,12 +34,12 @@ export function StartSection({
         {eyebrow || title || description ? (
           <header className="mb-10 md:mb-12">
             {eyebrow ? (
-              <p className="text-xs font-medium uppercase tracking-[0.28em] text-muted">
+              <p className="type-eyebrow text-muted">
                 {eyebrow}
               </p>
             ) : null}
             {title ? (
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+              <h2 className="type-display-section mt-3 text-foreground">
                 {title}
               </h2>
             ) : null}

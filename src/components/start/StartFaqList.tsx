@@ -12,7 +12,7 @@ export function StartFaqList({ items }: StartFaqListProps) {
         <AccordionDetails
           key={item.id}
           id={item.id}
-          className="scroll-mt-24 rounded-[1.5rem] px-5 py-4 md:px-7 md:py-5"
+          className="scroll-mt-24 px-5 py-4 md:px-7 md:py-5"
           summaryClassName="gap-3 sm:gap-6"
           contentClassName="contents"
           summary={

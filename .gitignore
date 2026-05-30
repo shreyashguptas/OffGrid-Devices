@@ -61,3 +61,4 @@ scripts/capture_audit.py
 # subagent-driven-development, etc). These are scratch artifacts, not
 # durable project documentation.
 /docs/superpowers/
+.design-handoff/

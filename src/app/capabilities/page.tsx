@@ -115,7 +115,7 @@ export default function CapabilitiesPage() {
             {materials.specs.map((spec) => (
               <div
                 key={spec.label}
-                className="grid grid-cols-[140px_1fr] items-baseline gap-4 border-b border-bark/30 pb-4"
+                className="grid grid-cols-1 gap-1 border-b border-bark/30 pb-4 sm:grid-cols-[140px_1fr] sm:items-baseline sm:gap-4"
               >
                 <dt className="type-mono-label text-sand/65">{spec.label}</dt>
                 <dd className="font-editorial text-base leading-snug text-bone">

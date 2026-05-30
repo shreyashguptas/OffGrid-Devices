@@ -16,7 +16,7 @@ const LINKS = [
 
 export default function NotFound() {
   return (
-    <section className="min-h-[80vh] border-b border-border-subtle bg-background px-6 pt-32 pb-20">
+    <section className="min-h-[80dvh] border-b border-border-subtle bg-background px-6 pt-32 pb-20">
       <div className="mx-auto max-w-3xl">
         <BeaconWordmark size={24} />
         <p className="mt-10 text-sm font-semibold uppercase tracking-[0.24em] text-muted">

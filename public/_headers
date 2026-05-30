@@ -1,0 +1,48 @@
+# Cloudflare Workers static-asset cache policy.
+# https://developers.cloudflare.com/workers/static-assets/headers/
+#
+# These rules override the Workers default of
+#   Cache-Control: public, max-age=0, must-revalidate
+# which made browsers re-validate every asset (even hashed JS/CSS and the
+# 15 MB GLB) on every page load. The Worker (SSR) is unaffected — these only
+# apply to responses served directly by the ASSETS binding (cf-cache-status
+# is present on those), which is every file under public/ and /_next/static.
+#
+# NOTE: paths here are request paths. OpenNext copies public/* and the build's
+# _next/static/* into the assets directory, so both match.
+
+# Content-hashed build output — safe to cache forever (filename changes on edit).
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Self-hosted font(s) used by OG image generation — effectively immutable.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Product media (renders, parallax frames, 3D model, HDRI). Not content-hashed,
+# so use a long-but-finite TTL with stale-while-revalidate rather than
+# `immutable` — an updated asset is picked up within a day of background
+# revalidation instead of being pinned for a year.
+/beacon-2/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/hdri/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/products/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/reviews/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/reviewers/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/brand/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+# App icons / favicons.
+/icon-192.png
+  Cache-Control: public, max-age=2592000
+/icon-512.png
+  Cache-Control: public, max-age=2592000

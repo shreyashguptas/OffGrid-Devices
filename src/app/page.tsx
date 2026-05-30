@@ -64,8 +64,8 @@ export default async function Home() {
             url: "/products/beacon-2",
             images: [
               beacon2Content.summary.heroImage.src,
-              "/beacon-2/feature-antenna.png",
-              "/beacon-2/whats-in-the-box.png",
+              "/beacon-2/feature-antenna.jpg",
+              "/beacon-2/whats-in-the-box.jpg",
             ],
             // aggregateRating + reviews removed from Beacon 2 schema until
             // we have Beacon-2-specific testimonials. The legacy reviews

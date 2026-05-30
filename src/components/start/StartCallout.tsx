@@ -18,10 +18,10 @@ const KIND_STYLES: Record<
 > = {
   warning: {
     container:
-      "border-red-500/40 bg-red-500/[0.08] ring-1 ring-inset ring-red-500/15",
-    eyebrow: "text-red-300",
-    title: "text-red-200",
-    iconWrap: "border-red-500/40 bg-red-500/15 text-red-200",
+      "border-border-emphasis border-l-2 border-l-ember bg-pitch-low",
+    eyebrow: "text-ember",
+    title: "text-bone",
+    iconWrap: "border-border-emphasis bg-pitch-low text-ember",
   },
   info: {
     container:
@@ -45,7 +45,7 @@ export function StartCallout({
     <aside
       role={kind === "warning" ? "alert" : "note"}
       className={cn(
-        "rounded-[1.5rem] border p-6 md:p-7",
+        "border p-6 md:p-7",
         styles.container,
         className,
       )}
@@ -55,7 +55,7 @@ export function StartCallout({
           <span
             aria-hidden="true"
             className={cn(
-              "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-lg",
+              "flex h-10 w-10 shrink-0 items-center justify-center border text-lg",
               styles.iconWrap,
             )}
           >
@@ -66,7 +66,7 @@ export function StartCallout({
           {eyebrow ? (
             <p
               className={cn(
-                "text-xs font-semibold uppercase tracking-[0.22em]",
+                "type-eyebrow",
                 styles.eyebrow,
               )}
             >
@@ -76,7 +76,7 @@ export function StartCallout({
           {title ? (
             <h3
               className={cn(
-                "mt-1 font-display text-xl font-semibold tracking-tight md:text-2xl",
+                "type-display-card mt-1",
                 styles.title,
               )}
             >

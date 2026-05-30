@@ -27,9 +27,9 @@ export function TableOfContents({ sections }: { sections: BlogSection[] }) {
   return (
     <nav
       aria-label="Table of contents"
-      className="section-card rounded-[1.5rem] p-5 lg:sticky lg:top-28"
+      className="section-card p-5 lg:sticky lg:top-28"
     >
-      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+      <p className="type-eyebrow text-muted">
         Contents
       </p>
       <ol className="mt-4 space-y-3">

@@ -27,11 +27,11 @@ export function Faq({
       <div className="mx-auto max-w-4xl px-6">
         <div className="text-center">
           {eyebrow ? (
-            <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
+            <p className="type-eyebrow text-muted">
               {eyebrow}
             </p>
           ) : null}
-          <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          <h2 className="mt-4 type-display-section">
             {title}
           </h2>
           {description ? (
@@ -46,7 +46,7 @@ export function Faq({
             {items.map((item) => (
               <AccordionDetails
                 key={item.question}
-                className="rounded-[1.5rem] px-6 py-5 md:px-7 md:py-6"
+                className="px-6 py-5 md:px-7 md:py-6"
                 summaryClassName="gap-6"
                 contentClassName="contents"
                 summary={

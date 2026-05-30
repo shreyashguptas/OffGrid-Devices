@@ -10,22 +10,22 @@ export function StartRegionNoticeSection() {
       <div className="mx-auto w-full max-w-3xl px-6">
         <div
           role="alert"
-          className="overflow-hidden rounded-[1.75rem] border border-red-500/30 bg-red-500/[0.06] ring-1 ring-inset ring-red-500/10"
+          className="overflow-hidden border border-border-emphasis border-l-2 border-l-ember bg-pitch-low"
         >
-          <div className="flex items-center gap-3 border-b border-red-500/20 bg-red-500/10 px-6 py-3 md:px-8">
+          <div className="flex items-center gap-3 border-b border-border-subtle bg-pitch px-6 py-3 md:px-8">
             <span
               aria-hidden="true"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-red-500/40 bg-red-500/15 text-sm font-bold text-red-200"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-ember bg-pitch-low text-sm font-bold text-ember"
             >
               !
             </span>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-red-200">
+            <p className="type-mono-label text-ember">
               {notice.eyebrow}
             </p>
           </div>
 
           <div className="space-y-5 px-6 py-7 md:px-8 md:py-8">
-            <h2 className="font-display text-2xl font-bold leading-tight tracking-tight text-foreground md:text-3xl">
+            <h2 className="type-display-card text-foreground">
               {notice.title}
             </h2>
 
@@ -43,7 +43,7 @@ export function StartRegionNoticeSection() {
                 <li key={step} className="flex items-start gap-3">
                   <span
                     aria-hidden="true"
-                    className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-red-500/30 bg-red-500/10 font-mono text-xs font-semibold text-red-200"
+                    className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border-emphasis bg-pitch font-mono text-xs font-semibold text-ember"
                   >
                     {index + 1}
                   </span>

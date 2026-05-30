@@ -8,8 +8,8 @@ export function StartPageFooter() {
       className="bg-background py-12 md:py-14"
     >
       <div className="mx-auto w-full max-w-3xl px-6">
-        <div className="rounded-[1.5rem] border border-border-subtle bg-surface px-6 py-6 md:px-8 md:py-7">
-          <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
+        <div className="border border-border-subtle bg-surface px-6 py-6 md:px-8 md:py-7">
+          <p className="type-mono-label text-muted">
             About this guide
           </p>
           <p className="mt-3 text-sm leading-relaxed text-muted-light">

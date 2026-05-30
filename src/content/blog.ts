@@ -81,7 +81,7 @@ export const blogPosts = [
     readTime: "9 min read",
     category: "Buyer's Guide",
     author: DEFAULT_AUTHOR,
-    image: "/beacon-2/hero-front.png",
+    image: "/beacon-2/hero-front.jpg",
     heroImageAlt:
       "OffGrid Beacon 2 Meshtastic LoRa radio next to a smartphone on a trail",
     relatedSlugs: ["meshtastic-vs-lorawan", "why-offgrid"],
@@ -309,7 +309,7 @@ export const blogPosts = [
     readTime: "8 min read",
     category: "Explainer",
     author: DEFAULT_AUTHOR,
-    image: "/beacon-2/hero-front.png",
+    image: "/beacon-2/hero-front.jpg",
     heroImageAlt:
       "OffGrid Beacon 2 LoRa mesh radio against a topographic map background",
     relatedSlugs: ["best-meshtastic-devices-2026", "why-offgrid"],
@@ -534,7 +534,7 @@ export const blogPosts = [
     readTime: "5 min read",
     category: "Story",
     author: DEFAULT_AUTHOR,
-    image: "/beacon-2/hero-front.png",
+    image: "/beacon-2/hero-front.jpg",
     heroImageAlt: "OffGrid Beacon 2 MagSafe LoRa mesh radio with antenna",
     sections: [
       {

@@ -30,8 +30,8 @@ export function StartWarrantySection() {
           {warranty.legal}
         </p>
 
-        <div id="returns" className="section-card scroll-mt-24 rounded-[1.5rem] p-6 md:p-8">
-          <h3 className="font-display text-xl font-semibold tracking-tight text-foreground md:text-2xl">
+        <div id="returns" className="section-card scroll-mt-24 p-6 md:p-8">
+          <h3 className="type-display-card text-foreground">
             {returns.title}
           </h3>
           <p className="mt-3 text-base leading-relaxed text-muted-light">
@@ -75,14 +75,14 @@ function CoverageList({
           bullet: "bg-accent",
         }
       : {
-          eyebrow: "text-red-300",
-          bullet: "bg-red-400",
+          eyebrow: "text-ember",
+          bullet: "bg-ember",
         };
 
   return (
-    <div className="section-card rounded-[1.5rem] p-6">
+    <div className="section-card p-6">
       <p
-        className={`text-xs font-semibold uppercase tracking-[0.22em] ${styles.eyebrow}`}
+        className={`type-mono-label ${styles.eyebrow}`}
       >
         {title}
       </p>

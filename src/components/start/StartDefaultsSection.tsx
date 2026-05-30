@@ -14,7 +14,7 @@ export function StartDefaultsSection() {
       surface="elevated"
     >
       <div className="space-y-10">
-        <div className="section-card overflow-hidden rounded-[1.5rem]">
+        <div className="section-card overflow-hidden">
           <table className="w-full text-left text-sm md:text-base">
             <caption className="sr-only">
               Default settings for the OffGrid Beacon 2
@@ -47,7 +47,7 @@ export function StartDefaultsSection() {
                   key={row.label}
                   className={cn(
                     idx > 0 && "border-t border-border-subtle",
-                    row.emphasis && "bg-red-500/[0.07]",
+                    row.emphasis && "bg-pitch-low",
                   )}
                 >
                   <th
@@ -59,7 +59,7 @@ export function StartDefaultsSection() {
                   <td
                     className={cn(
                       "px-5 py-4 align-top md:px-6",
-                      row.emphasis ? "text-red-300 font-medium" : "text-foreground/85",
+                      row.emphasis ? "text-bone font-semibold" : "text-foreground/85",
                     )}
                   >
                     {row.value}
@@ -72,7 +72,7 @@ export function StartDefaultsSection() {
                   <td
                     className={cn(
                       "hidden px-5 py-4 align-top text-sm md:table-cell md:px-6",
-                      row.emphasis ? "text-red-300 font-medium" : "text-muted",
+                      row.emphasis ? "text-bone font-semibold" : "text-muted",
                     )}
                   >
                     {row.note ?? "—"}
@@ -83,8 +83,8 @@ export function StartDefaultsSection() {
           </table>
         </div>
 
-        <div className="section-card rounded-[1.5rem] p-6 md:p-8">
-          <h3 className="font-display text-xl font-semibold tracking-tight text-foreground md:text-2xl">
+        <div className="section-card p-6 md:p-8">
+          <h3 className="type-display-card text-foreground">
             {channels.title}
           </h3>
           <p className="mt-3 text-base leading-relaxed text-muted-light">
