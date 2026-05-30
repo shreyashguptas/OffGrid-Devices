@@ -28,7 +28,7 @@ function ContentSection({ section }: { section: BlogSection }) {
       return (
         <h2
           id={getSectionId(section)}
-          className="scroll-mt-28 mt-12 font-display text-3xl font-semibold tracking-tight text-foreground first:mt-0"
+          className="scroll-mt-28 mt-12 type-display-card text-foreground first:mt-0"
         >
           {section.content}
         </h2>
@@ -37,7 +37,7 @@ function ContentSection({ section }: { section: BlogSection }) {
       return (
         <h3
           id={getSectionId(section)}
-          className="scroll-mt-28 mt-8 font-display text-2xl font-semibold tracking-tight text-foreground"
+          className="scroll-mt-28 mt-8 font-display text-2xl font-semibold tracking-[-0.02em] text-foreground"
         >
           {section.content}
         </h3>
@@ -67,7 +67,7 @@ function ContentSection({ section }: { section: BlogSection }) {
     case "image":
       return (
         <figure className="mt-8">
-          <div className="overflow-hidden rounded-[1.5rem] bg-background">
+          <div className="overflow-hidden bg-background">
             <Image
               src={section.src}
               alt={section.alt}
@@ -110,7 +110,7 @@ function ContentSection({ section }: { section: BlogSection }) {
     }
     case "code":
       return (
-        <pre className="mt-8 overflow-x-auto rounded-[1rem] bg-pitch p-5 text-sm leading-relaxed text-bone">
+        <pre className="mt-8 overflow-x-auto bg-pitch p-5 text-sm leading-relaxed text-bone">
           <code>{section.code}</code>
         </pre>
       );
@@ -270,7 +270,7 @@ export default async function BlogPostPage({
 
           <header className="mt-10">
             <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
-              <span className="rounded-full bg-accent/10 px-3 py-1 text-accent">
+              <span className="bg-accent/10 px-3 py-1 text-accent">
                 {post.category}
               </span>
               <span>{post.date}</span>
@@ -278,7 +278,7 @@ export default async function BlogPostPage({
               <span>{post.readTime}</span>
             </div>
 
-            <h1 className="mt-6 font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+            <h1 className="mt-6 type-display-hero">
               {post.title}
             </h1>
 
@@ -304,8 +304,8 @@ export default async function BlogPostPage({
 
       <section className="border-b border-border-subtle bg-surface-elevated py-16 md:py-20">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="section-stage rounded-[2.25rem] p-5 md:p-6">
-            <div className="overflow-hidden rounded-[1.75rem] bg-background">
+          <div className="section-stage p-5 md:p-6">
+            <div className="overflow-hidden bg-background">
               <Image
                 src={post.image}
                 alt={post.heroImageAlt ?? `${post.title} — OffGrid Devices`}
@@ -326,7 +326,7 @@ export default async function BlogPostPage({
             }
           >
             {hasToc ? <TableOfContents sections={post.sections} /> : null}
-            <article className="section-card rounded-[2rem] px-6 py-10 md:px-10 md:py-12">
+            <article className="section-card px-6 py-10 md:px-10 md:py-12">
               {post.sections.map((section, index) => (
                 <ContentSection
                   key={`${post.slug}-${index}`}
@@ -350,7 +350,7 @@ export default async function BlogPostPage({
                   .slice(0, 2)}
               </div>
               <div className="flex-1">
-                <p className="text-xs uppercase tracking-[0.24em] text-muted">
+                <p className="type-eyebrow text-muted">
                   Written by
                 </p>
                 <h3 className="mt-1 font-display text-xl font-semibold text-foreground">
@@ -403,7 +403,7 @@ export default async function BlogPostPage({
       {related.length > 0 ? (
         <section className="border-b border-border-subtle bg-background py-16 md:py-20">
           <div className="mx-auto max-w-5xl px-6">
-            <h2 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
+            <h2 className="type-display-section">
               Keep reading
             </h2>
             <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-light">
@@ -412,8 +412,8 @@ export default async function BlogPostPage({
             </p>
             <ul className="mt-8 grid gap-6 md:grid-cols-3">
               {related.map((r) => (
-                <li key={r.slug} className="section-card rounded-[1.5rem] p-6">
-                  <p className="text-xs uppercase tracking-[0.24em] text-muted">
+                <li key={r.slug} className="section-card p-6">
+                  <p className="type-eyebrow text-muted">
                     {r.category}
                   </p>
                   <h3 className="mt-3 font-display text-xl font-semibold leading-snug">

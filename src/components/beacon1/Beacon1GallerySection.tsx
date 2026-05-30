@@ -26,10 +26,10 @@ export function Beacon1GallerySection() {
           {beacon1Content.productGalleryCards.map((card) => (
             <article
               key={card.title}
-              className="section-card overflow-hidden rounded-[2rem]"
+              className="section-card overflow-hidden"
             >
               <div className="bg-surface-elevated p-5 md:p-8">
-                <div className="overflow-hidden rounded-[1.5rem] bg-background">
+                <div className="overflow-hidden bg-background">
                   <Image
                     src={card.image}
                     alt={card.alt}
@@ -44,7 +44,7 @@ export function Beacon1GallerySection() {
                 <p className="text-xs uppercase tracking-[0.24em] text-muted">
                   {card.kicker}
                 </p>
-                <h3 className="mt-3 font-display text-2xl font-semibold">
+                <h3 className="mt-3 type-display-card">
                   {card.title}
                 </h3>
                 <p className="mt-3 text-base leading-relaxed text-muted-light">

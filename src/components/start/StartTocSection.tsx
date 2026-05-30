@@ -8,10 +8,10 @@ export function StartTocSection() {
       className="border-b border-border-subtle bg-surface-elevated py-14 md:py-16"
     >
       <div className="mx-auto w-full max-w-3xl px-6">
-        <p className="text-xs font-medium uppercase tracking-[0.28em] text-muted">
+        <p className="type-eyebrow text-muted">
           Contents
         </p>
-        <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+        <h2 className="type-display-card mt-3 text-foreground">
           Jump to a section
         </h2>
         <nav className="mt-8">
@@ -20,7 +20,7 @@ export function StartTocSection() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="group flex h-full items-start gap-4 rounded-2xl border border-border-card bg-surface px-4 py-3 transition-colors hover:bg-fill-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="group flex h-full items-start gap-4 border border-border-card bg-surface px-4 py-3 transition-colors hover:bg-fill-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <span
                     aria-hidden="true"

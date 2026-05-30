@@ -5,10 +5,10 @@ import { StartSection } from "./StartSection";
 const KIND_STYLES = {
   warning: {
     block:
-      "border-red-500/40 bg-red-500/[0.08] ring-1 ring-inset ring-red-500/15",
-    eyebrow: "text-red-300",
-    iconWrap: "border-red-500/40 bg-red-500/15 text-red-200",
-    bullet: "bg-red-400",
+      "border-border-emphasis border-l-2 border-l-ember bg-pitch-low",
+    eyebrow: "text-ember",
+    iconWrap: "border-ember bg-pitch-low text-ember",
+    bullet: "bg-ember",
   },
   info: {
     block:
@@ -36,7 +36,7 @@ export function StartSafetySection() {
               key={section.id}
               id={section.id}
               className={cn(
-                "scroll-mt-24 rounded-[1.5rem] border p-6 md:p-8",
+                "scroll-mt-24 border p-6 md:p-8",
                 styles.block,
               )}
             >
@@ -55,13 +55,13 @@ export function StartSafetySection() {
                 <div>
                   <p
                     className={cn(
-                      "text-xs font-semibold uppercase tracking-[0.22em]",
+                      "type-mono-label",
                       styles.eyebrow,
                     )}
                   >
                     {section.kind === "warning" ? "Safety" : "Compliance"}
                   </p>
-                  <h3 className="mt-1 font-display text-xl font-semibold tracking-tight text-foreground md:text-2xl">
+                  <h3 className="type-display-card mt-1 text-foreground">
                     {section.title}
                   </h3>
                 </div>
@@ -74,7 +74,7 @@ export function StartSafetySection() {
               ) : null}
 
               {"rangeRows" in section && section.rangeRows ? (
-                <div className="mt-5 overflow-hidden rounded-2xl border border-border-card bg-surface">
+                <div className="mt-5 overflow-hidden border border-border-card bg-surface">
                   <table className="w-full text-left text-sm md:text-base">
                     <caption className="sr-only">Operating ranges</caption>
                     <tbody>

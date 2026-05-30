@@ -162,8 +162,8 @@ export default async function Beacon2Product() {
             // the previous array listed `hero-front.png` twice.
             images: [
               beacon2Content.heroImage.src,
-              "/beacon-2/feature-antenna.png",
-              "/beacon-2/whats-in-the-box.png",
+              "/beacon-2/feature-antenna.jpg",
+              "/beacon-2/whats-in-the-box.jpg",
             ],
             // aggregateRating + reviews removed until Beacon-2-specific
             // testimonials exist. See homepage Product schema for rationale.
@@ -296,7 +296,7 @@ export default async function Beacon2Product() {
             {beacon2Content.specs.map((spec) => (
               <div
                 key={spec.label}
-                className="grid grid-cols-[120px_1fr] items-baseline gap-4 border-b border-bark/30 pb-4"
+                className="grid grid-cols-1 gap-1 border-b border-bark/30 pb-4 sm:grid-cols-[120px_1fr] sm:items-baseline sm:gap-4"
               >
                 <dt className="type-mono-label text-sand/65">{spec.label}</dt>
                 <dd className="font-editorial text-base leading-snug text-bone">

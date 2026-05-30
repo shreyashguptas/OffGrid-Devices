@@ -12,7 +12,7 @@ export function StartCareSection() {
       surface="default"
     >
       <div className="space-y-8">
-        <div className="section-card overflow-hidden rounded-[1.5rem]">
+        <div className="section-card overflow-hidden">
           <table className="w-full text-left text-sm md:text-base">
             <caption className="sr-only">Operating temperature ranges</caption>
             <thead>

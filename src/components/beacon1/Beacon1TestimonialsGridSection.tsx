@@ -26,14 +26,14 @@ export function Beacon1TestimonialsGridSection() {
           {beacon1Content.testimonials.map((testimonial) => (
             <article
               key={testimonial.name}
-              className="section-card flex flex-col rounded-[2rem] p-6"
+              className="section-card flex flex-col p-6"
             >
               <RatingStars size={14} className="mb-4 flex items-center gap-1 text-accent" />
               <p className="mb-6 flex-1 leading-relaxed text-foreground/90">
                 &ldquo;{testimonial.review}&rdquo;
               </p>
               {testimonial.image ? (
-                <div className="mb-4 overflow-hidden rounded-[1.25rem] border border-border-subtle">
+                <div className="mb-4 overflow-hidden border border-border-subtle">
                   <Image
                     src={testimonial.image}
                     alt={`Review photo from ${testimonial.name}`}

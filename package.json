@@ -9,7 +9,7 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev": "NODE_OPTIONS='--disable-warning=DEP0205' next dev",
+    "dev": "NODE_OPTIONS='--disable-warning=DEP0205 --max-old-space-size=8192' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",

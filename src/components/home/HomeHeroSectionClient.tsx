@@ -98,7 +98,7 @@ export function HomeHeroSectionClient({ buyLabel }: { buyLabel: string }) {
             initial="hidden"
             animate="visible"
             variants={cornerDown(0.08)}
-            className="type-mono-label-sm inline-flex w-fit max-w-full items-center gap-x-2.5 whitespace-nowrap border border-sand/25 px-3 py-2 text-muted sm:px-3.5"
+            className="type-mono-label-sm inline-flex w-fit max-w-full items-center gap-x-2.5 border border-sand/25 px-3 py-2 text-muted sm:px-3.5"
           >
             <span>EST. 2026 · DESIGNED + ASSEMBLED IN USA</span>
             <UsFlag />

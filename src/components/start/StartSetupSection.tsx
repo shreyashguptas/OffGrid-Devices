@@ -48,10 +48,10 @@ function AppLinks({ ios, android }: { ios: string; android: string }) {
         href={ios}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-between gap-4 rounded-2xl border border-border-card bg-surface px-5 py-4 transition-colors hover:bg-fill-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="flex items-center justify-between gap-4 border border-border-card bg-surface px-5 py-4 transition-colors hover:bg-fill-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         <div>
-          <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
+          <p className="type-mono-label-sm text-muted">
             iOS
           </p>
           <p className="mt-1 font-display text-base font-semibold text-foreground">
@@ -77,10 +77,10 @@ function AppLinks({ ios, android }: { ios: string; android: string }) {
         href={android}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-between gap-4 rounded-2xl border border-border-card bg-surface px-5 py-4 transition-colors hover:bg-fill-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="flex items-center justify-between gap-4 border border-border-card bg-surface px-5 py-4 transition-colors hover:bg-fill-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         <div>
-          <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
+          <p className="type-mono-label-sm text-muted">
             Android
           </p>
           <p className="mt-1 font-display text-base font-semibold text-foreground">

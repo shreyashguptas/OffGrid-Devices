@@ -49,7 +49,11 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
 
   return (
     <div ref={container} className="relative h-[300vh]">
-      <div className="sticky top-0 h-screen overflow-hidden">
+      {/* `h-dvh` (dynamic viewport height) keeps the pinned stage matched to the
+          actual visible viewport on mobile, where the collapsing browser URL bar
+          makes `100vh` overshoot and shift the centered frames. Scroll length is
+          unchanged (outer stays `300vh`), so the zoom timing is identical. */}
+      <div className="sticky top-0 h-dvh overflow-hidden">
         {slots.map((image, i) => (
           <ZoomLayer
             key={i}

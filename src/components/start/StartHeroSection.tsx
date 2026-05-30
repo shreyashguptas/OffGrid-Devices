@@ -23,10 +23,10 @@ export function StartHeroSection() {
           </div>
 
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.28em] text-muted">
+            <p className="type-eyebrow text-muted">
               {startContent.fullProductName}
             </p>
-            <h1 className="mt-3 font-display text-4xl font-bold leading-[1.05] tracking-tight text-foreground md:text-6xl">
+            <h1 className="type-display-hero mt-3 text-foreground">
               {hero.title}
             </h1>
             <p className="mt-5 text-base leading-relaxed text-muted-light md:text-lg">
@@ -37,7 +37,7 @@ export function StartHeroSection() {
           <div className="flex flex-wrap items-center gap-3">
             <a
               href={hero.primaryCta.href}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
+              className="inline-flex items-center justify-center gap-2 bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors hover:bg-bone"
             >
               {hero.primaryCta.label}
               <svg
@@ -56,7 +56,7 @@ export function StartHeroSection() {
             </a>
             <a
               href={hero.secondaryCta.href}
-              className="inline-flex items-center justify-center rounded-full border border-border-card bg-surface px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-fill-hover"
+              className="inline-flex items-center justify-center border border-border-card px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-bone hover:border-border-emphasis"
             >
               {hero.secondaryCta.label}
             </a>

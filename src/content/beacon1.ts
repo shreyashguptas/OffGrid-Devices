@@ -63,7 +63,7 @@ export const beacon1Content = {
     buyLabel: "Buy Beacon 1",
     loadingLabel: "Opening Checkout...",
     heroImage: {
-      src: "/products/beacon1-hero-v1.png",
+      src: "/products/beacon1-hero-v1.jpg",
       alt: "OffGrid Beacon 1 MagSafe LoRa radio hero image",
     },
     productImage: {

@@ -40,7 +40,7 @@ export function Beacon1CallToAction({
       primaryAction={
         <Link
           href="/products/beacon-2"
-          className="inline-flex min-h-[56px] items-center justify-center gap-3 bg-ember px-6 py-4 font-display text-[13px] font-bold uppercase tracking-[0.18em] text-pitch transition-colors duration-300 hover:bg-bone sm:px-10 sm:py-5"
+          className="inline-flex min-h-[56px] items-center justify-center gap-3 bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone"
         >
           Shop OffGrid Beacon 2 →
         </Link>

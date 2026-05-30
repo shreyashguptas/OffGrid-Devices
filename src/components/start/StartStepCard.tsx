@@ -12,7 +12,7 @@ export function StartStepCard({ step, children }: StartStepCardProps) {
   return (
     <article
       id={stepId}
-      className="section-card scroll-mt-24 rounded-[1.75rem] p-6 md:p-8"
+      className="section-card scroll-mt-24 p-6 md:p-8"
     >
       <header className="flex items-baseline gap-4">
         <span
@@ -22,11 +22,11 @@ export function StartStepCard({ step, children }: StartStepCardProps) {
           {step.number}
         </span>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+          <p className="type-mono-label text-muted">
             <span className="sr-only">Step </span>
             Step {step.number}
           </p>
-          <h3 className="mt-1 font-display text-2xl font-semibold tracking-tight text-foreground md:text-[1.65rem]">
+          <h3 className="type-display-card mt-1 text-foreground">
             {step.title}
           </h3>
         </div>

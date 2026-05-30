@@ -15,14 +15,14 @@ export function StartContactSection() {
       surface="elevated"
     >
       <div className="space-y-8">
-        <div className="section-card rounded-[1.5rem] p-6 md:p-8">
-          <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
+        <div className="section-card p-6 md:p-8">
+          <p className="type-eyebrow text-muted">
             Direct support
           </p>
           <a
             href={`mailto:${contact.supportEmail}`}
             onClick={() => trackContactTap("email")}
-            className="mt-3 block break-all font-display text-2xl font-semibold tracking-tight text-foreground transition-colors hover:text-accent-dark md:text-3xl"
+            className="type-display-card mt-3 block break-all text-foreground transition-colors hover:text-accent-dark"
           >
             {contact.supportEmail}
           </a>
@@ -32,8 +32,8 @@ export function StartContactSection() {
           <p className="mt-3 text-sm text-muted">{contact.responseTime}</p>
         </div>
 
-        <div className="section-card rounded-[1.5rem] p-6 md:p-8">
-          <h3 className="font-display text-xl font-semibold tracking-tight text-foreground md:text-2xl">
+        <div className="section-card p-6 md:p-8">
+          <h3 className="type-display-card text-foreground">
             {community.title}
           </h3>
           <p className="mt-3 text-base leading-relaxed text-muted-light">

@@ -20,7 +20,7 @@ export function Beacon1SpecsSection() {
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {beacon1Content.specs.map((spec) => (
-                <div key={spec.label} className="section-card rounded-[1.5rem] p-5">
+                <div key={spec.label} className="section-card p-5">
                   <p className="text-sm text-muted">{spec.label}</p>
                   <p className="mt-2 font-display text-xl font-semibold text-foreground">
                     {spec.value}
@@ -31,21 +31,21 @@ export function Beacon1SpecsSection() {
           </div>
 
           <div className="space-y-6">
-            <div className="section-stage rounded-[2rem] p-6 md:p-8">
+            <div className="section-stage p-6 md:p-8">
               <Image
                 src={beacon1Content.summary.productImage.src}
                 alt="OffGrid Beacon 1 hardware specifications"
                 width={900}
                 height={1100}
-                className="mx-auto rounded-[1.75rem]"
+                className="mx-auto"
               />
             </div>
 
-            <div className="section-card rounded-[2rem] p-6 md:p-8">
+            <div className="section-card p-6 md:p-8">
               <p className="text-xs uppercase tracking-[0.24em] text-muted">
                 Firmware support
               </p>
-              <h3 className="mt-3 font-display text-2xl font-semibold">
+              <h3 className="mt-3 type-display-card">
                 {beacon1Content.productPage.specs.firmwareTitle}
               </h3>
               <p className="mt-3 text-base leading-relaxed text-muted-light">

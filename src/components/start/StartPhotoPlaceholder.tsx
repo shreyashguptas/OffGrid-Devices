@@ -20,14 +20,14 @@ export function StartPhotoPlaceholder({
   return (
     <figure
       className={cn(
-        "section-stage rounded-[1.75rem] p-3 md:p-4",
+        "section-stage p-3 md:p-4",
         "print:hidden",
         className,
       )}
     >
       <div
         className={cn(
-          "relative flex w-full items-center justify-center overflow-hidden rounded-[1.25rem] bg-surface-elevated",
+          "relative flex w-full items-center justify-center overflow-hidden bg-surface-elevated",
           ASPECT_CLASS[aspect],
         )}
         aria-hidden="true"
@@ -54,7 +54,7 @@ export function StartPhotoPlaceholder({
             strokeWidth="1"
           />
         </svg>
-        <span className="relative inline-flex items-center gap-2 rounded-full border border-border-card bg-surface px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-muted">
+        <span className="type-mono-label-sm relative inline-flex items-center gap-2 border border-border-card bg-surface px-3 py-1 text-muted">
           Photo
         </span>
       </div>

@@ -17,7 +17,7 @@ export function StartFirmwareSection() {
           {firmware.checkVersion}
         </p>
 
-        <div className="section-card rounded-[1.5rem] p-6 md:p-8">
+        <div className="section-card p-6 md:p-8">
           <h3 className="font-display text-lg font-semibold tracking-tight text-foreground md:text-xl">
             How to update
           </h3>

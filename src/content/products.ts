@@ -20,14 +20,14 @@ export const siteProducts = [
     name: "Beacon 2",
     subtitle: "OffGrid · LoRa mesh radio",
     href: "/products/beacon-2",
-    image: "/beacon-2/hero-front.png",
+    image: "/beacon-2/hero-front.jpg",
     badge: null,
   },
   {
     name: "Beacon 1",
     subtitle: "OffGrid · LoRa mesh radio",
     href: "/products/beacon-1",
-    image: "/products/beacon1-hero-v1.png",
+    image: "/products/beacon1-hero-v1.jpg",
     badge: "Sold out",
   },
 ] satisfies SiteProduct[];
@@ -59,14 +59,14 @@ export const beacon2Content = {
     buyLabel: "Buy Beacon 2",
     loadingLabel: "Opening Checkout...",
     heroImage: {
-      src: "/beacon-2/hero-front.png",
+      src: "/beacon-2/hero-front.jpg",
       alt: "OffGrid Beacon 2 MagSafe LoRa mesh radio",
     },
   },
   description:
     "Pre-flashed Meshtastic mesh radio with a 3000 mAh battery, replaceable SMA antenna, and N48H magnets that grip your phone and hold.",
   heroImage: {
-    src: "/beacon-2/hero-front.png",
+    src: "/beacon-2/hero-front.jpg",
     alt: "OffGrid Beacon 2 on a stone plinth with antenna up",
   },
   home: {
@@ -99,7 +99,7 @@ export const beacon2Content = {
         title: "Magnets that hold on.",
         body: "N48H neodymium magnets grip the back of your phone — and stay there. The slipping problem from the first Beacon is solved.",
         meta: "MagSafe · N48H ring",
-        image: "/beacon-2/feature-magnets.png",
+        image: "/beacon-2/feature-magnets.jpg",
         alt: "Beacon 2 back showing the magnet ring recesses",
       },
       {
@@ -107,7 +107,7 @@ export const beacon2Content = {
         title: "Swap antennas. Safely.",
         body: "External SMA mount with a real on/off switch. Pack the stock whip for the trail; screw on a higher-gain antenna at camp.",
         meta: "SMA · 902–928 MHz",
-        image: "/beacon-2/feature-antenna.png",
+        image: "/beacon-2/feature-antenna.jpg",
         alt: "Beacon 2 with replaceable SMA antenna",
       },
       {
@@ -115,7 +115,7 @@ export const beacon2Content = {
         title: "3000 mAh. Weeks on the mesh.",
         body: "A larger cell paired with the same low-power Meshtastic stack — multi-week runtime on a single USB-C charge, ready before you head out.",
         meta: "USB-C · adventure-ready",
-        image: "/beacon-2/feature-battery.png",
+        image: "/beacon-2/feature-battery.jpg",
         alt: "Beacon 2 lying flat in the belt-clip cradle",
       },
     ] satisfies Beacon2FieldNote[],
@@ -157,7 +157,7 @@ export const beacon2Content = {
       description:
         "N48H neodymium magnet ring so Beacon 2 snaps to your phone, your pack, and any steel surface without sliding.",
       image: {
-        src: "/beacon-2/feature-magnets.png",
+        src: "/beacon-2/feature-magnets.jpg",
         alt: "Beacon 2 back showing magnet recesses",
       },
     },
@@ -167,7 +167,7 @@ export const beacon2Content = {
       description:
         "Standard SMA connector with a guarded mount and on/off switch. Pack the stock whip for hiking, screw on a higher-gain antenna at camp.",
       image: {
-        src: "/beacon-2/feature-antenna.png",
+        src: "/beacon-2/feature-antenna.jpg",
         alt: "Beacon 2 with replaceable SMA antenna",
       },
     },
@@ -177,7 +177,7 @@ export const beacon2Content = {
       description:
         "A larger cell paired with the same low-power Meshtastic stack — multi-week runtime on a single USB-C charge.",
       image: {
-        src: "/beacon-2/feature-battery.png",
+        src: "/beacon-2/feature-battery.jpg",
         alt: "Beacon 2 lying flat in belt-clip cradle",
       },
     },
@@ -189,15 +189,15 @@ export const beacon2Content = {
       "The box doubles as a kickstand display. Pop out the stand, slot the unit back in, and Beacon 2 keeps catching mesh signals while it sits on your desk.",
     images: [
       {
-        src: "/beacon-2/packaging-display.png",
+        src: "/beacon-2/packaging-display.jpg",
         alt: "Beacon 2 inside its display-stand packaging",
       },
       {
-        src: "/beacon-2/packaging-stand.png",
+        src: "/beacon-2/packaging-stand.jpg",
         alt: "Beacon 2 packaging shown with the pop-out kickstand engaged",
       },
       {
-        src: "/beacon-2/packaging-detail.png",
+        src: "/beacon-2/packaging-detail.jpg",
         alt: "Macro of the embossed BEACON 2 by OffGrid logo on the packaging",
       },
     ],
@@ -208,7 +208,7 @@ export const beacon2Content = {
     description:
       "Beacon 2 with antenna, belt clip, USB-C charging cable, emergency whistle, and the display-stand packaging it all ships in.",
     image: {
-      src: "/beacon-2/whats-in-the-box.png",
+      src: "/beacon-2/whats-in-the-box.jpg",
       alt: "Flat lay of Beacon 2, belt clip, charging cable, whistle, and display packaging",
     },
   },

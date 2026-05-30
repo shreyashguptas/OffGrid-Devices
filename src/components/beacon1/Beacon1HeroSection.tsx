@@ -22,7 +22,7 @@ export function Beacon1HeroSection() {
               Retired · Replaced by Beacon 2
             </div>
 
-            <h1 className="mt-6 break-words font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:mt-8 md:text-6xl lg:text-7xl">
+            <h1 className="mt-6 break-words type-display-hero md:mt-8">
               {beacon1Content.summary.brandedName}
             </h1>
 
@@ -43,13 +43,13 @@ export function Beacon1HeroSection() {
             <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:mt-10 lg:justify-start">
               <Link
                 href="/products/beacon-2"
-                className="inline-flex min-h-[52px] items-center justify-center bg-accent px-7 py-3.5 font-semibold text-on-accent transition-all duration-300 hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20 sm:px-8 sm:py-4"
+                className="inline-flex min-h-[52px] items-center justify-center bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors hover:bg-bone"
               >
                 Shop OffGrid Beacon 2 →
               </Link>
               <Link
                 href="#features"
-                className="inline-flex min-h-[52px] items-center justify-center border border-border-emphasis bg-surface px-7 py-3.5 font-semibold text-foreground transition-colors duration-300 hover:border-border-emphasis-hover hover:bg-surface-elevated sm:px-8 sm:py-4"
+                className="inline-flex min-h-[52px] items-center justify-center border border-border-card px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-bone transition-colors hover:border-border-emphasis"
               >
                 Explore Beacon 1
               </Link>
@@ -59,7 +59,7 @@ export function Beacon1HeroSection() {
               {beacon1Content.heroSignals.map((signal) => (
                 <div
                   key={signal.label}
-                  className="rounded-[1.5rem] border border-border-card bg-surface-elevated px-4 py-5 text-left"
+                  className="border border-border-card bg-surface-elevated px-4 py-5 text-left"
                 >
                   <p className="text-xs uppercase tracking-[0.24em] text-muted">
                     {signal.label}
@@ -72,8 +72,8 @@ export function Beacon1HeroSection() {
             </div>
           </div>
 
-          <div className="section-stage rounded-[2.5rem] p-5 md:p-8">
-            <div className="overflow-hidden rounded-[2rem] bg-white p-4 md:p-8">
+          <div className="section-stage p-5 md:p-8">
+            <div className="overflow-hidden bg-white p-4 md:p-8">
               <Image
                 src={beacon1Content.summary.productImage.src}
                 alt={beacon1Content.summary.productImage.alt}
