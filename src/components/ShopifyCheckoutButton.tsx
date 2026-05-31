@@ -174,13 +174,21 @@ export function ShopifyCheckoutButton({
       !product.variant ||
       !product.variant.availableForSale);
   const isDisabled = isLoading || isSoldOut || isUnavailable || hasCheckoutError;
-  const label = isLoading
-    ? loadingLabel
-    : isSoldOut
-      ? soldOutLabel
-      : isUnavailable || hasCheckoutError
-        ? unavailableLabel
-        : defaultLabel;
+
+  function resolveLabel() {
+    if (isLoading) {
+      return loadingLabel;
+    }
+    if (isSoldOut) {
+      return soldOutLabel;
+    }
+    if (isUnavailable || hasCheckoutError) {
+      return unavailableLabel;
+    }
+    return defaultLabel;
+  }
+
+  const label = resolveLabel();
 
   async function handleClick() {
     if (isDisabled) {

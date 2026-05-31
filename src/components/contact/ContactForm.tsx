@@ -93,6 +93,12 @@ export function ContactForm() {
     setStatus("submitting");
     setErrorMessage("");
 
+    function fail(message: string) {
+      setStatus("error");
+      setErrorMessage(message);
+      resetTurnstile();
+    }
+
     try {
       const distinctId = getPostHogDistinctId();
       const res = await fetch("/api/contact", {
@@ -116,13 +122,9 @@ export function ContactForm() {
       }
 
       const data = (await res.json().catch(() => ({}))) as { error?: string };
-      setStatus("error");
-      setErrorMessage(data.error || COPY.errorBody);
-      resetTurnstile();
+      fail(data.error || COPY.errorBody);
     } catch {
-      setStatus("error");
-      setErrorMessage(COPY.errorBody);
-      resetTurnstile();
+      fail(COPY.errorBody);
     }
   }
 

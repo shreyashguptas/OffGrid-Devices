@@ -42,20 +42,23 @@ export async function POST(request?: Request) {
     request?.headers.get(POSTHOG_HEADER) ?? ANONYMOUS_DISTINCT_ID;
   const posthog = getPostHogClient();
 
+  async function captureCheckoutEvent(
+    event: string,
+    extraProperties: Record<string, unknown> = {},
+  ) {
+    if (!posthog) return;
+    posthog.capture({
+      distinctId,
+      event,
+      properties: { product: "beacon-2", source: "api", ...extraProperties },
+    });
+    await posthog.shutdown();
+  }
+
   try {
     const checkoutUrl = await createBeacon2CheckoutUrl();
 
-    if (posthog) {
-      posthog.capture({
-        distinctId,
-        event: "shopify_checkout_created",
-        properties: {
-          product: "beacon-2",
-          source: "api",
-        },
-      });
-      await posthog.shutdown();
-    }
+    await captureCheckoutEvent("shopify_checkout_created");
 
     return NextResponse.json(
       { checkoutUrl, source: "shopify" },
@@ -64,18 +67,9 @@ export async function POST(request?: Request) {
   } catch (error) {
     console.error("Failed to create Shopify checkout.", error);
 
-    if (posthog) {
-      posthog.capture({
-        distinctId,
-        event: "shopify_checkout_create_failed",
-        properties: {
-          product: "beacon-2",
-          source: "api",
-          reason: error instanceof Error ? error.message : "unknown",
-        },
-      });
-      await posthog.shutdown();
-    }
+    await captureCheckoutEvent("shopify_checkout_create_failed", {
+      reason: error instanceof Error ? error.message : "unknown",
+    });
 
     return NextResponse.json(
       {

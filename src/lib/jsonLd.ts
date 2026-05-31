@@ -367,15 +367,21 @@ function readTimeToDuration(readTime: string): string | undefined {
   return `PT${match[1]}M`;
 }
 
+function resolveArticleImage(post: BlogPost): string {
+  if (post.ogImage) {
+    return absoluteUrl(post.ogImage);
+  }
+  if (post.image.startsWith("http")) {
+    return post.image;
+  }
+  return absoluteUrl(post.image);
+}
+
 export function articleJsonLd(post: BlogPost) {
   const published = post.publishedAt ?? post.date;
   const modified = post.updatedAt ?? published;
   const url = absoluteUrl(`/blog/${post.slug}`);
-  const image = post.ogImage
-    ? absoluteUrl(post.ogImage)
-    : post.image.startsWith("http")
-      ? post.image
-      : absoluteUrl(post.image);
+  const image = resolveArticleImage(post);
 
   return {
     "@context": "https://schema.org",

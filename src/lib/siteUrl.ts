@@ -13,10 +13,8 @@ function normalizeUrl(raw: string) {
   const hasProtocol = /^[a-zA-Z][a-zA-Z\d+\-.]*:\/\//.test(raw);
   const withProtocol = hasProtocol ? raw : `https://${raw}`;
   try {
-    const url = new URL(withProtocol);
-    // Strip trailing slash from origin form for consistent concatenation.
-    const origin = url.origin;
-    return origin;
+    // Origin form has no trailing slash, for consistent concatenation.
+    return new URL(withProtocol).origin;
   } catch {
     return DEFAULT_SITE_URL;
   }

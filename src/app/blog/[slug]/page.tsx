@@ -22,6 +22,13 @@ import {
   jsonLdScriptProps,
 } from "@/lib/jsonLd";
 
+function getSocialLinkLabel(href: string): string {
+  if (href.includes("x.com")) return "X / Twitter →";
+  if (href.includes("github.com")) return "GitHub →";
+  if (href.includes("youtube.com")) return "YouTube →";
+  return "Profile →";
+}
+
 function ContentSection({ section }: { section: BlogSection }) {
   switch (section.type) {
     case "heading":
@@ -96,12 +103,17 @@ function ContentSection({ section }: { section: BlogSection }) {
         </blockquote>
       );
     case "callout": {
-      const toneClass =
-        section.tone === "warn"
-          ? "border-ember/50 bg-ember/10"
-          : section.tone === "tip"
-            ? "border-accent/50 bg-accent/10"
-            : "border-border-card bg-background";
+      let toneClass: string;
+      switch (section.tone) {
+        case "warn":
+          toneClass = "border-ember/50 bg-ember/10";
+          break;
+        case "tip":
+          toneClass = "border-accent/50 bg-accent/10";
+          break;
+        default:
+          toneClass = "border-border-card bg-background";
+      }
       return (
         <aside className={`mt-8 border p-5 text-base leading-relaxed ${toneClass}`}>
           {section.content}
@@ -365,26 +377,17 @@ export default async function BlogPostPage({
                   <Link href="/about" className="hover:text-accent">
                     About OffGrid →
                   </Link>
-                  {post.author.sameAs?.map((href) => {
-                    const label = href.includes("x.com")
-                      ? "X / Twitter →"
-                      : href.includes("github.com")
-                        ? "GitHub →"
-                        : href.includes("youtube.com")
-                          ? "YouTube →"
-                          : "Profile →";
-                    return (
-                      <a
-                        key={href}
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-accent"
-                      >
-                        {label}
-                      </a>
-                    );
-                  })}
+                  {post.author.sameAs?.map((href) => (
+                    <a
+                      key={href}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-accent"
+                    >
+                      {getSocialLinkLabel(href)}
+                    </a>
+                  ))}
                 </p>
               </div>
             </div>

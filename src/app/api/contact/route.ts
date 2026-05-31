@@ -82,18 +82,15 @@ async function hashIp(ip: string | undefined): Promise<string | undefined> {
   const salt = process.env.CONTACT_IP_SALT;
   if (!salt) return undefined;
   try {
+    const encoder = new TextEncoder();
     const key = await crypto.subtle.importKey(
       "raw",
-      new TextEncoder().encode(salt),
+      encoder.encode(salt),
       { name: "HMAC", hash: "SHA-256" },
       false,
       ["sign"],
     );
-    const digest = await crypto.subtle.sign(
-      "HMAC",
-      key,
-      new TextEncoder().encode(ip),
-    );
+    const digest = await crypto.subtle.sign("HMAC", key, encoder.encode(ip));
     return Array.from(new Uint8Array(digest))
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("")

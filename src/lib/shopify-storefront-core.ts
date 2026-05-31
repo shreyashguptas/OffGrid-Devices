@@ -130,9 +130,7 @@ async function shopifyFetch<T>(
   const configuredTokens = [privateToken, publicToken].filter(
     (token): token is string => Boolean(token),
   );
-  const attemptedTokens = configuredTokens.filter(
-    (token, index) => index === configuredTokens.indexOf(token),
-  );
+  const attemptedTokens = [...new Set(configuredTokens)];
 
   let lastError: Error | null = null;
   const shopifyHost = getShopifyHost(domain);
