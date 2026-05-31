@@ -117,10 +117,6 @@ export function HomeHeroSectionClient({ buyLabel }: { buyLabel: string }) {
             className="relative mx-auto aspect-square w-full min-w-0 max-w-[min(95vw,1000px)]"
             aria-label="OffGrid Beacon 2 mesh radio — drag or hover to rotate"
           >
-            <div
-              aria-hidden
-              className="ember-radial-glow pointer-events-none absolute inset-[10%]"
-            />
             <Beacon3DViewer className="h-full w-full" />
           </div>
         </motion.div>
