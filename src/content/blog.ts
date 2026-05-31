@@ -15,7 +15,7 @@ export type BlogSection =
       rows: string[][];
     };
 
-export type BlogAuthor = {
+type BlogAuthor = {
   name: string;
   url?: string;
   sameAs?: string[];
@@ -527,10 +527,8 @@ export const blogPosts = [
       "OffGrid builds mesh radios for the moments when the towers aren't there. Here's how we started, what we ship today, and where we're going.",
     date: "May 2026",
     publishedAt: "2026-05-18",
-    // Corrected from "7 min read": the post is ~1,100 words. At a normal
-    // 220 wpm pace this reads in ~5 minutes; the previous PT7M was
-    // implausible (~157 wpm) and Google's article reader-time heuristics
-    // flag implausible values.
+    // ~1,100 words ≈ 5 min at a normal 220 wpm pace. Keep this value
+    // plausible: Google's reader-time heuristics flag implausible wpm.
     readTime: "5 min read",
     category: "Story",
     author: DEFAULT_AUTHOR,

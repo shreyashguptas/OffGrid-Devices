@@ -13,8 +13,6 @@ export const INQUIRY_TYPES = [
   "Other",
 ] as const;
 
-export type InquiryType = (typeof INQUIRY_TYPES)[number];
-
 /** Max field lengths — enforced on the client (maxLength) and the server. */
 export const CONTACT_LIMITS = {
   name: 100,

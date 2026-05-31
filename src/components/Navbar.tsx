@@ -45,7 +45,6 @@ function NavbarContent() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Cleanup timeouts
   useEffect(() => {
     return () => {
       if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current);
@@ -130,9 +129,7 @@ function NavbarContent() {
           <BeaconWordmark size={20} />
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-9">
-          {/* Products Dropdown */}
           <div
             className="relative"
             onMouseEnter={handleMouseEnter}
@@ -187,7 +184,6 @@ function NavbarContent() {
                         href={product.href}
                         className="flex items-center gap-4 p-3 hover:bg-fill-glass-elevated transition-all duration-200 group"
                       >
-                        {/* Product thumbnail */}
                         <div className="w-12 h-12 overflow-hidden shrink-0 bg-bark-soft border border-border-card">
                           {product.image ? (
                             <Image
@@ -204,7 +200,6 @@ function NavbarContent() {
                           )}
                         </div>
 
-                        {/* Product info */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="font-display text-[13px] font-bold uppercase tracking-[0.04em] text-bone">
@@ -221,7 +216,6 @@ function NavbarContent() {
                           </p>
                         </div>
 
-                        {/* Arrow */}
                         <svg
                           width="14"
                           height="14"
@@ -260,7 +254,6 @@ function NavbarContent() {
           />
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden h-11 w-11 flex items-center justify-center -mr-2"
@@ -286,7 +279,6 @@ function NavbarContent() {
         </button>
       </nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -297,7 +289,6 @@ function NavbarContent() {
             className="md:hidden glass-strong mt-2 mx-4 overflow-hidden"
           >
             <div className="p-6 flex flex-col gap-4">
-              {/* Products Expandable */}
               <button
                 type="button"
                 onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}

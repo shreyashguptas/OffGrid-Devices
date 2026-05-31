@@ -43,7 +43,6 @@ export default function ContactPage() {
       />
       <script {...jsonLdScriptProps(contactPageJsonLd())} />
 
-      {/* Hero */}
       <section className="border-b border-bark/30 bg-pitch pt-28 pb-16 md:pt-32 md:pb-20">
         <div className="mx-auto max-w-4xl px-6">
           <p className="type-mono-label text-ember">{hero.eyebrow}</p>
@@ -54,7 +53,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Form + direct contact */}
       <section className="border-b border-bark/30 bg-pitch-deep py-16 md:py-20">
         <div className="mx-auto grid max-w-5xl gap-12 px-6 lg:grid-cols-[1.6fr_1fr]">
           <div>

@@ -62,7 +62,6 @@ export default function AboutPage() {
         )}
       />
 
-      {/* Hero */}
       <section className="border-b border-bark/30 bg-pitch pt-28 pb-16 md:pt-32 md:pb-20">
         <div className="mx-auto max-w-4xl px-6">
           <p className="type-mono-label text-ember">ABOUT · OFFGRID DEVICES</p>
@@ -99,7 +98,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Founder */}
       <section className="border-b border-bark/30 bg-pitch py-20 md:py-28">
         <div className="mx-auto max-w-4xl px-6">
           <p className="type-mono-label text-ember">FOUNDER</p>
@@ -157,7 +155,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission */}
       <section className="border-b border-bark/30 bg-pitch-deep py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-6">
           <p className="type-mono-label text-ember">MISSION</p>
@@ -182,7 +179,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="border-b border-bark/30 bg-pitch py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <p className="type-mono-label text-ember">READY WHEN YOU ARE</p>

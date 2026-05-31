@@ -60,7 +60,7 @@ export function BfCacheShell({ children }: BfCacheShellProps) {
           y = Number.parseFloat(stored);
         }
       } catch {
-        // ignore
+        // ignore quota / private mode
       }
     }
 

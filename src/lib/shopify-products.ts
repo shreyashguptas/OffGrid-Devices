@@ -7,7 +7,7 @@
 //
 // The store domain and tokens still come from env (those legitimately vary
 // per environment); only the product slug lives in code.
-export const SHOPIFY_PRODUCT_HANDLES = {
+const SHOPIFY_PRODUCT_HANDLES = {
   "beacon-1": "link-1",
   "beacon-2": "beacon-2-by-offgrid-magsafe-compatible-mesh-communicator",
 } as const;

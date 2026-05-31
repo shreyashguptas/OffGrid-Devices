@@ -158,8 +158,7 @@ export default async function Beacon2Product() {
             mpn: "OGD-BCN-2-US",
             category: "Radios > LoRa Mesh Radios",
             url: "/products/beacon-2",
-            // Three distinct images for Google Shopping image carousels —
-            // the previous array listed `hero-front.png` twice.
+            // Three distinct images for Google Shopping image carousels.
             images: [
               beacon2Content.heroImage.src,
               "/beacon-2/feature-antenna.jpg",

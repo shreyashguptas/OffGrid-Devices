@@ -274,7 +274,7 @@ async function createCheckoutUrlForVariant(
   return url.toString();
 }
 
-export async function getBeacon1Product(): Promise<ShopifyStorefrontProduct | null> {
+async function getBeacon1Product(): Promise<ShopifyStorefrontProduct | null> {
   if (!getShopifyEnv().isConfigured) {
     return null;
   }

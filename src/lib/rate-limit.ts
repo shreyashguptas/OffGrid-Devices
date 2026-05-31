@@ -82,7 +82,7 @@ export function clientIp(request: Request | undefined): string | undefined {
   );
 }
 
-export function getRateLimitKey(request: Request | undefined, scope: string) {
+function getRateLimitKey(request: Request | undefined, scope: string) {
   return `${scope}:${clientIp(request) ?? "anonymous"}`;
 }
 
@@ -136,7 +136,7 @@ export async function enforceRateLimit(
   return checkRateLimit({ key, limit, windowMs: period * 1000 });
 }
 
-export function checkRateLimit({
+function checkRateLimit({
   key,
   limit,
   windowMs,

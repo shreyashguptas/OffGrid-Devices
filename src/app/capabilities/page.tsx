@@ -55,7 +55,6 @@ export default function CapabilitiesPage() {
       />
       <script {...jsonLdScriptProps(manufacturingServiceJsonLd())} />
 
-      {/* Hero */}
       <section className="border-b border-bark/30 bg-pitch pt-28 pb-16 md:pt-32 md:pb-20">
         <div className="mx-auto max-w-4xl px-6">
           <p className="type-mono-label text-ember">{hero.eyebrow}</p>
@@ -74,7 +73,6 @@ export default function CapabilitiesPage() {
         </div>
       </section>
 
-      {/* What we do */}
       <section className="border-b border-bark/30 bg-pitch-deep py-20 md:py-28">
         <div className="mx-auto max-w-5xl px-6">
           <p className="type-mono-label text-ember">{whatWeDo.eyebrow}</p>
@@ -100,7 +98,6 @@ export default function CapabilitiesPage() {
         </div>
       </section>
 
-      {/* Materials & equipment */}
       <section className="border-b border-bark/30 bg-pitch py-20 md:py-28">
         <div className="mx-auto max-w-5xl px-6">
           <p className="type-mono-label text-ember">{materials.eyebrow}</p>
@@ -189,7 +186,6 @@ export default function CapabilitiesPage() {
         </div>
       </section>
 
-      {/* How to work with us */}
       <section className="border-b border-bark/30 bg-pitch py-20 md:py-28">
         <div className="mx-auto max-w-5xl px-6">
           <p className="type-mono-label text-ember">{process.eyebrow}</p>
@@ -215,7 +211,6 @@ export default function CapabilitiesPage() {
         </div>
       </section>
 
-      {/* Closing CTA */}
       <section className="border-b border-bark/30 bg-pitch py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <p className="type-mono-label text-ember">{closing.eyebrow}</p>

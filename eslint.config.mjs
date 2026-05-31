@@ -9,6 +9,10 @@ export default defineConfig([
     ".next/**",
     "out/**",
     "build/**",
+    // Generated, gitignored build/coverage output — never lint it (mirrors
+    // .gitignore so a local `eslint .` matches CI, which lints a clean tree).
+    ".open-next/**",
+    "coverage/**",
     ".claude/**",
     // Sibling worktrees check out other branches under this path; their
     // build artifacts should never be linted from here.

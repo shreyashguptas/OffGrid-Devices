@@ -19,9 +19,3 @@ export function getPostHogClient(): PostHog | undefined {
   }
   return cached;
 }
-
-export async function shutdownPostHog(): Promise<void> {
-  if (cached) {
-    await cached.shutdown();
-  }
-}

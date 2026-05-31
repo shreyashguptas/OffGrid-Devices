@@ -26,7 +26,6 @@ export default async function OgImage() {
           fontFamily: "Archivo",
         }}
       >
-        {/* Top — wordmark */}
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
           <svg
             width="64"
@@ -55,7 +54,6 @@ export default async function OgImage() {
           </div>
         </div>
 
-        {/* Middle — display copy */}
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div
             style={{
@@ -85,7 +83,6 @@ export default async function OgImage() {
           </div>
         </div>
 
-        {/* Bottom — meta */}
         <div
           style={{
             display: "flex",

@@ -70,9 +70,8 @@ export function HomeHeroSectionClient({ buyLabel }: { buyLabel: string }) {
     <section className="relative flex min-h-svh flex-col overflow-hidden border-b border-bark bg-pitch">
       <div aria-hidden className="absolute inset-0 topo-overlay opacity-30" />
 
-      {/* Top padding clears the fixed nav (75px on lg, 69px on mobile) with
-          a comfortable visual gap at every viewport — the previous
-          lg:pt-16 was actually obscuring the eyebrow behind the navbar. */}
+      {/* Top padding clears the fixed nav with a comfortable visual gap at
+          every viewport so the eyebrow never sits behind the navbar. */}
       <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pb-10 pt-28 sm:px-6 md:px-8 md:pb-12 md:pt-28 lg:px-10 lg:pb-14 lg:pt-32">
         {/* ── Top band — product mark · provenance badge ───────────────── */}
         <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4">

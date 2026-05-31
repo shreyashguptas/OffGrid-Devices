@@ -4,7 +4,7 @@ This repo is **pnpm-only**. Do not use `npm install`, `yarn`, or `bun` for depen
 
 ## Setup
 
-1. Use **Node 20+** (see `package.json` → `engines`).
+1. Use **Node 22+** (see `package.json` → `engines`).
 2. Enable **Corepack** (ships with Node) so the pinned pnpm version from `packageManager` is used:
   ```bash
    corepack enable

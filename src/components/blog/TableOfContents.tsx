@@ -1,6 +1,6 @@
 import type { BlogSection } from "@/content/blog";
 
-export function slugifyHeading(value: string) {
+function slugifyHeading(value: string) {
   return value
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
