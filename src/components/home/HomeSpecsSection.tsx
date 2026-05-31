@@ -36,7 +36,7 @@ export function HomeSpecsSection() {
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
         <div className="max-w-3xl">
-          <div className="type-eyebrow text-ember">IV · The Numbers</div>
+          <div className="type-eyebrow text-ember">III · The Numbers</div>
           <h2 className="type-display-section mt-5 text-bone">
             Everything, no asterisks.
           </h2>

@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { Beacon2CheckoutButton } from "@/components/Beacon2CheckoutButton";
+import { Beacon2CallToAction } from "@/components/beacon2/Beacon2CallToAction";
 import { Beacon2TestimonialsSection } from "@/components/beacon2/Beacon2TestimonialsSection";
 import { Faq } from "@/components/Faq";
+import { HomeFeatureShowcaseSection } from "@/components/home/HomeFeatureShowcaseSection";
+import { HomeHardwareSection } from "@/components/home/HomeHardwareSection";
+import { HomeHeroSection } from "@/components/home/HomeHeroSection";
+import { HomeProductDetailsSection } from "@/components/home/HomeProductDetailsSection";
+import { HomeSpecsSection } from "@/components/home/HomeSpecsSection";
 import { beacon2Content } from "@/content/products";
 import {
   breadcrumbJsonLd,
@@ -10,35 +14,33 @@ import {
   productJsonLd,
 } from "@/lib/jsonLd";
 import { loadProductForPage } from "@/lib/loadProductForPage";
-import { formatPrice } from "@/lib/price";
 import { priceValidUntilEndOfYear } from "@/lib/seoPriceValidUntil";
 import { getBeacon2ProductWithCache } from "@/lib/shopify";
 
 /**
- * Beacon 2 product page — lean "buy here" surface.
+ * Beacon 2 product page — the single, definitive Beacon 2 surface.
  *
- * The marketing story for Beacon 2 lives on the homepage (`/`). This PDP is
- * intentionally compact: it exists so that
- *   1. The product has a canonical URL Google can index as a Product entity
- *      (rather than the homepage, which is correctly an Organization/WebSite)
- *   2. Google Merchant Center / Shopping has a feedable destination URL with
- *      a real Product JSON-LD block including price, availability, MPN,
- *      return policy, and shipping details
- *   3. Visitors who land from an SEO query like "buy OffGrid Beacon 2" or
- *      "Beacon 2 spec sheet" get straight to a purchase with full specs
- *      and a focused FAQ, without scrolling past the home marketing copy
+ * This page now carries the full marketing story (3D model hero, the zoom
+ * collage, the feature showcase, the editorial quote, the spec sheet, and
+ * testimonials) merged with the commercial buy elements (live Shopify price +
+ * checkout in the hero, FAQ, and a closing CTA). The company home (`/`) is an
+ * Organization/lineup landing page and links here for both "Learn More" and
+ * "Buy" — so the entire Beacon 2 narrative lives at one canonical URL.
  *
- * Architecture: pure Server Component. Shopify price + availability are
- * fetched at request time via the cached `getBeacon2ProductWithCache()`
- * helper, baked into both the visible price tag and the JSON-LD Offer
- * before HTML ships. This means Googlebot's single-pass render sees the
- * real price in the initial HTML — no client-side "Loading live price"
- * placeholder, no missing `offers.price` field in structured data.
+ * SEO/commerce roles this page owns:
+ *   1. The canonical Product entity Google indexes (sole Product JSON-LD on the
+ *      site — the home no longer emits one).
+ *   2. A Google Merchant Center / Shopping destination URL with a real Product
+ *      JSON-LD block (price, availability, MPN, etc.).
+ *   3. The full spec sheet + focused FAQ for "buy / spec sheet" search intent.
  *
- * The `Beacon2CheckoutButton` remains a Client Component because cart
- * creation is necessarily interactive (POST to checkout endpoint, redirect
- * to Shopify-hosted checkout). That's fine — the SEO-critical content
- * (price, availability, FAQ, schema) is all server-rendered.
+ * Architecture: Server Component. Shopify price + availability are fetched at
+ * request time via the cached `getBeacon2ProductWithCache()` helper and baked
+ * into both the JSON-LD Offer and the hero's checkout button label before HTML
+ * ships, so Googlebot's single-pass render sees the real price. The 3D hero's
+ * `Beacon2CheckoutButton` and the closing CTA are Client Components (cart
+ * creation is interactive); everything SEO-critical is server-rendered. The
+ * hero `<section>` carries `id="buy"` so `/products/beacon-2#buy` lands on it.
  */
 
 const TITLE = "Buy OffGrid Beacon 2 — MagSafe LoRa Mesh Radio";
@@ -49,7 +51,7 @@ export const metadata: Metadata = {
   // `title.absolute` skips the global ` | OffGrid Devices` template so the
   // rendered <title> (47 chars) stays under the ~60-char SERP truncation
   // limit. The PDP owns the commercial "MagSafe LoRa Mesh Radio" phrase
-  // cleanly now that the homepage has been moved to a brand-statement title.
+  // cleanly now that the homepage is a brand-statement landing page.
   title: { absolute: TITLE },
   description: DESCRIPTION,
   keywords: [
@@ -141,9 +143,6 @@ export default async function Beacon2Product() {
     product?.availableForSale && product.variant?.availableForSale
       ? "InStock"
       : "OutOfStock";
-  const priceLabel = price
-    ? formatPrice({ amount: price, currencyCode: priceCurrency })
-    : null;
 
   return (
     <>
@@ -165,7 +164,7 @@ export default async function Beacon2Product() {
               "/beacon-2/whats-in-the-box.jpg",
             ],
             // aggregateRating + reviews removed until Beacon-2-specific
-            // testimonials exist. See homepage Product schema for rationale.
+            // testimonials exist (legacy reviews describe Beacon 1).
             offer: price
               ? {
                   price,
@@ -191,77 +190,21 @@ export default async function Beacon2Product() {
       {/* FAQPage JSON-LD is emitted by the <Faq> component itself, not
           duplicated here. */}
 
-      {/* Hero — focused buy surface */}
-      <section className="border-b border-bark/30 bg-pitch py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 md:grid-cols-2 md:items-center md:gap-16">
-          <div className="order-2 md:order-1">
-            <p className="type-mono-label text-ember">
-              OFFGRID · BEACON 2 · BUY
-            </p>
-            <h1 className="type-display-section mt-4 text-bone">
-              {beacon2Content.brandedName}
-            </h1>
-            <p className="font-editorial mt-6 max-w-xl text-lg leading-[1.55] text-sand/85 md:text-xl">
-              {beacon2Content.description}
-            </p>
+      {/* 3D hero — leads the page; holds the live-price checkout button.
+          Carries id="buy" so /products/beacon-2#buy scrolls here. */}
+      <HomeHeroSection product={product} />
 
-            <div className="mt-10 flex flex-wrap items-baseline gap-x-5 gap-y-2">
-              {priceLabel ? (
-                <>
-                  <span className="font-display text-4xl font-bold tracking-tight text-bone md:text-5xl">
-                    {priceLabel}
-                  </span>
-                  <span className="type-mono-label text-sand/75">
-                    {availability === "InStock"
-                      ? "IN STOCK · SHIPS FREE FROM USA"
-                      : "SOLD OUT"}
-                  </span>
-                </>
-              ) : (
-                <span className="type-mono-label text-sand/75">
-                  PRICING TEMPORARILY UNAVAILABLE
-                </span>
-              )}
-            </div>
+      {/* I · The Object — zoom collage */}
+      <HomeProductDetailsSection />
 
-            <div className="mt-8">
-              <Beacon2CheckoutButton
-                className="inline-flex items-center justify-center bg-ember px-7 py-4 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors hover:bg-ember/90 disabled:cursor-not-allowed disabled:opacity-60"
-                defaultLabel={beacon2Content.summary.buyLabel}
-                loadingLabel={beacon2Content.summary.loadingLabel}
-                surface="product-page"
-              />
-            </div>
-
-            <ul className="type-mono-label mt-8 grid grid-cols-2 gap-3 text-sand/85">
-              <li>NO TOWERS</li>
-              <li>NO SIMS</li>
-              <li>NO SUBSCRIPTIONS</li>
-              <li>MESHTASTIC PRE-FLASHED</li>
-            </ul>
-          </div>
-
-          <div className="order-1 md:order-2">
-            <div className="bg-pitch-deep p-6 md:p-8">
-              <Image
-                src={beacon2Content.heroImage.src}
-                alt={beacon2Content.heroImage.alt}
-                width={1024}
-                height={1024}
-                priority
-                sizes="(min-width: 768px) 50vw, 90vw"
-                className="h-auto w-full"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* II · The Field — feature showcase tabs */}
+      <HomeFeatureShowcaseSection />
 
       {/* Definitional passage — gives LLM search (Google AI Overviews,
           Perplexity, ChatGPT) a 60-word answerable block for queries like
           "what is OffGrid Beacon 2?". H2 + short paragraph is the format
           AI extractors favor. */}
-      <section className="border-b border-bark/30 bg-pitch py-16 md:py-20">
+      <section className="border-b border-bark/30 bg-pitch-deep py-16 md:py-20">
         <div className="mx-auto max-w-3xl px-6">
           <p className="type-mono-label text-ember">WHAT IS BEACON 2?</p>
           <h2 className="type-display-section mt-4 text-bone">
@@ -279,33 +222,11 @@ export default async function Beacon2Product() {
         </div>
       </section>
 
-      {/* Spec table — compact, complete */}
-      <section className="border-b border-bark/30 bg-pitch-deep py-20 md:py-28">
-        <div className="mx-auto max-w-5xl px-6">
-          <p className="type-mono-label text-ember">SPEC SHEET · BEACON 2</p>
-          <h2 className="type-display-section mt-4 text-bone">
-            Every spec, no fine print.
-          </h2>
-          <p className="font-editorial mt-6 max-w-2xl text-lg leading-[1.55] text-sand/80">
-            Every component in Beacon 2 is chosen for range, reliability, and
-            everyday carry. The experience stays simple; the hardware does not.
-          </p>
+      {/* Editorial quote interlude */}
+      <HomeHardwareSection />
 
-          <dl className="mt-12 grid gap-x-12 gap-y-5 border-t border-bark/40 pt-8 md:grid-cols-2">
-            {beacon2Content.specs.map((spec) => (
-              <div
-                key={spec.label}
-                className="grid grid-cols-1 gap-1 border-b border-bark/30 pb-4 sm:grid-cols-[120px_1fr] sm:items-baseline sm:gap-4"
-              >
-                <dt className="type-mono-label text-sand/65">{spec.label}</dt>
-                <dd className="font-editorial text-base leading-snug text-bone">
-                  {spec.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
+      {/* III · The Numbers — full spec sheet */}
+      <HomeSpecsSection />
 
       <Beacon2TestimonialsSection />
 
@@ -315,6 +236,14 @@ export default async function Beacon2Product() {
         eyebrow="FAQ"
         title="Common questions about Beacon 2"
         description="Answers to the questions we hear most often before customers commit to Beacon 2."
+      />
+
+      <Beacon2CallToAction
+        eyebrow={beacon2Content.home.cta.eyebrow}
+        title={beacon2Content.home.cta.title}
+        description={beacon2Content.home.cta.description}
+        secondaryHref={beacon2Content.home.cta.secondaryHref}
+        secondaryLabel={beacon2Content.home.cta.secondaryLabel}
       />
     </>
   );

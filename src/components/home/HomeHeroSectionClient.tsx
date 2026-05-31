@@ -67,7 +67,10 @@ export function HomeHeroSectionClient({ buyLabel }: { buyLabel: string }) {
   )}, ${beacon2Content.home.heroSubtitle.replace(/\.$/, "").toLowerCase()}.`;
 
   return (
-    <section className="relative flex min-h-svh flex-col overflow-hidden border-b border-bark bg-pitch">
+    <section
+      id="buy"
+      className="relative flex min-h-svh flex-col overflow-hidden border-b border-bark bg-pitch"
+    >
       <div aria-hidden className="absolute inset-0 topo-overlay opacity-30" />
 
       {/* Top padding clears the fixed nav with a comfortable visual gap at
