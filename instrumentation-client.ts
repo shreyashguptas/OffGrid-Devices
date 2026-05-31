@@ -5,6 +5,7 @@ import posthog from "posthog-js";
 // Next.js 15.3+ guidance this is the ONLY place we initialize posthog-js —
 // no <PostHogProvider> on top of this, otherwise we'd double-init.
 const token = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
+const isDevelopment = process.env.NODE_ENV === "development";
 
 if (token) {
   posthog.init(token, {
@@ -25,7 +26,15 @@ if (token) {
     // Respect the browser's Do Not Track signal so we don't need a
     // banner for the small minority of visitors who set it.
     respect_dnt: true,
+    // Session replay and dead-click autocapture each lazy-load a remote
+    // script (recorder.js, dead-clicks-autocapture.js). We proxy them
+    // first-party via /ingest, but privacy extensions still block them by
+    // signature, which spams the local dev console with "could not load"
+    // errors — and we don't want to record our own dev sessions anyway.
+    // Both stay ON in production; they're only suppressed in `next dev`.
+    disable_session_recording: isDevelopment,
+    capture_dead_clicks: !isDevelopment,
     secure_cookie: process.env.NODE_ENV === "production",
-    debug: process.env.NODE_ENV === "development",
+    debug: isDevelopment,
   });
 }

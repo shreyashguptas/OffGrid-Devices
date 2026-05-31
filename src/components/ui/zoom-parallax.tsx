@@ -108,7 +108,13 @@ function ZoomLayer({
           // conversion isn't worth chasing the false-positive warning.
           unoptimized
           className="object-cover"
-          priority={index === 0}
+          // The page hero above is a 3D <canvas>, which browsers don't treat
+          // as an LCP candidate — so when this section scrolls into view its
+          // largest frame becomes the measured LCP. Prioritize the centre
+          // frame (index 0) and the widest rest-frame (index 1) so next/image
+          // preloads the actual LCP image instead of warning that the LCP
+          // wasn't marked priority.
+          priority={index === 0 || index === 1}
         />
       </div>
     </motion.div>

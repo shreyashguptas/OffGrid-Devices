@@ -5,13 +5,13 @@ import { fadeInLeft } from "@/components/shared/motion";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
 
 const PARALLAX_IMAGES = [
-  { src: "/beacon-2/parallax/01-hero.jpg", alt: "Beacon 2 — front profile on a dark microcement plinth" },
-  { src: "/beacon-2/parallax/02-magnets.jpg", alt: "Magnets that hold on — rear of Beacon 2" },
-  { src: "/beacon-2/parallax/06-stand.jpg", alt: "Display-stand packaging that doubles as a kickstand" },
-  { src: "/beacon-2/parallax/03-antenna.jpg", alt: "Replaceable SMA antenna — swap antennas safely" },
-  { src: "/beacon-2/parallax/04-battery.jpg", alt: "3000 mAh — weeks on the mesh" },
-  { src: "/beacon-2/parallax/05-clip-front.jpg", alt: "Included belt clip — front view" },
-  { src: "/beacon-2/parallax/07-box.jpg", alt: "What's in the box — Beacon 2, belt clip, charging cable, whistle" },
+  { src: "/beacon-2/parallax/hero-front.jpg", alt: "Beacon 2 standing on Ember — front face, antenna up" },
+  { src: "/beacon-2/parallax/side-profile.jpg", alt: "Beacon 2 side profile with the replaceable SMA antenna fitted" },
+  { src: "/beacon-2/parallax/on-iphone.jpg", alt: "Beacon 2 snapped to the back of an iPhone with its MagSafe magnet ring" },
+  { src: "/beacon-2/parallax/magnet-face.jpg", alt: "Back of Beacon 2 showing the magnet face and corner screws" },
+  { src: "/beacon-2/parallax/beside-app.jpg", alt: "Beacon 2 beside an iPhone running the Meshtastic app, connected over Bluetooth" },
+  { src: "/beacon-2/parallax/charging.jpg", alt: "Beacon 2 charging over USB-C with the charge light lit" },
+  { src: "/beacon-2/parallax/in-hand.jpg", alt: "Beacon 2 held in hand, showing its pocketable size" },
 ];
 
 export function HomeProductDetailsSection() {
