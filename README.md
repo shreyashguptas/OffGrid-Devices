@@ -161,4 +161,6 @@ The E2E server runs on port `3123` by default so it does not clash with `pnpm de
 
 ## Deployment and CI
 
-- CI and deploy gate details live in [docs/ci.md](docs/ci.md)
+Push to `main` → GitHub Actions runs the full `quality` suite (lint, unit tests, dependency audit, live Shopify check, build, Playwright) → if green, a `deploy` job auto-publishes to Cloudflare Workers (OpenNext). If any check fails, nothing deploys and the last good version stays live. No PR or branch protection — commit straight to `main`, push, and the pipeline gates the deploy. Cloudflare keeps the last 100 versions for one-click rollback.
+
+- CI, deploy, and rollback details live in [docs/ci.md](docs/ci.md)

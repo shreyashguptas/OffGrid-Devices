@@ -7,7 +7,7 @@ This repo runs **lint**, **unit tests**, **dependency audit**, a **live Shopify 
 - **Phase 1 — CI hygiene**: concurrency (cancel stale runs), Node **22** aligned with `engines` in `package.json`.
 - **Phase 3 — Tests**: Vitest for API routes (mocked Shopify); Playwright for smoke + optional live Shopify API via HTTP.
 - **Phase 5 — Supply chain**: `pnpm audit --audit-level=high` in CI; [Dependabot](../.github/dependabot.yml) for weekly npm updates (grouped dev deps).
-- **Phase 7 — Deploy gates**: the `quality` GitHub Actions job runs `verify:shopify` before `next build`, so a broken Beacon 2 / checkout path fails CI on `main` and blocks merge.
+- **Phase 7 — Deploy gate**: pushes to `main` run the full `quality` job, then a `deploy` job publishes to Cloudflare **only if `quality` passes**. A broken Beacon 2 / checkout path (or any other failing check) fails `quality`, so the `deploy` job is skipped and the previously-deployed Worker version keeps serving — nothing broken goes live. See [Deploy (automatic, on green)](#deploy-automatic-on-green).
 
 ## Shopify secrets
 
@@ -95,13 +95,24 @@ Service → Email Sending** (adds SPF on a `cf-bounce` subdomain + DKIM; does **
 the root MX, so the iCloud-hosted inbox keeps working), then add the binding in
 `wrangler.jsonc`: `"send_email": [{ "name": "CONTACT_EMAIL" }]`. Requires the Workers Paid plan.
 
-## Branch protection (recommended)
+## Deploy (automatic, on green)
 
-In GitHub: **Settings → Branches → Branch protection** for `main`:
+Every push to `main` triggers the workflow. The `deploy` job (`needs: quality`) runs **only after the full `quality` job passes**, builds with OpenNext (`opennextjs-cloudflare build`), and publishes to Cloudflare Workers (`opennextjs-cloudflare deploy`).
 
-- Require the workflow job **quality** (shown as **CI / quality** on pull requests) to pass before merge.
+- **Green → live.** A passing run publishes a new immutable Worker version and makes it the active deployment.
+- **Red → last good stays live.** If any check fails, the `deploy` job is skipped and nothing is published, so the currently-live version is untouched. Pull, fix, push again.
+- **Rollback.** Cloudflare keeps the last 100 versions. Roll back from the dashboard (**Workers & Pages → offgrid → Deployments**) or with `wrangler rollback`.
 
-That way **broken Shopify Beacon 2 cannot land on `main`** when env is set.
+Work flows straight onto `main` — commit locally, push, and the pipeline gates the deploy. There is **no branch protection and no PR requirement**; the `quality` job is the gate that decides what reaches the live site.
+
+### Deploy credentials (GitHub Actions secrets)
+
+The `deploy` job authenticates to Cloudflare with two repository secrets:
+
+- `CLOUDFLARE_API_TOKEN` — Cloudflare API token with Workers deploy permission.
+- `CLOUDFLARE_ACCOUNT_ID` — the OffGrid Cloudflare account ID.
+
+Public build-time values (`NEXT_PUBLIC_*`) are read from the committed `.env`, so the deployed bundle carries analytics + Turnstile exactly like a local build. Secrets are **not** in `.env` — they stay in gitignored `.env.local` (local) and `wrangler secret put` (runtime).
 
 ## Fork pull requests
 
@@ -109,7 +120,7 @@ Fork PRs do not receive your repository secrets. The workflow **skips** the live
 
 ## Emergency override (avoid if possible)
 
-Setting `SKIP_SHOPIFY_VERIFY=1` skips the verify script only when you explicitly set it (e.g. local debugging). Do not set it in CI if you want the hard merge gate.
+Setting `SKIP_SHOPIFY_VERIFY=1` skips the verify script only when you explicitly set it (e.g. local debugging). Do not set it in CI if you want the deploy gate to keep a broken checkout off the live site.
 
 ## Local commands
 
