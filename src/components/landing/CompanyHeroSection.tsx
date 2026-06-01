@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HeroMeshBackground } from "@/components/landing/HeroMeshBackground";
 
 /**
  * Company-level home hero. Unlike the old home (which led with the 3D Beacon
@@ -6,14 +7,24 @@ import Link from "next/link";
  * OffGrid the company: the two things we do (carry-able mesh radios + US
  * small-batch manufacturing), then the lineup/services/mission below.
  *
- * Static server component, matching the /about and /capabilities heroes. No
- * 3D canvas here keeps the landing page light on first paint.
+ * Server component. The animated mesh-network background is the one Client
+ * island (canvas + rAF); a legibility scrim sits between it and the copy so
+ * the headline always reads. The scrim uses the `pitch` token so it flips
+ * correctly in light mode.
  */
 export function CompanyHeroSection() {
   return (
-    <section className="relative overflow-hidden border-b border-bark/30 bg-pitch pt-32 pb-20 md:pt-40 md:pb-28">
-      <div aria-hidden className="absolute inset-0 topo-overlay opacity-30" />
-      <div className="relative mx-auto max-w-4xl px-6">
+    <section className="relative isolate overflow-hidden border-b border-bark/30 bg-pitch pt-32 pb-20 md:min-h-[640px] md:pt-40 md:pb-28">
+      <HeroMeshBackground />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-pitch/75 via-pitch/30 to-transparent"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-pitch/45 via-transparent to-transparent"
+      />
+      <div className="relative z-10 mx-auto max-w-4xl px-6">
         <p className="type-mono-label text-ember">OFFGRID DEVICES · MARYLAND, USA</p>
         <h1 className="type-display-hero mt-5 text-bone">
           Off-grid hardware, built to be carried.
