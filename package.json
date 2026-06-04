@@ -27,7 +27,7 @@
     "framer-motion": "^12.40.0",
     "next": "^16.2.6",
     "posthog-js": "^1.376.2",
-    "posthog-node": "^5.35.5",
+    "posthog-node": "^5.35.14",
     "react": "19.2.5",
     "react-dom": "19.2.5",
     "resend": "^6.12.4",

@@ -30,8 +30,8 @@ importers:
         specifier: ^1.376.2
         version: 1.376.2
       posthog-node:
-        specifier: ^5.35.5
-        version: 5.35.5
+        specifier: ^5.35.14
+        version: 5.35.14
       react:
         specifier: 19.2.5
         version: 19.2.5
@@ -512,8 +512,8 @@ packages:
     peerDependencies:
       '@csstools/css-tokenizer': ^4.0.0
 
-  '@csstools/css-syntax-patches-for-csstree@1.1.4':
-    resolution: {integrity: sha512-wgsqt92b7C7tQhIdPNxj0n9zuUbQlvAuI1exyzeNrOKOi62SD7ren8zqszmpVREjAOqg8cD2FqYhQfAuKjk4sw==}
+  '@csstools/css-syntax-patches-for-csstree@1.1.5':
+    resolution: {integrity: sha512-oNjBvzLq2GPZtJphCjLqXow/cHySHSgtxvKZb7OqSZ/xHgw6NWNhfad+6AB9cLeVm6eA9d/qMll3JdEHjy6M+A==}
     peerDependencies:
       css-tree: ^3.2.1
     peerDependenciesMeta:
@@ -1473,14 +1473,14 @@ packages:
   '@posthog/core@1.29.11':
     resolution: {integrity: sha512-/4EF7oxAFSWJgaXxppT8bdYp7MGAnWFnKz994+MetTz/T6CKbYpjqIXHCofQXtcOXjEclTYj91igA+IkVFKiSg==}
 
-  '@posthog/core@1.29.12':
-    resolution: {integrity: sha512-r/2RUa4zbN0XdBp6d+Yk8Jw1rPWXHxyXIgSm/wJf9yDLIouZbH0Pdkgbc1RIuhwL6BIHCFrOqK5jy8TFKTI6iw==}
+  '@posthog/core@1.30.5':
+    resolution: {integrity: sha512-NGBRhqyMOpiSKd8xtg8dckUxh+kB02LdtnxKYW7ngycJmgM4GBGzSDaATbMQDKaNS9m2FJ9QRZ8nJyelGCoqNQ==}
 
   '@posthog/types@1.376.2':
     resolution: {integrity: sha512-Y3ROpAxNqgcy2G0w6JoG5Gt+P6WNY2lkHTPMPzWqexRwemYbFegDi5AifDyD9/tstKTlOYKTTExtaJ5EBcghyQ==}
 
-  '@posthog/types@1.376.3':
-    resolution: {integrity: sha512-w21lBoz3/ZGw7BZT7t2lJq1mpJwMvWpZijW7vEwBFNAQlq0KfKf2mj5KKUYZMXM1GdIQ0jHnn931uXPB1Ae60w==}
+  '@posthog/types@1.379.2':
+    resolution: {integrity: sha512-quGXOeNewmaGqTxE/eH8MgM/niW1jfgCyzh4bwpXFpDwuQPvWA8WkCFo6k1oKGYV03Go0udw49aGUz6s58cRsA==}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -3741,8 +3741,8 @@ packages:
   posthog-js@1.376.2:
     resolution: {integrity: sha512-Anz2pCp7dcNbammTExiZpcKC08dxfrHYaJgaXH6rq5x3Zcfj/4FkcMJF2cGCrdQXel5Y4vftiVSseZda0HAQTQ==}
 
-  posthog-node@5.35.5:
-    resolution: {integrity: sha512-zPLpjK0uAxVTVmV2TH/hNAq0JN0vUjZdJ8KOBErQS58lIJRHTkMMofNmpolkGq9pijpFITcpLsMYMsFMWvjBmg==}
+  posthog-node@5.35.14:
+    resolution: {integrity: sha512-vUO4/MQ+edqSua4jAQY+H8wvVMFOZNoBt72dqnxGkqgES0awW0NPFdDSfEhGhS6BSkydNFkN/4crnOksbCnFlQ==}
     engines: {node: ^20.20.0 || >=22.22.0}
     peerDependencies:
       rxjs: ^7.0.0
@@ -4143,15 +4143,19 @@ packages:
     resolution: {integrity: sha512-pn99VhoACYR8nFHhxqix+uvsbXineAasWm5ojXoN8xEwK5Kd3/TrhNn1wByuD52UxWRLy8pu+kRMniEi6Eq9Zg==}
     engines: {node: '>=12.0.0'}
 
+  tinyglobby@0.2.17:
+    resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
+    engines: {node: '>=12.0.0'}
+
   tinyrainbow@3.1.0:
     resolution: {integrity: sha512-Bf+ILmBgretUrdJxzXM0SgXLZ3XfiaUuOj/IKQHuTXip+05Xn+uyEYdVg0kYDipTBcLrCVyUzAPz7QmArb0mmw==}
     engines: {node: '>=14.0.0'}
 
-  tldts-core@7.4.0:
-    resolution: {integrity: sha512-/mb9kRld+x1sIMXxWNOAp5m6C+D4GrAORWlJkOJ5dElvxdN1eutz/o7qHLp9gFvDF4Y3/L2xeScoxz6AbEo8rQ==}
+  tldts-core@7.4.2:
+    resolution: {integrity: sha512-nwEyF4vl4RSJjwSjBUmOSxc3BFPoIFdlRthJ6e+5v9P3bHNsoD06UjuqMUspqp7vsEZ1beaHi1km+optiE17yA==}
 
-  tldts@7.4.0:
-    resolution: {integrity: sha512-yHBe+zVfzNZ3QfTPW/Z6KK1G2t340gFjMHqI/4KKSt/abzYydzuCnpqdaF5gCCABby+9Yfbj59oR5F2Fd5CBzg==}
+  tldts@7.4.2:
+    resolution: {integrity: sha512-kCwffuaH8ntKtygnWe1b4BJKWiCUH30n5KfoTr6IchcXOwR7chAOFJxFrH3vjANafUYrIA4a7SDL+nn7SiR4Sw==}
     hasBin: true
 
   to-regex-range@5.0.1:
@@ -4262,8 +4266,8 @@ packages:
     resolution: {integrity: sha512-6KQ/+QxK49Z/p3HO6E5ZCZWNnCasyZLa5ExaVYyvPxUwKtbCPMKELJOqh7EqOle0t9cH/7d2TaaTRRa6Nhs4YQ==}
     engines: {node: '>=20.18.1'}
 
-  undici@7.26.0:
-    resolution: {integrity: sha512-3O9Tf67pGhgOv9jM35AbhkXAKi13f3oy3aE4CSgr+TckGeY+/iu97ZXN+J7DpHPzLbVApFd1IFhcnBjREYXYcg==}
+  undici@7.27.1:
+    resolution: {integrity: sha512-UDdpiex+mzigiyrXrGbiUaF4HzTNhKbh2vRNFaTMzcqmLIPrZxaCtwo/1TMSuWoM1Xz3WiTo9KdgI3kRqYzJGg==}
     engines: {node: '>=20.18.1'}
 
   unenv@2.0.0-rc.24:
@@ -5353,7 +5357,7 @@ snapshots:
       '@csstools/css-tokenizer': 4.0.0
     optional: true
 
-  '@csstools/css-syntax-patches-for-csstree@1.1.4(css-tree@3.2.1)':
+  '@csstools/css-syntax-patches-for-csstree@1.1.5(css-tree@3.2.1)':
     optionalDependencies:
       css-tree: 3.2.1
     optional: true
@@ -6044,13 +6048,13 @@ snapshots:
     dependencies:
       '@posthog/types': 1.376.2
 
-  '@posthog/core@1.29.12':
+  '@posthog/core@1.30.5':
     dependencies:
-      '@posthog/types': 1.376.3
+      '@posthog/types': 1.379.2
 
   '@posthog/types@1.376.2': {}
 
-  '@posthog/types@1.376.3': {}
+  '@posthog/types@1.379.2': {}
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -8064,7 +8068,7 @@ snapshots:
       '@asamuzakjp/css-color': 5.1.11
       '@asamuzakjp/dom-selector': 7.1.1
       '@bramus/specificity': 2.4.2
-      '@csstools/css-syntax-patches-for-csstree': 1.1.4(css-tree@3.2.1)
+      '@csstools/css-syntax-patches-for-csstree': 1.1.5(css-tree@3.2.1)
       '@exodus/bytes': 1.15.1(@noble/hashes@1.8.0)
       css-tree: 3.2.1
       data-urls: 7.0.0(@noble/hashes@1.8.0)
@@ -8076,7 +8080,7 @@ snapshots:
       saxes: 6.0.0
       symbol-tree: 3.2.4
       tough-cookie: 6.0.1
-      undici: 7.26.0
+      undici: 7.27.1
       w3c-xmlserializer: 5.0.0
       webidl-conversions: 8.0.1
       whatwg-mimetype: 5.0.0
@@ -8504,9 +8508,9 @@ snapshots:
       query-selector-shadow-dom: 1.0.1
       web-vitals: 5.2.0
 
-  posthog-node@5.35.5:
+  posthog-node@5.35.14:
     dependencies:
-      '@posthog/core': 1.29.12
+      '@posthog/core': 1.30.5
 
   potpack@1.0.2: {}
 
@@ -8991,14 +8995,19 @@ snapshots:
       fdir: 6.5.0(picomatch@4.0.4)
       picomatch: 4.0.4
 
+  tinyglobby@0.2.17:
+    dependencies:
+      fdir: 6.5.0(picomatch@4.0.4)
+      picomatch: 4.0.4
+
   tinyrainbow@3.1.0: {}
 
-  tldts-core@7.4.0:
+  tldts-core@7.4.2:
     optional: true
 
-  tldts@7.4.0:
+  tldts@7.4.2:
     dependencies:
-      tldts-core: 7.4.0
+      tldts-core: 7.4.2
     optional: true
 
   to-regex-range@5.0.1:
@@ -9009,7 +9018,7 @@ snapshots:
 
   tough-cookie@6.0.1:
     dependencies:
-      tldts: 7.4.0
+      tldts: 7.4.2
     optional: true
 
   tr46@0.0.3: {}
@@ -9133,7 +9142,7 @@ snapshots:
 
   undici@7.24.8: {}
 
-  undici@7.26.0:
+  undici@7.27.1:
     optional: true
 
   unenv@2.0.0-rc.24:
@@ -9192,7 +9201,7 @@ snapshots:
       picomatch: 4.0.4
       postcss: 8.5.13
       rolldown: 1.0.0-rc.15
-      tinyglobby: 0.2.16
+      tinyglobby: 0.2.17
     optionalDependencies:
       '@types/node': 25.9.1
       esbuild: 0.28.0
