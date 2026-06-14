@@ -13,34 +13,18 @@ import {
   jsonLdScriptProps,
   productJsonLd,
 } from "@/lib/jsonLd";
-import { loadProductForPage } from "@/lib/loadProductForPage";
-import { priceValidUntilEndOfYear } from "@/lib/seoPriceValidUntil";
-import { getBeacon2ProductWithCache } from "@/lib/shopify";
 
 /**
  * Beacon 2 product page — the single, definitive Beacon 2 surface.
  *
- * This page now carries the full marketing story (3D model hero, the zoom
- * collage, the feature showcase, the editorial quote, the spec sheet, and
- * testimonials) merged with the commercial buy elements (live Shopify price +
- * checkout in the hero, FAQ, and a closing CTA). The company home (`/`) is an
- * Organization/lineup landing page and links here for both "Learn More" and
- * "Buy" — so the entire Beacon 2 narrative lives at one canonical URL.
- *
  * SEO/commerce roles this page owns:
  *   1. The canonical Product entity Google indexes (sole Product JSON-LD on the
  *      site — the home no longer emits one).
- *   2. A Google Merchant Center / Shopping destination URL with a real Product
- *      JSON-LD block (price, availability, MPN, etc.).
+ *   2. A Google Merchant Center / Shopping destination URL with a Product JSON-LD.
  *   3. The full spec sheet + focused FAQ for "buy / spec sheet" search intent.
  *
- * Architecture: Server Component. Shopify price + availability are fetched at
- * request time via the cached `getBeacon2ProductWithCache()` helper and baked
- * into both the JSON-LD Offer and the hero's checkout button label before HTML
- * ships, so Googlebot's single-pass render sees the real price. The 3D hero's
- * `Beacon2CheckoutButton` and the closing CTA are Client Components (cart
- * creation is interactive); everything SEO-critical is server-rendered. The
- * hero `<section>` carries `id="buy"` so `/products/beacon-2#buy` lands on it.
+ * Architecture: Server Component. The hero's checkout button links to Etsy.
+ * The hero `<section>` carries `id="buy"` so `/products/beacon-2#buy` lands on it.
  */
 
 const TITLE = "Buy OffGrid Beacon 2 — MagSafe LoRa Mesh Radio";
@@ -48,10 +32,6 @@ const DESCRIPTION =
   "Buy OffGrid Beacon 2: pre-flashed Meshtastic mesh radio with a 3000 mAh battery, replaceable SMA antenna, and N48H MagSafe magnets. Ships free from the US.";
 
 export const metadata: Metadata = {
-  // `title.absolute` skips the global ` | OffGrid Devices` template so the
-  // rendered <title> (47 chars) stays under the ~60-char SERP truncation
-  // limit. The PDP owns the commercial "MagSafe LoRa Mesh Radio" phrase
-  // cleanly now that the homepage is a brand-statement landing page.
   title: { absolute: TITLE },
   description: DESCRIPTION,
   keywords: [
@@ -128,22 +108,11 @@ const PRODUCT_FAQS = [
   {
     question: "How long does shipping take?",
     answer:
-      "OffGrid Beacon 2 ships free from the United States with a 1–3 day handling window and 2–7 day USPS or UPS transit. International shipping is not currently offered.",
+      "OffGrid Beacon 2 ships free from the United States. Orders placed on Etsy include Etsy's standard shipping estimate at checkout.",
   },
 ];
 
-export default async function Beacon2Product() {
-  const product = await loadProductForPage(
-    "Beacon 2 product for product page",
-    getBeacon2ProductWithCache,
-  );
-  const price = product?.variant?.price?.amount;
-  const priceCurrency = product?.variant?.price?.currencyCode ?? "USD";
-  const availability =
-    product?.availableForSale && product.variant?.availableForSale
-      ? "InStock"
-      : "OutOfStock";
-
+export default function Beacon2Product() {
   return (
     <>
       <script
@@ -157,53 +126,29 @@ export default async function Beacon2Product() {
             mpn: "OGD-BCN-2-US",
             category: "Radios > LoRa Mesh Radios",
             url: "/products/beacon-2",
-            // Three distinct images for Google Shopping image carousels.
             images: [
               beacon2Content.heroImage.src,
               "/beacon-2/feature-antenna.jpg",
               "/beacon-2/whats-in-the-box.jpg",
             ],
-            // aggregateRating + reviews removed until Beacon-2-specific
-            // testimonials exist (legacy reviews describe Beacon 1).
-            offer: price
-              ? {
-                  price,
-                  priceCurrency,
-                  availability,
-                  priceValidUntil: priceValidUntilEndOfYear(),
-                }
-              : undefined,
           }),
         )}
       />
       <script
         {...jsonLdScriptProps(
-          // Collapsed to 2 items because no /products collection page exists
-          // — positions 2 ("Products") and 3 ("OffGrid Beacon 2") would
-          // resolve to the same URL otherwise.
           breadcrumbJsonLd([
             { name: "Home", url: "/" },
             { name: "OffGrid Beacon 2", url: "/products/beacon-2" },
           ]),
         )}
       />
-      {/* FAQPage JSON-LD is emitted by the <Faq> component itself, not
-          duplicated here. */}
 
-      {/* 3D hero — leads the page; holds the live-price checkout button.
-          Carries id="buy" so /products/beacon-2#buy scrolls here. */}
-      <HomeHeroSection product={product} />
+      <HomeHeroSection />
 
-      {/* I · The Object — zoom collage */}
       <HomeProductDetailsSection />
 
-      {/* II · The Field — feature showcase tabs */}
       <HomeFeatureShowcaseSection />
 
-      {/* Definitional passage — gives LLM search (Google AI Overviews,
-          Perplexity, ChatGPT) a 60-word answerable block for queries like
-          "what is OffGrid Beacon 2?". H2 + short paragraph is the format
-          AI extractors favor. */}
       <section className="border-b border-bark/30 bg-pitch-deep py-16 md:py-20">
         <div className="mx-auto max-w-3xl px-6">
           <p className="type-mono-label text-ember">WHAT IS BEACON 2?</p>
@@ -222,15 +167,12 @@ export default async function Beacon2Product() {
         </div>
       </section>
 
-      {/* Editorial quote interlude */}
       <HomeHardwareSection />
 
-      {/* III · The Numbers — full spec sheet */}
       <HomeSpecsSection />
 
       <Beacon2TestimonialsSection />
 
-      {/* FAQ — Beacon-2-specific */}
       <Faq
         items={PRODUCT_FAQS}
         eyebrow="FAQ"

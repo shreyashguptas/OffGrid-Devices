@@ -12,9 +12,6 @@ import {
   jsonLdScriptProps,
   productJsonLd,
 } from "@/lib/jsonLd";
-import { loadProductForPage } from "@/lib/loadProductForPage";
-import { priceValidUntilEndOfYear } from "@/lib/seoPriceValidUntil";
-import { getBeacon1ProductWithCache } from "@/lib/shopify";
 
 const TITLE = "OffGrid Beacon 1 — MagSafe Meshtastic Radio (Retired)";
 const DESCRIPTION =
@@ -103,14 +100,7 @@ const PRODUCT_FAQS = [
   },
 ];
 
-export default async function Beacon1Product() {
-  const beacon1Product = await loadProductForPage(
-    "Beacon 1 product for product page",
-    getBeacon1ProductWithCache,
-  );
-  const price = beacon1Product?.variant?.price?.amount;
-  const priceCurrency = beacon1Product?.variant?.price?.currencyCode ?? "USD";
-
+export default function Beacon1Product() {
   return (
     <>
       <script
@@ -138,16 +128,6 @@ export default async function Beacon1Product() {
               date: testimonial.date,
               review: testimonial.review,
             })),
-            // Beacon 1 is permanently retired. `Discontinued` (vs. transient
-            // `OutOfStock`) tells Google not to keep crawling for restock.
-            offer: price
-              ? {
-                  price,
-                  priceCurrency,
-                  availability: "Discontinued",
-                  priceValidUntil: priceValidUntilEndOfYear(),
-                }
-              : undefined,
           }),
         )}
       />

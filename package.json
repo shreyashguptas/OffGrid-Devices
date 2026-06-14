@@ -14,7 +14,6 @@
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "verify:shopify": "tsx scripts/verify-shopify.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",

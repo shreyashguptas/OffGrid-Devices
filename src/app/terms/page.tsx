@@ -4,7 +4,7 @@ import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
 
 const TITLE = "Terms of Service — OffGrid Devices";
 const DESCRIPTION =
-  "The terms that govern your use of offgridevices.com and any OffGrid product you purchase. Templated US e-commerce ToS — Shopify's own checkout terms apply at point of sale.";
+  "The terms that govern your use of offgridevices.com and any OffGrid product you purchase. Templated US e-commerce ToS — Etsy's own checkout terms apply at point of sale.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -64,10 +64,10 @@ export default function TermsPage() {
 
         <h2>Purchases</h2>
         <p>
-          Orders are placed and processed through Shopify, our checkout and
-          payment provider. Shopify&rsquo;s own terms apply at the point of
+          Orders are placed and processed through Etsy, our marketplace and
+          payment provider. Etsy&rsquo;s own terms apply at the point of
           sale. Pricing is shown in USD and may change without notice; the
-          price you pay is the price displayed at checkout. OffGrid ships
+          price you pay is the price displayed at Etsy checkout. OffGrid ships
           from the United States only.
         </p>
 
