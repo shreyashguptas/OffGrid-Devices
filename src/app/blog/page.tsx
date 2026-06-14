@@ -47,92 +47,79 @@ export default function BlogPage() {
         )}
       />
       <section className="border-b border-border-subtle bg-background pt-28 pb-16 md:pt-32 md:pb-20">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
-            Journal
-          </p>
-          <h1 className="mt-4 type-display-hero">
-            OffGrid Blog — Meshtastic & Off-Grid Communication Guides
-          </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-light md:text-xl">
-            Practical writing on Meshtastic, LoRa mesh networking, and the
-            hardware that keeps it usable in the field. Written by Shreyash
-            Gupta &mdash; founder of OffGrid Devices and the builder behind
-            OffGrid Beacon &mdash; for hikers, preppers, event organizers,
-            and the wider Meshtastic community.
-          </p>
-          <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-muted-light">
-            What you&rsquo;ll find here: device comparisons grounded in
-            specs and field use, protocol explainers that resolve the
-            recurring LoRa-vs-LoRaWAN-vs-Meshtastic confusion, and the
-            running story of how Beacon hardware evolves from one revision
-            to the next. No filler, no affiliate stack &mdash; just notes
-            from people who carry the radios they ship.
+        <div className="mx-auto max-w-3xl px-6">
+          <p className="type-mono-label text-ember">Blog · OffGrid</p>
+          <h1 className="mt-4 type-display-section text-foreground">Blog</h1>
+          <p className="mt-8 max-w-2xl font-editorial text-xl leading-[1.55] text-muted-light">
+            Thoughts, projects, and notes on LoRa mesh and the hardware I build.
           </p>
         </div>
       </section>
 
-      <section className="border-b border-border-subtle bg-surface-elevated py-16 md:py-20">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-10 border border-border-card bg-background p-6 md:flex md:items-center md:justify-between md:gap-8 md:p-8">
-            <div>
-              <p className="type-eyebrow text-muted">
-                New
-              </p>
-              <h2 className="mt-3 type-display-card">
-                Beacon 2 — the MagSafe mesh radio
-              </h2>
-            </div>
-            <Link
-              href="/"
-              className="mt-6 inline-flex text-sm font-semibold uppercase tracking-[0.16em] text-accent transition-colors hover:text-foreground md:mt-0"
-            >
-              See Beacon 2 →
-            </Link>
-          </div>
-          <div className="grid gap-6 lg:grid-cols-2">
-            {blogPosts.map((post, index) => (
-              <article
-                key={post.slug}
-                className="group section-card overflow-hidden"
-              >
-                <Link href={`/blog/${post.slug}`} className="block">
-                  <div className="bg-background p-5 md:p-6">
-                    <div className="overflow-hidden bg-surface-elevated">
-                      <Image
-                        src={post.image}
-                        alt={post.title}
-                        width={1000}
-                        height={700}
-                        priority={index === 0}
-                        sizes="(min-width: 1024px) 50vw, 100vw"
-                        className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
-                      />
-                    </div>
-                  </div>
+      <section className="bg-surface-elevated py-16 md:py-20">
+        <div className="mx-auto max-w-3xl px-6">
+          <ul className="divide-y divide-border-subtle">
+            {blogPosts.map((post, index) => {
+              const featured = index === 0;
+              return (
+                <li
+                  key={post.slug}
+                  className="py-10 first:pt-0 last:pb-0 md:py-12"
+                >
+                  <article className="group">
+                    <Link href={`/blog/${post.slug}`} className="block">
+                      {featured ? (
+                        <div className="mb-7 overflow-hidden border border-border-subtle bg-background">
+                          <Image
+                            src={post.image}
+                            alt={post.title}
+                            width={1200}
+                            height={675}
+                            priority
+                            sizes="(min-width: 768px) 768px, 100vw"
+                            className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                          />
+                        </div>
+                      ) : null}
 
-                  <div className="px-6 pb-8 md:px-8">
-                    <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
-                      <span className="bg-accent/10 px-3 py-1 text-accent">
-                        {post.category}
+                      <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
+                        <span className="bg-accent/10 px-3 py-1 text-accent-text">
+                          {post.category}
+                        </span>
+                        <time dateTime={post.publishedAt}>{post.date}</time>
+                        <span className="h-1 w-1 rounded-full bg-muted" />
+                        <span>{post.readTime}</span>
+                      </div>
+
+                      <h2
+                        className={
+                          featured
+                            ? "mt-5 type-display-card transition-colors duration-300 group-hover:text-accent"
+                            : "mt-4 font-display text-2xl font-semibold tracking-[-0.02em] text-foreground transition-colors duration-300 group-hover:text-accent md:text-3xl"
+                        }
+                      >
+                        {post.title}
+                      </h2>
+
+                      {featured ? (
+                        <p className="type-editorial-lead mt-4 text-muted-light">
+                          {post.excerpt}
+                        </p>
+                      ) : (
+                        <p className="mt-3 text-base leading-relaxed text-muted-light">
+                          {post.excerpt}
+                        </p>
+                      )}
+
+                      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-accent transition-colors group-hover:text-foreground">
+                        Read the story →
                       </span>
-                      <time dateTime={post.publishedAt}>{post.date}</time>
-                      <span className="h-1 w-1 rounded-full bg-muted" />
-                      <span>{post.readTime}</span>
-                    </div>
-
-                    <h2 className="mt-5 type-display-card transition-colors duration-300 group-hover:text-accent">
-                      {post.title}
-                    </h2>
-
-                    <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-light">
-                      {post.excerpt}
-                    </p>
-                  </div>
-                </Link>
-              </article>
-            ))}
-          </div>
+                    </Link>
+                  </article>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </section>
     </>

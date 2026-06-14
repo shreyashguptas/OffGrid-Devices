@@ -33,31 +33,21 @@ function ContentSection({ section }: { section: BlogSection }) {
   switch (section.type) {
     case "heading":
       return (
-        <h2
-          id={getSectionId(section)}
-          className="scroll-mt-28 mt-12 type-display-card text-foreground first:mt-0"
-        >
+        <h2 id={getSectionId(section)} className="scroll-mt-28">
           {section.content}
         </h2>
       );
     case "subheading":
       return (
-        <h3
-          id={getSectionId(section)}
-          className="scroll-mt-28 mt-8 font-display text-2xl font-semibold tracking-[-0.02em] text-foreground"
-        >
+        <h3 id={getSectionId(section)} className="scroll-mt-28">
           {section.content}
         </h3>
       );
     case "paragraph":
-      return (
-        <p className="mt-5 text-lg leading-relaxed text-muted-light first:mt-0">
-          {section.content}
-        </p>
-      );
+      return <p>{section.content}</p>;
     case "list":
       return (
-        <ul className="mt-5 list-disc space-y-3 pl-5 text-lg leading-relaxed text-muted-light marker:text-accent">
+        <ul>
           {section.items.map((item) => (
             <li key={item}>{item}</li>
           ))}
@@ -65,7 +55,7 @@ function ContentSection({ section }: { section: BlogSection }) {
       );
     case "orderedList":
       return (
-        <ol className="mt-5 list-decimal space-y-3 pl-5 text-lg leading-relaxed text-muted-light marker:text-accent">
+        <ol>
           {section.items.map((item) => (
             <li key={item}>{item}</li>
           ))}
@@ -73,14 +63,14 @@ function ContentSection({ section }: { section: BlogSection }) {
       );
     case "image":
       return (
-        <figure className="mt-8">
-          <div className="overflow-hidden bg-background">
+        <figure className="blog-figure">
+          <div className="overflow-hidden border border-border-subtle bg-background">
             <Image
               src={section.src}
               alt={section.alt}
               width={1200}
               height={800}
-              sizes="(min-width: 1024px) 800px, 100vw"
+              sizes="(min-width: 1024px) 700px, 100vw"
               className="w-full object-cover"
             />
           </div>
@@ -93,10 +83,10 @@ function ContentSection({ section }: { section: BlogSection }) {
       );
     case "quote":
       return (
-        <blockquote className="mt-8 border-l-2 border-accent pl-5 text-xl leading-relaxed text-foreground">
+        <blockquote>
           <p>{section.content}</p>
           {section.cite ? (
-            <cite className="mt-3 block text-sm not-italic text-muted">
+            <cite className="mt-3 block font-body text-sm not-italic tracking-[0.02em] text-muted">
               {section.cite}
             </cite>
           ) : null}
@@ -115,14 +105,16 @@ function ContentSection({ section }: { section: BlogSection }) {
           toneClass = "border-border-card bg-background";
       }
       return (
-        <aside className={`mt-8 border p-5 text-base leading-relaxed ${toneClass}`}>
+        <aside
+          className={`mt-8 border p-5 text-base leading-relaxed ${toneClass}`}
+        >
           {section.content}
         </aside>
       );
     }
     case "code":
       return (
-        <pre className="mt-8 overflow-x-auto bg-pitch p-5 text-sm leading-relaxed text-bone">
+        <pre className="mt-8 overflow-x-auto border border-border-subtle bg-pitch p-5 text-sm leading-relaxed text-bone">
           <code>{section.code}</code>
         </pre>
       );
@@ -290,17 +282,14 @@ export default async function BlogPostPage({
               <span>{post.readTime}</span>
             </div>
 
-            <h1 className="mt-6 type-display-hero">
-              {post.title}
-            </h1>
+            <h1 className="mt-6 type-display-hero">{post.title}</h1>
 
-            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-light">
+            <p className="type-editorial-lead mt-6 max-w-2xl text-muted-light">
               {post.excerpt}
             </p>
 
             <p className="mt-4 text-sm text-muted">
-              By{" "}
-              <span className="text-foreground">{post.author.name}</span>
+              By <span className="text-foreground">{post.author.name}</span>
               {" · "}
               <time dateTime={post.publishedAt}>{post.date}</time>
               {post.updatedAt && post.updatedAt !== post.publishedAt ? (
@@ -315,6 +304,8 @@ export default async function BlogPostPage({
       </section>
 
       <section className="border-b border-border-subtle bg-surface-elevated py-16 md:py-20">
+        {/* Hero image runs wide; the prose below sits in a tight measure for
+            comfortable reading — the editorial split that carries the page. */}
         <div className="mx-auto max-w-5xl px-6">
           <div className="section-stage p-5 md:p-6">
             <div className="overflow-hidden bg-background">
@@ -329,69 +320,76 @@ export default async function BlogPostPage({
               />
             </div>
           </div>
+        </div>
 
+        <div className="mx-auto mt-12 max-w-6xl px-6 md:mt-16">
           <div
             className={
               hasToc
-                ? "mt-8 grid gap-8 lg:grid-cols-[240px_minmax(0,1fr)] lg:items-start"
-                : "mt-8"
+                ? "xl:grid xl:grid-cols-[15rem_minmax(0,44rem)_minmax(0,1fr)] xl:justify-center xl:gap-12"
+                : ""
             }
           >
-            {hasToc ? <TableOfContents sections={post.sections} /> : null}
-            <article className="section-card px-6 py-10 md:px-10 md:py-12">
-              {post.sections.map((section, index) => (
-                <ContentSection
-                  key={`${post.slug}-${index}`}
-                  section={section}
-                />
-              ))}
-            </article>
-          </div>
+            {hasToc ? (
+              <aside className="hidden xl:block">
+                <TableOfContents sections={post.sections} />
+              </aside>
+            ) : null}
 
-          {/* Author bio — visible byline + bio block strengthens E-E-A-T
-              beyond what the BlogPosting JSON-LD alone signals. Links to
-              /about (founder page) so quality raters and AI Overviews can
-              corroborate authorship. */}
-          <aside className="mt-12 border-t border-border-subtle pt-10">
-            <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center bg-accent/15 font-display text-lg font-bold uppercase tracking-tight text-accent">
-                {post.author.name
-                  .split(" ")
-                  .map((p) => p[0])
-                  .join("")
-                  .slice(0, 2)}
-              </div>
-              <div className="flex-1">
-                <p className="type-eyebrow text-muted">
-                  Written by
-                </p>
-                <h3 className="mt-1 font-display text-xl font-semibold text-foreground">
-                  {post.author.name}
-                </h3>
-                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-light md:text-base">
-                  Founder of OffGrid Devices and the builder behind OffGrid
-                  Beacon — a MagSafe-compatible LoRa mesh radio that ships
-                  with Meshtastic pre-flashed. Based in Maryland.
-                </p>
-                <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs uppercase tracking-[0.18em] text-muted">
-                  <Link href="/about" className="hover:text-accent">
-                    About OffGrid →
-                  </Link>
-                  {post.author.sameAs?.map((href) => (
-                    <a
-                      key={href}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-accent"
-                    >
-                      {getSocialLinkLabel(href)}
-                    </a>
-                  ))}
-                </p>
-              </div>
+            <div className="mx-auto w-full max-w-[44rem] xl:mx-0">
+              <article className="blog-prose">
+                {post.sections.map((section, index) => (
+                  <ContentSection
+                    key={`${post.slug}-${index}`}
+                    section={section}
+                  />
+                ))}
+              </article>
+
+              {/* Author bio — visible byline + bio block strengthens E-E-A-T
+                  beyond what the BlogPosting JSON-LD alone signals. Links to
+                  /about (founder page) so quality raters and AI Overviews can
+                  corroborate authorship. */}
+              <aside className="mt-14 border-t border-border-subtle pt-10">
+                <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center bg-accent/15 font-display text-lg font-bold uppercase tracking-tight text-accent">
+                    {post.author.name
+                      .split(" ")
+                      .map((p) => p[0])
+                      .join("")
+                      .slice(0, 2)}
+                  </div>
+                  <div className="flex-1">
+                    <p className="type-eyebrow text-muted">Written by</p>
+                    <h3 className="mt-1 font-display text-xl font-semibold text-foreground">
+                      {post.author.name}
+                    </h3>
+                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-light md:text-base">
+                      Founder of OffGrid Devices and the builder behind OffGrid
+                      Beacon — a MagSafe-compatible LoRa mesh radio that ships
+                      with Meshtastic pre-flashed. Based in Maryland.
+                    </p>
+                    <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs uppercase tracking-[0.18em] text-muted">
+                      <Link href="/about" className="hover:text-accent">
+                        About OffGrid →
+                      </Link>
+                      {post.author.sameAs?.map((href) => (
+                        <a
+                          key={href}
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-accent"
+                        >
+                          {getSocialLinkLabel(href)}
+                        </a>
+                      ))}
+                    </p>
+                  </div>
+                </div>
+              </aside>
             </div>
-          </aside>
+          </div>
         </div>
       </section>
 
@@ -406,9 +404,7 @@ export default async function BlogPostPage({
       {related.length > 0 ? (
         <section className="border-b border-border-subtle bg-background py-16 md:py-20">
           <div className="mx-auto max-w-5xl px-6">
-            <h2 className="type-display-section">
-              Keep reading
-            </h2>
+            <h2 className="type-display-section">Keep reading</h2>
             <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-light">
               More from the OffGrid blog on Meshtastic, LoRa mesh, and off-grid
               communication.
@@ -416,9 +412,7 @@ export default async function BlogPostPage({
             <ul className="mt-8 grid gap-6 md:grid-cols-3">
               {related.map((r) => (
                 <li key={r.slug} className="section-card p-6">
-                  <p className="type-eyebrow text-muted">
-                    {r.category}
-                  </p>
+                  <p className="type-eyebrow text-muted">{r.category}</p>
                   <h3 className="mt-3 font-display text-xl font-semibold leading-snug">
                     <Link
                       href={`/blog/${r.slug}`}
