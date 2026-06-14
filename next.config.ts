@@ -121,28 +121,45 @@ const nextConfig: NextConfig = {
         statusCode: 301,
       },
 
-      // Four blog posts consolidated into /blog/why-offgrid (the
-      // "Why OffGrid" brand story). The setup-focused post points at the
-      // Beacon 2 quickstart reference instead. These preserve any
-      // accumulated link equity and prevent 404s on indexed URLs.
+      // The blog was consolidated to a single story post,
+      // /blog/why-i-built-beacon. The setup-focused post points at the
+      // Beacon 2 quickstart reference instead. Every other retired blog URL
+      // (including the former why-offgrid story and the two guide posts)
+      // 301s to the story post to preserve link equity and prevent 404s on
+      // indexed URLs.
       {
         source: "/blog/getting-started-with-meshtastic",
         destination: "/beacon-2/start",
         statusCode: 301,
       },
       {
+        source: "/blog/why-offgrid",
+        destination: "/blog/why-i-built-beacon",
+        statusCode: 301,
+      },
+      {
+        source: "/blog/best-meshtastic-devices-2026",
+        destination: "/blog/why-i-built-beacon",
+        statusCode: 301,
+      },
+      {
+        source: "/blog/meshtastic-vs-lorawan",
+        destination: "/blog/why-i-built-beacon",
+        statusCode: 301,
+      },
+      {
         source: "/blog/what-is-lora-mesh-off-grid-communication-explained",
-        destination: "/blog/why-offgrid",
+        destination: "/blog/why-i-built-beacon",
         statusCode: 301,
       },
       {
         source: "/blog/meshtastic-vs-walkie-talkies-frs-gmrs",
-        destination: "/blog/why-offgrid",
+        destination: "/blog/why-i-built-beacon",
         statusCode: 301,
       },
       {
         source: "/blog/backup-comms-when-cell-towers-go-down",
-        destination: "/blog/why-offgrid",
+        destination: "/blog/why-i-built-beacon",
         statusCode: 301,
       },
     ];

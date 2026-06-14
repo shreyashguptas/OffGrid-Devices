@@ -39,3 +39,14 @@ export const trackBlogScrollDepth = (
 
 export const trackFaqOpen = (question: string, page: string) =>
   fanout("faq_open", { question, page });
+
+// Read PostHog's anonymous distinct ID so a server-side event captured from a
+// Route Handler stitches to the same person profile as the client.
+export function getPostHogDistinctId(): string | undefined {
+  if (typeof window === "undefined") return undefined;
+  try {
+    return posthog.get_distinct_id();
+  } catch {
+    return undefined;
+  }
+}
