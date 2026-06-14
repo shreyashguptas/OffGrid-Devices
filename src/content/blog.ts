@@ -79,9 +79,9 @@ export const blogPosts = [
     readTime: "7 min read",
     category: "Story",
     author: DEFAULT_AUTHOR,
-    image: "/beacon-2/hero-front.jpg",
+    image: "/beacon-2/tier-3-kit.jpg",
     heroImageAlt:
-      "OffGrid Beacon 2 MagSafe Meshtastic LoRa radio on the back of a phone",
+      "OffGrid Beacon 2 mesh radio with its belt-clip cradle, replaceable SMA antenna, spare whip antenna, and whistle keychain on an orange background",
     sections: [
       {
         type: "paragraph",
