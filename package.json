@@ -27,7 +27,7 @@
     "next": "^16.2.9",
     "posthog-js": "^1.376.2",
     "posthog-node": "^5.37.1",
-    "react": "19.2.5",
+    "react": "19.2.7",
     "react-dom": "19.2.5",
     "resend": "^6.12.4",
     "server-only": "^0.0.1",
