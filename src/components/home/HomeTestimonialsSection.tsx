@@ -33,7 +33,7 @@ export function HomeTestimonialsSection() {
             <h2 className="type-display-section mt-5 text-bone">
               {beacon2Content.home.testimonials.title}
             </h2>
-            <p className="font-editorial mt-6 max-w-2xl text-[22px] leading-[1.4] text-sand">
+            <p className="type-editorial-lead font-editorial mt-6 max-w-2xl text-sand">
               {beacon2Content.home.testimonials.subtitle}
             </p>
             <p className="font-mono mt-4 max-w-2xl text-[12px] tracking-[0.08em] text-sand/70">
@@ -61,7 +61,7 @@ export function HomeTestimonialsSection() {
               variants={cardVariant}
               className="flex h-full flex-col border border-sand/15 bg-bark-soft p-7"
             >
-              <blockquote className="font-editorial text-[19px] leading-[1.45] text-bone">
+              <blockquote className="font-editorial text-[17px] leading-[1.45] text-bone sm:text-[19px]">
                 “{item.text}”
               </blockquote>
               <figcaption className="mt-7 flex items-center gap-3 border-t border-sand/15 pt-5">

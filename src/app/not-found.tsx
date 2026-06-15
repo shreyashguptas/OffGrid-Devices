@@ -22,7 +22,7 @@ export default function NotFound() {
         <p className="mt-10 text-sm font-semibold uppercase tracking-[0.24em] text-muted">
           404
         </p>
-        <h1 className="mt-4 font-display text-5xl font-bold tracking-tight md:text-7xl">
+        <h1 className="mt-4 type-display-section font-bold tracking-tight">
           This page didn&apos;t make it onto the mesh.
         </h1>
         <div className="mt-10 flex flex-wrap gap-3">
@@ -30,7 +30,7 @@ export default function NotFound() {
             <Link
               key={link.href}
               href={link.href}
-              className="border border-border-card px-4 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:border-border-emphasis hover:text-accent"
+              className="inline-flex min-h-[44px] items-center border border-border-card px-4 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:border-border-emphasis hover:text-accent"
             >
               {link.label}
             </Link>

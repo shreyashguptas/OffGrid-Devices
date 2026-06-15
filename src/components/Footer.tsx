@@ -112,7 +112,7 @@ export function Footer() {
                   );
 
                   const className =
-                    "text-[13px] text-sand transition-colors duration-300 hover:text-ember";
+                    "inline-block py-1.5 text-[13px] text-sand transition-colors duration-300 hover:text-ember";
 
                   if (link.external) {
                     return (
@@ -145,7 +145,7 @@ export function Footer() {
         <div className="type-mono-label mt-14 flex flex-col gap-3 border-t border-bark pt-6 tracking-[0.14em] text-sand/65 md:flex-row md:items-center md:justify-between">
           <span>&copy; {new Date().getFullYear()} OFFGRID LLC</span>
           <span>Built to be carried</span>
-          <span>NO TOWERS · NO SIMS · NO SUBSCRIPTIONS</span>
+          <span className="type-mono-label-sm">NO TOWERS · NO SIMS · NO SUBSCRIPTIONS</span>
         </div>
       </motion.div>
     </footer>

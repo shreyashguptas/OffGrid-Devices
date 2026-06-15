@@ -30,7 +30,7 @@ export function HomeProductDetailsSection() {
             Built like a hand tool.
           </h2>
 
-          <p className="font-editorial mt-7 max-w-xl text-[21px] leading-[1.5] text-sand">
+          <p className="type-editorial-lead font-editorial mt-7 max-w-xl text-sand">
             3D-printed in sun-tolerant filament, magnet-mounted to the phone you
             already carry, with a replaceable SMA antenna and a 3000 mAh cell.
             Built to live in a pocket and shrug off the trip.

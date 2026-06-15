@@ -14,14 +14,14 @@ export function StartStepCard({ step, children }: StartStepCardProps) {
       id={stepId}
       className="section-card scroll-mt-24 p-6 md:p-8"
     >
-      <header className="flex items-baseline gap-4">
+      <header className="flex items-start gap-3 sm:gap-4">
         <span
           aria-hidden="true"
           className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/25 bg-accent/10 font-display text-base font-semibold text-accent-dark"
         >
           {step.number}
         </span>
-        <div>
+        <div className="min-w-0">
           <p className="type-mono-label text-muted">
             <span className="sr-only">Step </span>
             Step {step.number}

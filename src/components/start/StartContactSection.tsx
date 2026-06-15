@@ -22,7 +22,7 @@ export function StartContactSection() {
           <a
             href={`mailto:${contact.supportEmail}`}
             onClick={() => trackContactTap("email")}
-            className="type-display-card mt-3 block break-all text-foreground transition-colors hover:text-accent-dark"
+            className="type-display-card mt-3 block break-words [overflow-wrap:anywhere] text-foreground transition-colors hover:text-accent-dark"
           >
             {contact.supportEmail}
           </a>

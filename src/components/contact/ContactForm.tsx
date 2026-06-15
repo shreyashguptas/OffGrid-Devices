@@ -25,7 +25,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 const COPY = contactContent.form;
 
 const INPUT_CLASS =
-  "mt-2 w-full border border-bark bg-pitch px-4 py-3 text-[15px] text-bone placeholder:text-sand/35 focus:border-ember focus:outline-none transition-colors";
+  "mt-2 w-full border border-bark bg-pitch px-4 py-3 text-base text-bone placeholder:text-sand/35 focus:border-ember focus:outline-none transition-colors";
 const LABEL_CLASS = "type-mono-label text-sand/65";
 
 export function ContactForm() {
@@ -155,7 +155,7 @@ export function ContactForm() {
         />
       ) : null}
 
-      <form onSubmit={handleSubmit} noValidate className="space-y-6">
+      <form onSubmit={handleSubmit} noValidate className="relative space-y-6">
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
             <label htmlFor={`${uid}-name`} className={LABEL_CLASS}>
@@ -262,9 +262,11 @@ export function ContactForm() {
           />
         </div>
 
-        {/* Honeypot — hidden from users, off-screen rather than display:none so
-            bots that skip hidden inputs still fill it. */}
-        <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        {/* Honeypot — visually hidden via the sr-only clip pattern (not
+            display:none, so bots that skip hidden inputs still fill it; not
+            off-screen with a negative left, which expands the layout and caused
+            a few px of horizontal overflow on narrow phones). */}
+        <div aria-hidden="true" className="sr-only">
           <label htmlFor={`${uid}-${HONEYPOT_FIELD}`}>Company website</label>
           <input
             id={`${uid}-${HONEYPOT_FIELD}`}
@@ -293,7 +295,7 @@ export function ContactForm() {
           >
             {status === "submitting" ? COPY.submittingLabel : COPY.submitLabel}
           </button>
-          <p className="text-[13px] leading-[1.5] text-sand/55">
+          <p className="text-sm leading-[1.5] text-sand/55">
             {COPY.privacyPrefix}
             <Link href="/privacy" className="text-sand underline hover:text-ember">
               {COPY.privacyLinkLabel}

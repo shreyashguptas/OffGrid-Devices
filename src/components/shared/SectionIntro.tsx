@@ -28,7 +28,7 @@ export function SectionIntro({
       <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted">
         {badge}
       </p>
-      <div className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+      <div className="type-display-section mt-4">
         {title}
       </div>
       {description ? (

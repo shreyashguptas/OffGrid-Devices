@@ -71,7 +71,7 @@ function FlightPlanHero() {
           </span>
           <span className="text-bone">.</span>
         </h1>
-        <p className="font-editorial mt-6 max-w-xl text-xl leading-[1.5] text-sand/85">
+        <p className="type-editorial-lead font-editorial mt-6 max-w-xl text-sand/85">
           The cheapest flying drone we can build — documented in the open, one
           phase at a time.
         </p>
@@ -87,7 +87,7 @@ function FlightPlanHero() {
         <div className="mt-9">
           <Link
             href="#log"
-            className="type-mono-label text-sand transition-colors hover:text-ember"
+            className="type-mono-label inline-flex items-center min-h-11 text-sand transition-colors hover:text-ember"
           >
             View the flight plan ↓
           </Link>
@@ -223,7 +223,7 @@ function LogEntry({ phase, index }: { phase: RoadmapPhase; index: number }) {
             {phase.href ? (
               <Link
                 href={phase.href}
-                className="type-mono-label mt-4 inline-block text-sand transition-colors hover:text-ember"
+                className="type-mono-label mt-4 inline-flex items-center min-h-11 text-sand transition-colors hover:text-ember"
               >
                 {phase.hrefLabel ?? "More"} →
               </Link>
