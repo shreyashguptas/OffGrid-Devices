@@ -5,7 +5,7 @@ import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
 
 const TITLE = "Privacy Policy — OffGrid Devices";
 const DESCRIPTION =
-  "How OffGrid Devices collects, uses, and protects your information. Templated US e-commerce policy — Shopify handles checkout and payments; we collect minimal data.";
+  "How OffGrid Devices collects, uses, and protects your information. Templated US e-commerce policy — Etsy handles checkout and payments; we collect minimal data.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -53,8 +53,8 @@ export default function PrivacyPage() {
           <li>
             <strong>Order data</strong> — name, shipping address, billing
             address, email, phone (optional), and the items you ordered.
-            Collected by our checkout provider, Shopify, on the
-            shop.offgridevices.com checkout page.
+            Collected by Etsy, the marketplace where the Beacon listing lives,
+            on Etsy&rsquo;s own checkout.
           </li>
           <li>
             <strong>Support email</strong> — when you email
@@ -77,10 +77,10 @@ export default function PrivacyPage() {
             posthog.com/privacy.
           </li>
           <li>
-            <strong>Shopify checkout</strong> — Shopify collects standard
+            <strong>Etsy checkout</strong> — Etsy collects standard
             e-commerce data (IP, browser, items viewed, cart state) during
             checkout to process payment, prevent fraud, and ship your order.
-            See shopify.com/legal/privacy.
+            See etsy.com/legal/privacy.
           </li>
           <li>
             <strong>Server logs</strong> — Cloudflare records request metadata
@@ -94,7 +94,7 @@ export default function PrivacyPage() {
           <li>To fulfill, ship, and provide support for your order.</li>
           <li>
             To send order confirmation and shipping update emails (via
-            Shopify).
+            Etsy).
           </li>
           <li>
             To respond when you contact hello@offgridevices.com.
@@ -122,8 +122,8 @@ export default function PrivacyPage() {
         <h2>Third parties we rely on</h2>
         <ul>
           <li>
-            <strong>Shopify</strong> — checkout, payment processing, order
-            fulfillment data. shopify.com/legal/privacy
+            <strong>Etsy</strong> — marketplace, checkout, payment processing,
+            order fulfillment data. etsy.com/legal/privacy
           </li>
           <li>
             <strong>Cloudflare</strong> — hosting, edge network, server

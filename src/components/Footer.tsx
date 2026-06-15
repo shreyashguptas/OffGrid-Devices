@@ -41,7 +41,6 @@ export function Footer() {
       links: [
         { label: "Field notes", href: "/blog" },
         { label: "About", href: "/about" },
-        { label: "Manufacturing", href: "/capabilities" },
       ],
     },
     {

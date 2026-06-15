@@ -27,10 +27,7 @@ type RateLimitBinding = {
   limit: (options: { key: string }) => Promise<{ success: boolean }>;
 };
 
-export type RateLimitScope =
-  | "contact"
-  | "shopify-beacon-2-checkout"
-  | "shopify-beacon-2-product";
+export type RateLimitScope = "contact";
 
 /**
  * Central limit config. `binding` matches a `ratelimits[].name` in
@@ -42,16 +39,6 @@ const RATE_LIMITS: Record<
   { binding: string; limit: number; period: 10 | 60 }
 > = {
   contact: { binding: "RL_CONTACT", limit: 5, period: 60 },
-  "shopify-beacon-2-checkout": {
-    binding: "RL_CHECKOUT",
-    limit: 10,
-    period: 60,
-  },
-  "shopify-beacon-2-product": {
-    binding: "RL_PRODUCT",
-    limit: 120,
-    period: 60,
-  },
 };
 
 const buckets = new Map<string, RateLimitEntry>();

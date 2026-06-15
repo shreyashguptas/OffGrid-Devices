@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { motion, type Variants } from "framer-motion";
-import { Beacon2CheckoutButton } from "@/components/Beacon2CheckoutButton";
+import { Beacon2BuyLink } from "@/components/Beacon2BuyLink";
 import { MeshtasticMark } from "@/components/shared/icons/MeshtasticMark";
 import { UsFlag } from "@/components/shared/icons/UsFlag";
 import { beacon2Content } from "@/content/products";
@@ -153,12 +153,10 @@ export function HomeHeroSectionClient({ buyLabel }: { buyLabel: string }) {
             variants={cornerUp(0.5)}
             className="w-full sm:w-auto"
           >
-            <Beacon2CheckoutButton
-              defaultLabel={buyLabel}
-              loadingLabel={beacon2Content.summary.loadingLabel}
+            <Beacon2BuyLink
+              label={buyLabel}
               surface="hero"
               className="inline-flex min-h-[56px] w-full cursor-pointer items-center justify-center bg-ember px-7 py-[18px] font-display text-[13px] font-bold uppercase tracking-[0.14em] text-pitch transition-colors duration-300 hover:bg-bone disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
-              showArrow={false}
             />
           </motion.div>
         </div>
