@@ -30,22 +30,22 @@
 
 :root {
   /* ─── 1 · Raw brand palette (immutable, both modes) ──────────────── */
-  --app-pitch: #1B1813;   /* primary dark                                 */
-  --app-coal: #100D09;    /* deepest dark                                 */
+  --app-pitch: #1b1813; /* primary dark                                 */
+  --app-coal: #100d09; /* deepest dark                                 */
   --app-pitch-deep: var(--app-coal);
-  --app-pitch-low: #15110C;
-  --app-bark: #3A2E22;    /* secondary dark                               */
-  --app-bark-soft: #2A2118;
-  --app-sand: #D9C9A8;    /* secondary light                              */
-  --app-bone: #F1ECE0;    /* primary light                                */
-  --app-dim: #9A9082;     /* muted — works in both modes                  */
-  --app-ember: #FF6A00;   /* the accent — same fill in both modes (v1.2)   */
-  --app-ember-low: #D95A00;
+  --app-pitch-low: #15110c;
+  --app-bark: #3a2e22; /* secondary dark                               */
+  --app-bark-soft: #2a2118;
+  --app-sand: #d9c9a8; /* secondary light                              */
+  --app-bone: #f1ece0; /* primary light                                */
+  --app-dim: #9a9082; /* muted — works in both modes                  */
+  --app-ember: #ff6a00; /* the accent — same fill in both modes (v1.2)   */
+  --app-ember-low: #d95a00;
 
   /* v1.2 additions — light-mode neutrals & contrast-safe ember-as-text */
-  --app-linen: #E5DDC9;       /* light-mode card surface                  */
-  --app-paper: #FAF7EF;       /* light-mode lifted plane                  */
-  --app-ember-deep: #A84A00;  /* darker Ember reserved for TEXT on light  */
+  --app-linen: #e5ddc9; /* light-mode card surface                  */
+  --app-paper: #faf7ef; /* light-mode lifted plane                  */
+  --app-ember-deep: #a84a00; /* darker Ember reserved for TEXT on light  */
 }
 
 /* ─── 2 · Default = DARK mode role-bound tokens ───────────────────────
@@ -66,7 +66,7 @@
   --app-color-bone: var(--app-bone);
   --app-color-dim: var(--app-dim);
   --app-color-ember: var(--app-ember);
-  --app-color-ember-text: var(--app-ember);   /* text-ember contrast var */
+  --app-color-ember-text: var(--app-ember); /* text-ember contrast var */
   --app-color-ember-low: var(--app-ember-low);
 
   /* Page-level semantic tokens                                          */
@@ -75,7 +75,7 @@
   --app-on-accent: var(--app-pitch);
   --app-accent: var(--app-ember);
   --app-accent-text: var(--app-ember);
-  --app-accent-light: #FF8A3D;
+  --app-accent-light: #ff8a3d;
   --app-accent-dark: var(--app-ember-low);
 
   --app-surface: var(--app-pitch);
@@ -86,7 +86,7 @@
   --app-muted-light: rgba(217, 201, 168, 0.72);
 
   /* Hairlines & borders — Bone @ low alpha on dark                      */
-  --app-border-subtle: rgba(217, 201, 168, 0.10);
+  --app-border-subtle: rgba(217, 201, 168, 0.1);
   --app-border-card: rgba(217, 201, 168, 0.18);
   --app-border-emphasis: rgba(217, 201, 168, 0.32);
   --app-border-emphasis-hover: rgba(217, 201, 168, 0.55);
@@ -115,7 +115,7 @@
   --app-scrollbar-thumb-hover: rgba(217, 201, 168, 0.32);
   --app-selection-fg: var(--app-pitch);
 
-  --app-glass-border: rgba(217, 201, 168, 0.20);
+  --app-glass-border: rgba(217, 201, 168, 0.2);
   --app-glass-border-strong: rgba(217, 201, 168, 0.32);
 
   /* Composed surfaces — referenced by .section-stage, .hero-media-frame */
@@ -139,17 +139,15 @@
   --app-image-hover-shadow: rgba(0, 0, 0, 0.5);
   --app-card-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   --app-media-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.55),
-    0 8px 24px rgba(0, 0, 0, 0.35);
+    0 24px 60px rgba(0, 0, 0, 0.55), 0 8px 24px rgba(0, 0, 0, 0.35);
   --app-hero-card-shadow:
-    0 18px 42px rgba(0, 0, 0, 0.55),
-    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 18px 42px rgba(0, 0, 0, 0.55), 0 8px 24px rgba(0, 0, 0, 0.35),
     0 0 0 1px rgba(217, 201, 168, 0.12);
 
   /* Ember radial glows — hero + feature showcase */
   --app-accent-glow-strong: rgba(255, 106, 0, 0.45);
   --app-accent-glow-mid: rgba(255, 106, 0, 0.12);
-  --app-accent-glow-soft: rgba(255, 106, 0, 0.30);
+  --app-accent-glow-soft: rgba(255, 106, 0, 0.3);
   --app-accent-glow-faint: rgba(255, 106, 0, 0.08);
 }
 
@@ -186,9 +184,9 @@
     --app-muted: var(--app-bark);
     --app-muted-light: rgba(58, 46, 34, 0.78);
 
-    --app-border-subtle: rgba(27, 24, 19, 0.10);
+    --app-border-subtle: rgba(27, 24, 19, 0.1);
     --app-border-card: rgba(27, 24, 19, 0.16);
-    --app-border-emphasis: rgba(27, 24, 19, 0.30);
+    --app-border-emphasis: rgba(27, 24, 19, 0.3);
     --app-border-emphasis-hover: rgba(27, 24, 19, 0.52);
 
     --app-fill-glass: rgba(250, 247, 239, 0.78);
@@ -202,7 +200,7 @@
     --app-overlay-border: rgba(27, 24, 19, 0.22);
     --app-overlay-text: rgba(27, 24, 19, 0.96);
     --app-overlay-text-muted: rgba(58, 46, 34, 0.82);
-    --app-overlay-chip: rgba(27, 24, 19, 0.10);
+    --app-overlay-chip: rgba(27, 24, 19, 0.1);
 
     --app-nav-scrolled: rgba(250, 247, 239, 0.92);
     --app-dropdown: rgba(250, 247, 239, 0.96);
@@ -215,7 +213,7 @@
     --app-selection-fg: var(--app-bone);
 
     --app-glass-border: rgba(27, 24, 19, 0.18);
-    --app-glass-border-strong: rgba(27, 24, 19, 0.30);
+    --app-glass-border-strong: rgba(27, 24, 19, 0.3);
 
     --app-stage-from: var(--app-paper);
     --app-stage-to: var(--app-linen);
@@ -227,15 +225,13 @@
     --app-gradient-text-mid: var(--app-ember-deep);
     --app-gradient-text-to: var(--app-bark);
 
-    --app-image-hover-shadow: rgba(27, 24, 19, 0.20);
-    --app-card-shadow: 0 12px 32px rgba(27, 24, 19, 0.10);
+    --app-image-hover-shadow: rgba(27, 24, 19, 0.2);
+    --app-card-shadow: 0 12px 32px rgba(27, 24, 19, 0.1);
     --app-media-shadow:
-      0 24px 60px rgba(27, 24, 19, 0.14),
-      0 8px 24px rgba(27, 24, 19, 0.10);
+      0 24px 60px rgba(27, 24, 19, 0.14), 0 8px 24px rgba(27, 24, 19, 0.1);
     --app-hero-card-shadow:
-      0 18px 42px rgba(27, 24, 19, 0.14),
-      0 8px 24px rgba(27, 24, 19, 0.10),
-      0 0 0 1px rgba(27, 24, 19, 0.10);
+      0 18px 42px rgba(27, 24, 19, 0.14), 0 8px 24px rgba(27, 24, 19, 0.1),
+      0 0 0 1px rgba(27, 24, 19, 0.1);
   }
 }
 
@@ -450,6 +446,122 @@ body {
   letter-spacing: -0.02em;
 }
 
+/* ─── Blog reading surface ───────────────────────────────────────────
+   Long-form typography for blog posts. Centralizes the rhythm so the
+   prose reads like an essay: a tight measure, generous line-height, and
+   asymmetric heading spacing (more above than below) so sections breathe.
+   Body stays in the brand body face (Inter Tight); the editorial serif
+   (Newsreader) and Archivo display do the accent work — leads, pull
+   quotes, drop cap. One Ember accent only, reserved for links. */
+.blog-prose {
+  font-family: var(--font-body);
+  font-size: 1.1875rem; /* 19px — comfortable long-form measure */
+  line-height: 1.75;
+  color: var(--app-muted);
+}
+
+.blog-prose p {
+  margin-block: 1.25rem;
+}
+
+.blog-prose ul,
+.blog-prose ol {
+  margin-block: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.blog-prose ul {
+  list-style: disc;
+}
+
+.blog-prose ol {
+  list-style: decimal;
+}
+
+.blog-prose li {
+  margin-block: 0.4rem;
+}
+
+/* Quiet markers — they shouldn't compete with the one Ember accent. */
+.blog-prose li::marker {
+  color: var(--app-muted-light);
+}
+
+.blog-prose h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(26px, 3.4vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--app-fg);
+  margin-top: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.blog-prose h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 2.4vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--app-fg);
+  margin-top: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-prose > :first-child {
+  margin-top: 0;
+}
+
+.blog-prose strong {
+  color: var(--app-fg);
+  font-weight: 600;
+}
+
+.blog-prose a {
+  color: var(--app-accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.blog-prose a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Pull quote — editorial serif, hairline rule (not Ember). */
+.blog-prose blockquote {
+  margin-block: 2rem;
+  border-left: 2px solid var(--app-border-emphasis);
+  padding-left: 1.5rem;
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(20px, 2.4vw, 24px);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--app-fg);
+}
+
+.blog-prose blockquote p {
+  margin-block: 0;
+}
+
+.blog-figure {
+  margin-block: 2.5rem;
+}
+
+/* Drop cap on the opening paragraph — Archivo display, sets the tone
+   without adding another Ember. */
+.blog-prose > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 3.4em;
+  line-height: 0.78;
+  float: left;
+  margin: 0.05em 0.1em 0 0;
+  color: var(--app-fg);
+}
+
 .ember-radial-glow {
   background: radial-gradient(
     circle,
@@ -497,7 +609,11 @@ body {
 }
 
 .hero-media-frame {
-  background: linear-gradient(180deg, var(--app-stage-from) 0%, var(--app-stage-to) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--app-stage-from) 0%,
+    var(--app-stage-to) 100%
+  );
   border: 1px solid var(--app-border-subtle);
 }
 
@@ -514,7 +630,11 @@ body {
 }
 
 .section-stage {
-  background: linear-gradient(180deg, var(--app-stage-from) 0%, var(--app-stage-to) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--app-stage-from) 0%,
+    var(--app-stage-to) 100%
+  );
   border: 1px solid var(--app-border-card);
   box-shadow: var(--app-media-shadow);
 }
@@ -548,7 +668,8 @@ body {
 }
 
 .image-hover {
-  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+  transition:
+    transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
     box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -585,7 +706,11 @@ body {
     transparent 1px,
     transparent 12px
   );
-  -webkit-mask-image: radial-gradient(ellipse at 70% 0%, black, transparent 60%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at 70% 0%,
+    black,
+    transparent 60%
+  );
   mask-image: radial-gradient(ellipse at 70% 0%, black, transparent 60%);
 }
 

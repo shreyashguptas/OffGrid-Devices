@@ -29,11 +29,6 @@ type RateLimitBinding = {
 
 export type RateLimitScope = "contact";
 
-/**
- * Central limit config. `binding` matches a `ratelimits[].name` in
- * wrangler.jsonc; `period` is in SECONDS and must be 10 or 60 to satisfy the
- * Cloudflare Rate Limiting binding contract.
- */
 const RATE_LIMITS: Record<
   RateLimitScope,
   { binding: string; limit: number; period: 10 | 60 }

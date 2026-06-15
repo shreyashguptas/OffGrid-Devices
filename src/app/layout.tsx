@@ -194,12 +194,6 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-        <link
-          rel="preconnect"
-          href="https://cdn.shopify.com"
-          crossOrigin="anonymous"
-        />
-        <link rel="dns-prefetch" href="https://cdn.shopify.com" />
         <script {...jsonLdScriptProps(organizationJsonLd())} />
         <script {...jsonLdScriptProps(websiteJsonLd())} />
       </head>

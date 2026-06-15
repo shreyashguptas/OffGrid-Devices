@@ -167,7 +167,7 @@ export const beacon1Content = {
       title: "Ready for Beacon 1?",
       description:
         "Get OffGrid Beacon 1 and keep the radio with the device you already carry.",
-      secondaryHref: "/blog/why-offgrid",
+      secondaryHref: "/blog/why-i-built-beacon",
       secondaryLabel: "Read the OffGrid story",
     },
   },

@@ -29,13 +29,14 @@ const contentSecurityPolicy = [
   // button stays permanently disabled once a Turnstile site key is set.
   "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline'",
+  // cdn.shopify.com is kept for Beacon 1 legacy images hosted there
   "img-src 'self' data: blob: https://cdn.shopify.com",
   "font-src 'self' data:",
   // blob: is needed because three.js/drei reads GLB-embedded textures as
   // Blob → URL.createObjectURL → fetch(blob:...). Without it the 15
   // textures in beacon-2.glb fail to load and the Beacon renders without
   // its CAD-assigned surface detail.
-  "connect-src 'self' blob: https://*.myshopify.com https://cdn.shopify.com https://challenges.cloudflare.com",
+  "connect-src 'self' blob: https://challenges.cloudflare.com",
   "frame-src 'self' https://challenges.cloudflare.com",
   "media-src 'self'",
   "worker-src 'self' blob:",
@@ -67,8 +68,7 @@ const nextConfig: NextConfig = {
     // With `unoptimized`, next/image emits the direct asset URL, which Workers
     // serves straight from the cached ASSETS binding (cf-cache-status: HIT) and
     // never touches the SSR Worker. Source images are pre-sized JPEGs, so there
-    // is no optimization left to do. remotePatterns is kept for documentation;
-    // Shopify CDN images are already optimized and served from their own CDN.
+    // is no optimization left to do.
     unoptimized: true,
     remotePatterns: [
       {
@@ -121,28 +121,45 @@ const nextConfig: NextConfig = {
         statusCode: 301,
       },
 
-      // Four blog posts consolidated into /blog/why-offgrid (the
-      // "Why OffGrid" brand story). The setup-focused post points at the
-      // Beacon 2 quickstart reference instead. These preserve any
-      // accumulated link equity and prevent 404s on indexed URLs.
+      // The blog was consolidated to a single story post,
+      // /blog/why-i-built-beacon. The setup-focused post points at the
+      // Beacon 2 quickstart reference instead. Every other retired blog URL
+      // (including the former why-offgrid story and the two guide posts)
+      // 301s to the story post to preserve link equity and prevent 404s on
+      // indexed URLs.
       {
         source: "/blog/getting-started-with-meshtastic",
         destination: "/beacon-2/start",
         statusCode: 301,
       },
       {
+        source: "/blog/why-offgrid",
+        destination: "/blog/why-i-built-beacon",
+        statusCode: 301,
+      },
+      {
+        source: "/blog/best-meshtastic-devices-2026",
+        destination: "/blog/why-i-built-beacon",
+        statusCode: 301,
+      },
+      {
+        source: "/blog/meshtastic-vs-lorawan",
+        destination: "/blog/why-i-built-beacon",
+        statusCode: 301,
+      },
+      {
         source: "/blog/what-is-lora-mesh-off-grid-communication-explained",
-        destination: "/blog/why-offgrid",
+        destination: "/blog/why-i-built-beacon",
         statusCode: 301,
       },
       {
         source: "/blog/meshtastic-vs-walkie-talkies-frs-gmrs",
-        destination: "/blog/why-offgrid",
+        destination: "/blog/why-i-built-beacon",
         statusCode: 301,
       },
       {
         source: "/blog/backup-comms-when-cell-towers-go-down",
-        destination: "/blog/why-offgrid",
+        destination: "/blog/why-i-built-beacon",
         statusCode: 301,
       },
     ];
