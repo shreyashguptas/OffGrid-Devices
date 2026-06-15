@@ -55,6 +55,155 @@ const DEFAULT_AUTHOR: BlogAuthor = {
 
 export const blogPosts = [
   {
+    slug: "project-cheap-drone",
+    title: "Project Cheap Drone",
+    seoTitle: "Project Cheap Drone: Building the Cheapest Drone I Can, in Public",
+    metaDescription:
+      "I've never flown a drone, so I'm building the cheapest one I can from off-the-shelf parts — and documenting every part, cost, and crash in public.",
+    keywords: [
+      "Project Cheap Drone",
+      "build a cheap drone",
+      "DIY drone build",
+      "3D printed drone",
+      "FPV drone for beginners",
+      "drone supply chain US",
+      "VelociDrone simulator",
+      "cheapest drone build",
+      "OffGrid Devices",
+    ],
+    excerpt:
+      "I've never flown a drone. I've never even picked up the controller. So naturally, I'm building one from scratch — the cheapest one I can — and documenting every part, cost, and crash along the way.",
+    date: "June 2026",
+    publishedAt: "2026-06-15",
+    updatedAt: "2026-06-15",
+    readTime: "6 min read",
+    category: "Project",
+    author: DEFAULT_AUTHOR,
+    image: "/blog/project-cheap-drone/cover.jpg",
+    heroImageAlt:
+      "A workbench laid out with drone-building gear — a bench power supply, multimeter, soldering iron station, hot glue gun, pliers, a RadioMaster radio controller, a flight controller board, ESCs and battery leads — in front of labeled parts drawers.",
+    sections: [
+      {
+        type: "paragraph",
+        content:
+          "I have never flown a drone. I don't mean I'm bad at it. I mean I have never picked up the controller. So naturally, the thing I've decided to do is build one from scratch.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "This is the first post in a series I'm calling Project Cheap Drone, and I'm running it under OffGrid. I'll be posting updates here on my site and dropping shorter ones on X as I go, so if you want to follow along, that's where it lives. I didn't start today — I've already been quietly working on the first piece of it — but this is me opening it up in public.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "The idea, in one line: build the cheapest drone I possibly can out of off-the-shelf parts, and document everything. What's hard, what's easy, what breaks, what's missing. Then go from there.",
+      },
+      { type: "heading", content: "Why a drone, and why now" },
+      {
+        type: "paragraph",
+        content:
+          "Look around. Drones are everywhere. They've gone from a hobby you do in a park to something countries are using in their actual external affairs. And running alongside that, there's this constant conversation about bringing manufacturing back to the US, about owning the supply chain. \"Supply chain\" has turned into one of those words everyone says. I think it's more than a word. I think it genuinely matters for the US to control the key pieces of how these things get made.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "That's the thread I care about. Not the geopolitics for its own sake, but the practical question sitting underneath it: can a regular person, with a 3D printer and a credit card, build something that flies? And when they try, where exactly does the supply chain bite? Which parts are cheap, which are expensive because of the trade situation, and which ones you flat-out can't get anymore?",
+      },
+      {
+        type: "paragraph",
+        content:
+          "I already know going in that some parts will cost more than they should, and a few might not be available at all because of what's happening with these components and trade. I'm not pretending that away. The goal is just to build one that's as cheap as possible, that flies, and that flies well — and to be honest about the cost of every single part along the way.",
+      },
+      { type: "heading", content: "The honest version of \"made in USA\"" },
+      {
+        type: "paragraph",
+        content:
+          "I want to be careful here, because it's easy to wave a flag and get the facts wrong. Right now, a truly domestic drone supply chain at hobby scale basically doesn't exist. When I went down the motor rabbit hole, the rare-earth magnet refining alone was a wall I couldn't get past. So I'm not going to stand here and tell you I've cracked it.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "But there are real signs of it starting. People are spinning up actuator companies for robotics and drones. People are building flight controllers — the brain of the drone — here in the US for somewhere around $60 to $200. Compare that to the $600-plus those domestic boards used to run, and you can see the direction it's heading. It's new. It hasn't been happening long. And it's a real step in the right direction.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "I'm not going to solve the supply chain by myself. But I can document, very concretely, where it hurts. And maybe someone reading this — someone with more resources than I have — sees a problem I describe and goes and builds the company that fixes it. I've watched that exact thing happen with actuators and control boards. That's an outcome I'd be genuinely happy with.",
+      },
+      { type: "heading", content: "Where I'm starting: Phase 0 and Phase 1" },
+      {
+        type: "paragraph",
+        content:
+          "I'm keeping this simple and public. There are more phases after these, but I'm only talking about the first two for now. The later ones, where this turns into solving an actual problem in the market, I'll share when I get there. Think of it as a slow reveal.",
+      },
+      {
+        type: "subheading",
+        content: "Phase 0 — Learn to fly, for almost nothing",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Before I spend real money, I'm flying in a simulator. I'm on a Mac, and the one I landed on is VelociDrone (velocidrone.com). Twenty bucks, runs natively, and I can plug in a controller and practice crashing where crashing costs nothing. The goal of this phase is embarrassingly basic: stop crashing on takeoff. Build the muscle memory on a screen first, so I'm not snapping props and motors learning the same lesson at $15 a pop.",
+      },
+      {
+        type: "subheading",
+        content: "Phase 1 — Build the cheapest small drone I can, and fly it",
+      },
+      {
+        type: "paragraph",
+        content:
+          "This is the real start. One small, cheap, mostly 3D-printed quad. I print the frame and the mounts; I buy the parts that actually have to be bought — the motors, the flight controller, the battery, the radio. You can't 3D print the guts. I tried to talk myself into it. You can't. Then I wire it, configure it, and fly it line of sight, close to the ground, short flights. I crash it, fix it, and figure out why it crashed. That loop is the entire point. I'm keeping it small and under the weight where the paperwork kicks in, on purpose.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "I'll be sharing the pain points as I hit them: the stuff the tutorials skip, the parts that don't fit, the settings nobody bothers to explain. If you've built drones before, a lot of this is going to be obvious to you, and that's fine. I think there's real value in watching someone do it for the first time and saying out loud what's actually confusing.",
+      },
+      { type: "heading", content: "What's after this" },
+      {
+        type: "paragraph",
+        content:
+          "Phase 2 and Phase 3 exist. They're where the LoRa mesh work I do at OffGrid meets the drone, and where this stops being a learning project and starts being something that solves a real problem. But that's a later post. For now I want to get the basics right, in public, and bring you along for it.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "If you want to follow the build, I'll be posting here and on X. Come watch me figure out which end is up.",
+      },
+      {
+        type: "paragraph",
+        content: "— Shreyash",
+      },
+    ],
+    faq: [
+      {
+        question: "What is Project Cheap Drone?",
+        answer:
+          "It's a public build series from OffGrid where I try to build the cheapest flyable drone I can out of off-the-shelf parts, and document every part, cost, and mistake along the way. This first post kicks it off; updates run here and on X.",
+      },
+      {
+        question: "Have you built or flown a drone before?",
+        answer:
+          "No — I'd never even picked up a controller when I started. That's part of the point. The series captures what's genuinely confusing the first time around, including the stuff most tutorials quietly skip.",
+      },
+      {
+        question: "How are you keeping it cheap?",
+        answer:
+          "The frame and mounts are 3D-printed; only the parts that have to be bought — motors, flight controller, battery, radio — get bought. I track the real cost of every part, including the ones that are expensive or hard to get because of the trade situation.",
+      },
+      {
+        question: "What are the phases?",
+        answer:
+          "Phase 0 is learning to fly in a simulator (VelociDrone on Mac) so crashing is free. Phase 1 is building one small, cheap, mostly 3D-printed quad and flying it line of sight. Later phases connect it to the LoRa mesh work at OffGrid, but those come later.",
+      },
+      {
+        question: "Is this related to OffGrid's mesh radios?",
+        answer:
+          "Eventually, yes. The later phases are where the LoRa mesh work I do at OffGrid meets the drone. For now the series is focused on getting the basics of building and flying right, in public.",
+      },
+    ],
+  },
+  {
     slug: "why-i-built-beacon",
     title: "Why I Built Beacon: the Mesh Radio I Kept Leaving at Home",
     seoTitle: "Why I Built OffGrid Beacon — the MagSafe Story",
