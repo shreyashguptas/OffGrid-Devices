@@ -73,8 +73,8 @@ export default function ShippingPage() {
           </li>
         </ul>
         <p>
-          You&rsquo;ll receive a shipping confirmation email with a tracking
-          number the moment the carrier picks the package up.
+          You&rsquo;ll receive a shipping confirmation email from Etsy with a
+          tracking number the moment the carrier picks the package up.
         </p>
 
         <h2>Out-of-stock notice</h2>

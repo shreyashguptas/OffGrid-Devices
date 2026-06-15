@@ -53,7 +53,8 @@ export default function PrivacyPage() {
           <li>
             <strong>Order data</strong> — name, shipping address, billing
             address, email, phone (optional), and the items you ordered.
-            Collected by Etsy at checkout when you place an order.
+            Collected by Etsy, the marketplace where the Beacon listing lives,
+            on Etsy&rsquo;s own checkout.
           </li>
           <li>
             <strong>Support email</strong> — when you email
@@ -92,7 +93,8 @@ export default function PrivacyPage() {
         <ul>
           <li>To fulfill, ship, and provide support for your order.</li>
           <li>
-            To send order confirmation and shipping update emails (via Etsy).
+            To send order confirmation and shipping update emails (via
+            Etsy).
           </li>
           <li>
             To respond when you contact hello@offgridevices.com.
@@ -120,8 +122,8 @@ export default function PrivacyPage() {
         <h2>Third parties we rely on</h2>
         <ul>
           <li>
-            <strong>Etsy</strong> — checkout, payment processing, order
-            fulfillment data. etsy.com/legal/privacy
+            <strong>Etsy</strong> — marketplace, checkout, payment processing,
+            order fulfillment data. etsy.com/legal/privacy
           </li>
           <li>
             <strong>Cloudflare</strong> — hosting, edge network, server

@@ -128,6 +128,14 @@ export default function Beacon1Product() {
               date: testimonial.date,
               review: testimonial.review,
             })),
+            // Beacon 1 is permanently retired and has no buy path. With no
+            // price, the Product JSON-LD emits no Offer block, so the page
+            // claims no price or purchasable availability — consistent with a
+            // sold-out, sunset product.
+            offer: {
+              priceCurrency: "USD",
+              availability: "OutOfStock",
+            },
           }),
         )}
       />

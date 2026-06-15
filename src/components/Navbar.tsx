@@ -5,10 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Beacon2CheckoutButton } from "@/components/Beacon2CheckoutButton";
+import { Beacon2BuyLink } from "@/components/Beacon2BuyLink";
 import { BadgeEmberOutline } from "@/components/shared/BadgeEmberOutline";
 import { BeaconWordmark, WaypointMark } from "@/components/shared/WaypointMark";
-import { beacon2Content, siteProducts } from "@/content/products";
+import { siteProducts } from "@/content/products";
 import { primaryNavLinks, productsMenuLabel } from "@/content/navigation";
 
 export function Navbar() {
@@ -246,9 +246,7 @@ function NavbarContent() {
               {link.label}
             </Link>
           ))}
-          <Beacon2CheckoutButton
-            defaultLabel={beacon2Content.summary.buyLabel}
-            loadingLabel={beacon2Content.summary.loadingLabel}
+          <Beacon2BuyLink
             surface="nav-desktop"
             className="bg-bone px-5 py-3 font-display text-[12px] font-bold tracking-[0.14em] uppercase text-pitch transition-all duration-300 hover:bg-ember hover:text-pitch disabled:opacity-60 disabled:cursor-not-allowed"
           />
@@ -372,9 +370,7 @@ function NavbarContent() {
                   {link.label}
                 </Link>
               ))}
-              <Beacon2CheckoutButton
-                defaultLabel={beacon2Content.summary.buyLabel}
-                loadingLabel={beacon2Content.summary.loadingLabel}
+              <Beacon2BuyLink
                 surface="nav-mobile"
                 className="mt-2 px-5 py-4 bg-bone text-pitch font-display text-[12px] font-bold tracking-[0.14em] uppercase text-center hover:bg-ember transition-all duration-300"
               />

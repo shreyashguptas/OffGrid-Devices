@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
  * Light by design: a centered single-column reading layout with eyebrow,
  * title, "Last updated" timestamp, and the lawyer's-disclaimer line at the
  * top so visitors immediately understand the content is templated and
- * should be read against an actual purchase agreement (Etsy's checkout
+ * should be read against an actual purchase agreement (Etsy checkout
  * presents its own ToS at the point of sale).
  */
 export function LegalPageShell({

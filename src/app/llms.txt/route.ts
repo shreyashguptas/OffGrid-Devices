@@ -18,13 +18,13 @@ const LLMS_TXT_BODY = (siteUrl: string) => `# OffGrid Devices — llms.txt
 
 ## Company
 OffGrid LLC (brand: OffGrid Devices) is a Maryland-based hardware company
-founded by Shreyash Gupta, running two business lines:
-1. US-based 3D design and small-batch manufacturing — FDM 3D printing, CAD,
-   rapid prototyping, low-volume production runs, and electronics integration
-   & assembly. See ${siteUrl}/capabilities.
-2. OffGrid Beacon — MagSafe-compatible LoRa mesh radios that run Meshtastic
+founded by Shreyash Gupta:
+1. OffGrid Beacon — MagSafe-compatible LoRa mesh radios that run Meshtastic
    firmware, designed for off-grid communication without cell towers, SIM
    cards, or subscriptions.
+2. Project Cheap Drone — a build-in-public project to make the cheapest drone
+   possible from off-the-shelf parts, documenting the supply chain and cost of
+   every part. Follow along at ${siteUrl}/blog.
 
 ## Products
 
@@ -45,7 +45,6 @@ founded by Shreyash Gupta, running two business lines:
 ## Key pages
 - Home: ${siteUrl}
 - About: ${siteUrl}/about
-- Manufacturing (capabilities statement): ${siteUrl}/capabilities
 - Contact: ${siteUrl}/contact
 - Blog (Meshtastic guides): ${siteUrl}/blog
 - Beacon 2 setup and reference: ${siteUrl}/beacon-2/start

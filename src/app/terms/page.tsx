@@ -64,11 +64,12 @@ export default function TermsPage() {
 
         <h2>Purchases</h2>
         <p>
-          Orders are placed and processed through Etsy, our marketplace and
-          payment provider. Etsy&rsquo;s own terms apply at the point of
-          sale. Pricing is shown in USD and may change without notice; the
-          price you pay is the price displayed at Etsy checkout. OffGrid ships
-          from the United States only.
+          Orders are placed and processed through Etsy, the marketplace where
+          the Beacon listing lives and our checkout and payment provider.
+          Etsy&rsquo;s own terms apply at the point of sale. Pricing is shown
+          in USD and may change without notice; the price you pay is the price
+          displayed on the Etsy listing at checkout. OffGrid ships from the
+          United States only.
         </p>
 
         <h2>Product warranty</h2>

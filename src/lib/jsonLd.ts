@@ -109,52 +109,6 @@ export function websiteJsonLd() {
 }
 
 /**
- * JSON-LD for the manufacturing arm (the /capabilities page). Models OffGrid's
- * 3D-design / small-batch manufacturing offering as a Service provided by
- * OffGrid LLC, with a Maryland address (city/state only — no street, matching
- * the public address granularity), a national service area, and the shop's
- * core competencies as `knowsAbout`. Deliberately claims no certifications or
- * registrations that have not been confirmed.
- */
-export function manufacturingServiceJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${getSiteUrl()}/capabilities#service`,
-    name: "3D Design & Small-Batch Manufacturing",
-    serviceType: "Contract manufacturing, 3D printing, and design services",
-    url: absoluteUrl("/capabilities"),
-    description:
-      "US-based 3D design, rapid prototyping, custom enclosures, low-volume production runs, and electronics integration & assembly.",
-    areaServed: { "@type": "Country", name: "United States" },
-    provider: {
-      "@type": "Organization",
-      "@id": `${getSiteUrl()}#organization`,
-      name: "OffGrid LLC",
-      url: getSiteUrl(),
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Rockville",
-        addressRegion: "MD",
-        addressCountry: "US",
-      },
-      knowsAbout: [
-        "FDM 3D printing",
-        "Fused deposition modeling",
-        "CAD design",
-        "Design for manufacturing",
-        "Rapid prototyping",
-        "Low-volume production",
-        "Electronics integration and assembly",
-        "LoRa mesh devices",
-        "Custom 3D-printed enclosures",
-        "ASA, ABS, TPU, and PLA materials",
-      ],
-    },
-  } as const;
-}
-
-/**
  * JSON-LD for the /contact page. A ContactPage that points back at the
  * OffGrid organization node so search engines tie the intake page to the brand.
  */
@@ -166,7 +120,7 @@ export function contactPageJsonLd() {
     url: absoluteUrl("/contact"),
     name: "Contact OffGrid Devices",
     description:
-      "Get in touch with OffGrid about manufacturing, custom design, Beacon devices, wholesale, or government inquiries.",
+      "Get in touch with OffGrid about Beacon devices, Project Cheap Drone, wholesale, or general inquiries.",
     isPartOf: { "@id": `${getSiteUrl()}#website` },
     about: { "@id": `${getSiteUrl()}#organization` },
   } as const;

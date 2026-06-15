@@ -10,7 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     blog: "2026-05-18",
     beacon2Start: "2026-05-10",
     about: "2026-05-18",
-    capabilities: "2026-05-29",
     contact: "2026-05-29",
     shipping: "2026-05-18",
     returns: "2026-05-18",
@@ -58,12 +57,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: ROUTE_LAST_MODIFIED.about,
       changeFrequency: "monthly",
       priority: 0.7,
-    },
-    {
-      url: absoluteUrl("/capabilities"),
-      lastModified: ROUTE_LAST_MODIFIED.capabilities,
-      changeFrequency: "monthly",
-      priority: 0.8,
     },
     {
       url: absoluteUrl("/contact"),
