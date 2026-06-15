@@ -68,19 +68,21 @@ export default function BlogPage() {
                 >
                   <article className="group">
                     <Link href={`/blog/${post.slug}`} className="block">
-                      {featured ? (
-                        <div className="mb-7 overflow-hidden border border-border-subtle bg-background">
-                          <Image
-                            src={post.image}
-                            alt={post.title}
-                            width={1200}
-                            height={675}
-                            priority
-                            sizes="(min-width: 768px) 768px, 100vw"
-                            className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
-                          />
-                        </div>
-                      ) : null}
+                      {/* Every post shows its hero image — not just the first.
+                          `priority` stays on the top post only so it's the LCP
+                          candidate; the rest lazy-load. This is the standing
+                          rule for all future posts. */}
+                      <div className="mb-7 overflow-hidden border border-border-subtle bg-background">
+                        <Image
+                          src={post.image}
+                          alt={post.heroImageAlt ?? post.title}
+                          width={1200}
+                          height={675}
+                          priority={featured}
+                          sizes="(min-width: 768px) 768px, 100vw"
+                          className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                        />
+                      </div>
 
                       <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
                         <span className="bg-accent/10 px-3 py-1 text-accent-text">
