@@ -47,7 +47,7 @@ export function Faq({
               <AccordionDetails
                 key={item.question}
                 className="px-6 py-5 md:px-7 md:py-6"
-                summaryClassName="gap-6"
+                summaryClassName="gap-3 sm:gap-6"
                 contentClassName="contents"
                 summary={
                   <dt className="font-display text-lg font-semibold leading-snug text-foreground md:text-xl">
@@ -55,7 +55,7 @@ export function Faq({
                   </dt>
                 }
               >
-                <dd className="mt-4 text-base leading-relaxed text-muted-light md:text-[1.05rem]">
+                <dd className="mt-4 text-base leading-relaxed text-muted-light md:text-lg">
                   {item.answer}
                 </dd>
               </AccordionDetails>

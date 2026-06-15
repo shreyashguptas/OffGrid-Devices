@@ -55,11 +55,11 @@ export default function ContactPage() {
 
       <section className="border-b border-bark/30 bg-pitch-deep py-16 md:py-20">
         <div className="mx-auto grid max-w-5xl gap-12 px-6 lg:grid-cols-[1.6fr_1fr]">
-          <div>
+          <div className="min-w-0">
             <ContactForm />
           </div>
 
-          <aside className="lg:border-l lg:border-bark/40 lg:pl-10">
+          <aside className="min-w-0 lg:border-l lg:border-bark/40 lg:pl-10">
             <p className="type-mono-label text-sand/55">PREFER EMAIL?</p>
             <p className="font-editorial mt-4 text-lg leading-[1.6] text-sand/85">
               Reach us directly at{" "}

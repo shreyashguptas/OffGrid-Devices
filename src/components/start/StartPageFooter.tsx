@@ -21,13 +21,13 @@ export function StartPageFooter() {
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <a
               href="#top"
-              className="font-medium text-foreground transition-colors hover:text-accent-dark"
+              className="inline-flex min-h-11 items-center font-medium text-foreground transition-colors hover:text-accent-dark"
             >
               Back to top
             </a>
             <a
               href="mailto:hello@offgridevices.com"
-              className="font-medium text-foreground transition-colors hover:text-accent-dark"
+              className="inline-flex min-h-11 items-center font-medium text-foreground transition-colors hover:text-accent-dark"
             >
               Email support
             </a>

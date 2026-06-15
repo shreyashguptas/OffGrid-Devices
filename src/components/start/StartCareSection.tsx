@@ -15,7 +15,7 @@ export function StartCareSection() {
         <div className="section-card overflow-hidden">
           <table className="w-full text-left text-sm md:text-base">
             <caption className="sr-only">Operating temperature ranges</caption>
-            <thead>
+            <thead className="hidden md:table-header-group">
               <tr className="border-b border-border-subtle bg-fill-muted">
                 <th
                   scope="col"
@@ -35,15 +35,19 @@ export function StartCareSection() {
               {care.temperatures.map((row, idx) => (
                 <tr
                   key={row.activity}
-                  className={idx > 0 ? "border-t border-border-subtle" : ""}
+                  className={
+                    idx > 0
+                      ? "block border-t border-border-subtle md:table-row"
+                      : "block md:table-row"
+                  }
                 >
                   <th
                     scope="row"
-                    className="px-5 py-4 font-display font-semibold text-foreground md:px-6"
+                    className="block px-5 pt-4 pb-1 font-display font-semibold text-foreground md:table-cell md:px-6 md:py-4"
                   >
                     {row.activity}
                   </th>
-                  <td className="px-5 py-4 font-mono text-sm text-foreground/85 md:px-6 md:text-base">
+                  <td className="block px-5 pt-0 pb-4 font-mono text-sm text-foreground/85 md:table-cell md:px-6 md:py-4 md:text-base">
                     {row.range}
                   </td>
                 </tr>

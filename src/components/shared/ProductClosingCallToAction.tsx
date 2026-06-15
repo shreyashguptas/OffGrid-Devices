@@ -50,11 +50,10 @@ export function ProductClosingCallToAction({
         <p className="type-eyebrow text-ember">{eyebrow}</p>
 
         <h2
-          className="mx-auto mt-6 max-w-3xl font-display text-bone uppercase"
+          className="mx-auto mt-6 max-w-3xl font-display uppercase leading-[0.95] text-bone sm:leading-[0.88]"
           style={{
             fontWeight: 900,
             fontSize: "clamp(36px, 9vw, 120px)",
-            lineHeight: 0.88,
             letterSpacing: "-0.04em",
           }}
         >

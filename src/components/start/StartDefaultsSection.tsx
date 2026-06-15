@@ -23,19 +23,19 @@ export function StartDefaultsSection() {
               <tr className="border-b border-border-subtle bg-fill-muted">
                 <th
                   scope="col"
-                  className="px-5 py-3 font-display text-xs font-semibold uppercase tracking-[0.18em] text-muted md:px-6"
+                  className="px-3 py-3 font-display text-xs font-semibold uppercase tracking-[0.18em] text-muted md:px-6"
                 >
                   Setting
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3 font-display text-xs font-semibold uppercase tracking-[0.18em] text-muted md:px-6"
+                  className="px-3 py-3 font-display text-xs font-semibold uppercase tracking-[0.18em] text-muted md:px-6"
                 >
                   Default
                 </th>
                 <th
                   scope="col"
-                  className="hidden px-5 py-3 font-display text-xs font-semibold uppercase tracking-[0.18em] text-muted md:table-cell md:px-6"
+                  className="hidden px-3 py-3 font-display text-xs font-semibold uppercase tracking-[0.18em] text-muted md:table-cell md:px-6"
                 >
                   Action
                 </th>
@@ -52,13 +52,13 @@ export function StartDefaultsSection() {
                 >
                   <th
                     scope="row"
-                    className="px-5 py-4 align-top font-display font-semibold text-foreground md:px-6"
+                    className="px-3 py-4 align-top font-display font-semibold text-foreground md:px-6"
                   >
                     {row.label}
                   </th>
                   <td
                     className={cn(
-                      "px-5 py-4 align-top md:px-6",
+                      "px-3 py-4 align-top md:px-6",
                       row.emphasis ? "text-bone font-semibold" : "text-foreground/85",
                     )}
                   >
@@ -71,7 +71,7 @@ export function StartDefaultsSection() {
                   </td>
                   <td
                     className={cn(
-                      "hidden px-5 py-4 align-top text-sm md:table-cell md:px-6",
+                      "hidden px-3 py-4 align-top text-sm md:table-cell md:px-6",
                       row.emphasis ? "text-bone font-semibold" : "text-muted",
                     )}
                   >
@@ -111,7 +111,7 @@ export function StartDefaultsSection() {
               href={channels.docs}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-accent-dark underline decoration-accent/40 underline-offset-4 hover:decoration-accent"
+              className="font-medium break-words text-accent-dark underline decoration-accent/40 underline-offset-4 [overflow-wrap:anywhere] hover:decoration-accent"
             >
               meshtastic.org/docs/configuration/radio/channels
             </a>

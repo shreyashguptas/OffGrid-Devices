@@ -427,6 +427,9 @@ body {
   line-height: 0.88;
   letter-spacing: -0.04em;
   text-transform: uppercase;
+  /* Long all-caps words (brand names, "PRECONFIGURED") can be wider than a
+     ~320px column. Break them as a last resort instead of overflowing the page. */
+  overflow-wrap: break-word;
 }
 
 .type-display-section {
@@ -436,6 +439,7 @@ body {
   line-height: 0.92;
   letter-spacing: -0.03em;
   text-transform: uppercase;
+  overflow-wrap: break-word;
 }
 
 .type-display-card {
@@ -444,6 +448,26 @@ body {
   font-size: clamp(28px, 4vw, 44px);
   line-height: 1.05;
   letter-spacing: -0.02em;
+  overflow-wrap: break-word;
+}
+
+/* ─── Mobile headline breathing room ──────────────────────────────────
+   The display line-heights (0.88 / 0.92) are dialed for big, often
+   single-line headlines on desktop. On phones the same headlines wrap to
+   3–4 lines and those tight line-heights make the lines — and any
+   box-decoration-clone highlight blocks behind them — collide. Loosen the
+   line-height only on small screens so wrapped mobile headlines breathe;
+   desktop keeps the canonical brand tracking and leading untouched. */
+@media (max-width: 640px) {
+  .type-display-hero {
+    line-height: 1.06;
+  }
+  .type-display-section {
+    line-height: 1.04;
+  }
+  .type-display-card {
+    line-height: 1.12;
+  }
 }
 
 /* ─── Blog reading surface ───────────────────────────────────────────

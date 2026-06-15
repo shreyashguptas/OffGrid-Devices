@@ -95,7 +95,7 @@ export default function BlogPage() {
                         className={
                           featured
                             ? "mt-5 type-display-card transition-colors duration-300 group-hover:text-accent"
-                            : "mt-4 font-display text-2xl font-semibold tracking-[-0.02em] text-foreground transition-colors duration-300 group-hover:text-accent md:text-3xl"
+                            : "mt-4 type-display-card text-foreground transition-colors duration-300 group-hover:text-accent"
                         }
                       >
                         {post.title}

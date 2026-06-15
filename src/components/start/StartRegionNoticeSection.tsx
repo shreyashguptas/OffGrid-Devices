@@ -12,7 +12,7 @@ export function StartRegionNoticeSection() {
           role="alert"
           className="overflow-hidden border border-border-emphasis border-l-2 border-l-ember bg-pitch-low"
         >
-          <div className="flex items-center gap-3 border-b border-border-subtle bg-pitch px-6 py-3 md:px-8">
+          <div className="flex flex-wrap items-center gap-3 border-b border-border-subtle bg-pitch px-6 py-3 md:px-8">
             <span
               aria-hidden="true"
               className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-ember bg-pitch-low text-sm font-bold text-ember"

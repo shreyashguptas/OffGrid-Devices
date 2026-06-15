@@ -22,7 +22,7 @@ export function Beacon1HeroSection() {
               Retired · Replaced by Beacon 2
             </div>
 
-            <h1 className="mt-6 break-words type-display-hero md:mt-8">
+            <h1 className="mt-6 type-display-hero text-pretty md:mt-8">
               {beacon1Content.summary.brandedName}
             </h1>
 

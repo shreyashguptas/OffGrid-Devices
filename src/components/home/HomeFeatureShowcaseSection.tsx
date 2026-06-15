@@ -132,10 +132,7 @@ export function HomeFeatureShowcaseSection() {
           <h2 className="type-display-section mt-5 text-bone">
             One device. Three reasons it stays in your pack.
           </h2>
-          <p
-            className="type-editorial-lead mt-6 max-w-xl text-sand"
-            style={{ fontSize: "clamp(18px, 1.8vw, 24px)" }}
-          >
+          <p className="type-editorial-lead mt-6 max-w-xl text-sand">
             Tap a mode to see what each part of Beacon 2 was built to do.
           </p>
         </div>
@@ -242,7 +239,7 @@ export function HomeFeatureShowcaseSection() {
 
                 <motion.div
                   variants={detailItem}
-                  className="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-sand/15 pt-8"
+                  className="mt-10 grid grid-cols-1 gap-x-8 gap-y-6 border-t border-sand/15 pt-8 sm:grid-cols-2"
                 >
                   {active.specs.map(([label, value]) => (
                     <div key={label}>
@@ -264,7 +261,7 @@ export function HomeFeatureShowcaseSection() {
           <div
             role="tablist"
             aria-label="Beacon features"
-            className="flex border-y border-border-card"
+            className="flex w-full border-y border-border-card sm:w-auto"
           >
             {MODES.map((mode, idx) => {
               const isActive = mode.id === activeId;
@@ -276,7 +273,7 @@ export function HomeFeatureShowcaseSection() {
                   aria-selected={isActive}
                   onClick={() => setActiveId(mode.id)}
                   className={cn(
-                    "type-eyebrow relative min-w-[112px] px-5 py-4 transition-colors hover:text-bone sm:min-w-[160px] sm:px-8 sm:py-5",
+                    "type-eyebrow relative min-w-0 flex-1 px-5 py-4 transition-colors hover:text-bone sm:min-w-[160px] sm:flex-none sm:px-8 sm:py-5",
                     isActive ? "text-foreground" : "text-muted",
                     idx < MODES.length - 1 && "border-r border-border-card",
                   )}

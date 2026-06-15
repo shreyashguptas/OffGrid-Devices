@@ -40,7 +40,7 @@ export function StartSafetySection() {
                 styles.block,
               )}
             >
-              <header className="flex items-start gap-4">
+              <header className="flex items-start gap-3 sm:gap-4">
                 {section.emoji ? (
                   <span
                     aria-hidden="true"
@@ -81,17 +81,18 @@ export function StartSafetySection() {
                       {section.rangeRows.map((row, idx) => (
                         <tr
                           key={row.activity}
-                          className={
-                            idx > 0 ? "border-t border-border-subtle" : ""
-                          }
+                          className={cn(
+                            "block md:table-row",
+                            idx > 0 && "border-t border-border-subtle",
+                          )}
                         >
                           <th
                             scope="row"
-                            className="px-5 py-3 font-display font-semibold text-foreground"
+                            className="block px-5 pt-3 pb-1 font-display font-semibold text-foreground md:table-cell md:py-3"
                           >
                             {row.activity}
                           </th>
-                          <td className="px-5 py-3 font-mono text-sm text-foreground/85 md:text-base">
+                          <td className="block px-5 pt-0 pb-3 font-mono text-sm text-foreground/85 md:table-cell md:py-3 md:text-base">
                             {row.range}
                           </td>
                         </tr>
