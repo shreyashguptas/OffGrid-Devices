@@ -1,27 +1,19 @@
 # CI, tests, and deploy gates
 
-This repo runs **lint**, **unit tests**, **dependency audit**, a **live Shopify Beacon 2 check**, **production build**, and **Playwright** on pushes and PRs to `main` / `master` (see [.github/workflows/ci.yml](../.github/workflows/ci.yml)).
+This repo runs **lint**, **unit tests**, **dependency audit**, **production build**, and **Playwright** on pushes and PRs to `main` / `master` (see [.github/workflows/ci.yml](../.github/workflows/ci.yml)).
 
 ## Scope (what we enforce)
 
 - **Phase 1 — CI hygiene**: concurrency (cancel stale runs), Node **22** aligned with `engines` in `package.json`.
-- **Phase 3 — Tests**: Vitest for API routes (mocked Shopify); Playwright for smoke + optional live Shopify API via HTTP.
+- **Phase 3 — Tests**: Vitest for the contact API route + core lib logic; Playwright for smoke tests.
 - **Phase 5 — Supply chain**: `pnpm audit --audit-level=high` in CI; [Dependabot](../.github/dependabot.yml) for weekly npm updates (grouped dev deps).
-- **Phase 7 — Deploy gate**: pushes to `main` run the full `quality` job, then a `deploy` job publishes to Cloudflare **only if `quality` passes**. A broken Beacon 2 / checkout path (or any other failing check) fails `quality`, so the `deploy` job is skipped and the previously-deployed Worker version keeps serving — nothing broken goes live. See [Deploy (automatic, on green)](#deploy-automatic-on-green).
+- **Phase 7 — Deploy gate**: pushes to `main` run the full `quality` job, then a `deploy` job publishes to Cloudflare **only if `quality` passes**. Any failing check fails `quality`, so the `deploy` job is skipped and the previously-deployed Worker version keeps serving — nothing broken goes live. See [Deploy (automatic, on green)](#deploy-automatic-on-green).
 
-## Shopify secrets
+## Buying (Etsy)
 
-Secrets live in two places:
-
-- **GitHub Actions repository secrets** — used by the `quality` job's live `verify:shopify` step.
-- **Cloudflare Workers runtime** — `wrangler.jsonc` `vars` for public values, `wrangler secret put <NAME>` for tokens.
-
-| Variable                                                                | Purpose                                        |
-| ----------------------------------------------------------------------- | ---------------------------------------------- |
-| `SHOPIFY_STORE_DOMAIN`                                                  | Store domain (e.g. `your-store.myshopify.com`) |
-| `SHOPIFY_STOREFRONT_PRIVATE_TOKEN` or `SHOPIFY_STOREFRONT_PUBLIC_TOKEN` | Storefront API access                          |
-
-Optional: `SHOPIFY_STOREFRONT_API_VERSION` (defaults in app code if unset).
+There is no on-site checkout to gate or verify in CI. Beacon 2 "buy" buttons link out to a
+single Etsy listing (`BEACON2_ETSY_URL` in `src/components/Beacon2BuyLink.tsx`); Beacon 1 is
+sold out with no buy link.
 
 ## PostHog
 
@@ -81,12 +73,11 @@ fail closed automatically.
 
 ### Rate limiting (already provisioned via `ratelimits` in `wrangler.jsonc`)
 
-The public endpoints (`/api/contact`, `/api/shopify/beacon-2`, `.../checkout`) are rate
-limited per client IP using Cloudflare's Rate Limiting binding — counters are shared
-across Worker isolates within a Cloudflare location. The key is derived from
-`cf-connecting-ip` (a forged `x-forwarded-for` cannot bypass it). No setup needed; the
-`RL_CONTACT` / `RL_CHECKOUT` / `RL_PRODUCT` namespaces provision on deploy. Local `next
-dev` (no binding) falls back to an in-memory counter.
+The public `/api/contact` endpoint is rate limited per client IP using Cloudflare's Rate
+Limiting binding — counters are shared across Worker isolates within a Cloudflare location.
+The key is derived from `cf-connecting-ip` (a forged `x-forwarded-for` cannot bypass it). No
+setup needed; the `RL_CONTACT` namespace provisions on deploy. Local `next dev` (no binding)
+falls back to an in-memory counter.
 
 ### Cloudflare Email Sending (optional — to avoid Resend)
 
@@ -114,25 +105,14 @@ The `deploy` job authenticates to Cloudflare with two repository secrets:
 
 Public build-time values (`NEXT_PUBLIC_*`) are read from the committed `.env`, so the deployed bundle carries analytics + Turnstile exactly like a local build. Secrets are **not** in `.env` — they stay in gitignored `.env.local` (local) and `wrangler secret put` (runtime).
 
-## Fork pull requests
-
-Fork PRs do not receive your repository secrets. The workflow **skips** the live `verify:shopify` step with a notice.
-
-## Emergency override (avoid if possible)
-
-Setting `SKIP_SHOPIFY_VERIFY=1` skips the verify script only when you explicitly set it (e.g. local debugging). Do not set it in CI if you want the deploy gate to keep a broken checkout off the live site.
-
 ## Local commands
 
 ```bash
 pnpm lint
 pnpm test
-pnpm verify:shopify   # needs .env.local with Shopify vars
 pnpm build
 pnpm test:e2e:install # one-time local Playwright browser install
 pnpm test:e2e         # builds are required; Playwright starts `pnpm start`
 ```
-
-Playwright live Shopify specs skip automatically if `SHOPIFY_STORE_DOMAIN` is unset.
 
 The dev server for e2e uses port **3123** by default (`E2E_PORT`) so it does not clash with `pnpm dev` on 3000.
