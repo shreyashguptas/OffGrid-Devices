@@ -9,7 +9,7 @@ import { FlightPlanHome } from "@/components/landing/FlightPlanHome";
 const HOMEPAGE_TITLE =
   "OffGrid Devices — Mesh Radios When Towers Aren't There";
 const HOMEPAGE_DESCRIPTION =
-  "OffGrid builds MagSafe-compatible LoRa mesh radios that run Meshtastic — and builds hardware in the open, like Project Cheap Drone. No towers, no SIMs, no subscriptions.";
+  "OffGrid builds MagSafe LoRa mesh radios that run Meshtastic — plus open hardware like Project Cheap Drone. No towers, no SIMs, no subscriptions.";
 
 export const metadata: Metadata = {
   title: { absolute: HOMEPAGE_TITLE },

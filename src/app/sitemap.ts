@@ -4,9 +4,9 @@ import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const ROUTE_LAST_MODIFIED = {
-    home: "2026-05-31",
-    beacon2: "2026-05-31",
-    beacon1: "2026-05-17",
+    home: "2026-06-14",
+    beacon2: "2026-06-14",
+    beacon1: "2026-06-14",
     blog: "2026-05-18",
     beacon2Start: "2026-05-10",
     about: "2026-05-18",

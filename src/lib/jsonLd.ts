@@ -246,19 +246,30 @@ export function productJsonLd(input: ProductSchemaInput) {
     product.gtin = input.gtin;
   }
 
-  if (input.offer?.price) {
-    product.offers = {
+  if (input.offer) {
+    const offer: Record<string, unknown> = {
       "@type": "Offer",
       url: absoluteUrl(input.url),
-      price: input.offer.price,
       priceCurrency: input.offer.priceCurrency,
       availability: `https://schema.org/${input.offer.availability}`,
-      priceValidUntil: input.offer.priceValidUntil,
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@type": "Organization", name: ORGANIZATION_NAME },
-      hasMerchantReturnPolicy: OFFGRID_RETURN_POLICY,
-      shippingDetails: OFFGRID_SHIPPING_DETAILS,
     };
+
+    // A purchasable offer (real price) carries the full commercial payload:
+    // price, validity window, and the free-shipping / free-returns policies
+    // that unlock Google Shopping eligibility. A retired product (availability
+    // only, no price) still emits a bare Offer so the OutOfStock signal reaches
+    // search engines and the Product's reviews stay paired with an Offer
+    // (Google expects review/aggregateRating markup to sit alongside one).
+    if (input.offer.price) {
+      offer.price = input.offer.price;
+      offer.priceValidUntil = input.offer.priceValidUntil;
+      offer.hasMerchantReturnPolicy = OFFGRID_RETURN_POLICY;
+      offer.shippingDetails = OFFGRID_SHIPPING_DETAILS;
+    }
+
+    product.offers = offer;
   }
 
   return product;
