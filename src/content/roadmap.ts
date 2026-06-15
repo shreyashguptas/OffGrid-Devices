@@ -185,19 +185,10 @@ export const roadmapPhases: RoadmapPhase[] = [
       {
         date: "12 Jun 2026",
         kind: "learned",
-        title: "Throttle is everything",
         body: [
           "Spent the evening doing nothing but hover drills. The whole game is the throttle hand — tiny, smooth corrections, not big stabs. The moment I tried to be quick, I over-corrected and pancaked it.",
           "Next session I'm going to fly with the rates turned way down and just sit in a stable hover for five minutes straight before I let myself move anywhere.",
         ],
-        images: [
-          {
-            // placeholder image (re-uses an existing asset) — swap for a real sim screenshot
-            src: "/beacon-2/parallax/hero-front.jpg",
-            alt: "Placeholder — replace with a Phase 0 sim screenshot",
-          },
-        ],
-        tweetUrl: "https://x.com/ShreyashGuptas",
       },
       {
         date: "9 Jun 2026",
