@@ -36,7 +36,7 @@ const MONTH_NAMES = [
  * ISO 8601 is the documented preferred format. We keep human dates in content
  * for display and only normalize at the JSON-LD boundary.
  */
-function toIsoDate(date: string): string {
+export function toIsoDate(date: string): string {
   if (!date) return date;
 
   // Already ISO (YYYY-MM-DD or full timestamp) — pass through.
