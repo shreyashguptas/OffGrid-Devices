@@ -12,8 +12,7 @@ const projectRoot = dirname(fileURLToPath(import.meta.url));
 //     React hydrates; using a nonce would defeat the "early" goal)
 //   - JSON-LD <script type="application/ld+json"> blocks
 //   - Tailwind's runtime style injection
-// Shopify CDN serves product imagery. Tighten further once we have a CSP
-// report endpoint.
+// All imagery is now first-party (served from /public), so img-src stays 'self'.
 const contentSecurityPolicy = [
   "default-src 'self'",
   // 'wasm-unsafe-eval' is needed because @react-three/drei sets up the
@@ -29,8 +28,6 @@ const contentSecurityPolicy = [
   // button stays permanently disabled once a Turnstile site key is set.
   "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline'",
-  // All imagery is now first-party — Beacon 1 photos were re-hosted off the
-  // retired Shopify CDN into public/products/, so no remote image host is needed.
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
   // blob: is needed because three.js/drei reads GLB-embedded textures as
@@ -70,10 +67,6 @@ const nextConfig: NextConfig = {
     // serves straight from the cached ASSETS binding (cf-cache-status: HIT) and
     // never touches the SSR Worker. Source images are pre-sized JPEGs, so there
     // is no optimization left to do.
-    //
-    // All images are first-party (served from public/), so no remotePatterns
-    // allow-list is required — the former cdn.shopify.com entry was removed when
-    // the Beacon 1 photos were re-hosted locally.
     unoptimized: true,
   },
   // PostHog ingest + asset bundle proxied behind /ingest so the browser only

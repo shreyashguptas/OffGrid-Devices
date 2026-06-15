@@ -235,18 +235,8 @@ export const roadmapPhases: RoadmapPhase[] = [
   },
 ];
 
-/** Convenience splits for the layouts that render the two lanes separately. */
-export const beaconPhases = roadmapPhases.filter((p) => p.track === "beacon");
-export const dronePhases = roadmapPhases.filter((p) => p.track === "drone");
-
-/** The single "you are here" phase (exactly one is `active`). */
-export const activePhase =
-  roadmapPhases.find((p) => p.status === "active") ?? roadmapPhases[0];
-
-/** Phase index used by the Mission Control progress rail ("3 of 6"). */
-export const activePhaseIndex = roadmapPhases.findIndex(
-  (p) => p.status === "active",
-);
+/** Phase index used to split the timeline into "recent" and "ahead" lanes. */
+const activePhaseIndex = roadmapPhases.findIndex((p) => p.status === "active");
 
 /**
  * Newest-first view for the Flight Plan "build log" layout.
