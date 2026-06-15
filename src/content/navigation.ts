@@ -15,12 +15,10 @@ export const productsMenuLabel = "Meshtastic Devices";
  * dropdown and before the Beacon 2 buy button. Drives both the desktop bar
  * and the mobile menu so the two never drift apart.
  *
- * - Manufacturing → the 3D-design / small-batch manufacturing business line.
- * - Blog → existing field notes.
- * - Contact → the new prospect intake.
+ * - Blog → field notes + the Project Cheap Drone build log.
+ * - Contact → the prospect intake.
  */
 export const primaryNavLinks: NavLink[] = [
-  { label: "Manufacturing", href: "/capabilities" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];

@@ -3,7 +3,6 @@
  * See https://opennext.js.org/cloudflare
  *
  * Secrets (set via `wrangler secret put NAME`):
- *   - SHOPIFY_STOREFRONT_PRIVATE_TOKEN
  *   - RESEND_API_KEY        (contact form email; optional if using the
  *                            Cloudflare Email Sending binding — see below)
  *   - TURNSTILE_SECRET_KEY  (contact form bot check; optional until set. Once
@@ -25,11 +24,6 @@
   },
   "workers_dev": true,
   "vars": {
-    "SHOPIFY_STORE_DOMAIN": "j2s9ka-pi.myshopify.com",
-    "SHOPIFY_STOREFRONT_PUBLIC_TOKEN": "130742849e20d84e1a9df24eeeefe889",
-    "SHOPIFY_STOREFRONT_API_VERSION": "2026-04",
-    "SHOPIFY_LINK_1_HANDLE": "link-1",
-    "SHOPIFY_LINK_2_HANDLE": "beacon-2-by-offgrid-magsafe-compatible-mesh-communicator",
     "NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN": "phc_AXfaoqJ8czPwrecHrKPuQ65gobFzm3EwxfrEgWYpn4rD",
     "NEXT_PUBLIC_POSTHOG_HOST": "/ingest",
     "NEXT_PUBLIC_POSTHOG_UI_HOST": "https://us.posthog.com",
@@ -56,16 +50,6 @@
       "name": "RL_CONTACT",
       "namespace_id": "1001",
       "simple": { "limit": 5, "period": 60 }
-    },
-    {
-      "name": "RL_CHECKOUT",
-      "namespace_id": "1002",
-      "simple": { "limit": 10, "period": 60 }
-    },
-    {
-      "name": "RL_PRODUCT",
-      "namespace_id": "1003",
-      "simple": { "limit": 120, "period": 60 }
     }
   ],
   // Contact notifications try the Cloudflare Email Sending binding first, then

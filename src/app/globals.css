@@ -316,6 +316,16 @@
   --color-primary: var(--app-accent);
   --color-primary-foreground: var(--app-on-accent);
   --color-secondary-foreground: var(--app-fg);
+
+  /* ─── Layout — site shell width ────────────────────────────────────────
+     The brand handoff specifies a 1280px max width, but we deliberately
+     widen the outer section shells one notch so the page fills more of a
+     large monitor. Only the *shells* grow — text columns are capped
+     separately (max-w-3xl/2xl/xl) and keep their readable measure. Every
+     section container, the navbar, and the footer use max-w-7xl / max-w-6xl,
+     so overriding these two container tokens widens the whole site at once. */
+  --container-6xl: 80rem; /* 1280px (was 1152px) */
+  --container-7xl: 90rem; /* 1440px (was 1280px) */
 }
 
 /* ─── 5 · Page chrome ─────────────────────────────────────────────── */

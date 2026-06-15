@@ -13,34 +13,31 @@ import {
   jsonLdScriptProps,
   productJsonLd,
 } from "@/lib/jsonLd";
-import { loadProductForPage } from "@/lib/loadProductForPage";
-import { priceValidUntilEndOfYear } from "@/lib/seoPriceValidUntil";
-import { getBeacon2ProductWithCache } from "@/lib/shopify";
 
 /**
  * Beacon 2 product page — the single, definitive Beacon 2 surface.
  *
  * This page now carries the full marketing story (3D model hero, the zoom
  * collage, the feature showcase, the editorial quote, the spec sheet, and
- * testimonials) merged with the commercial buy elements (live Shopify price +
- * checkout in the hero, FAQ, and a closing CTA). The company home (`/`) is an
- * Organization/lineup landing page and links here for both "Learn More" and
- * "Buy" — so the entire Beacon 2 narrative lives at one canonical URL.
+ * testimonials) merged with the buy path (an Etsy buy link in the hero, FAQ,
+ * and a closing CTA). The company home (`/`) is an Organization/lineup landing
+ * page and links here for both "Learn More" and "Buy" — so the entire Beacon 2
+ * narrative lives at one canonical URL.
  *
- * SEO/commerce roles this page owns:
+ * SEO roles this page owns:
  *   1. The canonical Product entity Google indexes (sole Product JSON-LD on the
  *      site — the home no longer emits one).
- *   2. A Google Merchant Center / Shopping destination URL with a real Product
- *      JSON-LD block (price, availability, MPN, etc.).
- *   3. The full spec sheet + focused FAQ for "buy / spec sheet" search intent.
+ *   2. The full spec sheet + focused FAQ for "buy / spec sheet" search intent.
  *
- * Architecture: Server Component. Shopify price + availability are fetched at
- * request time via the cached `getBeacon2ProductWithCache()` helper and baked
- * into both the JSON-LD Offer and the hero's checkout button label before HTML
- * ships, so Googlebot's single-pass render sees the real price. The 3D hero's
- * `Beacon2CheckoutButton` and the closing CTA are Client Components (cart
- * creation is interactive); everything SEO-critical is server-rendered. The
- * hero `<section>` carries `id="buy"` so `/products/beacon-2#buy` lands on it.
+ * Note: price + availability are intentionally NOT claimed in the Product
+ * JSON-LD here. Checkout and payment happen on the Etsy listing, which is the
+ * authoritative source for price and stock, so the on-site schema omits the
+ * Offer rather than risk stale pricing.
+ *
+ * Architecture: Server Component. The hero's buy link and the closing CTA are
+ * Client Components (they fire an analytics event on click); everything
+ * SEO-critical is server-rendered. The hero `<section>` carries `id="buy"` so
+ * `/products/beacon-2#buy` lands on it.
  */
 
 const TITLE = "Buy OffGrid Beacon 2 — MagSafe LoRa Mesh Radio";
@@ -132,18 +129,7 @@ const PRODUCT_FAQS = [
   },
 ];
 
-export default async function Beacon2Product() {
-  const product = await loadProductForPage(
-    "Beacon 2 product for product page",
-    getBeacon2ProductWithCache,
-  );
-  const price = product?.variant?.price?.amount;
-  const priceCurrency = product?.variant?.price?.currencyCode ?? "USD";
-  const availability =
-    product?.availableForSale && product.variant?.availableForSale
-      ? "InStock"
-      : "OutOfStock";
-
+export default function Beacon2Product() {
   return (
     <>
       <script
@@ -165,14 +151,10 @@ export default async function Beacon2Product() {
             ],
             // aggregateRating + reviews removed until Beacon-2-specific
             // testimonials exist (legacy reviews describe Beacon 1).
-            offer: price
-              ? {
-                  price,
-                  priceCurrency,
-                  availability,
-                  priceValidUntil: priceValidUntilEndOfYear(),
-                }
-              : undefined,
+            // No Offer: price + availability live on the Etsy listing, the
+            // authoritative buy path, so the on-site schema makes no price or
+            // availability claim that could go stale.
+            offer: undefined,
           }),
         )}
       />
@@ -190,9 +172,9 @@ export default async function Beacon2Product() {
       {/* FAQPage JSON-LD is emitted by the <Faq> component itself, not
           duplicated here. */}
 
-      {/* 3D hero — leads the page; holds the live-price checkout button.
+      {/* 3D hero — leads the page; holds the Etsy buy link.
           Carries id="buy" so /products/beacon-2#buy scrolls here. */}
-      <HomeHeroSection product={product} />
+      <HomeHeroSection />
 
       {/* I · The Object — zoom collage */}
       <HomeProductDetailsSection />

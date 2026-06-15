@@ -73,7 +73,7 @@ export default function ShippingPage() {
           </li>
         </ul>
         <p>
-          You&rsquo;ll receive a Shopify shipping confirmation email with a
+          You&rsquo;ll receive a shipping confirmation email from Etsy with a
           tracking number the moment the carrier picks the package up.
         </p>
 

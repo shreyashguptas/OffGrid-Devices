@@ -21,8 +21,8 @@ import { useReducedMotion } from "framer-motion";
  *    hidden (visibilitychange) — it's the highest-traffic page, so it idles
  *    cheaply. Pointer-events are off; the parent section drives the cursor.
  *
- * Client Component (canvas + rAF). Rendered behind the hero copy by
- * CompanyHeroSection, which layers a legibility scrim on top.
+ * Client Component (canvas + rAF). Rendered behind the home hero copy by
+ * FlightPlanHome, which layers a legibility scrim on top.
  */
 
 type RGB = [number, number, number];

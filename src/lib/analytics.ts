@@ -43,22 +43,6 @@ export const trackBlogScrollDepth = (
 export const trackFaqOpen = (question: string, page: string) =>
   fanout("faq_open", { question, page });
 
-export type CheckoutStage = "opened" | "redirected" | "blocked" | "failed";
-
-export type CheckoutEventProperties = {
-  product: Product;
-  surface: BuySurface;
-  latency_ms?: number;
-  reason?: string;
-};
-
-export function trackShopifyCheckout(
-  stage: CheckoutStage,
-  props: CheckoutEventProperties,
-) {
-  fanout(`shopify_checkout_${stage}`, props);
-}
-
 // Read PostHog's anonymous distinct ID so the server-side event captured
 // from a Route Handler stitches to the same person profile as the client.
 export function getPostHogDistinctId(): string | undefined {
