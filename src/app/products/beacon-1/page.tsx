@@ -128,10 +128,11 @@ export default function Beacon1Product() {
               date: testimonial.date,
               review: testimonial.review,
             })),
-            // Beacon 1 is permanently retired and has no buy path. With no
-            // price, the Product JSON-LD emits no Offer block, so the page
-            // claims no price or purchasable availability — consistent with a
-            // sold-out, sunset product.
+            // Beacon 1 is permanently retired and has no buy path. The Offer
+            // carries availability (OutOfStock) but no price — so the page makes
+            // no price claim while still emitting a valid Offer that (a) signals
+            // sold-out to search engines and (b) keeps the review/aggregateRating
+            // markup paired with an Offer, as Google expects.
             offer: {
               priceCurrency: "USD",
               availability: "OutOfStock",

@@ -67,7 +67,7 @@ export const beacon1Content = {
       alt: "OffGrid Beacon 1 MagSafe LoRa radio hero image",
     },
     productImage: {
-      src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
+      src: "/products/beacon1-product-1.jpg",
       alt: "OffGrid Beacon 1 MagSafe LoRa radio",
     },
   },
@@ -192,7 +192,7 @@ export const beacon1Content = {
         "MagSafe puts Beacon 1 on the phone you already carry, so the radio is with you when you actually need it.",
       chips: ["MagSafe", "No loose gear"],
       image:
-        "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
+        "/products/beacon1-product-1.jpg",
       alt: "OffGrid Beacon 1 MagSafe-mounted to a phone",
     },
     {
@@ -205,7 +205,7 @@ export const beacon1Content = {
         "When cell service drops away, LoRa keeps messages moving through the mesh without relying on a tower.",
       chips: ["Off-grid", "Peer to peer"],
       image:
-        "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
+        "/products/beacon1-product-3.jpg",
       alt: "OffGrid Beacon 1 used outdoors",
     },
     {
@@ -218,7 +218,7 @@ export const beacon1Content = {
         "Rechargeable power and USB-C make Beacon 1 easy to top off before a trip and easy to trust once you're out.",
       chips: ["USB-C", "Adventure ready"],
       image:
-        "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
+        "/products/beacon1-product-2.jpg",
       alt: "OffGrid Beacon 1 internal hardware and battery",
     },
     {
@@ -231,7 +231,7 @@ export const beacon1Content = {
         "The transparent shell shows the hardware inside instead of hiding it behind extra styling.",
       chips: ["Visible internals", "Distinctive look"],
       image:
-        "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
+        "/products/beacon1-product-2.jpg",
       alt: "Transparent OffGrid Beacon 1 close-up",
     },
     {
@@ -244,7 +244,7 @@ export const beacon1Content = {
         "Beacon 1 fits the Meshtastic or MeshCore workflow you already use instead of forcing a new one.",
       chips: ["Meshtastic", "MeshCore"],
       image:
-        "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
+        "/products/beacon1-product-1.jpg",
       alt: "OffGrid Beacon 1 product view",
     },
     {
@@ -257,7 +257,7 @@ export const beacon1Content = {
         "Messages can hop across nearby devices, so the network gets tougher as more people join.",
       chips: ["Shared coverage", "Resilient"],
       image:
-        "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
+        "/products/beacon1-product-3.jpg",
       alt: "OffGrid Beacon 1 used during an outdoor trip",
     },
   ] satisfies Beacon1FeatureHighlight[],
@@ -311,7 +311,7 @@ export const beacon1Content = {
       description:
         "MagSafe keeps the radio with the device already in your hand, whether you're on a trail, at an event, or off the grid.",
       image:
-        "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
+        "/products/beacon1-product-3.jpg",
       alt: "OffGrid Beacon 1 outdoor use",
     },
     {
@@ -320,7 +320,7 @@ export const beacon1Content = {
       description:
         "The enclosure shows the RAK board, battery, and antenna with no extra visual noise around it.",
       image:
-        "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
+        "/products/beacon1-product-2.jpg",
       alt: "OffGrid Beacon 1 detail view",
     },
   ] satisfies Beacon1GalleryCard[],
@@ -331,7 +331,7 @@ export const beacon1Content = {
       description:
         "Beacon 1 snaps to the device you already reach for, so you don't have to remember a separate radio before heading out.",
       image:
-        "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
+        "/products/beacon1-product-3.jpg",
       alt: "OffGrid Beacon 1 outdoor use",
     },
     {
@@ -340,43 +340,43 @@ export const beacon1Content = {
       description:
         "The transparent shell makes the engineering visible and keeps the product looking as technical as it actually is.",
       image:
-        "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
+        "/products/beacon1-product-2.jpg",
       alt: "OffGrid Beacon 1 detail view",
     },
   ] satisfies Beacon1GalleryCard[],
   parallaxImages: [
     {
-      src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
+      src: "/products/beacon1-product-1.jpg",
       alt: "OffGrid Beacon 1 MagSafe-mounted to a phone",
       label: "Hero detail",
     },
     {
-      src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
+      src: "/products/beacon1-product-3.jpg",
       alt: "OffGrid Beacon 1 used outdoors",
       label: "In hand",
     },
     {
-      src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
+      src: "/products/beacon1-product-2.jpg",
       alt: "OffGrid Beacon 1 antenna and internal hardware detail",
       label: "Antenna detail",
     },
     {
-      src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
+      src: "/products/beacon1-product-1.jpg",
       alt: "OffGrid Beacon 1 front view",
       label: "Front view",
     },
     {
-      src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/2_v2_2.jpg?v=1775678042",
+      src: "/products/beacon1-product-2.jpg",
       alt: "OffGrid Beacon 1 board closeup",
       label: "Board closeup",
     },
     {
-      src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/3v2.jpg?v=1775678009",
+      src: "/products/beacon1-product-3.jpg",
       alt: "OffGrid Beacon 1 carried outdoors",
       label: "Carry shot",
     },
     {
-      src: "https://cdn.shopify.com/s/files/1/0780/9135/4351/files/1_v2.jpg?v=1775678037",
+      src: "/products/beacon1-product-1.jpg",
       alt: "OffGrid Beacon 1 side profile",
       label: "Side profile",
     },

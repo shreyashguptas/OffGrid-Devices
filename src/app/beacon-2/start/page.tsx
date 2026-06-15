@@ -14,7 +14,7 @@ import { StartWarrantySection } from "@/components/start/StartWarrantySection";
 
 const TITLE = "Beacon 2 — Setup & reference";
 const DESCRIPTION =
-  "Setup, troubleshooting, safety, and warranty information for the OffGrid Beacon 2 LoRa mesh radio. Pair via Meshtastic, set your region, and get on the mesh in under ten minutes.";
+  "Setup, troubleshooting, safety, and warranty info for the OffGrid Beacon 2 LoRa mesh radio. Pair via Meshtastic, set your region, and get on the mesh fast.";
 
 export const metadata: Metadata = {
   title: TITLE,

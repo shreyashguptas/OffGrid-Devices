@@ -29,8 +29,9 @@ const contentSecurityPolicy = [
   // button stays permanently disabled once a Turnstile site key is set.
   "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline'",
-  // cdn.shopify.com is kept for Beacon 1 legacy images hosted there
-  "img-src 'self' data: blob: https://cdn.shopify.com",
+  // All imagery is now first-party — Beacon 1 photos were re-hosted off the
+  // retired Shopify CDN into public/products/, so no remote image host is needed.
+  "img-src 'self' data: blob:",
   "font-src 'self' data:",
   // blob: is needed because three.js/drei reads GLB-embedded textures as
   // Blob → URL.createObjectURL → fetch(blob:...). Without it the 15
@@ -69,14 +70,11 @@ const nextConfig: NextConfig = {
     // serves straight from the cached ASSETS binding (cf-cache-status: HIT) and
     // never touches the SSR Worker. Source images are pre-sized JPEGs, so there
     // is no optimization left to do.
+    //
+    // All images are first-party (served from public/), so no remotePatterns
+    // allow-list is required — the former cdn.shopify.com entry was removed when
+    // the Beacon 1 photos were re-hosted locally.
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "cdn.shopify.com",
-        pathname: "/**",
-      },
-    ],
   },
   // PostHog ingest + asset bundle proxied behind /ingest so the browser only
   // talks to our own origin. Keeps cookies first-party, dodges ad-blocker

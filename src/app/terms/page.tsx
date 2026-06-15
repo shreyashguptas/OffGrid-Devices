@@ -4,7 +4,7 @@ import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
 
 const TITLE = "Terms of Service — OffGrid Devices";
 const DESCRIPTION =
-  "The terms that govern your use of offgridevices.com and any OffGrid product you purchase. Templated US e-commerce ToS — Etsy's own checkout terms apply at point of sale.";
+  "The terms governing your use of offgridevices.com and any OffGrid product you buy. Templated US e-commerce terms; Etsy's checkout terms apply at purchase.";
 
 export const metadata: Metadata = {
   title: TITLE,
