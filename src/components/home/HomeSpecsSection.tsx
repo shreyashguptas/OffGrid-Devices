@@ -59,13 +59,13 @@ export function HomeSpecsSection() {
               <motion.div
                 key={m.label}
                 variants={cardVariant}
-                className="relative flex flex-col gap-3 border-b border-r border-sand/15 px-6 py-8 md:px-8 md:py-10"
+                className="relative flex min-w-0 flex-col gap-3 border-b border-r border-sand/15 px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10"
               >
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-sand/55">
                   {m.label}
                 </div>
-                <div className="flex items-baseline gap-2">
-                  <span className="font-display text-[clamp(40px,5.5vw,64px)] font-black leading-[0.92] tracking-[-0.04em] text-bone">
+                <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
+                  <span className="font-display text-[clamp(32px,6.5vw,64px)] font-black leading-[0.92] tracking-[-0.04em] text-bone">
                     {m.big}
                   </span>
                   {m.unit && (

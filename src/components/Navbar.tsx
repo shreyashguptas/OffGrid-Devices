@@ -290,7 +290,7 @@ function NavbarContent() {
               <button
                 type="button"
                 onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
-                className="flex w-full items-center justify-between text-left font-display text-[14px] font-bold tracking-[0.18em] uppercase text-sand transition-colors hover:text-bone"
+                className="flex min-h-[44px] w-full items-center justify-between py-2 text-left font-display text-[14px] font-bold tracking-[0.18em] uppercase text-sand transition-colors hover:text-bone"
               >
                 Products
                 <svg
@@ -328,7 +328,7 @@ function NavbarContent() {
                           key={product.name}
                           href={product.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex items-center gap-3 text-sand hover:text-bone transition-colors"
+                          className="flex min-h-[44px] items-center gap-3 py-2 text-sand hover:text-bone transition-colors"
                         >
                           <div className="w-8 h-8 overflow-hidden shrink-0 bg-bark-soft border border-border-card">
                             {product.image ? (
@@ -365,7 +365,7 @@ function NavbarContent() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="font-display text-[14px] font-bold tracking-[0.18em] uppercase text-sand transition-colors hover:text-bone"
+                  className="flex min-h-[44px] items-center py-2 font-display text-[14px] font-bold tracking-[0.18em] uppercase text-sand transition-colors hover:text-bone"
                 >
                   {link.label}
                 </Link>

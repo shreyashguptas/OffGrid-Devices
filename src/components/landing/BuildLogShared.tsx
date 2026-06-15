@@ -81,7 +81,7 @@ export function FollowBuildCTA() {
             href={FOLLOW_LINKS.x}
             target="_blank"
             rel="noopener noreferrer"
-            className="type-mono-label text-sand transition-colors hover:text-ember"
+            className="type-mono-label inline-flex items-center min-h-11 text-sand transition-colors hover:text-ember"
           >
             Updates on X →
           </a>

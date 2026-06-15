@@ -39,7 +39,7 @@ export function StartSection({
               </p>
             ) : null}
             {title ? (
-              <h2 className="type-display-section mt-3 text-foreground">
+              <h2 className="type-display-section mt-3 text-foreground [overflow-wrap:anywhere]">
                 {title}
               </h2>
             ) : null}
