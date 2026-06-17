@@ -19,6 +19,9 @@ permissions:
 jobs:
   quality:
     runs-on: ubuntu-latest
+    # Backstop so a stalled network step (e.g. a browser/OS-deps download) fails
+    # in minutes instead of sitting on GitHub's default 6-hour job ceiling.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
 
@@ -46,10 +49,30 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # Cache the downloaded browser between runs so a flaky/slow Playwright
+      # CDN download can't dominate (or stall) the job. Keyed on the lockfile
+      # so it busts whenever any dependency (incl. Playwright) changes.
+      - name: Cache Playwright browser
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
+
+      # On a cache hit, only the (fast) OS libraries are installed; the browser
+      # binary download is skipped. The timeout turns a stalled download into a
+      # quick failure instead of a multi-minute hang.
       - name: Install Playwright browser
-        run: pnpm exec playwright install chromium --with-deps
+        timeout-minutes: 6
+        run: |
+          if [ "${{ steps.playwright-cache.outputs.cache-hit }}" = "true" ]; then
+            pnpm exec playwright install-deps chromium
+          else
+            pnpm exec playwright install chromium --with-deps
+          fi
 
       - name: End-to-end tests
+        timeout-minutes: 8
         run: pnpm test:e2e
 
   # ── Deploy to Cloudflare (only when the full `quality` suite is green) ──
