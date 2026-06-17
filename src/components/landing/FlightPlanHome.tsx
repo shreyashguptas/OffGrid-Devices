@@ -9,7 +9,7 @@ import {
 } from "@/content/roadmap";
 import { getBlogPost } from "@/content/blog";
 import { ClientTweet } from "@/components/landing/ClientTweet";
-import { FollowBuildCTA } from "@/components/landing/BuildLogShared";
+import { DroneFlightTest } from "@/components/landing/DroneFlightTest";
 import { ZoomableImage } from "@/components/shared/ZoomableImage";
 
 /**
@@ -31,7 +31,7 @@ export function FlightPlanHome() {
     <main className="bg-pitch">
       <JournalHero />
       <JournalLog />
-      <FollowBuildCTA />
+      <DroneFlightTest />
     </main>
   );
 }
