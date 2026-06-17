@@ -52,6 +52,8 @@ export type PhaseUpdate = {
   body?: string[];
   /** Inline image(s) for this update. */
   images?: { src: string; alt: string }[];
+  /** Optional outbound links for this update, e.g. where a model was published. */
+  links?: { label: string; url: string }[];
   /** Optional X/tweet URL to embed inline. */
   tweetUrl?: string;
 };
@@ -179,21 +181,41 @@ export const roadmapPhases: RoadmapPhase[] = [
     //     tweetUrl: "https://x.com/ShreyashGuptas/status/123",
     //   },
     // ─────────────────────────────────────────────────────────────────────
-    // SAMPLE updates below are placeholders to show the format — replace with
-    // real entries (and delete this sample) before launch. Do not commit as-is.
     updates: [
       {
-        date: "12 Jun 2026",
-        kind: "learned",
-        body: [
-          "Spent the evening doing nothing but hover drills. The whole game is the throttle hand — tiny, smooth corrections, not big stabs. The moment I tried to be quick, I over-corrected and pancaked it.",
-          "Next session I'm going to fly with the rates turned way down and just sit in a stable hover for five minutes straight before I let myself move anywhere.",
-        ],
-      },
-      {
-        date: "9 Jun 2026",
+        date: "16 Jun 2026",
         kind: "did",
-        body: ["Installed VelociDrone on the Mac and got a first, very shaky hover."],
+        title: "Open-sourced the flight controller's 3D model",
+        body: [
+          "It's not helpful that the companies making these flight controller boards don't publish a 3D model of the part. To design a drone frame around the board, I first had to model the board itself.",
+          "It took about four iterations, but I got the height, length, and width accurate, with the screw holes in the right spots to actually hold the board in place. I 3D print each version to check it against the real device.",
+          "The board is the GEPRC TAKER G4 45A 8-bit AIO flight controller. I've open-sourced the model so nobody else has to redraw it from scratch.",
+        ],
+        images: [
+          {
+            src: "/build-log/phase-0/taker-g4-cad.jpg",
+            alt: "3D CAD model of the GEPRC TAKER G4 AIO flight controller board, USB-C corner",
+          },
+        ],
+        links: [
+          {
+            label: "Printables",
+            url: "https://www.printables.com/model/1756356-geprc-taker-g4-aio-g4-fc-45a-2-6s-esc-25x25-dimens",
+          },
+          {
+            label: "MakerWorld",
+            url: "https://makerworld.com/en/models/2942103-geprc-taker-g4-45a-aio-accurate-cad-model",
+          },
+          {
+            label: "GrabCAD",
+            url: "https://grabcad.com/library/geprc-taker-g4-aio-g4-fc-45a-2-6s-esc-25x25-dimension-accurate-3d-model-1",
+          },
+          {
+            label: "Thingiverse",
+            url: "https://www.thingiverse.com/thing:7370782",
+          },
+        ],
+        tweetUrl: "https://x.com/ShreyashGuptas/status/2066640231693160925",
       },
     ],
   },

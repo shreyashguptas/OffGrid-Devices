@@ -5,6 +5,11 @@
 #     (forced across wrangler, tsx, and @opennextjs/aws, which still pin <0.28.1)
 #   - brace-expansion 5.0.6 fixes the v5 ReDoS advisory (only the 5.x line is
 #     bumped; the 1.x/2.x copies in the tree are unaffected and not vulnerable)
+#   - ws >=8.21.0 fixes GHSA-96hv-2xvq-fx4p (high, via wrangler>miniflare)
+#   - form-data >=4.0.6 fixes GHSA-hmw2-7cc7-3qxx (high, via @opennextjs/cloudflare)
+#   - vite 8.0.16 fixes GHSA-fx2h-pf6j-xcff (high, via vitest). Pinned exactly
+#     (like postcss/esbuild above): a range override left the already-locked
+#     8.0.8 in place, so an exact pin is needed to actually bump it.
 onlyBuiltDependencies:
   - sharp
   - unrs-resolver
@@ -12,3 +17,6 @@ overrides:
   postcss: 8.5.13
   esbuild: 0.28.1
   brace-expansion@5: 5.0.6
+  "ws@>=8.0.0 <8.21.0": ">=8.21.0"
+  "form-data@>=4.0.0 <4.0.6": ">=4.0.6"
+  vite: 8.0.16
