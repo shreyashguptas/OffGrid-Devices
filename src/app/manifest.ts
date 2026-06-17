@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { ICON_VERSION } from "@/lib/iconVersion";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
@@ -12,12 +13,12 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/",
     icons: [
       {
-        src: "/icon-192.png",
+        src: `/icon-192.png?v=${ICON_VERSION}`,
         sizes: "192x192",
         type: "image/png",
       },
       {
-        src: "/icon-512.png",
+        src: `/icon-512.png?v=${ICON_VERSION}`,
         sizes: "512x512",
         type: "image/png",
       },

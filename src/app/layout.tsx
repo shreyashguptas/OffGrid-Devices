@@ -16,6 +16,7 @@ import {
   BEACON_MARK_PITCH,
   beaconFaviconDataUrl,
 } from "@/lib/beaconMarkSvg";
+import { ICON_VERSION } from "@/lib/iconVersion";
 import {
   jsonLdScriptProps,
   organizationJsonLd,
@@ -133,6 +134,10 @@ export const metadata: Metadata = {
       "application/atom+xml": "/blog/feed.xml",
     },
   },
+  // The manifest is a Next route served `max-age=0, must-revalidate`, so it is
+  // always re-fetched — a changed icon list propagates without a query stamp
+  // (Next strips one from this field anyway). Cache-busting happens on the
+  // icon URLs *inside* the manifest (see src/app/manifest.ts).
   manifest: "/manifest.webmanifest",
   robots: {
     index: true,
@@ -145,12 +150,21 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  // A config `icons` field overrides Next's file-based icon conventions, so
+  // `apple` MUST be listed explicitly here or the apple-touch-icon link is
+  // dropped entirely. It points at the src/app/apple-icon.png convention route
+  // (served `max-age=0, must-revalidate`, i.e. always revalidated) and is
+  // version-stamped so the URL also changes on a bump. See src/lib/iconVersion.ts.
   icons: {
     icon: [
       { url: BEACON_FAVICON, type: "image/svg+xml" },
-      { url: "/logo.svg", type: "image/svg+xml" },
+      { url: `/logo.svg?v=${ICON_VERSION}`, type: "image/svg+xml" },
     ],
-    apple: { url: "/apple-icon.png", type: "image/png" },
+    apple: {
+      url: `/apple-icon.png?v=${ICON_VERSION}`,
+      sizes: "180x180",
+      type: "image/png",
+    },
   },
   openGraph: {
     title: DEFAULT_TITLE,
