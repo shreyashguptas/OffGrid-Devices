@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { ZoomableImage } from "@/components/shared/ZoomableImage";
 import { beacon1Content } from "@/content/beacon1";
 
 /**
@@ -74,7 +74,7 @@ export function Beacon1HeroSection() {
 
           <div className="section-stage p-5 md:p-8">
             <div className="overflow-hidden bg-white p-4 md:p-8">
-              <Image
+              <ZoomableImage
                 src={beacon1Content.summary.productImage.src}
                 alt={beacon1Content.summary.productImage.alt}
                 width={900}

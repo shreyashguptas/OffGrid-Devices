@@ -9,6 +9,7 @@ import "./globals.css";
 import { BfCacheShell } from "@/components/BfCacheShell";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { LightboxProvider } from "@/components/shared/Lightbox";
 import { getMetadataBase } from "@/lib/siteUrl";
 import {
   BEACON_MARK_BONE,
@@ -200,7 +201,9 @@ export default function RootLayout({
       <body className="bg-background text-foreground antialiased">
         <BfCacheShell>
           <Navbar />
-          <main>{children}</main>
+          <LightboxProvider>
+            <main>{children}</main>
+          </LightboxProvider>
           <Footer />
         </BfCacheShell>
       </body>
