@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { RatingStars } from "@/components/shared/RatingStars";
 import { SectionIntro } from "@/components/shared/SectionIntro";
+import { ZoomableImage } from "@/components/shared/ZoomableImage";
 import { beacon1Content } from "@/content/beacon1";
 
 export function Beacon1TestimonialsGridSection() {
@@ -34,7 +34,7 @@ export function Beacon1TestimonialsGridSection() {
               </p>
               {testimonial.image ? (
                 <div className="mb-4 overflow-hidden border border-border-subtle">
-                  <Image
+                  <ZoomableImage
                     src={testimonial.image}
                     alt={`Review photo from ${testimonial.name}`}
                     width={400}

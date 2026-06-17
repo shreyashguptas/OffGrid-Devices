@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { SectionIntro } from "@/components/shared/SectionIntro";
+import { ZoomableImage } from "@/components/shared/ZoomableImage";
 import { beacon1Content } from "@/content/beacon1";
 
 export function Beacon1SpecsSection() {
@@ -32,7 +32,7 @@ export function Beacon1SpecsSection() {
 
           <div className="space-y-6">
             <div className="section-stage p-6 md:p-8">
-              <Image
+              <ZoomableImage
                 src={beacon1Content.summary.productImage.src}
                 alt="OffGrid Beacon 1 hardware specifications"
                 width={900}

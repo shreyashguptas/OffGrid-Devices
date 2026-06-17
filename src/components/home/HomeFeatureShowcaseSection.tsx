@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { beacon2Content } from "@/content/products";
+import { ZoomableImage } from "@/components/shared/ZoomableImage";
 import { cn } from "@/lib/utils";
 
 type ModeId = "magnets" | "antenna" | "battery";
@@ -179,7 +179,7 @@ export function HomeFeatureShowcaseSection() {
                   exit="exit"
                   className="relative h-full w-full"
                 >
-                  <Image
+                  <ZoomableImage
                     src={active.image}
                     alt={active.alt}
                     fill

@@ -10,6 +10,7 @@ import {
 import { getBlogPost } from "@/content/blog";
 import { ClientTweet } from "@/components/landing/ClientTweet";
 import { FollowBuildCTA } from "@/components/landing/BuildLogShared";
+import { ZoomableImage } from "@/components/shared/ZoomableImage";
 
 /**
  * The home page — "Journal" direction.
@@ -254,7 +255,7 @@ function UpdateItem({ update }: { update: PhaseUpdate }) {
               key={idx}
               className="relative aspect-[16/9] w-full overflow-hidden border border-border-card"
             >
-              <Image
+              <ZoomableImage
                 src={img.src}
                 alt={img.alt}
                 fill
@@ -434,7 +435,7 @@ function PhaseMedia({
     <div
       className={`relative aspect-[16/9] w-full overflow-hidden border ${frame}`}
     >
-      <Image
+      <ZoomableImage
         src={phase.image.src}
         alt={phase.image.alt}
         fill

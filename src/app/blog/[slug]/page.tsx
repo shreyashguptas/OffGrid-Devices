@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Faq } from "@/components/Faq";
@@ -9,6 +8,7 @@ import {
   getSectionId,
   TableOfContents,
 } from "@/components/blog/TableOfContents";
+import { ZoomableImage } from "@/components/shared/ZoomableImage";
 import {
   blogPosts,
   getBlogPost,
@@ -65,7 +65,7 @@ function ContentSection({ section }: { section: BlogSection }) {
       return (
         <figure className="blog-figure">
           <div className="overflow-hidden border border-border-subtle bg-background">
-            <Image
+            <ZoomableImage
               src={section.src}
               alt={section.alt}
               width={1200}
@@ -309,7 +309,7 @@ export default async function BlogPostPage({
         <div className="mx-auto max-w-5xl px-6">
           <div className="section-stage p-5 md:p-6">
             <div className="overflow-hidden bg-background">
-              <Image
+              <ZoomableImage
                 src={post.image}
                 alt={post.heroImageAlt ?? `${post.title} — OffGrid Devices`}
                 width={1400}

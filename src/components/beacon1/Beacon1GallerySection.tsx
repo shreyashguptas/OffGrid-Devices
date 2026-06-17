@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { SectionIntro } from "@/components/shared/SectionIntro";
+import { ZoomableImage } from "@/components/shared/ZoomableImage";
 import { beacon1Content } from "@/content/beacon1";
 
 export function Beacon1GallerySection() {
@@ -30,7 +30,7 @@ export function Beacon1GallerySection() {
             >
               <div className="bg-surface-elevated p-5 md:p-8">
                 <div className="overflow-hidden bg-background">
-                  <Image
+                  <ZoomableImage
                     src={card.image}
                     alt={card.alt}
                     width={900}
