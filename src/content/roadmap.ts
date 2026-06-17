@@ -215,6 +215,7 @@ export const roadmapPhases: RoadmapPhase[] = [
             url: "https://www.thingiverse.com/thing:7370782",
           },
         ],
+        tweetUrl: "https://x.com/ShreyashGuptas/status/2066640231693160925",
       },
     ],
   },
