@@ -41,8 +41,19 @@
 /brand/*
   Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
 
-# App icons / favicons.
+# App icons / favicons. URLs are version-stamped (?v=ICON_VERSION, see
+# src/lib/iconVersion.ts) so a bump busts caches instantly regardless of TTL
+# (Cloudflare keys on the full URL incl. query). The shorter TTL +
+# stale-while-revalidate below is the self-healing backstop: even an
+# un-bumped art change is picked up within ~a day instead of being pinned
+# for 30 days.
 /icon-192.png
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 /icon-512.png
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+/logo.svg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+
+# Note: /manifest.webmanifest, /apple-icon.png and /icon.png are Next route
+# handlers (Worker-rendered, served `max-age=0, must-revalidate` — always
+# revalidated), NOT files under public/, so no _headers rule applies to them.

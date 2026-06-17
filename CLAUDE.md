@@ -35,5 +35,6 @@ In-repo token mappings live in `src/app/globals.css` (`--app-pitch`, `--app-bark
 - Geometry: `border-radius: 0` everywhere · `1px` hairlines (canonical color Bone @ 10% = `#F1ECE01A`) · `120px` section vertical padding · `56px` page gutter · `1280px` max width
 - Primary button: `font: 700 13px/1 Archivo; letter-spacing: 0.14em; padding: 18px 28px; bg: Ember; fg: Pitch`
 - Logo: **Beacon Ring** mark — an open "O" ring (`stroke-width 22` in a `0 0 200 200` viewBox) with a lit apex node at top; wordmark "OFFGRID" in Archivo 900. Bracketed variant (survey-corner brackets) is for motion/instrument moments only. In-repo: `src/components/shared/WaypointMark.tsx`, `src/lib/beaconMarkSvg.ts` (favicon/OG), `public/logo.svg`, `public/brand/*.svg`.
+- **Changed an icon/favicon?** Bump `ICON_VERSION` in `src/lib/iconVersion.ts` so caches and future PWA installs pick up the new art (`public/icon-192.png`, `public/icon-512.png`, `public/logo.svg`, `src/app/icon.png`, `src/app/apple-icon.png`). An already-installed iOS home-screen tile can't be refreshed by code — it must be deleted and re-added.
 - **One accent**: Ember appears once per surface. Never two.
 - No drop shadows on surfaces. Type does the heavy lifting; chrome stays quiet.
