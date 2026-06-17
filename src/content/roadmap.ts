@@ -97,9 +97,10 @@ export const FOLLOW_LINKS = {
 } as const;
 
 /**
- * Ordered oldest → newest → planned. The `active` phase (Phase 0) is the
- * narrative "now"; everything above it is shipped history, everything below
- * is the road ahead.
+ * Ordered oldest → newest → planned. The `active` phase (Phase 1 — building
+ * the first quad) is the narrative "now"; everything above it is history
+ * (including the still-ongoing Phase 0 sim practice), everything below is the
+ * road ahead.
  */
 export const roadmapPhases: RoadmapPhase[] = [
   {
@@ -151,10 +152,10 @@ export const roadmapPhases: RoadmapPhase[] = [
     title: "Learn to fly, for almost nothing",
     blurb:
       "I have never picked up a drone controller. So before spending real money, I'm logging hours in a simulator — crashing where crashing is free. The goal is embarrassingly basic: stop crashing on takeoff.",
-    status: "active",
-    statusLabel: "In progress",
+    status: "shipped",
+    statusLabel: "Ongoing",
     meta: "VelociDrone · Mac · ~$20",
-    date: "9th of June 2026", // TODO: confirm when Phase 0 actually started
+    date: "14th of June 2026", // the day sim practice went public (tweet below)
     // No per-phase blog link: the inline build log below IS the record.
     tagline: "Logging sim hours so my first real flight isn't my first time flying.",
     // ─────────────────────────────────────────────────────────────────────
@@ -173,6 +174,32 @@ export const roadmapPhases: RoadmapPhase[] = [
     //     tweetUrl: "https://x.com/ShreyashGuptas/status/123",
     //   },
     // ─────────────────────────────────────────────────────────────────────
+    updates: [
+      {
+        date: "14 Jun 2026",
+        title: "Practicing in the simulator first",
+        body: [
+          "Before I get my hands on a real drone and actually try to fly it, I'm logging hours in a flight simulator. Flying is completely new to me, and it's very different from anything I've done before.",
+          "A drone controller is nothing like a PlayStation or Xbox controller — the sticks do different things and it takes real practice to get a feel for it. So rather than crash an expensive drone on my first attempt, I'm crashing in the sim, where it costs nothing.",
+        ],
+        tweetUrl: "https://x.com/ShreyashGuptas/status/2066640231693160925",
+      },
+    ],
+  },
+  {
+    id: "drone-phase-1",
+    track: "drone",
+    marker: "PHASE 1",
+    title: "Build the cheapest quad I can — and fly it",
+    blurb:
+      "One small 3-inch quad, mostly 3D-printed. Print the frame; buy the parts you can't print — motors, flight controller, battery, radio. Wire it, fly it line-of-sight, crash it, and figure out exactly why. That loop is the whole point.",
+    status: "active",
+    statusLabel: "In progress",
+    meta: "3D-printed frame · off-the-shelf guts · honest cost of every part",
+    date: "16th of June 2026",
+    tagline: "Print the frame, buy the guts, fly it, crash it, find out why.",
+    // First real Phase 1 artifact: the flight-controller CAD model — the
+    // starting point for designing the printed frame around the board.
     updates: [
       {
         date: "16 Jun 2026",
@@ -206,21 +233,8 @@ export const roadmapPhases: RoadmapPhase[] = [
             url: "https://www.thingiverse.com/thing:7370782",
           },
         ],
-        tweetUrl: "https://x.com/ShreyashGuptas/status/2066640231693160925",
       },
     ],
-  },
-  {
-    id: "drone-phase-1",
-    track: "drone",
-    marker: "PHASE 1",
-    title: "Build the cheapest quad I can — and fly it",
-    blurb:
-      "One small, mostly 3D-printed drone. Print the frame; buy the parts you can't print — motors, flight controller, battery, radio. Wire it, fly it line-of-sight, crash it, and figure out exactly why. That loop is the whole point.",
-    status: "next",
-    statusLabel: "Up next",
-    meta: "3D-printed frame · off-the-shelf guts · honest cost of every part",
-    tagline: "Print the frame, buy the guts, fly it, crash it, find out why.",
   },
   {
     id: "drone-phase-2",

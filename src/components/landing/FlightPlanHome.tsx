@@ -96,7 +96,7 @@ function JournalLog() {
         {/* the road ahead — lower, quieter, forward order */}
         <div className="mt-16 border-t border-sand/15 pt-12">
           <p className="type-mono-label text-sand/60">The road ahead</p>
-          <p className="font-editorial mt-3 max-w-md text-lg leading-[1.55] text-sand/75">
+          <p className="font-body mt-3 max-w-xl text-xl leading-[1.5] text-sand/75 md:text-2xl">
             What&rsquo;s next, and the slow reveal after it — including the point
             where the mesh work meets the drone.
           </p>
@@ -116,9 +116,10 @@ function JournalLog() {
   );
 }
 
-/* A full log entry, journal style: a single reading column — date, marker +
-   status, title, caption, optional link, then the media tile full-width, then
-   the running build log for the phase beneath it. */
+/* A full log entry, journal style: a single reading column — marker + date,
+   then one title (no subtitle), an optional link, optional media, then the
+   running build log for the phase beneath it. The title is the whole header;
+   what we're actually doing lives in the dated updates underneath. */
 function LogEntry({ phase, index }: { phase: RoadmapPhase; index: number }) {
   const isActive = phase.status === "active";
   const isShipped = phase.status === "shipped";
@@ -140,31 +141,28 @@ function LogEntry({ phase, index }: { phase: RoadmapPhase; index: number }) {
       </div>
 
       <div className={isShipped ? "opacity-90" : ""}>
-        {/* one tidy meta line — status, phase, date — not three stacked rows.
-           The colored status chip leads so the state reads at a glance. */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <StatusChip status={phase.status} label={phase.statusLabel} />
-          <span className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-sand/55">
+        {/* one quiet meta line — phase marker + date. No status chip: the one
+           live phase is signalled by its Ember rail node, and the date carries
+           the rest. Keeps every entry down to a clean title. */}
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <span className="font-mono text-[13px] font-medium uppercase tracking-[0.18em] text-sand/55 md:text-sm">
             {phase.marker}
           </span>
           {phase.date ? (
-            <span className="font-mono text-[11px] tracking-[0.06em] text-sand/45">
+            <span className="font-mono text-sm font-semibold tracking-[0.05em] text-sand/90 md:text-[15px]">
               {phase.date}
             </span>
           ) : null}
         </div>
+        {/* The title is the whole header — no subtitle. It can run to a full
+           sentence; the detail lives in the dated updates below. */}
         <h3
-          className={`mt-3 font-display font-bold uppercase tracking-[-0.01em] text-bone ${
-            isActive ? "text-2xl md:text-[28px]" : "text-xl md:text-2xl"
+          className={`mt-3 font-display font-bold uppercase leading-[1.05] tracking-[-0.01em] text-bone ${
+            isActive ? "text-4xl md:text-5xl" : "text-3xl md:text-4xl"
           }`}
         >
           {phase.title}
         </h3>
-        {phase.tagline ? (
-          <p className="font-editorial mt-3 text-lg leading-[1.5] text-sand/85 md:text-xl">
-            {phase.tagline}
-          </p>
-        ) : null}
         {phase.href ? (
           <Link
             href={phase.href}
@@ -208,12 +206,12 @@ function UpdateItem({ update }: { update: PhaseUpdate }) {
   const manyImages = (update.images?.length ?? 0) > 1;
   return (
     <li>
-      <span className="font-mono text-[11px] tracking-[0.06em] text-sand/60">
+      <span className="font-mono text-[13px] font-semibold tracking-[0.06em] text-sand/80">
         {update.date}
       </span>
 
       {update.title ? (
-        <h4 className="mt-3 font-display text-base font-bold uppercase tracking-[-0.01em] text-bone md:text-lg">
+        <h4 className="mt-3 font-display text-xl font-bold uppercase tracking-[-0.01em] text-bone md:text-2xl">
           {update.title}
         </h4>
       ) : null}
@@ -223,7 +221,7 @@ function UpdateItem({ update }: { update: PhaseUpdate }) {
           {update.body.map((para, idx) => (
             <p
               key={idx}
-              className="font-editorial max-w-prose text-lg leading-[1.65] text-sand/90"
+              className="font-body max-w-prose text-xl leading-[1.6] text-sand/90 md:text-2xl md:leading-[1.6]"
             >
               {para}
             </p>
@@ -259,7 +257,7 @@ function UpdateItem({ update }: { update: PhaseUpdate }) {
                 href={l.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-sand/75 transition-colors hover:text-ember"
+                className="inline-flex items-center gap-1.5 font-mono text-[13px] uppercase tracking-[0.14em] text-sand/75 transition-colors hover:text-ember"
               >
                 {l.label} →
               </a>
@@ -331,7 +329,7 @@ function AheadEntry({ phase }: { phase: RoadmapPhase }) {
 
       <div className="opacity-95">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-sand/60">
+          <span className="font-mono text-[13px] font-medium uppercase tracking-[0.18em] text-sand/60 md:text-sm">
             {phase.marker}
           </span>
           <StatusChip status={phase.status} label={phase.statusLabel} />
@@ -341,11 +339,11 @@ function AheadEntry({ phase }: { phase: RoadmapPhase }) {
             </span>
           ) : null}
         </div>
-        <h3 className="mt-3 font-display text-lg font-bold uppercase tracking-[-0.01em] text-bone/90 md:text-xl">
+        <h3 className="mt-3 font-display text-2xl font-bold uppercase tracking-[-0.01em] text-bone/90 md:text-3xl">
           {phase.title}
         </h3>
         {phase.tagline ? (
-          <p className="font-editorial mt-2 max-w-lg text-lg leading-[1.5] text-sand/75">
+          <p className="font-body mt-2 max-w-xl text-xl leading-[1.5] text-sand/75">
             {phase.tagline}
           </p>
         ) : null}
