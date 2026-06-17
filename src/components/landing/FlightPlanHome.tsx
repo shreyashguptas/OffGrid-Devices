@@ -8,7 +8,7 @@ import {
   type RoadmapPhase,
 } from "@/content/roadmap";
 import { getBlogPost } from "@/content/blog";
-import { Tweet } from "react-tweet";
+import { ClientTweet } from "@/components/landing/ClientTweet";
 import { FollowBuildCTA } from "@/components/landing/BuildLogShared";
 
 /**
@@ -295,13 +295,13 @@ function tweetIdFromUrl(url: string): string | null {
   return m?.[1] ?? null;
 }
 
-/* Inline tweet embed. `react-tweet` renders the tweet during our normal server
-   render, pulling its data from X's public syndication CDN with a plain fetch
-   — no Vercel infra, no client-side X widget script, and no Node APIs, so it's
-   safe on Cloudflare Workers. It themes off the same `data-theme` attribute the
-   site sets on <html>, so it matches light/dark automatically. If the URL isn't
-   a recognizable tweet we fall back to a quiet link; if the tweet itself can't
-   be loaded, react-tweet renders its own "not found" card linking to X. */
+/* Inline tweet embed. The tweet is fetched in the visitor's browser at view
+   time (see ClientTweet) rather than once at build time — X's syndication CDN
+   blocks the data-center IPs our CI build and Cloudflare Workers run on, which
+   would otherwise freeze a "Tweet not found" card into the static HTML. It
+   themes off the same `data-theme` attribute the site sets on <html>, so it
+   matches light/dark automatically. If the URL isn't a recognizable tweet we
+   fall back to a quiet link. */
 function TweetEmbed({ url }: { url: string }) {
   const id = tweetIdFromUrl(url);
   if (!id) {
@@ -321,7 +321,7 @@ function TweetEmbed({ url }: { url: string }) {
   }
   return (
     <div className="mt-5 w-full max-w-[32rem]">
-      <Tweet id={id} />
+      <ClientTweet id={id} />
     </div>
   );
 }
