@@ -76,6 +76,12 @@ export type RoadmapPhase = {
   external?: boolean;
   /** Short, image-first caption used by the visual Flight Plan layout. */
   tagline?: string;
+  /**
+   * Slug of a blog post to feature as this phase's framing write-up — rendered
+   * as an image + title + excerpt card at the top of the entry, pulling its
+   * data live from `@/content/blog`.
+   */
+  featuredPostSlug?: string;
   /** Optional media for the visual layout; a placeholder shows when absent. */
   image?: { src: string; alt: string };
   /**
@@ -113,7 +119,7 @@ export const roadmapPhases: RoadmapPhase[] = [
     status: "shipped",
     statusLabel: "Retired",
     meta: "MagSafe · Meshtastic · sold out",
-    date: "1st of November 2024", // TODO: confirm real Beacon 1 launch date
+    date: "24 February 2026",
     href: "/products/beacon-1",
     hrefLabel: "See Beacon 1",
     tagline: "The first MagSafe Meshtastic radio. Where OffGrid started.",
@@ -132,7 +138,7 @@ export const roadmapPhases: RoadmapPhase[] = [
     status: "shipping",
     statusLabel: "Shipping now",
     meta: "3000 mAh · replaceable antenna · in stock",
-    date: "31st of May 2026", // TODO: confirm real Beacon 2 launch date
+    date: "15 May 2026",
     href: "/products/beacon-2",
     hrefLabel: "Shop Beacon 2",
     tagline: "The MagSafe mesh radio we ship today — and the work the drone builds on.",
@@ -155,9 +161,11 @@ export const roadmapPhases: RoadmapPhase[] = [
     status: "shipped",
     statusLabel: "Ongoing",
     meta: "VelociDrone · Mac · ~$20",
-    date: "14th of June 2026", // the day sim practice went public (tweet below)
-    // No per-phase blog link: the inline build log below IS the record.
+    date: "14 June 2026", // the day sim practice went public (tweet below)
     tagline: "Logging sim hours so my first real flight isn't my first time flying.",
+    // The framing write-up for the whole project — featured at the top of the
+    // phase as an image + title card linking to the full post.
+    featuredPostSlug: "project-cheap-drone",
     // ─────────────────────────────────────────────────────────────────────
     // TEMPLATE — copy one of these into `updates` to log something. Every
     // field except `date` is optional, so it can be a one-liner or a full
@@ -176,7 +184,7 @@ export const roadmapPhases: RoadmapPhase[] = [
     // ─────────────────────────────────────────────────────────────────────
     updates: [
       {
-        date: "14 Jun 2026",
+        date: "14 June 2026",
         title: "Practicing in the simulator first",
         body: [
           "Before I get my hands on a real drone and actually try to fly it, I'm logging hours in a flight simulator. Flying is completely new to me, and it's very different from anything I've done before.",
@@ -196,13 +204,13 @@ export const roadmapPhases: RoadmapPhase[] = [
     status: "active",
     statusLabel: "In progress",
     meta: "3D-printed frame · off-the-shelf guts · honest cost of every part",
-    date: "16th of June 2026",
+    date: "16 June 2026",
     tagline: "Print the frame, buy the guts, fly it, crash it, find out why.",
     // First real Phase 1 artifact: the flight-controller CAD model — the
     // starting point for designing the printed frame around the board.
     updates: [
       {
-        date: "16 Jun 2026",
+        date: "16 June 2026",
         title: "Open-sourced the flight controller's 3D model",
         body: [
           "It's not helpful that the companies making these flight controller boards don't publish a 3D model of the part. To design a drone frame around the board, I first had to model the board itself.",
@@ -213,6 +221,10 @@ export const roadmapPhases: RoadmapPhase[] = [
           {
             src: "/build-log/phase-0/taker-g4-cad.jpg",
             alt: "3D CAD model of the GEPRC TAKER G4 AIO flight controller board, USB-C corner",
+          },
+          {
+            src: "/build-log/phase-0/taker-g4-frame.jpg",
+            alt: "The real GEPRC TAKER G4 AIO flight controller seated in the 3D-printed frame, USB-C port and corner standoffs visible",
           },
         ],
         links: [

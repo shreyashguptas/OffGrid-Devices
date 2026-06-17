@@ -7,8 +7,9 @@ import {
   type PhaseUpdate,
   type RoadmapPhase,
 } from "@/content/roadmap";
+import { getBlogPost } from "@/content/blog";
 import { Tweet } from "react-tweet";
-import { FollowBuildCTA, StatusChip } from "@/components/landing/BuildLogShared";
+import { FollowBuildCTA } from "@/components/landing/BuildLogShared";
 
 /**
  * The home page — "Journal" direction.
@@ -116,6 +117,19 @@ function JournalLog() {
   );
 }
 
+/* The phase marker as a boxed "instrument" tag — a hairline outline with the
+   marker text in bright Bone, used uniformly on every entry (recent + road
+   ahead) so the timeline is glanceable: you can tell at once which phase each
+   row is. The single Ember accent stays on the active phase's rail node, so
+   these boxes read neutral and consistent rather than competing for the eye. */
+function PhaseMarker({ marker }: { marker: string }) {
+  return (
+    <span className="inline-flex items-center border border-bone/40 px-2.5 py-1 font-mono text-[12px] font-semibold uppercase tracking-[0.16em] text-bone md:text-[13px]">
+      {marker}
+    </span>
+  );
+}
+
 /* A full log entry, journal style: a single reading column — marker + date,
    then one title (no subtitle), an optional link, optional media, then the
    running build log for the phase beneath it. The title is the whole header;
@@ -141,13 +155,11 @@ function LogEntry({ phase, index }: { phase: RoadmapPhase; index: number }) {
       </div>
 
       <div className={isShipped ? "opacity-90" : ""}>
-        {/* one quiet meta line — phase marker + date. No status chip: the one
-           live phase is signalled by its Ember rail node, and the date carries
-           the rest. Keeps every entry down to a clean title. */}
-        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span className="font-mono text-[13px] font-medium uppercase tracking-[0.18em] text-sand/55 md:text-sm">
-            {phase.marker}
-          </span>
+        {/* one quiet meta line — boxed phase marker + date. The marker sits in
+           a hairline box with bright text so you can glance the timeline and
+           tell which phase each entry is; the date is the prominent anchor. */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <PhaseMarker marker={phase.marker} />
           {phase.date ? (
             <span className="font-mono text-sm font-semibold tracking-[0.05em] text-sand/90 md:text-[15px]">
               {phase.date}
@@ -163,6 +175,12 @@ function LogEntry({ phase, index }: { phase: RoadmapPhase; index: number }) {
         >
           {phase.title}
         </h3>
+
+        {/* framing write-up for the phase (the long-form blog post) */}
+        {phase.featuredPostSlug ? (
+          <FeaturedPostCard slug={phase.featuredPostSlug} />
+        ) : null}
+
         {phase.href ? (
           <Link
             href={phase.href}
@@ -329,12 +347,9 @@ function AheadEntry({ phase }: { phase: RoadmapPhase }) {
 
       <div className="opacity-95">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="font-mono text-[13px] font-medium uppercase tracking-[0.18em] text-sand/60 md:text-sm">
-            {phase.marker}
-          </span>
-          <StatusChip status={phase.status} label={phase.statusLabel} />
+          <PhaseMarker marker={phase.marker} />
           {isConvergence ? (
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ember">
+            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ember">
               ◆ Mesh ✕ Drone
             </span>
           ) : null}
@@ -349,6 +364,52 @@ function AheadEntry({ phase }: { phase: RoadmapPhase }) {
         ) : null}
       </div>
     </li>
+  );
+}
+
+/**
+ * A featured blog-post card for a phase — the long-form "here's what we're
+ * doing" write-up. Pulls the post straight from the blog content by slug and
+ * renders a clean cover image + title + excerpt link; renders nothing if the
+ * slug doesn't resolve. Lives at the top of the phase entry, above the dated
+ * inline updates.
+ */
+function FeaturedPostCard({ slug }: { slug: string }) {
+  const post = getBlogPost(slug);
+  if (!post) return null;
+
+  return (
+    <Link
+      href={`/blog/${post.slug}`}
+      className="group mt-7 flex flex-col overflow-hidden border border-border-card bg-pitch/30 transition-colors hover:border-ember/50 sm:flex-row"
+    >
+      <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden sm:aspect-auto sm:w-56 md:w-64">
+        <Image
+          src={post.image}
+          alt={post.heroImageAlt ?? post.title}
+          fill
+          unoptimized
+          sizes="(min-width: 768px) 16rem, 90vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+        />
+      </div>
+      <div className="flex flex-1 flex-col justify-center gap-2.5 p-6">
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[12px] uppercase tracking-[0.14em] text-sand/60">
+          <span>{post.category}</span>
+          <span className="h-1 w-1 rounded-full bg-sand/40" />
+          <span>{post.readTime}</span>
+        </div>
+        <h4 className="font-display text-xl font-bold uppercase tracking-[-0.01em] text-bone md:text-2xl">
+          {post.title}
+        </h4>
+        <p className="font-body line-clamp-3 text-base leading-[1.5] text-sand/80 md:text-lg">
+          {post.excerpt}
+        </p>
+        <span className="mt-1 inline-flex items-center font-mono text-[13px] uppercase tracking-[0.14em] text-sand/75 transition-colors group-hover:text-ember">
+          Read the write-up →
+        </span>
+      </div>
+    </Link>
   );
 }
 
