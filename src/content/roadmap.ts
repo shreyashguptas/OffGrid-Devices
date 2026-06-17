@@ -26,26 +26,19 @@ export type RoadmapStatus =
   | "locked"; // teased on purpose — details later
 
 /**
- * The kind of a single build-log update inside a phase. Color-coded in the UI
- * so a scan reads the rhythm of the work: progress, setbacks, lessons.
- */
-export type PhaseUpdateKind = "did" | "broke" | "learned" | "shipped";
-
-/**
  * One entry in a phase's running build log. A phase accumulates many of these
  * over time — the day-to-day "here's what happened" shown INLINE on the home
  * page. This log IS the record (not a link to a blog post): an update can hold
  * its own paragraphs of text, image(s), and an embedded tweet. The separate
  * blog is for long-form writing and does not feed this.
  *
- * Everything except `date` + `kind` is optional, so an update can be a quick
- * one-liner ("broke X today") or a full image + two-paragraph write-up.
- * Stored newest-first within `RoadmapPhase.updates`.
+ * Everything except `date` is optional, so an update can be a quick one-liner
+ * or a full image + two-paragraph write-up. Stored newest-first within
+ * `RoadmapPhase.updates`.
  */
 export type PhaseUpdate = {
   /** Short display date, e.g. "12 Jun 2026". */
   date: string;
-  kind: PhaseUpdateKind;
   /** Optional short headline for the update. */
   title?: string;
   /** Body text — one string per paragraph (write as many as you want). */
@@ -83,6 +76,12 @@ export type RoadmapPhase = {
   external?: boolean;
   /** Short, image-first caption used by the visual Flight Plan layout. */
   tagline?: string;
+  /**
+   * Slug of a blog post to feature as this phase's framing write-up — rendered
+   * as an image + title + excerpt card at the top of the entry, pulling its
+   * data live from `@/content/blog`.
+   */
+  featuredPostSlug?: string;
   /** Optional media for the visual layout; a placeholder shows when absent. */
   image?: { src: string; alt: string };
   /**
@@ -104,9 +103,10 @@ export const FOLLOW_LINKS = {
 } as const;
 
 /**
- * Ordered oldest → newest → planned. The `active` phase (Phase 0) is the
- * narrative "now"; everything above it is shipped history, everything below
- * is the road ahead.
+ * Ordered oldest → newest → planned. The `active` phase (Phase 1 — building
+ * the first quad) is the narrative "now"; everything above it is history
+ * (including the still-ongoing Phase 0 sim practice), everything below is the
+ * road ahead.
  */
 export const roadmapPhases: RoadmapPhase[] = [
   {
@@ -119,7 +119,7 @@ export const roadmapPhases: RoadmapPhase[] = [
     status: "shipped",
     statusLabel: "Retired",
     meta: "MagSafe · Meshtastic · sold out",
-    date: "1st of November 2024", // TODO: confirm real Beacon 1 launch date
+    date: "24 February 2026",
     href: "/products/beacon-1",
     hrefLabel: "See Beacon 1",
     tagline: "The first MagSafe Meshtastic radio. Where OffGrid started.",
@@ -138,7 +138,7 @@ export const roadmapPhases: RoadmapPhase[] = [
     status: "shipping",
     statusLabel: "Shipping now",
     meta: "3000 mAh · replaceable antenna · in stock",
-    date: "31st of May 2026", // TODO: confirm real Beacon 2 launch date
+    date: "15 May 2026",
     href: "/products/beacon-2",
     hrefLabel: "Shop Beacon 2",
     tagline: "The MagSafe mesh radio we ship today — and the work the drone builds on.",
@@ -148,7 +148,7 @@ export const roadmapPhases: RoadmapPhase[] = [
     },
     // Real updates go here, e.g.:
     //   updates: [
-    //     { date: "2 Jun 2026", kind: "did", body: ["Restocked SMA antennas."] },
+    //     { date: "2 Jun 2026", body: ["Restocked SMA antennas."] },
     //   ],
   },
   {
@@ -158,20 +158,21 @@ export const roadmapPhases: RoadmapPhase[] = [
     title: "Learn to fly, for almost nothing",
     blurb:
       "I have never picked up a drone controller. So before spending real money, I'm logging hours in a simulator — crashing where crashing is free. The goal is embarrassingly basic: stop crashing on takeoff.",
-    status: "active",
-    statusLabel: "In progress",
+    status: "shipped",
+    statusLabel: "Ongoing",
     meta: "VelociDrone · Mac · ~$20",
-    date: "9th of June 2026", // TODO: confirm when Phase 0 actually started
-    // No per-phase blog link: the inline build log below IS the record.
+    date: "14 June 2026", // the day sim practice went public (tweet below)
     tagline: "Logging sim hours so my first real flight isn't my first time flying.",
+    // The framing write-up for the whole project — featured at the top of the
+    // phase as an image + title card linking to the full post.
+    featuredPostSlug: "project-cheap-drone",
     // ─────────────────────────────────────────────────────────────────────
     // TEMPLATE — copy one of these into `updates` to log something. Every
-    // field except `date` + `kind` is optional, so it can be a one-liner or a
-    // full image + multi-paragraph write-up with an embedded tweet:
+    // field except `date` is optional, so it can be a one-liner or a full
+    // image + multi-paragraph write-up with an embedded tweet:
     //
     //   {
     //     date: "12 Jun 2026",
-    //     kind: "learned",                 // did | broke | learned | shipped
     //     title: "Throttle is everything", // optional headline
     //     body: [
     //       "First paragraph of the write-up.",
@@ -183,8 +184,33 @@ export const roadmapPhases: RoadmapPhase[] = [
     // ─────────────────────────────────────────────────────────────────────
     updates: [
       {
-        date: "16 Jun 2026",
-        kind: "did",
+        date: "14 June 2026",
+        title: "Practicing in the simulator first",
+        body: [
+          "Before I get my hands on a real drone and actually try to fly it, I'm logging hours in a flight simulator. Flying is completely new to me, and it's very different from anything I've done before.",
+          "A drone controller is nothing like a PlayStation or Xbox controller — the sticks do different things and it takes real practice to get a feel for it. So rather than crash an expensive drone on my first attempt, I'm crashing in the sim, where it costs nothing.",
+        ],
+        tweetUrl: "https://x.com/ShreyashGuptas/status/2066640231693160925",
+      },
+    ],
+  },
+  {
+    id: "drone-phase-1",
+    track: "drone",
+    marker: "PHASE 1",
+    title: "Build the cheapest quad I can — and fly it",
+    blurb:
+      "One small 3-inch quad, mostly 3D-printed. Print the frame; buy the parts you can't print — motors, flight controller, battery, radio. Wire it, fly it line-of-sight, crash it, and figure out exactly why. That loop is the whole point.",
+    status: "active",
+    statusLabel: "In progress",
+    meta: "3D-printed frame · off-the-shelf guts · honest cost of every part",
+    date: "16 June 2026",
+    tagline: "Print the frame, buy the guts, fly it, crash it, find out why.",
+    // First real Phase 1 artifact: the flight-controller CAD model — the
+    // starting point for designing the printed frame around the board.
+    updates: [
+      {
+        date: "16 June 2026",
         title: "Open-sourced the flight controller's 3D model",
         body: [
           "It's not helpful that the companies making these flight controller boards don't publish a 3D model of the part. To design a drone frame around the board, I first had to model the board itself.",
@@ -195,6 +221,10 @@ export const roadmapPhases: RoadmapPhase[] = [
           {
             src: "/build-log/phase-0/taker-g4-cad.jpg",
             alt: "3D CAD model of the GEPRC TAKER G4 AIO flight controller board, USB-C corner",
+          },
+          {
+            src: "/build-log/phase-0/taker-g4-frame.jpg",
+            alt: "The real GEPRC TAKER G4 AIO flight controller seated in the 3D-printed frame, USB-C port and corner standoffs visible",
           },
         ],
         links: [
@@ -215,21 +245,8 @@ export const roadmapPhases: RoadmapPhase[] = [
             url: "https://www.thingiverse.com/thing:7370782",
           },
         ],
-        tweetUrl: "https://x.com/ShreyashGuptas/status/2066640231693160925",
       },
     ],
-  },
-  {
-    id: "drone-phase-1",
-    track: "drone",
-    marker: "PHASE 1",
-    title: "Build the cheapest quad I can — and fly it",
-    blurb:
-      "One small, mostly 3D-printed drone. Print the frame; buy the parts you can't print — motors, flight controller, battery, radio. Wire it, fly it line-of-sight, crash it, and figure out exactly why. That loop is the whole point.",
-    status: "next",
-    statusLabel: "Up next",
-    meta: "3D-printed frame · off-the-shelf guts · honest cost of every part",
-    tagline: "Print the frame, buy the guts, fly it, crash it, find out why.",
   },
   {
     id: "drone-phase-2",
