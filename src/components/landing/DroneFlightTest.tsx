@@ -55,7 +55,10 @@ export function DroneFlightTest() {
       lastPointer = performance.now();
       setEngaged(true);
     };
+    // pointerdown grabs the craft immediately on touch (where there's no hover);
+    // touch-action:none on the bay (below) keeps the gesture from scrolling the page.
     el.addEventListener("pointermove", onPointerMove);
+    el.addEventListener("pointerdown", onPointerMove);
 
     const tick = (now: number) => {
       // Autonomous drift whenever the pointer hasn't moved recently.
@@ -89,6 +92,7 @@ export function DroneFlightTest() {
 
     return () => {
       el.removeEventListener("pointermove", onPointerMove);
+      el.removeEventListener("pointerdown", onPointerMove);
       ro.disconnect();
       cancelAnimationFrame(raf);
     };
@@ -101,6 +105,7 @@ export function DroneFlightTest() {
           ref={containerRef}
           aria-hidden
           className="relative h-72 w-full overflow-hidden md:h-96"
+          style={reduceMotion ? undefined : { touchAction: "none" }}
         >
           <Brackets />
 

@@ -25,6 +25,8 @@ function NavbarContent() {
 
   const openTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const mobileToggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     let ticking = false;
@@ -52,14 +54,28 @@ function NavbarContent() {
     };
   }, []);
 
+  // While the mobile menu is open, tapping/clicking anywhere outside it — or
+  // starting to scroll — dismisses it with its normal exit animation. We
+  // deliberately don't lock body scroll: a scroll gesture should close the menu
+  // and let the page move in the same motion.
   useEffect(() => {
-    if (!isMobileMenuOpen) {
-      document.body.style.overflow = "";
-      return;
-    }
-    document.body.style.overflow = "hidden";
+    if (!isMobileMenuOpen) return;
+
+    const closeOnOutside = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (mobileMenuRef.current?.contains(target)) return;
+      if (mobileToggleRef.current?.contains(target)) return;
+      setIsMobileMenuOpen(false);
+    };
+    const closeOnScroll = () => setIsMobileMenuOpen(false);
+
+    document.addEventListener("pointerdown", closeOnOutside);
+    window.addEventListener("wheel", closeOnScroll, { passive: true });
+    window.addEventListener("touchmove", closeOnScroll, { passive: true });
     return () => {
-      document.body.style.overflow = "";
+      document.removeEventListener("pointerdown", closeOnOutside);
+      window.removeEventListener("wheel", closeOnScroll);
+      window.removeEventListener("touchmove", closeOnScroll);
     };
   }, [isMobileMenuOpen]);
 
@@ -253,6 +269,7 @@ function NavbarContent() {
         </div>
 
         <button
+          ref={mobileToggleRef}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden h-11 w-11 flex items-center justify-center -mr-2"
           aria-label="Toggle menu"
@@ -280,6 +297,7 @@ function NavbarContent() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
+            ref={mobileMenuRef}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
