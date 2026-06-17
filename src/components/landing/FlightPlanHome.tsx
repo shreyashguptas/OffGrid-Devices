@@ -321,6 +321,23 @@ function UpdateItem({ update }: { update: PhaseUpdate }) {
         </div>
       ) : null}
 
+      {update.links?.length ? (
+        <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+          {update.links.map((l) => (
+            <li key={l.url}>
+              <a
+                href={l.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-sand/70 transition-colors hover:text-ember"
+              >
+                {l.label} →
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
       {update.tweetUrl ? <TweetEmbed url={update.tweetUrl} /> : null}
     </li>
   );
