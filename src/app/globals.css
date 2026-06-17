@@ -813,3 +813,12 @@ body {
     content: "";
   }
 }
+
+/* ─── Embedded tweets (react-tweet) ──────────────────────────────────────
+   react-tweet themes off the same `data-theme` attribute the site sets on
+   <html>, so the card already matches light/dark. We only drop its default
+   outer margin — vertical spacing is owned by the surrounding build-log
+   layout (the wrapper's `mt-5`) so the embed lines up with everything else. */
+.react-tweet-theme {
+  --tweet-container-margin: 0;
+}

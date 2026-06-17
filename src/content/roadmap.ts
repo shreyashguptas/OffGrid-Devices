@@ -26,26 +26,19 @@ export type RoadmapStatus =
   | "locked"; // teased on purpose — details later
 
 /**
- * The kind of a single build-log update inside a phase. Color-coded in the UI
- * so a scan reads the rhythm of the work: progress, setbacks, lessons.
- */
-export type PhaseUpdateKind = "did" | "broke" | "learned" | "shipped";
-
-/**
  * One entry in a phase's running build log. A phase accumulates many of these
  * over time — the day-to-day "here's what happened" shown INLINE on the home
  * page. This log IS the record (not a link to a blog post): an update can hold
  * its own paragraphs of text, image(s), and an embedded tweet. The separate
  * blog is for long-form writing and does not feed this.
  *
- * Everything except `date` + `kind` is optional, so an update can be a quick
- * one-liner ("broke X today") or a full image + two-paragraph write-up.
- * Stored newest-first within `RoadmapPhase.updates`.
+ * Everything except `date` is optional, so an update can be a quick one-liner
+ * or a full image + two-paragraph write-up. Stored newest-first within
+ * `RoadmapPhase.updates`.
  */
 export type PhaseUpdate = {
   /** Short display date, e.g. "12 Jun 2026". */
   date: string;
-  kind: PhaseUpdateKind;
   /** Optional short headline for the update. */
   title?: string;
   /** Body text — one string per paragraph (write as many as you want). */
@@ -148,7 +141,7 @@ export const roadmapPhases: RoadmapPhase[] = [
     },
     // Real updates go here, e.g.:
     //   updates: [
-    //     { date: "2 Jun 2026", kind: "did", body: ["Restocked SMA antennas."] },
+    //     { date: "2 Jun 2026", body: ["Restocked SMA antennas."] },
     //   ],
   },
   {
@@ -166,12 +159,11 @@ export const roadmapPhases: RoadmapPhase[] = [
     tagline: "Logging sim hours so my first real flight isn't my first time flying.",
     // ─────────────────────────────────────────────────────────────────────
     // TEMPLATE — copy one of these into `updates` to log something. Every
-    // field except `date` + `kind` is optional, so it can be a one-liner or a
-    // full image + multi-paragraph write-up with an embedded tweet:
+    // field except `date` is optional, so it can be a one-liner or a full
+    // image + multi-paragraph write-up with an embedded tweet:
     //
     //   {
     //     date: "12 Jun 2026",
-    //     kind: "learned",                 // did | broke | learned | shipped
     //     title: "Throttle is everything", // optional headline
     //     body: [
     //       "First paragraph of the write-up.",
@@ -184,7 +176,6 @@ export const roadmapPhases: RoadmapPhase[] = [
     updates: [
       {
         date: "16 Jun 2026",
-        kind: "did",
         title: "Open-sourced the flight controller's 3D model",
         body: [
           "It's not helpful that the companies making these flight controller boards don't publish a 3D model of the part. To design a drone frame around the board, I first had to model the board itself.",
