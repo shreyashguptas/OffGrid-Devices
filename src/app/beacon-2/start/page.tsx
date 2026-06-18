@@ -11,6 +11,12 @@ import { StartSafetySection } from "@/components/start/StartSafetySection";
 import { StartSetupSection } from "@/components/start/StartSetupSection";
 import { StartTocSection } from "@/components/start/StartTocSection";
 import { StartWarrantySection } from "@/components/start/StartWarrantySection";
+import { startContent } from "@/content/start";
+import {
+  breadcrumbJsonLd,
+  howToJsonLd,
+  jsonLdScriptProps,
+} from "@/lib/jsonLd";
 
 const TITLE = "Beacon 2 — Setup & reference";
 const DESCRIPTION =
@@ -40,6 +46,37 @@ export const metadata: Metadata = {
 export default function StartPage() {
   return (
     <>
+      {/* Breadcrumb ties the setup guide back to the product + home so search
+          engines (and AI answer engines) understand its place in the site. */}
+      <script
+        {...jsonLdScriptProps(
+          breadcrumbJsonLd([
+            { name: "Home", url: "/" },
+            { name: "OffGrid Beacon 2", url: "/products/beacon-2" },
+            { name: "Setup & reference", url: "/beacon-2/start" },
+          ]),
+        )}
+      />
+      {/* HowTo JSON-LD, derived from the same setup steps rendered below, makes
+          this guide eligible for the How-To rich result and gives AI answer
+          engines an explicit ordered procedure to cite for "how to set up
+          Beacon 2" queries. */}
+      <script
+        {...jsonLdScriptProps(
+          howToJsonLd({
+            name: "How to set up the OffGrid Beacon 2 LoRa mesh radio",
+            description: startContent.setup.note,
+            url: "/beacon-2/start#setup",
+            steps: startContent.setup.steps.map((step) => ({
+              name: step.title.replace(/\.$/, ""),
+              text: [step.body.join(" "), step.warning, step.note]
+                .filter(Boolean)
+                .join(" "),
+              url: "/beacon-2/start#setup",
+            })),
+          }),
+        )}
+      />
       <StartHeroSection />
       <StartTocSection />
       <StartRegionNoticeSection />
