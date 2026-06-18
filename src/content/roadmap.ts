@@ -210,6 +210,51 @@ export const roadmapPhases: RoadmapPhase[] = [
     // starting point for designing the printed frame around the board.
     updates: [
       {
+        date: "17 June 2026",
+        title: "First test-fit of the board and a motor on a fin",
+        body: [
+          "I test-fit the flight controller board and one of the motors onto a single fin for the very first time. It's rough, but seeing the real parts sit where they're meant to go immediately surfaced a few fixes I need to make before going any further.",
+        ],
+        tweetUrl: "https://x.com/ShreyashGuptas/status/2067408238816247934",
+      },
+      {
+        date: "17 June 2026",
+        title: "Open-sourced the propeller's 3D model",
+        body: [
+          "Same problem as the flight controller: I couldn't find an accurate 3D model of the exact propeller I'm using, so I designed one myself. I needed it to plan placement — how far each propeller sits from the main body of the drone, the clearances around it, that kind of thing.",
+          "It's dimensionally accurate in every way that matters for laying out the build. The blade shape itself isn't a perfect 1:1 of the real thing, but for checking fit and spacing it does the job.",
+          "The propeller is the Gemfan Hurricane 3016 3-inch. I get why companies don't always put an STL out there — trade secrets, probably — but I'd already redrawn it, so I open-sourced it for anyone who wants this specific model.",
+        ],
+        images: [
+          {
+            src: "/build-log/phase-0/gemfan-3016-cad.jpg",
+            alt: "Orange 3D CAD render of the Gemfan Hurricane 3016 propeller hub, showing the three motor-mounting holes where the blade meets the center",
+          },
+          {
+            src: "/build-log/phase-0/gemfan-3016-prop.jpg",
+            alt: "The real pink Gemfan Hurricane 3016 three-blade 3-inch propeller resting on a dark surface",
+          },
+        ],
+        links: [
+          {
+            label: "Printables",
+            url: "https://www.printables.com/model/1757059-gemfan-hurricane-3016-3-inch-propeller-dimension-a",
+          },
+          {
+            label: "MakerWorld",
+            url: "https://makerworld.com/en/models/2945197-gemfan-hurricane-3016-3-inch-propeller-cad-model",
+          },
+          {
+            label: "GrabCAD",
+            url: "https://grabcad.com/library/gemfan-hurricane-3016-3-inch-propeller-dimension-accurate-3d-model-1",
+          },
+          {
+            label: "Thingiverse",
+            url: "https://www.thingiverse.com/thing:7371120",
+          },
+        ],
+      },
+      {
         date: "16 June 2026",
         title: "Open-sourced the flight controller's 3D model",
         body: [
