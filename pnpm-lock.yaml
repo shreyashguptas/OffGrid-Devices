@@ -51,8 +51,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1(react-dom@19.2.5(react@19.2.7))(react@19.2.7)
       resend:
-        specifier: ^6.12.4
-        version: 6.12.4
+        specifier: ^6.14.0
+        version: 6.14.0
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
@@ -3446,8 +3446,8 @@ packages:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
 
-  resend@6.12.4:
-    resolution: {integrity: sha512-lRpJ2Hxd+ht+JPDm97juRcUp9HOMuZyxaRFRFmc9Tx8iNWiei94Dx9v6SWufgKk2667C/uCeKKspMotOHSpCSg==}
+  resend@6.14.0:
+    resolution: {integrity: sha512-jVdpUgOoWGLjaP64lo8KwzHT9gY4w6Dl8c36CIb2F+ayYOMLr3khqs8xrNjXM2k19b+lPoj0VWQFhVNLiToBjA==}
     engines: {node: '>=20'}
     peerDependencies:
       '@react-email/render': '*'
@@ -3769,11 +3769,11 @@ packages:
     resolution: {integrity: sha512-Bf+ILmBgretUrdJxzXM0SgXLZ3XfiaUuOj/IKQHuTXip+05Xn+uyEYdVg0kYDipTBcLrCVyUzAPz7QmArb0mmw==}
     engines: {node: '>=14.0.0'}
 
-  tldts-core@7.4.2:
-    resolution: {integrity: sha512-nwEyF4vl4RSJjwSjBUmOSxc3BFPoIFdlRthJ6e+5v9P3bHNsoD06UjuqMUspqp7vsEZ1beaHi1km+optiE17yA==}
+  tldts-core@7.4.3:
+    resolution: {integrity: sha512-27ep5H9PzdBrNd5OFM/j3WCU8F3kPwM9D0BOaOf7uYfxMJfyr0K5Tjj69Gri+sZlh2WXd5buIm47NuPF29CDiw==}
 
-  tldts@7.4.2:
-    resolution: {integrity: sha512-kCwffuaH8ntKtygnWe1b4BJKWiCUH30n5KfoTr6IchcXOwR7chAOFJxFrH3vjANafUYrIA4a7SDL+nn7SiR4Sw==}
+  tldts@7.4.3:
+    resolution: {integrity: sha512-A3BDQBeeukYPzB4QdQ1DtdlUmp4x2OCH8n5UVhEWbyANxNep8GavottKzd1xYKFJKjUgMyPT7EzOfnBO55s8Sg==}
     hasBin: true
 
   to-regex-range@5.0.1:
@@ -7912,7 +7912,7 @@ snapshots:
 
   require-from-string@2.0.2: {}
 
-  resend@6.12.4:
+  resend@6.14.0:
     dependencies:
       postal-mime: 2.7.4
       standardwebhooks: 1.0.0
@@ -8310,12 +8310,12 @@ snapshots:
 
   tinyrainbow@3.1.0: {}
 
-  tldts-core@7.4.2:
+  tldts-core@7.4.3:
     optional: true
 
-  tldts@7.4.2:
+  tldts@7.4.3:
     dependencies:
-      tldts-core: 7.4.2
+      tldts-core: 7.4.3
     optional: true
 
   to-regex-range@5.0.1:
@@ -8326,7 +8326,7 @@ snapshots:
 
   tough-cookie@6.0.1:
     dependencies:
-      tldts: 7.4.2
+      tldts: 7.4.3
     optional: true
 
   tr46@0.0.3: {}
