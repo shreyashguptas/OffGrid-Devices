@@ -418,6 +418,61 @@ export function faqJsonLd(items: FaqItem[]) {
   } as const;
 }
 
+export type ItemListEntry = { name: string; url: string; description?: string };
+
+/**
+ * ItemList JSON-LD for a collection/listing page (e.g. the blog index).
+ * Surfaces the ordered set of posts to search engines so the collection is
+ * discoverable as a unit instead of relying on crawl-following the links.
+ * Each element is a bare ListItem → url (Google's documented minimal form);
+ * the linked page carries its own Article/BlogPosting markup.
+ */
+export function itemListJsonLd(name: string, items: ItemListEntry[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      url: absoluteUrl(item.url),
+      ...(item.description ? { description: item.description } : {}),
+    })),
+  } as const;
+}
+
+export type HowToStep = { name: string; text: string; url?: string };
+
+/**
+ * HowTo JSON-LD for a step-by-step guide (e.g. the Beacon 2 setup page).
+ * Unlocks the How-To rich result and gives AI answer engines an explicit,
+ * ordered procedure to cite. Each step is a HowToStep; pass an `url` (with a
+ * #fragment) to deep-link a step to its section.
+ */
+export function howToJsonLd(input: {
+  name: string;
+  description: string;
+  url: string;
+  steps: HowToStep[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: input.name,
+    description: input.description,
+    url: absoluteUrl(input.url),
+    step: input.steps.map((step, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: step.name,
+      text: step.text,
+      ...(step.url ? { url: absoluteUrl(step.url) } : {}),
+    })),
+  } as const;
+}
+
 /** Helper for rendering JSON-LD script tags. */
 export function jsonLdScriptProps(data: unknown) {
   return {

@@ -29,6 +29,50 @@ function getSocialLinkLabel(href: string): string {
   return "Profile →";
 }
 
+// Inline markdown-link renderer for blog body text. Supports `[label](url)`
+// so posts can carry contextual internal links (to product / setup pages) and
+// external citations without an MDX pipeline. Text with no link syntax renders
+// byte-for-byte as before. Internal links (starting with "/") use next/link
+// for client-side nav; external links open in a new tab with rel="noopener".
+const INLINE_LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+
+function renderInline(text: string): React.ReactNode {
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  INLINE_LINK.lastIndex = 0;
+  while ((match = INLINE_LINK.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+    const [, label, href] = match;
+    if (href.startsWith("/")) {
+      nodes.push(
+        <Link key={`${href}-${match.index}`} href={href}>
+          {label}
+        </Link>,
+      );
+    } else {
+      nodes.push(
+        <a
+          key={`${href}-${match.index}`}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {label}
+        </a>,
+      );
+    }
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+  // Single plain-text node → return the string directly (identical to before).
+  return nodes.length === 1 && typeof nodes[0] === "string" ? nodes[0] : nodes;
+}
+
 function ContentSection({ section }: { section: BlogSection }) {
   switch (section.type) {
     case "heading":
@@ -44,12 +88,12 @@ function ContentSection({ section }: { section: BlogSection }) {
         </h3>
       );
     case "paragraph":
-      return <p>{section.content}</p>;
+      return <p>{renderInline(section.content)}</p>;
     case "list":
       return (
         <ul>
           {section.items.map((item) => (
-            <li key={item}>{item}</li>
+            <li key={item}>{renderInline(item)}</li>
           ))}
         </ul>
       );
@@ -57,7 +101,7 @@ function ContentSection({ section }: { section: BlogSection }) {
       return (
         <ol>
           {section.items.map((item) => (
-            <li key={item}>{item}</li>
+            <li key={item}>{renderInline(item)}</li>
           ))}
         </ol>
       );
@@ -108,7 +152,7 @@ function ContentSection({ section }: { section: BlogSection }) {
         <aside
           className={`mt-8 border p-5 text-base leading-relaxed ${toneClass}`}
         >
-          {section.content}
+          {renderInline(section.content)}
         </aside>
       );
     }

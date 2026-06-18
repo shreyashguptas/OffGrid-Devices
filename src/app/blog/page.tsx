@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { blogPosts } from "@/content/blog";
-import { breadcrumbJsonLd, jsonLdScriptProps } from "@/lib/jsonLd";
+import {
+  breadcrumbJsonLd,
+  itemListJsonLd,
+  jsonLdScriptProps,
+} from "@/lib/jsonLd";
 
 const TITLE = "OffGrid Blog — Meshtastic & LoRa Mesh Notes";
 const DESCRIPTION =
@@ -44,6 +48,20 @@ export default function BlogPage() {
             { name: "Home", url: "/" },
             { name: "Blog", url: "/blog" },
           ]),
+        )}
+      />
+      {/* ItemList JSON-LD surfaces the post collection to search engines so the
+          blog index is discoverable as a set, not just via link-following. */}
+      <script
+        {...jsonLdScriptProps(
+          itemListJsonLd(
+            "OffGrid Blog — Meshtastic & LoRa Mesh Notes",
+            blogPosts.map((post) => ({
+              name: post.title,
+              url: `/blog/${post.slug}`,
+              description: post.excerpt,
+            })),
+          ),
         )}
       />
       <section className="border-b border-border-subtle bg-background pt-28 pb-16 md:pt-32 md:pb-20">

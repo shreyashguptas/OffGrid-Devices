@@ -34,7 +34,7 @@ export default function TermsPage() {
       <LegalPageShell
         eyebrow="LEGAL · TERMS"
         title="Terms of Service"
-        lastUpdated="2026-05-18"
+        lastUpdated="2026-06-18"
       >
         <p>
           These terms govern your use of offgridevices.com and any OffGrid
@@ -60,6 +60,26 @@ export default function TermsPage() {
           training crawlers (CCBot, anthropic-ai, cohere-ai) is prohibited
           and blocked via robots.txt; inference and citation crawlers
           (GPTBot, ClaudeBot, PerplexityBot, etc.) are welcome.
+        </p>
+
+        <h2>Communications and submissions</h2>
+        <p>
+          When you use the contact form or email us, you agree to provide
+          accurate information and not to submit unlawful, abusive, infringing,
+          or deliberately misleading content. The form is protected by a bot
+          check (Cloudflare Turnstile) and is rate-limited to prevent abuse; we
+          may decline, store, or act on submissions at our discretion, and we
+          may contact you in reply. How we handle the information you send is
+          described in our <a href="/privacy">Privacy Policy</a>.
+        </p>
+
+        <h2>Site content</h2>
+        <p>
+          Pages, specifications, blog posts, and build-in-public updates (such
+          as Project Cheap Drone) are provided for general information on an
+          &ldquo;as is&rdquo; basis. We work to keep them accurate but do not
+          guarantee that content, product details, or availability are complete,
+          current, or error-free, and we may change them at any time.
         </p>
 
         <h2>Purchases</h2>
@@ -113,6 +133,15 @@ export default function TermsPage() {
           from the use of the product or the site. Our total liability for
           any claim is limited to the amount you paid for the product
           giving rise to the claim.
+        </p>
+
+        <h2>Third-party links</h2>
+        <p>
+          The site links to third-party services and resources — including the
+          Etsy listing, the Meshtastic and MeshCore projects, flight simulators,
+          and our social profiles. We do not control those sites and are not
+          responsible for their content, products, or privacy practices. Your
+          use of them is governed by their own terms.
         </p>
 
         <h2>Intellectual property</h2>

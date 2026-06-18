@@ -35,7 +35,7 @@ export default function PrivacyPage() {
       <LegalPageShell
         eyebrow="LEGAL · PRIVACY"
         title="Privacy Policy"
-        lastUpdated="2026-05-28"
+        lastUpdated="2026-06-18"
       >
         <p>
           OffGrid Devices (&ldquo;OffGrid&rdquo;, &ldquo;we&rdquo;,
@@ -54,27 +54,50 @@ export default function PrivacyPage() {
             <strong>Order data</strong> — name, shipping address, billing
             address, email, phone (optional), and the items you ordered.
             Collected by Etsy, the marketplace where the Beacon listing lives,
-            on Etsy&rsquo;s own checkout.
+            on Etsy&rsquo;s own checkout. OffGrid never sees or stores your
+            payment-card details.
+          </li>
+          <li>
+            <strong>Contact form</strong> — when you use the form at{" "}
+            <a href="/contact">offgridevices.com/contact</a>, you provide your
+            name, email, an inquiry type, your message, and optionally a company
+            name and phone number. We use it to reply and keep a record of the
+            conversation. How we store and retain it is described under{" "}
+            <em>Storing and retaining contact submissions</em> below.
           </li>
           <li>
             <strong>Support email</strong> — when you email
-            hello@offgridevices.com, we receive the address you sent from
-            and the contents of your message.
+            hello@offgridevices.com directly, we receive the address you sent
+            from and the contents of your message.
           </li>
         </ul>
 
         <h3>Information collected automatically</h3>
         <ul>
           <li>
-            <strong>PostHog</strong> — pageviews, click events, scroll
-            depth, device/browser/OS, country/region (geo-IP, never the
-            raw address), and anonymous session recordings used to debug
-            UX issues. All traffic is proxied through{" "}
-            <code>offgridevices.com/ingest</code> so PostHog never sees
-            your IP address directly. We honor browser <em>Do Not Track</em>
-            , and the &ldquo;opt out&rdquo; button at the bottom of this
-            page disables PostHog entirely for your browser. See
-            posthog.com/privacy.
+            <strong>Product analytics (PostHog)</strong> — to understand how
+            the site is used, PostHog records: pageviews, how long you spend on
+            each page, clicks and taps, scroll and mouse activity used to build
+            heatmaps, page-performance (web vitals) measurements, JavaScript
+            errors, and anonymous session replays used to debug usability
+            issues. It also records your device, browser, and operating system,
+            an approximate location derived from your IP address (country and
+            region only — never the raw address), and, if you arrive from an ad,
+            email, or another site, the referring source (such as the campaign
+            tags in the link). Visitors are{" "}
+            <strong>anonymous by default</strong> — we do not build a named
+            profile of you. All analytics traffic is proxied through{" "}
+            <code>offgridevices.com/ingest</code> so PostHog never sees your IP
+            address directly. We honor the browser <em>Do Not Track</em> signal,
+            and the &ldquo;opt out&rdquo; button at the bottom of this page
+            disables PostHog entirely for your browser. See posthog.com/privacy.
+          </li>
+          <li>
+            <strong>Bot protection (Cloudflare Turnstile)</strong> — the contact
+            form is protected by Cloudflare Turnstile, a privacy-preserving
+            check that blocks spam and automated abuse. Cloudflare receives a
+            challenge token and your IP address for this check; Turnstile does
+            not track you across websites. See cloudflare.com/privacypolicy.
           </li>
           <li>
             <strong>Etsy checkout</strong> — Etsy collects standard
@@ -105,6 +128,33 @@ export default function PrivacyPage() {
           </li>
         </ul>
 
+        <h2>Cookies and local storage</h2>
+        <p>
+          We use a small number of first-party cookies and browser-storage
+          entries — and <strong>no third-party advertising cookies</strong>.
+          PostHog sets a first-party cookie so it can recognize your browser
+          across pages and visits and avoid double-counting; your analytics
+          opt-out choice is stored in your browser so it persists across visits.
+          Cloudflare Turnstile may set a short-lived token while you use the
+          contact form. You can clear these at any time in your browser
+          settings, and opting out of analytics (below) removes the PostHog
+          cookie.
+        </p>
+
+        <h2>Storing and retaining contact submissions</h2>
+        <p>
+          When you submit the contact form, we email your message to ourselves
+          (delivered by Resend) and also save the submission in a Cloudflare D1
+          database as a durable record, so a message isn&rsquo;t lost if email
+          delivery fails. We store the name, email, inquiry type, message, any
+          company or phone number you provide, your browser&rsquo;s user-agent
+          string, and a <strong>one-way hashed</strong> version of your IP
+          address — we never store your raw IP. You may also receive a
+          confirmation email that we received your message. To have a contact
+          submission deleted, email{" "}
+          <a href="mailto:hello@offgridevices.com">hello@offgridevices.com</a>.
+        </p>
+
         <h2>What we do not do</h2>
         <ul>
           <li>We do not sell your information to third parties.</li>
@@ -126,8 +176,14 @@ export default function PrivacyPage() {
             order fulfillment data. etsy.com/legal/privacy
           </li>
           <li>
-            <strong>Cloudflare</strong> — hosting, edge network, server
-            logs. cloudflare.com/privacypolicy
+            <strong>Cloudflare</strong> — hosting and edge network, server
+            logs, the Turnstile bot-protection check, and the D1 database that
+            stores contact submissions. cloudflare.com/privacypolicy
+          </li>
+          <li>
+            <strong>Resend</strong> — delivers the email generated by the
+            contact form to us (and the confirmation email to you).
+            resend.com/legal/privacy-policy
           </li>
           <li>
             <strong>PostHog</strong> — product analytics, session replay,

@@ -143,7 +143,7 @@ export const blogPosts = [
       {
         type: "paragraph",
         content:
-          "Before I spend real money, I'm flying in a simulator. I'm on a Mac, and the one I landed on is VelociDrone (velocidrone.com). Twenty bucks, runs natively, and I can plug in a controller and practice crashing where crashing costs nothing. The goal of this phase is embarrassingly basic: stop crashing on takeoff. Build the muscle memory on a screen first, so I'm not snapping props and motors learning the same lesson at $15 a pop.",
+          "Before I spend real money, I'm flying in a simulator. I'm on a Mac, and the one I landed on is VelociDrone ([velocidrone.com](https://www.velocidrone.com)). Twenty bucks, runs natively, and I can plug in a controller and practice crashing where crashing costs nothing. The goal of this phase is embarrassingly basic: stop crashing on takeoff. Build the muscle memory on a screen first, so I'm not snapping props and motors learning the same lesson at $15 a pop.",
       },
       {
         type: "subheading",
@@ -163,7 +163,7 @@ export const blogPosts = [
       {
         type: "paragraph",
         content:
-          "Phase 2 and Phase 3 exist. They're where the LoRa mesh work I do at OffGrid meets the drone, and where this stops being a learning project and starts being something that solves a real problem. But that's a later post. For now I want to get the basics right, in public, and bring you along for it.",
+          "Phase 2 and Phase 3 exist. They're where the [LoRa mesh work I do at OffGrid](/products/beacon-2) meets the drone, and where this stops being a learning project and starts being something that solves a real problem. But that's a later post. For now I want to get the basics right, in public, and bring you along for it.",
       },
       {
         type: "paragraph",
@@ -276,12 +276,12 @@ export const blogPosts = [
       {
         type: "paragraph",
         content:
-          "Beacon 1 was the first crack at it: a MagSafe-friendly Meshtastic radio you could carry on the back of your phone instead of clipping a brick to your belt. People liked it. They also told me, clearly, what wasn't good enough yet — and almost every note came back to the magnets. A device whose entire reason for existing is that it stays on your phone cannot afford a magnet that slips. That was the feedback that mattered most, and it's where I spent the most time.",
+          "[Beacon 1](/products/beacon-1) was the first crack at it: a MagSafe-friendly Meshtastic radio you could carry on the back of your phone instead of clipping a brick to your belt. People liked it. They also told me, clearly, what wasn't good enough yet — and almost every note came back to the magnets. A device whose entire reason for existing is that it stays on your phone cannot afford a magnet that slips. That was the feedback that mattered most, and it's where I spent the most time.",
       },
       {
         type: "paragraph",
         content:
-          "The rest of the list came from real use, too: people wanted to swap antennas, power the thing off without unscrewing it, see when it was charging, get more than a few days of battery, and trust it not to crack or soften when they actually took it outside. Beacon 2 is the answer to that whole list. But let me start with the part that is the product: the magnet.",
+          "The rest of the list came from real use, too: people wanted to swap antennas, power the thing off without unscrewing it, see when it was charging, get more than a few days of battery, and trust it not to crack or soften when they actually took it outside. [Beacon 2](/products/beacon-2) is the answer to that whole list. But let me start with the part that is the product: the magnet.",
       },
       { type: "heading", content: "The magnet problem (this is the whole product)" },
       {
