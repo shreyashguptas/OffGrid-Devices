@@ -12,7 +12,14 @@ const projectRoot = dirname(fileURLToPath(import.meta.url));
 //     React hydrates; using a nonce would defeat the "early" goal)
 //   - JSON-LD <script type="application/ld+json"> blocks
 //   - Tailwind's runtime style injection
-// All imagery is now first-party (served from /public), so img-src stays 'self'.
+// Imagery is first-party (served from /public) EXCEPT embedded tweets: the
+// homepage build log renders X/Twitter posts via react-tweet's `useTweet`,
+// which fetches the tweet in the visitor's browser (see ClientTweet.tsx) and
+// renders avatars/photos from pbs.twimg.com and inline video from
+// video.twimg.com. Those three origins are allow-listed below (the data fetch
+// in connect-src, images in img-src, video in media-src). Without them the
+// browser's CSP silently blocks the embed for every visitor and the tweet card
+// never renders.
 const contentSecurityPolicy = [
   "default-src 'self'",
   // 'wasm-unsafe-eval' is needed because @react-three/drei sets up the
@@ -28,15 +35,15 @@ const contentSecurityPolicy = [
   // button stays permanently disabled once a Turnstile site key is set.
   "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  "img-src 'self' data: blob: https://pbs.twimg.com",
   "font-src 'self' data:",
   // blob: is needed because three.js/drei reads GLB-embedded textures as
   // Blob → URL.createObjectURL → fetch(blob:...). Without it the 15
   // textures in beacon-2.glb fail to load and the Beacon renders without
   // its CAD-assigned surface detail.
-  "connect-src 'self' blob: https://challenges.cloudflare.com",
+  "connect-src 'self' blob: https://challenges.cloudflare.com https://react-tweet.vercel.app",
   "frame-src 'self' https://challenges.cloudflare.com",
-  "media-src 'self'",
+  "media-src 'self' https://video.twimg.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "base-uri 'self'",

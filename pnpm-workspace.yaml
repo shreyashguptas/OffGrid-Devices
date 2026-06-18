@@ -10,6 +10,16 @@
 #   - vite 8.0.16 fixes GHSA-fx2h-pf6j-xcff (high, via vitest). Pinned exactly
 #     (like postcss/esbuild above): a range override left the already-locked
 #     8.0.8 in place, so an exact pin is needed to actually bump it.
+#   - undici >=7.28.0 fixes GHSA-vmh5-mc38-953g (high: TLS cert validation
+#     bypass in SOCKS5 ProxyAgent, via vitest>jsdom and wrangler>miniflare).
+#   - dompurify 3.4.11 fixes GHSA-76mc-f452-cxcm / -rp9w-3fw7-7cwq /
+#     -cmwh-pvxp-8882 (moderate) + -x4vx-rjvf-j5p4 / -vxr8-fq34-vvx9 /
+#     -gvmj-g25r-r7wr (low), via posthog-js (its ^3.3.2 range already allows it).
+#   - js-yaml 4.2.0 fixes GHSA-h67p-54hq-rp68 (moderate ReDoS in merge keys,
+#     via eslint>@eslint/eslintrc).
+#   - @babel/core 7.29.7 fixes GHSA-4x5r-pxfx-6jf8 (low: arbitrary file read via
+#     sourceMappingURL; vuln range <=7.29.0, so the in-major 7.29.7 patch clears
+#     it — no 8.x jump). Forced across next + eslint-plugin-react-hooks.
 onlyBuiltDependencies:
   - sharp
   - unrs-resolver
@@ -20,3 +30,7 @@ overrides:
   "ws@>=8.0.0 <8.21.0": ">=8.21.0"
   "form-data@>=4.0.0 <4.0.6": ">=4.0.6"
   vite: 8.0.16
+  "undici@>=7.23.0 <7.28.0": ">=7.28.0 <8"
+  dompurify: 3.4.11
+  "js-yaml@4": 4.2.0
+  "@babel/core@<=7.29.0": 7.29.7
