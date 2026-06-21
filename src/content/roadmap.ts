@@ -49,6 +49,12 @@ export type PhaseUpdate = {
   links?: { label: string; url: string }[];
   /** Optional X/tweet URL to embed inline. */
   tweetUrl?: string;
+  /**
+   * Slugs of interactive `/learn` explainers to surface inline as full cards
+   * (same block as the /learn hub), stacked one after the other. Use for
+   * "here's how I learned this" updates that point at an interactive page.
+   */
+  learnCards?: string[];
 };
 
 export type RoadmapPhase = {
@@ -209,6 +215,22 @@ export const roadmapPhases: RoadmapPhase[] = [
     // First real Phase 1 artifact: the flight-controller CAD model — the
     // starting point for designing the printed frame around the board.
     updates: [
+      {
+        date: "20 June 2026",
+        title: "How I actually learn the hard parts",
+        body: [
+          "A lot of this doesn't click for me just by reading about it. So when I have a specific question, I have Claude build me a small interactive page I can poke at until it makes sense. Here are two I learned from today — open them and play with them yourself.",
+        ],
+        learnCards: ["drone-frame-physics", "prop-guards"],
+      },
+      {
+        date: "18 June 2026",
+        title: "Frame tweaks: shorter fins, fixed mounts, and legs",
+        body: [
+          "A few frame fixes in one pass: I shortened the fins so the whole frame fits on my print bed in a single print instead of multiple parts, locked in the screw mounts so the controller board and the motors sit exactly where they should, and added legs just tall enough to give it ground clearance.",
+        ],
+        tweetUrl: "https://x.com/ShreyashGuptas/status/2067684876011418038",
+      },
       {
         date: "17 June 2026",
         title: "First test-fit of the board and a motor on a fin",

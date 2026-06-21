@@ -8,6 +8,8 @@ import {
   type RoadmapPhase,
 } from "@/content/roadmap";
 import { getBlogPost } from "@/content/blog";
+import { getExplainer } from "@/content/learn";
+import { ExplainerCard } from "@/components/learn/ExplainerCard";
 import { ClientTweet } from "@/components/landing/ClientTweet";
 import { DroneFlightTest } from "@/components/landing/DroneFlightTest";
 import { ZoomableImage } from "@/components/shared/ZoomableImage";
@@ -270,19 +272,39 @@ function UpdateItem({ update }: { update: PhaseUpdate }) {
 
       {update.links?.length ? (
         <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
-          {update.links.map((l) => (
-            <li key={l.url}>
-              <a
-                href={l.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 font-mono text-[13px] uppercase tracking-[0.14em] text-sand/75 transition-colors hover:text-ember"
-              >
-                {l.label} →
-              </a>
-            </li>
-          ))}
+          {update.links.map((l) => {
+            const internal = l.url.startsWith("/");
+            const className =
+              "inline-flex items-center gap-1.5 font-mono text-[13px] uppercase tracking-[0.14em] text-sand/75 transition-colors hover:text-ember";
+            return (
+              <li key={l.url}>
+                {internal ? (
+                  <Link href={l.url} className={className}>
+                    {l.label} →
+                  </Link>
+                ) : (
+                  <a
+                    href={l.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={className}
+                  >
+                    {l.label} →
+                  </a>
+                )}
+              </li>
+            );
+          })}
         </ul>
+      ) : null}
+
+      {update.learnCards?.length ? (
+        <div className="mt-6 space-y-4">
+          {update.learnCards.map((slug) => {
+            const ex = getExplainer(slug);
+            return ex ? <ExplainerCard key={slug} explainer={ex} /> : null;
+          })}
+        </div>
       ) : null}
 
       {update.tweetUrl ? <TweetEmbed url={update.tweetUrl} /> : null}
